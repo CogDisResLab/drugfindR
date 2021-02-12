@@ -1,0 +1,4 @@
+^renv$
+^renv\.lock$
+^drugfindR\.Rproj$
+^\.Rproj\.user$
