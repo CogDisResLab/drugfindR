@@ -33,7 +33,10 @@ bytes](https://img.shields.io/github/languages/code-size/AliSajid/drugfindR)
 size](https://img.shields.io/github/repo-size/AliSajid/drugfindR)
 <!-- badges: end -->
 
-The goal of drugfindR is to …
+drugfindR allows convenient access to the iLINCS Gene Knockdown, Gene
+Overexpression and Chemical Perturbagen databases and allows you to
+generate and invesitgate signatures to identify relevant genes and
+drugs.
 
 ## Installation
 
