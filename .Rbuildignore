@@ -2,3 +2,4 @@
 ^renv\.lock$
 ^drugfindR\.Rproj$
 ^\.Rproj\.user$
+^LICENSE\.md$

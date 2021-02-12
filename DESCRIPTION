@@ -1,0 +1,38 @@
+Package: drugfindR
+Title: Investigate iLINCS for candidate repurposable drugs
+Version: 0.0.0.9000
+Authors@R: c(
+    person(given = c("Ali", "Sajid"),
+           family = "Imami",
+           role = c("aut", "cre"),
+           email = "Ali.Sajid.Imami@gmail.com",
+           comment = c(ORCID = "0000-0003-3684-3539")),
+    person(given = c("Justin", "Fortune"),
+           family = "Creeden",
+           role = c("aut"),
+           email = "Justin.Creeden@rockets.utoledo.edu",
+           comment = c(ORCID = "0000-0003-3123-8401")),
+    person(given = c("Evelyn", "Alden"),
+           family = "Bates",
+           role = c("aut"),
+           email = "Evelyn.Bates@rockets.utoledo.edu",
+           comment = c(ORCID = "0000-0002-4157-2481"))
+           )
+Description: This package allows convenient access to the iLINCS Gene Knockdown,
+    Gene Overexpression and Chemical Perturbagen databases and allows you to generate 
+    and invesitgate signatures to identify relevant genes and drugs.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    httr,
+    jsonlite,
+    magrittr,
+    tibble,
+    rlang,
+    dplyr,
+    purrr,
+    readr,
+    stringr
