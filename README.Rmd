@@ -19,8 +19,8 @@ knitr::opts_chunk$set(
 [![GitHub issues](https://img.shields.io/github/issues/AliSajid/drugfindR)](https://github.com/AliSajid/drugfindR/issues)
 [![GitHub forks](https://img.shields.io/github/forks/AliSajid/drugfindR)](https://github.com/AliSajid/drugfindR/network)
 [![GitHub stars](https://img.shields.io/github/stars/AliSajid/drugfindR)](https://github.com/AliSajid/drugfindR/stargazers)
-[![Travis-CI](https://img.shields.io/travis/com/AliSajid/drugfindR)]()
-[![codecov](https://codecov.io/gh/AliSajid/drugfindR/branch/main/graph/badge.svg?token=HP1VFCRZ0M)]()
+[![R-CMD-check](https://github.com/AliSajid/drugfindR/workflows/R-CMD-check/badge.svg)](https://github.com/AliSajid/drugfindR/actions)
+[![codecov](https://codecov.io/gh/AliSajid/drugfindR/branch/main/graph/badge.svg?token=FeAvIeTAiz)](https://codecov.io/gh/AliSajid/drugfindR)
 
 ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/AliSajid/drugfindR?include_prereleases&label=latest-release)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/AliSajid/drugfindR?label=latest-stable)
