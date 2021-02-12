@@ -21,7 +21,7 @@ Authors@R: c(
 Description: This package allows convenient access to the iLINCS Gene Knockdown,
     Gene Overexpression and Chemical Perturbagen databases and allows you to generate 
     and invesitgate signatures to identify relevant genes and drugs.
-License: GPL (>= 3)
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -36,3 +36,5 @@ Imports:
     purrr,
     readr,
     stringr
+Depends: 
+    R (>= 2.10)
