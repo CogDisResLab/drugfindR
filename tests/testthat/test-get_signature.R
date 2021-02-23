@@ -21,9 +21,9 @@ col_spec <- cols(
   Significance_pvalue = col_double()
 )
 
-kd_signature_known <- readr::read_csv("LINCSKD_28.csv", col_types = col_spec)[]
-cp_signature_known <- readr::read_csv("LINCSCP_5821.csv", col_types = col_spec)[]
-oe_signature_known <- readr::read_csv("LINCSOE_104.csv", col_types = col_spec)[]
+kd_signature_known <- readr::read_csv("reference/LINCSKD_28.csv", col_types = col_spec)[]
+cp_signature_known <- readr::read_csv("reference/LINCSCP_5821.csv", col_types = col_spec)[]
+oe_signature_known <- readr::read_csv("reference/LINCSOE_104.csv", col_types = col_spec)[]
 
 inv_signature <- get_signature("LINCS_INV")
 kd_signature <- get_signature("LINCSKD_28")
