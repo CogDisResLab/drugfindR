@@ -30,6 +30,7 @@ kd_signature <- get_signature("LINCSKD_28")
 cp_signature <- get_signature("LINCSCP_5821")
 oe_signature <- get_signature("LINCSOE_104")
 
+# Testing invalid signature
 test_that("correct number of rows for the invalid signature", {
   expect_equal(nrow(inv_signature), 978)
 })
@@ -48,6 +49,7 @@ test_that("correct content for the invalid signature", {
   expect_equal(inv_signature, empty_signature)
 })
 
+# Testing the knockdown signature
 test_that("correct number of rows for the knockdown signature", {
   expect_equal(nrow(kd_signature), 978)
 })
@@ -66,6 +68,7 @@ test_that("correct content for the knockdown signature", {
   expect_equal(kd_signature, kd_signature_known)
 })
 
+# Testing the chemical perturbagen signature
 test_that("correct number of rows for the chemical perturbagen signature", {
   expect_equal(nrow(cp_signature), 978)
 })
@@ -84,6 +87,7 @@ test_that("correct content for the chemical perturbagen signature", {
   expect_equal(cp_signature, cp_signature_known)
 })
 
+# Testing the Overexpression signature
 test_that("correct number of rows for the overexpression signature", {
   expect_equal(nrow(oe_signature), 978)
 })
