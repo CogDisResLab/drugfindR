@@ -1,0 +1,5 @@
+TargetSignature,Target,TargetCellLine,TargetTime,TargetConcentration,Similarity
+LINCSCP_290011,Hexylcaine,VCAP,24h,10uM,-0.42739619
+LINCSCP_60488,BRD-K84405221,VCAP,6h,5uM,-0.42525052
+LINCSCP_10101,Avrainvillamide-analog-1,A549,24h,1.11uM,-0.40398659
+LINCSCP_12815,PP-30,DV90,6h,10uM,-0.4002701
