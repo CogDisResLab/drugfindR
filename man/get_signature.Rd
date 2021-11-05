@@ -4,10 +4,12 @@
 \alias{get_signature}
 \title{Get the L1000 Signature from iLINCS}
 \usage{
-get_signature(sig_id)
+get_signature(sig_id, l1000 = TRUE)
 }
 \arguments{
 \item{sig_id}{character. The ilincs signature_id}
+
+\item{l1000}{boolean. If you have a known l1000 signature}
 }
 \value{
 a tibble with the L1000 Signature
