@@ -17,6 +17,7 @@
 #' @importFrom purrr map flatten_dfr
 #' @importFrom dplyr select any_of mutate filter
 #' @importFrom tibble tibble
+#' @importFrom rlang .data
 #'
 #' @examples
 #' TRUE
@@ -53,8 +54,8 @@ get_concordants <- function(signature, library = "CP") {
       dplyr::select(dplyr::any_of(c("signatureid", "compound", "treatment",
                                     "concentration", "time", "cellline","similarity", "pValue"))) %>%
       dplyr::mutate(
-        similarity = round(similarity, 8),
-        pValue = round(pValue, 20)
+        similarity = round(.data$similarity, 8),
+        pValue = round(.data$pValue, 20)
       )
   } else if (library %in% c("OE", "KD")) {
     concordants <- tibble::tibble(
@@ -65,7 +66,7 @@ get_concordants <- function(signature, library = "CP") {
       similarity = NA,
       pValue = NA
     ) %>%
-      dplyr::filter(!is.na(signatureid))
+      dplyr::filter(!is.na(.data$signatureid))
   } else {
     concordants <- tibble::tibble(
       signatureid = NA,
@@ -76,7 +77,7 @@ get_concordants <- function(signature, library = "CP") {
       similarity = NA,
       pValue = NA
     ) %>%
-      dplyr::filter(!is.na(signatureid))
+      dplyr::filter(!is.na(.data$signatureid))
   }
 
   concordants
