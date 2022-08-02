@@ -39,7 +39,8 @@ test_that("correct number of rows for the invalid signature", {
 test_that("everything NA for invalid signature", {
   expect_equal(
     all(purrr::flatten_lgl(purrr::map(inv_signature, is.na))),
-    TRUE)
+    TRUE
+  )
 })
 
 test_that("correct columns for the invalid signature", {
@@ -62,7 +63,8 @@ test_that("correct columns for the knockdown signature", {
 test_that("nothing NA for knockdown signature", {
   expect_equal(
     any(purrr::flatten_lgl(purrr::map(kd_signature, is.na))),
-    FALSE)
+    FALSE
+  )
 })
 
 test_that("correct content for the knockdown signature", {
@@ -81,7 +83,8 @@ test_that("correct columns for the chemical perturbagen signature", {
 test_that("nothing NA for chemical perturbagen signature", {
   expect_equal(
     any(purrr::flatten_lgl(purrr::map(cp_signature, is.na))),
-    FALSE)
+    FALSE
+  )
 })
 
 test_that("correct content for the chemical perturbagen signature", {
@@ -100,7 +103,8 @@ test_that("correct columns for the overexpression signature", {
 test_that("nothing NA for overexpression signature", {
   expect_equal(
     any(purrr::flatten_lgl(purrr::map(oe_signature, is.na))),
-    FALSE)
+    FALSE
+  )
 })
 
 test_that("correct content for the overexpression signature", {

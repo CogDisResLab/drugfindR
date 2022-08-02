@@ -29,9 +29,9 @@ test_that("Signature is in the proper format", {
   example <- prepare_signature(reference_input, "Symbol", "logFC", "PValue")
   expect_equal(nrow(example), 978)
   expect_equal(example, reference_output, ignore_attr = TRUE)
-  })
+})
 
-test_that("Correct Error messages are generated",  {
+test_that("Correct Error messages are generated", {
   expect_error(prepare_signature(reference_input, gene_column = "Gene"), "gene_column should be present in the dataframe")
   expect_error(prepare_signature(reference_input, logfc_column = "log2fc"), "logfc_column should be present in the dataframe")
   expect_error(prepare_signature(reference_input, pval_column = "pvals"), "pval_column should be present in the dataframe")

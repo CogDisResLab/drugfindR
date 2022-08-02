@@ -5,11 +5,15 @@ library(tidyverse)
 
 rename_columns <- function(input_names) {
   if ("Perturbagen" %in% input_names) {
-    col_names <- c("SourceSignature", "Source", "SourceConcentration",
-                   "SourceCellLine", "SourceTime")
+    col_names <- c(
+      "SourceSignature", "Source", "SourceConcentration",
+      "SourceCellLine", "SourceTime"
+    )
   } else {
-    col_names <- c("SourceSignature", "Source",
-                   "SourceCellLine", "SourceTime")
+    col_names <- c(
+      "SourceSignature", "Source",
+      "SourceCellLine", "SourceTime"
+    )
   }
 
   col_names
@@ -31,10 +35,11 @@ l1000_list <- read_tsv("raw/l1000_genes.tsv")
 
 l1000 <- l1000_list %>%
   pull(HGNC) %>%
-  unique %>%
+  unique() %>%
   AnnotationDbi::select(org.Hs.eg.db, keys = ., columns = c("ENTREZID", "ALIAS", "SYMBOL"), keytype = "SYMBOL") %>%
   inner_join(l1000_list, by = c(SYMBOL = "HGNC")) %>%
   dplyr::select(ENTREZID, L1000, SYMBOL, ALIAS)
 
 usethis::use_data(oe_metadata, kd_metadata, cp_metadata, l1000,
-                  internal = TRUE, overwrite = TRUE, compress = "bzip2", version = 2)
+  internal = TRUE, overwrite = TRUE, compress = "bzip2", version = 2
+)

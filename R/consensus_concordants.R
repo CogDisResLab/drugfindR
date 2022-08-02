@@ -8,11 +8,15 @@
 #' TRUE
 target_rename <- function(input_names) {
   if ("treatment" %in% input_names) {
-    new_cols <- c("TargetSignature", "Target", "TargetCellLine",
-                  "TargetTime", "Similarity")
+    new_cols <- c(
+      "TargetSignature", "Target", "TargetCellLine",
+      "TargetTime", "Similarity"
+    )
   } else {
-    new_cols <- c("TargetSignature", "Target", "TargetCellLine",
-                  "TargetTime", "TargetConcentration", "Similarity")
+    new_cols <- c(
+      "TargetSignature", "Target", "TargetCellLine",
+      "TargetTime", "TargetConcentration", "Similarity"
+    )
   }
 
   new_cols
@@ -41,7 +45,6 @@ target_rename <- function(input_names) {
 #' TRUE
 consensus_concordants <- function(..., paired = FALSE, cutoff = 0.321,
                                   cell_line = NULL, discordant = FALSE) {
-
   if (paired & length(list(...)) != 2) {
     stop("Paired analysis requires two data frames")
   } else if (!paired & length(list(...)) != 1) {
@@ -62,9 +65,11 @@ consensus_concordants <- function(..., paired = FALSE, cutoff = 0.321,
         dplyr::across(dplyr::any_of(c("treatment", "compound")))
       ) %>%
       dplyr::filter(abs(.data$similarity) == max(abs(.data$similarity))) %>%
-      dplyr::select(.data$signatureid, dplyr::any_of(c("treatment", "compound")),
-                    .data$cellline, .data$time, dplyr::any_of(c("concentration")),
-                    .data$similarity) %>%
+      dplyr::select(
+        .data$signatureid, dplyr::any_of(c("treatment", "compound")),
+        .data$cellline, .data$time, dplyr::any_of(c("concentration")),
+        .data$similarity
+      ) %>%
       dplyr::arrange(dplyr::desc(abs(.data$similarity))) %>%
       dplyr::rename_with(target_rename) %>%
       dplyr::ungroup()
@@ -75,9 +80,11 @@ consensus_concordants <- function(..., paired = FALSE, cutoff = 0.321,
         dplyr::across(dplyr::any_of(c("treatment", "compound")))
       ) %>%
       dplyr::filter(abs(.data$similarity) == max(abs(.data$similarity))) %>%
-      dplyr::select(.data$signatureid, dplyr::any_of(c("treatment", "compound")),
-                    .data$cellline, .data$time, dplyr::any_of(c("concentration")),
-                    .data$similarity) %>%
+      dplyr::select(
+        .data$signatureid, dplyr::any_of(c("treatment", "compound")),
+        .data$cellline, .data$time, dplyr::any_of(c("concentration")),
+        .data$similarity
+      ) %>%
       dplyr::arrange(dplyr::desc(abs(.data$similarity))) %>%
       dplyr::rename_with(target_rename) %>%
       dplyr::ungroup()

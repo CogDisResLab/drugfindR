@@ -23,8 +23,8 @@ col_spec <- cols(
 )
 
 kd_signature <- readr::read_csv("reference/LINCSKD_28.csv", col_types = col_spec)[]
-#cp_signature <- readr::read_csv("reference/LINCSCP_5821.csv", col_types = col_spec)[]
-#oe_signature <- readr::read_csv("reference/LINCSOE_104.csv", col_types = col_spec)[]
+# cp_signature <- readr::read_csv("reference/LINCSCP_5821.csv", col_types = col_spec)[]
+# oe_signature <- readr::read_csv("reference/LINCSOE_104.csv", col_types = col_spec)[]
 
 test_that("empty signature when filtered is empty", {
   expect_equal(nrow(filter_signature(empty_signature)), 0)

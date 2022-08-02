@@ -21,10 +21,10 @@ get_signature <- function(sig_id, l1000 = TRUE) {
   if (l1000) {
     num_genes <- 978
   } else {
-    num_genes = 25000
+    num_genes <- 25000
   }
 
-  query = list(sigID = sig_id, noOfTopGenes = num_genes)
+  query <- list(sigID = sig_id, noOfTopGenes = num_genes)
 
   request <- httr::POST(url, query = query)
 
@@ -33,8 +33,10 @@ get_signature <- function(sig_id, l1000 = TRUE) {
       purrr::map("signature") %>%
       purrr::flatten_dfr() %>%
       dplyr::select(-.data$PROBE) %>%
-      dplyr::mutate(Value_LogDiffExp = round(.data$Value_LogDiffExp, 12),
-                    Significance_pvalue = round(.data$Significance_pvalue, 12))
+      dplyr::mutate(
+        Value_LogDiffExp = round(.data$Value_LogDiffExp, 12),
+        Significance_pvalue = round(.data$Significance_pvalue, 12)
+      )
   } else {
     signature <- tibble::tibble(
       signatureID = rep(NA, num_genes),

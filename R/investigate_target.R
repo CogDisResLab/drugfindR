@@ -27,10 +27,9 @@ investigate_target <- function(target, input_lib, output_lib,
                                filter_threshold = 0.85, similarity_threshold = 0.321,
                                paired = TRUE, input_cell_lines = NULL,
                                output_cell_lines = NULL, discordant = FALSE) {
-
   libs <- c("OE", "KD", "CP")
 
-  if(!input_lib %in% libs | !output_lib %in% libs) {
+  if (!input_lib %in% libs | !output_lib %in% libs) {
     stop("Both input and output libraries must be one of 'OE', 'KD', 'CP'")
   }
 
@@ -80,11 +79,15 @@ investigate_target <- function(target, input_lib, output_lib,
     concordant_down <- filtered_down %>%
       purrr::map(~ get_concordants(.x, library = output_lib))
 
-    consensus_targets <- purrr::map2(concordant_up, concordant_down,
-                                     ~ consensus_concordants(.x, .y, paired = paired,
-                                                             cell_line = output_cell_lines,
-                                                             discordant = discordant,
-                                                             cutoff = similarity_threshold))
+    consensus_targets <- purrr::map2(
+      concordant_up, concordant_down,
+      ~ consensus_concordants(.x, .y,
+        paired = paired,
+        cell_line = output_cell_lines,
+        discordant = discordant,
+        cutoff = similarity_threshold
+      )
+    )
   } else {
     filtered <- all_signatures %>%
       purrr::map(~ filter_signature(.x, direction = "any", threshold = filter_threshold))
@@ -92,21 +95,27 @@ investigate_target <- function(target, input_lib, output_lib,
     concordants <- filtered %>%
       purrr::map(~ get_concordants(.x, library = output_lib))
 
-    consensus_targets <- purrr::map(concordants,
-                                    ~ consensus_concordants(.x, paired = paired,
-                                                            cell_line = output_cell_lines,
-                                                            discordant = discordant,
-                                                            cutoff = similarity_threshold))
+    consensus_targets <- purrr::map(
+      concordants,
+      ~ consensus_concordants(.x,
+        paired = paired,
+        cell_line = output_cell_lines,
+        discordant = discordant,
+        cutoff = similarity_threshold
+      )
+    )
   }
 
   augmented <- consensus_targets %>%
     purrr::map2(filtered_signature_ids, ~ dplyr::mutate(.x, SourceSignature = .y)) %>%
     purrr::map_dfr(~ dplyr::inner_join(.x, input_metadata, by = "SourceSignature")) %>%
-    dplyr::select(.data$Source, .data$Target, .data$Similarity,
-                  .data$SourceSignature, .data$SourceCellLine,
-                  dplyr::any_of(c("SourceConcentration")), .data$SourceTime,
-                  .data$TargetSignature, .data$TargetCellLine,
-                  dplyr::any_of(c("TargetConcentration")), .data$TargetTime)
+    dplyr::select(
+      .data$Source, .data$Target, .data$Similarity,
+      .data$SourceSignature, .data$SourceCellLine,
+      dplyr::any_of(c("SourceConcentration")), .data$SourceTime,
+      .data$TargetSignature, .data$TargetCellLine,
+      dplyr::any_of(c("TargetConcentration")), .data$TargetTime
+    )
 
   augmented
 }

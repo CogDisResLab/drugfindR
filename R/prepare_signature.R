@@ -44,9 +44,11 @@ prepare_signature <- function(dge, gene_column = "Symbol",
       Significance_pvalue = .data[[pval_column]]
     ) %>%
     dplyr::mutate(signatureID = "InputSig") %>%
-    dplyr::select(.data$signatureID, .data$ID_geneid, .data$Name_GeneSymbol,
-                  .data$Value_LogDiffExp, .data$Significance_pvalue) %>%
-    unique
+    dplyr::select(
+      .data$signatureID, .data$ID_geneid, .data$Name_GeneSymbol,
+      .data$Value_LogDiffExp, .data$Significance_pvalue
+    ) %>%
+    unique()
 
   signature
 }
