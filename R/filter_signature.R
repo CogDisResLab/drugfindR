@@ -16,22 +16,43 @@
 #'
 #' @examples
 #' TRUE
-filter_signature <- function(signature, direction = "any", threshold = 0.85) {
+filter_signature <- function(signature, direction = "any", threshold = NULL, prop = NULL) {
   stopifnot("data.frame" %in% class(signature))
+
+  if (!is.null(threshold) & !is.null(prop)) {
+    stop("Only one of prop or threshold can be specified")
+  } else if (is.null(threshold) & is.null(prop)) {
+    stop("One of prop or threshold must be specified")
+  }
 
   if (!direction %in% c("up", "down", "any")) {
     stop("Direction must be one of 'up', 'down' or 'any'")
   }
 
+  if (!is.null(threshold)) {
+    if (length(threshold) == 2) {
+      down_threshold <- threshold[1]
+      up_threshold <- threshold[2]
+    } else if (length(threshold) == 1) {
+      down_threshold <- -threshold
+      up_threshold <- threshold
+    } else {
+      stop("Threshold must be specified as one or two values")
+    }
+  } else if (!is.null(prop)) {
+    down_threshold <- quantile(signature$Value_LogDiffExp, prop)
+    up_threshold <- quantile(signature$Value_LogDiffExp, 1 - prop)
+  }
+
   if (direction == "up") {
     filtered <- signature %>%
-      dplyr::filter(.data$Value_LogDiffExp >= threshold)
+      dplyr::filter(.data$Value_LogDiffExp >= up_threshold)
   } else if (direction == "down") {
     filtered <- signature %>%
-      dplyr::filter(.data$Value_LogDiffExp <= -threshold)
+      dplyr::filter(.data$Value_LogDiffExp <= down_threshold)
   } else {
     filtered <- signature %>%
-      dplyr::filter(abs(.data$Value_LogDiffExp) >= threshold)
+      dplyr::filter(.data$Value_LogDiffExp >= up_threshold | .data$Value_LogDiffExp <= down_threshold)
   }
 
   filtered
