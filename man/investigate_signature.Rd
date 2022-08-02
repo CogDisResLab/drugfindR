@@ -7,8 +7,9 @@
 investigate_signature(
   expr,
   output_lib,
-  filter_threshold = 0.85,
-  similarity_threshold = 0.321,
+  filter_threshold = NULL,
+  filter_prop = NULL,
+  similarity_threshold = 0.2,
   paired = TRUE,
   output_cell_lines = NULL,
   discordant = FALSE,
@@ -27,6 +28,8 @@ investigate_signature(
 \item{output_lib}{The library to search}
 
 \item{filter_threshold}{The Filtering threshold.}
+
+\item{filter_prop}{The Filtering proportion.}
 
 \item{similarity_threshold}{The Similarity Threshold}
 

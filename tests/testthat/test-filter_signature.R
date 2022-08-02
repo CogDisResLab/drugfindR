@@ -23,11 +23,17 @@ col_spec <- cols(
 )
 
 kd_signature <- readr::read_csv("reference/LINCSKD_28.csv", col_types = col_spec)[]
-# cp_signature <- readr::read_csv("reference/LINCSCP_5821.csv", col_types = col_spec)[]
-# oe_signature <- readr::read_csv("reference/LINCSOE_104.csv", col_types = col_spec)[]
+
+test_that("Not specifying threshold and prop causes error", {
+  expect_error(filter_signature(kd_signature))
+})
+
+test_that("Specifying both threshold and prop causes error", {
+  expect_error(filter_signature(kd_signature, threshold = 0.1, prop = 0.1))
+})
 
 test_that("empty signature when filtered is empty", {
-  expect_equal(nrow(filter_signature(empty_signature)), 0)
+  expect_equal(nrow(filter_signature(empty_signature, threshold = 0)), 0)
 })
 
 # Checking filtering of knockdown signatures

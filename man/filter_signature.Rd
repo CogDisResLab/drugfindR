@@ -4,14 +4,16 @@
 \alias{filter_signature}
 \title{Filter the L1000 Signature}
 \usage{
-filter_signature(signature, direction = "any", threshold = 0.85)
+filter_signature(signature, direction = "any", threshold = NULL, prop = NULL)
 }
 \arguments{
 \item{signature}{A dataframe with the L1000 signature}
 
 \item{direction}{Direction to filter to. Must be one of "up", "down" or "any". Defaults to "any"}
 
-\item{threshold}{A Log Fold-Change Threshold to filter at. Is inclusive and defaults to 0.85}
+\item{threshold}{A Log Fold-Change Threshold to filter at. Cannot be specified with prop}
+
+\item{prop}{A proportion of genes to take from top and bottom. Cannot be specified with threshold}
 }
 \value{
 a tibble with the filtered L1000 Signature
