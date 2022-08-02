@@ -22,7 +22,6 @@
 #' @examples
 #' TRUE
 get_concordants <- function(signature, library = "CP") {
-
   if (!"data.frame" %in% class(signature)) {
     stop("signature must be a data frame or data frame like object")
   } else {
@@ -42,8 +41,8 @@ get_concordants <- function(signature, library = "CP") {
   }
 
   url <- "http://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze"
-  query = list(lib = lib_map[library])
-  body = list(file = httr::upload_file(signature_file))
+  query <- list(lib = lib_map[library])
+  body <- list(file = httr::upload_file(signature_file))
 
   request <- httr::POST(url, query = query, body = body)
 
@@ -51,8 +50,10 @@ get_concordants <- function(signature, library = "CP") {
     concordants <- httr::content(request) %>%
       purrr::map("concordanceTable") %>%
       purrr::flatten_dfr() %>%
-      dplyr::select(dplyr::any_of(c("signatureid", "compound", "treatment",
-                                    "concentration", "time", "cellline","similarity", "pValue"))) %>%
+      dplyr::select(dplyr::any_of(c(
+        "signatureid", "compound", "treatment",
+        "concentration", "time", "cellline", "similarity", "pValue"
+      ))) %>%
       dplyr::mutate(
         similarity = round(.data$similarity, 8),
         pValue = round(.data$pValue, 20)
