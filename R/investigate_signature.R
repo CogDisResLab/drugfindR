@@ -7,9 +7,10 @@
 #' @param expr A dataframe that has differential gene expression analysis
 #' @param output_lib The library to search
 #' @param filter_threshold The Filtering threshold.
+#' @param filter_prop The Filtering proportion.
 #' @param similarity_threshold The Similarity Threshold
 #' @param paired Logical. Whether to query iLINCS separately for up and down regulated genes
-#' @param output_cell_lines A character vetor of cell lines to restrict the output search to.
+#' @param output_cell_lines A character vector of cell lines to restrict the output search to.
 #' @param discordant Logical. Whether to look for discordant signatures
 #' @param gene_column The name of the column that has gene symbols
 #' @param logfc_column The name of the column that has log_2 fold-change values
