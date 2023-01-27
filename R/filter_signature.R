@@ -14,6 +14,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom dplyr filter
 #' @importFrom rlang .data
+#' @importFrom stats quantile
 #'
 #' @examples
 #' TRUE
