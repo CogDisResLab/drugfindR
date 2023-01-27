@@ -35,7 +35,7 @@ investigate_signature(
 
 \item{paired}{Logical. Whether to query iLINCS separately for up and down regulated genes}
 
-\item{output_cell_lines}{A character vetor of cell lines to restrict the output search to.}
+\item{output_cell_lines}{A character vector of cell lines to restrict the output search to.}
 
 \item{discordant}{Logical. Whether to look for discordant signatures}
 
