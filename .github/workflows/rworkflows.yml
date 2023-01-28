@@ -1,5 +1,5 @@
-name: rworkflows
-'on':
+name: Continuous Integration / R Workflows
+on:
   push:
     branches:
     - master
