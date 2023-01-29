@@ -43,84 +43,84 @@ investigate_signature <- function(expr,
                                   source_cell_line = "NA",
                                   source_time = "NA",
                                   source_concentration = "NA") {
-  libs <- c("OE", "KD", "CP")
+    libs <- c("OE", "KD", "CP")
 
-  if (!output_lib %in% libs) {
-    stop("Output library must be one of 'OE', 'KD', 'CP'")
-  }
+    if (!output_lib %in% libs) {
+        stop("Output library must be one of 'OE', 'KD', 'CP'")
+    }
 
-  if (missing(output_lib)) {
-    stop("Please specify an output library")
-  }
+    if (missing(output_lib)) {
+        stop("Please specify an output library")
+    }
 
-  expr_signature <- expr %>%
-    prepare_signature(
-      gene_column = gene_column,
-      logfc_column = logfc_column,
-      pval_column = pval_column
-    )
+    expr_signature <- expr %>%
+        prepare_signature(
+            gene_column = gene_column,
+            logfc_column = logfc_column,
+            pval_column = pval_column
+        )
 
-  signature_id <- unique(expr_signature$signatureID)
+    signature_id <- unique(expr_signature$signatureID)
 
-  if (paired) {
-    filtered_up <- expr_signature %>%
-      filter_signature(direction = "up", threshold = filter_threshold, prop = filter_prop)
+    if (paired) {
+        filtered_up <- expr_signature %>%
+            filter_signature(direction = "up", threshold = filter_threshold, prop = filter_prop)
 
-    filtered_down <- expr_signature %>%
-      filter_signature(direction = "down", threshold = filter_threshold, prop = filter_prop)
+        filtered_down <- expr_signature %>%
+            filter_signature(direction = "down", threshold = filter_threshold, prop = filter_prop)
 
-    concordant_up <- filtered_up %>%
-      get_concordants(library = output_lib)
+        concordant_up <- filtered_up %>%
+            get_concordants(library = output_lib)
 
-    concordant_down <- filtered_down %>%
-      get_concordants(library = output_lib)
+        concordant_down <- filtered_down %>%
+            get_concordants(library = output_lib)
 
-    consensus_targets <-
-      consensus_concordants(
-        concordant_up,
-        concordant_down,
-        paired = paired,
-        cell_line = output_cell_lines,
-        discordant = discordant,
-        cutoff = similarity_threshold
-      )
-  } else {
-    filtered <- expr_signature %>%
-      filter_signature(direction = "any", threshold = filter_threshold, prop = filter_prop)
+        consensus_targets <-
+            consensus_concordants(
+                concordant_up,
+                concordant_down,
+                paired = paired,
+                cell_line = output_cell_lines,
+                discordant = discordant,
+                cutoff = similarity_threshold
+            )
+    } else {
+        filtered <- expr_signature %>%
+            filter_signature(direction = "any", threshold = filter_threshold, prop = filter_prop)
 
-    concordants <- filtered %>%
-      get_concordants(library = output_lib)
+        concordants <- filtered %>%
+            get_concordants(library = output_lib)
 
-    consensus_targets <-
-      consensus_concordants(
-        concordants,
-        paired = paired,
-        cell_line = output_cell_lines,
-        discordant = discordant,
-        cutoff = similarity_threshold
-      )
-  }
+        consensus_targets <-
+            consensus_concordants(
+                concordants,
+                paired = paired,
+                cell_line = output_cell_lines,
+                discordant = discordant,
+                cutoff = similarity_threshold
+            )
+    }
 
-  augmented <- consensus_targets %>%
-    dplyr::mutate(
-      SourceSignature = signature_id,
-      Source = source_name,
-      SourceCellLine = source_cell_line,
-      SourceTime = source_time
-    ) %>%
-    dplyr::select(
-      .data$Source,
-      .data$Target,
-      .data$Similarity,
-      .data$SourceSignature,
-      .data$SourceCellLine,
-      dplyr::any_of(c("SourceConcentration")),
-      .data$SourceTime,
-      .data$TargetSignature,
-      .data$TargetCellLine,
-      dplyr::any_of(c("TargetConcentration")),
-      .data$TargetTime
-    )
+    augmented <- consensus_targets %>%
+        dplyr::mutate(
+            SourceSignature = signature_id,
+            Source = source_name,
+            SourceCellLine = source_cell_line,
+            SourceTime = source_time
+        ) %>%
+        dplyr::select(
+            .data$Source,
+            .data$Target,
+            .data$Similarity,
+            .data$SourceSignature,
+            .data$SourceCellLine,
+            dplyr::any_of(c("SourceConcentration")),
+            .data$SourceTime,
+            .data$TargetSignature,
+            .data$TargetCellLine,
+            dplyr::any_of(c("TargetConcentration")),
+            .data$TargetTime
+        )
 
-  augmented
+    augmented
 }

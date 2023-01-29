@@ -22,64 +22,64 @@
 #' @examples
 #' TRUE
 get_concordants <- function(signature, library = "CP") {
-  if (!"data.frame" %in% class(signature)) {
-    stop("signature must be a data frame or data frame like object")
-  } else {
-    signature_file <- tempfile(pattern = "ilincs_sig", fileext = ".xls")
-    signature %>%
-      readr::write_tsv(signature_file)
-  }
+    if (!"data.frame" %in% class(signature)) {
+        stop("signature must be a data frame or data frame like object")
+    } else {
+        signature_file <- tempfile(pattern = "ilincs_sig", fileext = ".xls")
+        signature %>%
+            readr::write_tsv(signature_file)
+    }
 
-  lib_map <- c(
-    OE = "LIB_11",
-    KD = "LIB_6",
-    CP = "LIB_5"
-  )
+    lib_map <- c(
+        OE = "LIB_11",
+        KD = "LIB_6",
+        CP = "LIB_5"
+    )
 
-  if (!library %in% c("OE", "KD", "CP")) {
-    stop("library must be one of 'OE', 'KD' or 'CP'")
-  }
+    if (!library %in% c("OE", "KD", "CP")) {
+        stop("library must be one of 'OE', 'KD' or 'CP'")
+    }
 
-  url <- "http://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze"
-  query <- list(lib = lib_map[library])
-  body <- list(file = httr::upload_file(signature_file))
+    url <- "http://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze"
+    query <- list(lib = lib_map[library])
+    body <- list(file = httr::upload_file(signature_file))
 
-  request <- httr::POST(url, query = query, body = body)
+    request <- httr::POST(url, query = query, body = body)
 
-  if (httr::status_code(request) == 200) {
-    concordants <- httr::content(request) %>%
-      purrr::map("concordanceTable") %>%
-      purrr::flatten_dfr() %>%
-      dplyr::select(dplyr::any_of(c(
-        "signatureid", "compound", "treatment",
-        "concentration", "time", "cellline", "similarity", "pValue"
-      ))) %>%
-      dplyr::mutate(
-        similarity = round(.data$similarity, 8),
-        pValue = round(.data$pValue, 20)
-      )
-  } else if (library %in% c("OE", "KD")) {
-    concordants <- tibble::tibble(
-      signatureid = NA,
-      treatment = NA,
-      time = NA,
-      cellline = NA,
-      similarity = NA,
-      pValue = NA
-    ) %>%
-      dplyr::filter(!is.na(.data$signatureid))
-  } else {
-    concordants <- tibble::tibble(
-      signatureid = NA,
-      compound = NA,
-      concentration = NA,
-      time = NA,
-      cellline = NA,
-      similarity = NA,
-      pValue = NA
-    ) %>%
-      dplyr::filter(!is.na(.data$signatureid))
-  }
+    if (httr::status_code(request) == 200) {
+        concordants <- httr::content(request) %>%
+            purrr::map("concordanceTable") %>%
+            purrr::flatten_dfr() %>%
+            dplyr::select(dplyr::any_of(c(
+                "signatureid", "compound", "treatment",
+                "concentration", "time", "cellline", "similarity", "pValue"
+            ))) %>%
+            dplyr::mutate(
+                similarity = round(.data$similarity, 8),
+                pValue = round(.data$pValue, 20)
+            )
+    } else if (library %in% c("OE", "KD")) {
+        concordants <- tibble::tibble(
+            signatureid = NA,
+            treatment = NA,
+            time = NA,
+            cellline = NA,
+            similarity = NA,
+            pValue = NA
+        ) %>%
+            dplyr::filter(!is.na(.data$signatureid))
+    } else {
+        concordants <- tibble::tibble(
+            signatureid = NA,
+            compound = NA,
+            concentration = NA,
+            time = NA,
+            cellline = NA,
+            similarity = NA,
+            pValue = NA
+        ) %>%
+            dplyr::filter(!is.na(.data$signatureid))
+    }
 
-  concordants
+    concordants
 }
