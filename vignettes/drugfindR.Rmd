@@ -17,3 +17,7 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(drugfindR)
 ```
+
+```{r sessionInfo}
+devtools::session_info()
+```
