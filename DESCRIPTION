@@ -18,9 +18,12 @@ Authors@R: c(
            email = "Evelyn.Bates@rockets.utoledo.edu",
            comment = c(ORCID = "0000-0002-4157-2481"))
            )
-Description: This package allows convenient access to the iLINCS Gene Knockdown,
-    Gene Overexpression and Chemical Perturbagen databases and allows you to generate 
-    and investigate signatures to identify relevant genes and drugs.
+Description: This package provides a convenient way to access the 
+    LINCS Signatures available in the iLINCS database. These signatures include
+    Consensus Gene Knockdown Signatures, Gene Overexpression signatures and
+    Chemical Perturbagen Signatures. It also provides a way to enter your own
+    transcriptomic signatures and identify concordant and discordant signatures
+    in the LINCS database.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: false
