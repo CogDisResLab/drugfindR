@@ -16,36 +16,36 @@
 #' @examples
 #' TRUE
 get_signature <- function(sig_id, l1000 = TRUE) {
-  url <- "http://www.ilincs.org/api/ilincsR/downloadSignature"
+    url <- "http://www.ilincs.org/api/ilincsR/downloadSignature"
 
-  if (l1000) {
-    num_genes <- 978
-  } else {
-    num_genes <- 25000
-  }
+    if (l1000) {
+        num_genes <- 978
+    } else {
+        num_genes <- 25000
+    }
 
-  query <- list(sigID = sig_id, noOfTopGenes = num_genes)
+    query <- list(sigID = sig_id, noOfTopGenes = num_genes)
 
-  request <- httr::POST(url, query = query)
+    request <- httr::POST(url, query = query)
 
-  if (httr::status_code(request) == 200) {
-    signature <- httr::content(request) %>%
-      purrr::map("signature") %>%
-      purrr::flatten_dfr() %>%
-      dplyr::select(-.data$PROBE) %>%
-      dplyr::mutate(
-        Value_LogDiffExp = round(.data$Value_LogDiffExp, 12),
-        Significance_pvalue = round(.data$Significance_pvalue, 12)
-      )
-  } else {
-    signature <- tibble::tibble(
-      signatureID = rep(NA, num_genes),
-      ID_geneid = rep(NA, num_genes),
-      Name_GeneSymbol = rep(NA, num_genes),
-      Value_LogDiffExp = rep(NA, num_genes),
-      Significance_pvalue = rep(NA, num_genes)
-    )
-  }
+    if (httr::status_code(request) == 200) {
+        signature <- httr::content(request) %>%
+            purrr::map("signature") %>%
+            purrr::flatten_dfr() %>%
+            dplyr::select(-.data$PROBE) %>%
+            dplyr::mutate(
+                Value_LogDiffExp = round(.data$Value_LogDiffExp, 12),
+                Significance_pvalue = round(.data$Significance_pvalue, 12)
+            )
+    } else {
+        signature <- tibble::tibble(
+            signatureID = rep(NA, num_genes),
+            ID_geneid = rep(NA, num_genes),
+            Name_GeneSymbol = rep(NA, num_genes),
+            Value_LogDiffExp = rep(NA, num_genes),
+            Significance_pvalue = rep(NA, num_genes)
+        )
+    }
 
-  signature
+    signature
 }
