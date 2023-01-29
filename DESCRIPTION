@@ -1,6 +1,6 @@
 Package: drugfindR
 Title: Investigate iLINCS for candidate repurposable drugs
-Version: 0.0.3
+Version: 0.0.4
 Authors@R: c(
     person(given = c("Ali", "Sajid"),
            family = "Imami",
@@ -23,9 +23,10 @@ Description: This package allows convenient access to the iLINCS Gene Knockdown,
     and invesitgate signatures to identify relevant genes and drugs.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
-LazyData: true
+LazyData: false
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+biocViews: FunctionalPrediction, DifferentialExpression, GeneSetEnrichment
 Imports: 
     httr,
     magrittr,
@@ -34,9 +35,10 @@ Imports:
     dplyr,
     purrr,
     readr,
-    stringr
+    stringr,
+    stats
 Depends: 
-    R (>= 2.10)
+    R (>= 4.2.0)
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
