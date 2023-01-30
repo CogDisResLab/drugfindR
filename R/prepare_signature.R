@@ -27,11 +27,11 @@ prepare_signature <- function(dge, gene_column = "Symbol",
         stop("logfc_column should be present in the dataframe")
     }
 
-    if (!pval_column %in% names(dge) | !is.null(pval_column)) {
+    if (!pval_column %in% names(dge) | !is.na(pval_column)) {
         stop("pval_column should be present in the dataframe")
     }
 
-    if (!is.null(pval_column)) {
+    if (!is.na(pval_column)) {
         filtered_l1000 <- dge %>%
             dplyr::filter(.data[[gene_column]] %in% l1000$SYMBOL) %>%
             dplyr::select(dplyr::any_of(c(gene_column, logfc_column, pval_column)))
