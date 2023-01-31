@@ -27,7 +27,7 @@ prepare_signature <- function(dge, gene_column = "Symbol",
         stop("logfc_column should be present in the dataframe")
     }
 
-    if (!pval_column %in% names(dge) | !is.na(pval_column)) {
+    if (!pval_column %in% names(dge) & !is.na(pval_column)) {
         stop("pval_column should be present in the dataframe")
     }
 
