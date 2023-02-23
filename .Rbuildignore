@@ -8,3 +8,4 @@
 ^raw$
 ^\.travis\.yml$
 ^\.github$
+^\.pre-commit-config.yaml$
