@@ -4,13 +4,7 @@
 \alias{consensus_concordants}
 \title{Generate a Consensus list of Targets}
 \usage{
-consensus_concordants(
-  ...,
-  paired = FALSE,
-  cutoff = 0.321,
-  cell_line = NULL,
-  discordant = FALSE
-)
+consensus_concordants(..., paired = FALSE, cutoff = 0.321, cell_line = NULL)
 }
 \arguments{
 \item{...}{One or Two (see paired) Data Frames with the concordants}
@@ -20,8 +14,6 @@ consensus_concordants(
 \item{cutoff}{A similarity cutoff value. Defaults to 0.321}
 
 \item{cell_line}{A character vector of Cell Lines you are interested in.}
-
-\item{discordant}{Logical indicating whether you want discordant signatures}
 }
 \value{
 A tibble with the filtered and deduplicated results
