@@ -24,9 +24,9 @@
 #' @examples
 #' TRUE
 investigate_target <- function(target, input_lib, output_lib,
-                               filter_threshold = 0.85, similarity_threshold = 0.321,
-                               paired = TRUE, input_cell_lines = NULL,
-                               output_cell_lines = NULL, discordant = FALSE) {
+    filter_threshold = 0.85, similarity_threshold = 0.321,
+    paired = TRUE, input_cell_lines = NULL,
+    output_cell_lines = NULL, discordant = FALSE) {
     libs <- c("OE", "KD", "CP")
 
     if (!input_lib %in% libs | !output_lib %in% libs) {
