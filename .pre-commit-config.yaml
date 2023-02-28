@@ -1,6 +1,27 @@
 # All available hooks: https://pre-commit.com/hooks.html
 # R specific hooks: https://github.com/lorenzwalthert/precommit
 repos:
+-   repo: local
+    hooks:
+    -   id: forbid-to-commit
+        name: Don't commit common R artifacts
+        entry: Cannot commit .Rhistory, .RData, .Rds or .rds.
+        language: fail
+        files: '\.(Rhistory|RData|Rds|rds)$'
+    -   id: bump-version
+        name: Bump version
+        entry: >
+          Rscript -e "usethis::use_version('patch')"
+        language: system
+        files: DESCRIPTION
+        stages: [post-commit]
+    -   id: codemeta-json-updated
+        name: Update codemeta.json
+        entry: >
+          Rscript -e "codemetar::write_codemeta()"
+        language: system
+        files: DESCRIPTION
+        stages: [commit]
 -   repo: https://github.com/lorenzwalthert/precommit
     rev: v0.3.2.9007
     hooks:
@@ -71,13 +92,6 @@ repos:
     rev: v1.5.1
     hooks:
     -   id: check-pre-commit-ci-config
--   repo: local
-    hooks:
-    -   id: forbid-to-commit
-        name: Don't commit common R artifacts
-        entry: Cannot commit .Rhistory, .RData, .Rds or .rds.
-        language: fail
-        files: '\.(Rhistory|RData|Rds|rds)$'
 
 ci:
     autoupdate_schedule: monthly
