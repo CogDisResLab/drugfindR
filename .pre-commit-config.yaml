@@ -11,10 +11,11 @@ repos:
     -   id: bump-version
         name: Bump version
         entry: >
-          bumpversion patch
+          bumpversion patch --allow-dirty --no-commit --no-tag --verbose --no-configured-files DESCRIPTION codemeta.json
         language: system
-        stages: [post-commit]
         always_run: true
+        pass_filenames: false
+        stages: [post-commit]
     -   id: codemeta-json-updated
         name: Update codemeta.json
         entry: >
