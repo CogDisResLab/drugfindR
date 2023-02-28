@@ -11,7 +11,7 @@ repos:
     -   id: bump-version
         name: Bump version
         entry: >
-          Rscript -e "usethis::use_version('patch')"
+          bumpversion patch
         language: system
         stages: [post-commit]
         always_run: true
