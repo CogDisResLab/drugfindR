@@ -19,7 +19,7 @@ repos:
     -   id: codemeta-json-updated
         name: Update codemeta.json
         entry: >
-          Rscript -e "codemetar::write_codemeta()"
+          Rscript -e "codemetar::write_codemeta(force_update = FALSE)"
         language: system
         files: DESCRIPTION
         stages: [commit]
