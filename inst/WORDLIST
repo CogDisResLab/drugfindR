@@ -5,6 +5,7 @@ bioconductor
 biocthis
 biocViews
 bioinformatics
+BugReports
 bumpversion
 CMD
 codecov
@@ -38,6 +39,7 @@ iLINCS
 ilincs
 Imami
 io
+issueTracker
 knitr
 LazyData
 LINCS
