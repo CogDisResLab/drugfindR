@@ -35,7 +35,7 @@ size](https://img.shields.io/github/repo-size/AliSajid/drugfindR)
 
 drugfindR allows convenient access to the iLINCS Gene Knockdown, Gene
 Overexpression and Chemical Perturbagen databases and allows you to
-generate and invesitgate signatures to identify relevant genes and
+generate and investigate signatures to identify relevant genes and
 drugs.
 
 ## Installation
@@ -50,6 +50,6 @@ install.packages("drugfindR")
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("AliSajid/drugfindR")
+#install.packages("devtools")
+devtools::install_github("CogDisResLab/drugfindR")
 ```
