@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/CogDisResLab/drugfindR",
   "issueTracker": "https://github.com/CogDisResLab/drugfindR/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.99.9",
+  "version": "0.99.10",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -231,9 +231,8 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "81031.859KB",
+  "fileSize": "81031.865KB",
   "releaseNotes": "https://github.com/CogDisResLab/drugfindR/blob/master/NEWS.md",
   "readme": "https://github.com/CogDisResLab/drugfindR/blob/main/README.md",
-  "contIntegration": ["https://github.com/AliSajid/drugfindR/actions", "https://codecov.io/gh/AliSajid/drugfindR"],
   "keywords": ["r", "ilincs", "transcriptomics", "bioinformatics", "bioinformatics-pipeline"]
 }
