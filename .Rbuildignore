@@ -5,6 +5,7 @@
 ^\.github$
 ^\.pre-commit-config.yaml$
 ^\.travis\.yml$
+^codemeta\.json$
 ^data-raw$
 ^drugfindR\.Rproj$
 ^raw$

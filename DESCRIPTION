@@ -44,6 +44,7 @@ Depends:
     R (>= 4.2.0)
 Suggests: 
     biocthis,
+    codemetar,
     devtools,
     knitr,
     rmarkdown,
