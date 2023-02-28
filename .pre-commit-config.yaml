@@ -13,7 +13,6 @@ repos:
         entry: >
           Rscript -e "usethis::use_version('patch')"
         language: system
-        files: DESCRIPTION
         stages: [post-commit]
     -   id: codemeta-json-updated
         name: Update codemeta.json
