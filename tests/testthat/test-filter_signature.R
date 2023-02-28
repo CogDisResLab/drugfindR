@@ -52,3 +52,5 @@ test_that("Specifying both threshold and prop causes error", {
 test_that("empty signature when filtered is empty", {
     expect_equal(nrow(filter_signature(empty_signature, threshold = 0)), 0)
 })
+
+# Testing Filtering
