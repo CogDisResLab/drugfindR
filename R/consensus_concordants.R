@@ -10,12 +10,12 @@ target_rename <- function(input_names) {
     if ("treatment" %in% input_names) {
         new_cols <- c(
             "TargetSignature", "Target", "TargetCellLine",
-            "TargetTime", "Similarity"
+            "TargetTime", "Similarity", "sig_direction"
         )
     } else {
         new_cols <- c(
             "TargetSignature", "Target", "TargetCellLine",
-            "TargetTime", "TargetConcentration", "Similarity"
+            "TargetTime", "TargetConcentration", "Similarity", "sig_direction"
         )
     }
 
@@ -66,7 +66,7 @@ consensus_concordants <- function(..., paired = FALSE, cutoff = 0.321,
         dplyr::select(
             .data$signatureid, dplyr::any_of(c("treatment", "compound")),
             .data$cellline, .data$time, dplyr::any_of(c("concentration")),
-            .data$similarity
+            .data$similarity, .data$sig_direction
         ) %>%
         dplyr::arrange(dplyr::desc(abs(.data$similarity))) %>%
         dplyr::rename_with(target_rename) %>%

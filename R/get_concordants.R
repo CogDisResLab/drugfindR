@@ -21,7 +21,7 @@
 #'
 #' @examples
 #' TRUE
-get_concordants <- function(signature, library = "CP") {
+get_concordants <- function(signature, library = "CP", sig_direction = NULL) {
     if (!"data.frame" %in% class(signature)) {
         stop("signature must be a data frame or data frame like object")
     } else {
@@ -56,7 +56,8 @@ get_concordants <- function(signature, library = "CP") {
             ))) %>%
             dplyr::mutate(
                 similarity = round(.data$similarity, 8),
-                pValue = round(.data$pValue, 20)
+                pValue = round(.data$pValue, 20),
+                sig_direction = sig_direction
             )
     } else if (library %in% c("OE", "KD")) {
         concordants <- tibble::tibble(
@@ -65,7 +66,8 @@ get_concordants <- function(signature, library = "CP") {
             time = NA,
             cellline = NA,
             similarity = NA,
-            pValue = NA
+            pValue = NA,
+            sig_drection = NA
         ) %>%
             dplyr::filter(!is.na(.data$signatureid))
     } else {
@@ -76,7 +78,8 @@ get_concordants <- function(signature, library = "CP") {
             time = NA,
             cellline = NA,
             similarity = NA,
-            pValue = NA
+            pValue = NA,
+            sig_drection = NA
         ) %>%
             dplyr::filter(!is.na(.data$signatureid))
     }
