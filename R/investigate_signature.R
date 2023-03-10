@@ -69,12 +69,13 @@ investigate_signature <- function(expr,
             filter_signature(direction = "down", threshold = filter_threshold, prop = filter_prop)
 
         concordant_up <- filtered_up %>%
-            get_concordants(library = output_lib)
+            get_concordants(library = output_lib, sig_direction = "Up")
 
         concordant_down <- filtered_down %>%
-            get_concordants(library = output_lib)
+            get_concordants(library = output_lib, sig_direction = "Down")
 
-        consensus_targets <-
+
+    consensus_targets <-
             consensus_concordants(
                 concordant_up,
                 concordant_down,
@@ -103,7 +104,8 @@ investigate_signature <- function(expr,
             SourceSignature = signature_id,
             Source = source_name,
             SourceCellLine = source_cell_line,
-            SourceTime = source_time
+            SourceTime = source_time,
+            InputSignatureDirection = sig_direction
         ) %>%
         dplyr::select(
             .data$Source,
@@ -111,6 +113,7 @@ investigate_signature <- function(expr,
             .data$Similarity,
             .data$SourceSignature,
             .data$SourceCellLine,
+            .data$InputSignatureDirection,
             dplyr::any_of(c("SourceConcentration")),
             .data$SourceTime,
             .data$TargetSignature,
