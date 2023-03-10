@@ -35,7 +35,6 @@ investigate_signature <- function(expr,
     similarity_threshold = 0.2,
     paired = TRUE,
     output_cell_lines = NULL,
-    discordant = FALSE,
     gene_column = "Symbol",
     logfc_column = "logFC",
     pval_column = "PValue",
@@ -81,7 +80,6 @@ investigate_signature <- function(expr,
                 concordant_down,
                 paired = paired,
                 cell_line = output_cell_lines,
-                discordant = discordant,
                 cutoff = similarity_threshold
             )
     } else {
@@ -96,7 +94,6 @@ investigate_signature <- function(expr,
                 concordants,
                 paired = paired,
                 cell_line = output_cell_lines,
-                discordant = discordant,
                 cutoff = similarity_threshold
             )
     }
