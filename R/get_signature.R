@@ -32,7 +32,7 @@ get_signature <- function(sig_id, l1000 = TRUE) {
         signature <- httr::content(request) %>%
             purrr::map("signature") %>%
             purrr::flatten_dfr() %>%
-            dplyr::select(-.data$PROBE) %>%
+            dplyr::select(-"PROBE") %>%
             dplyr::mutate(
                 Value_LogDiffExp = round(.data$Value_LogDiffExp, 12),
                 Significance_pvalue = round(.data$Significance_pvalue, 12)
