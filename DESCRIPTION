@@ -1,6 +1,6 @@
 Package: drugfindR
 Title: Investigate iLINCS for candidate repurposable drugs
-Version: 0.99.255
+Version: 0.99.256
 Authors@R: c(
     person(given = c("Ali", "Sajid"),
            family = "Imami",
