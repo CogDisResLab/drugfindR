@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/CogDisResLab/drugfindR",
   "issueTracker": "https://github.com/CogDisResLab/drugfindR/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.99.312",
+  "version": "0.99.313",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
