@@ -24,7 +24,7 @@ repos:
         files: DESCRIPTION
         stages: [commit]
 -   repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.3.2.9007
+    rev: v0.3.2.9019
     hooks:
     -   id: style-files
         additional_dependencies:
@@ -89,10 +89,35 @@ repos:
         files: '^\.Rbuildignore$'
     -   id: end-of-file-fixer
         exclude: '\.Rd'
--   repo: https://github.com/pre-commit-ci/pre-commit-ci-config
-    rev: v1.5.1
+    -   id: check-json
+    -   id: check-merge-conflict
+    -   id: mixed-line-ending
+        args:
+        -   --fix=no
+    -   id: trailing-whitespace
+-   repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v2.4.0
     hooks:
-    -   id: check-pre-commit-ci-config
-
-ci:
-    autoupdate_schedule: monthly
+    -   args:
+        -   build
+        -   chore
+        -   ci
+        -   docs
+        -   feat
+        -   fix
+        -   perf
+        -   refactor
+        -   revert
+        -   style
+        -   test
+        -   bump
+        id: conventional-pre-commit
+        stages:
+        -   commit-msg
+-   repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.4
+    hooks:
+    -   id: forbid-crlf
+    -   id: remove-crlf
+    # -   id: forbid-tabs
+    # -   id: remove-tabs
