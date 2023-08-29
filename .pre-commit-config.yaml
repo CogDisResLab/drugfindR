@@ -115,7 +115,7 @@ repos:
     -   id: bump-version
         name: Bump version
         entry: >
-          bumpversion patch
+          ./utilities/bump-version.sh
         language: system
         always_run: true
         pass_filenames: false
