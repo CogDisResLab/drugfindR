@@ -14,6 +14,45 @@
     "url": "https://r-project.org"
   },
   "runtimePlatform": "R version 4.3.1 (2023-06-16)",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": ["Ali", "Sajid"],
+      "familyName": "Imami",
+      "email": "Ali.Sajid.Imami@gmail.com",
+      "@id": "https://orcid.org/0000-0003-3684-3539"
+    },
+    {
+      "@type": "Person",
+      "givenName": ["Justin", "Fortune"],
+      "familyName": "Creeden",
+      "email": "Justin.Creeden@rockets.utoledo.edu",
+      "@id": "https://orcid.org/0000-0003-3123-8401"
+    },
+    {
+      "@type": "Person",
+      "givenName": ["Evelyn", "Alden"],
+      "familyName": "Bates",
+      "email": "Evelyn.Bates@rockets.utoledo.edu",
+      "@id": "https://orcid.org/0000-0002-4157-2481"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Smita",
+      "familyName": "Sahay",
+      "email": "Smita.Sahay@rockets.utoledo.edu",
+      "@id": "https://orcid.org/0009-0003-4377-8963"
+    }
+  ],
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": ["Ali", "Sajid"],
+      "familyName": "Imami",
+      "email": "Ali.Sajid.Imami@gmail.com",
+      "@id": "https://orcid.org/0000-0003-3684-3539"
+    }
+  ],
   "softwareSuggestions": [
     {
       "@type": "SoftwareApplication",
@@ -225,8 +264,10 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "434038.967KB",
+  "applicationCategory": "Genomics",
+  "isPartOf": "https://bioconductor.org",
+  "keywords": ["LINCS", "iLINCS", "drugrepurposing", "drugdiscovery", "transcriptomics", "geneexpression", "geneknockdown", "geneoverexpression", "chemicalperturbagen", "drugfindR", "r", "ilincs", "bioinformatics", "bioinformatics-pipeline"],
+  "fileSize": "434039.395KB",
   "releaseNotes": "https://github.com/CogDisResLab/drugfindR/blob/master/NEWS.md",
-  "readme": "https://github.com/CogDisResLab/drugfindR/blob/main/README.md",
-  "keywords": ["r", "ilincs", "transcriptomics", "bioinformatics", "bioinformatics-pipeline"]
+  "readme": "https://github.com/CogDisResLab/drugfindR/blob/main/README.md"
 }

@@ -2,28 +2,6 @@
 # R specific hooks: https://github.com/lorenzwalthert/precommit
 exclude: '.*\.(csv|tsv|xls)$'
 repos:
--   repo: local
-    hooks:
-    -   id: forbid-to-commit
-        name: Don't commit common R artifacts
-        entry: Cannot commit .Rhistory, .RData, .Rds or .rds.
-        language: fail
-        files: '\.(Rhistory|RData|Rds|rds)$'
-    -   id: bump-version
-        name: Bump version
-        entry: >
-          bumpversion patch
-        language: system
-        always_run: true
-        pass_filenames: false
-        stages: [post-commit]
-    -   id: codemeta-json-updated
-        name: Update codemeta.json
-        entry: >
-          Rscript -e "codemetar::write_codemeta(force_update = FALSE)"
-        language: system
-        files: DESCRIPTION
-        stages: [commit]
 -   repo: https://github.com/lorenzwalthert/precommit
     rev: v0.3.2.9019
     hooks:
@@ -118,5 +96,27 @@ repos:
     hooks:
     -   id: forbid-crlf
     -   id: remove-crlf
-    # -   id: forbid-tabs
-    # -   id: remove-tabs
+    -   id: forbid-tabs
+    -   id: remove-tabs
+-   repo: local
+    hooks:
+    -   id: forbid-to-commit
+        name: Don't commit common R artifacts
+        entry: Cannot commit .Rhistory, .RData, .Rds or .rds.
+        language: fail
+        files: '\.(Rhistory|RData|Rds|rds)$'
+    -   id: codemeta-json-updated
+        name: Update codemeta.json
+        entry: >
+          Rscript -e "codemetar::write_codemeta(force_update = FALSE)"
+        language: system
+        files: DESCRIPTION
+        stages: [commit]
+    -   id: bump-version
+        name: Bump version
+        entry: >
+          bumpversion patch
+        language: system
+        always_run: true
+        pass_filenames: false
+        stages: [post-commit]
