@@ -16,13 +16,12 @@ Authors@R: c(
            family = "Bates",
            role = c("aut"),
            email = "Evelyn.Bates@rockets.utoledo.edu",
-           comment = c(ORCID = "0000-0002-4157-2481"))
-           ),
+           comment = c(ORCID = "0000-0002-4157-2481")),
     person(given = c("Smita"),
             family = "Sahay",
             role = c("aut"),
             email = "Smita.Sahay@rockets.utoledo.edu",
-            comment = c(ORCID = "0009-0003-4377-8963"))
+            comment = c(ORCID = "0009-0003-4377-8963")))
 Description: This package provides a convenient way to access the
     LINCS Signatures available in the iLINCS database. These signatures include
     Consensus Gene Knockdown Signatures, Gene Overexpression signatures and
@@ -61,3 +60,8 @@ Suggests:
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 VignetteBuilder: knitr
+X-schema.org-applicationCategory: Genomics
+X-schema.org-keywords: LINCS, iLINCS, drug repurposing, drug discovery,
+    transcriptomics, gene expression, gene knockdown, gene overexpression,
+    chemical perturbagen, drugfindR
+X-schema.org-isPartOf: https://bioconductor.org

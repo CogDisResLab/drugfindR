@@ -540,6 +540,7 @@ APOOL
 APOOP
 APPBP
 APPL
+applicationCategory
 Apremilast
 Aprepitant
 APRT
@@ -1502,6 +1503,7 @@ Chelerythrine
 Chelidonine
 CHEMBL
 CHEMDIV
+chemicalperturbagen
 Chenodeoxycholic
 Chenodiol
 CHERP
@@ -2665,7 +2667,9 @@ DROSHA
 DROSPIRENONE
 Droxinostat
 DRP
+drugdiscovery
 drugfindR
+drugrepurposing
 DS
 DSC
 DSCAM
@@ -3619,7 +3623,10 @@ Gemcitabine
 Gemfibrozil
 Gemifloxacin
 GEMIN
+geneexpression
 geneid
+geneknockdown
+geneoverexpression
 GeneSetEnrichment
 GeneSymbol
 GeneTargets
@@ -4593,6 +4600,7 @@ Isosorbide
 Isothiocyanate
 Isotretinoin
 Isoxsuprine
+isPartOf
 Ispinesib
 Isradipine
 issueTracker
@@ -6653,6 +6661,7 @@ Ovasterol
 OVCA
 OVCH
 Overexpression
+overexpression
 OVGP
 OVOL
 OVOS
@@ -6938,6 +6947,7 @@ Perospirone
 PERP
 Perphenazine
 Perturbagen
+perturbagen
 Peruvoside
 PES
 Petcm
@@ -7914,6 +7924,7 @@ Reparixin
 REPIN
 repo
 repurposable
+repurposing
 RER
 RERE
 RERG
