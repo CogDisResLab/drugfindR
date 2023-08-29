@@ -7,45 +7,13 @@
   "codeRepository": "https://github.com/CogDisResLab/drugfindR",
   "issueTracker": "https://github.com/CogDisResLab/drugfindR/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.99.297",
+  "version": "0.99.298",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.2 (2022-10-31)",
-  "author": [
-    {
-      "@type": "Person",
-      "givenName": ["Ali", "Sajid"],
-      "familyName": "Imami",
-      "email": "Ali.Sajid.Imami@gmail.com",
-      "@id": "https://orcid.org/0000-0003-3684-3539"
-    },
-    {
-      "@type": "Person",
-      "givenName": ["Justin", "Fortune"],
-      "familyName": "Creeden",
-      "email": "Justin.Creeden@rockets.utoledo.edu",
-      "@id": "https://orcid.org/0000-0003-3123-8401"
-    },
-    {
-      "@type": "Person",
-      "givenName": ["Evelyn", "Alden"],
-      "familyName": "Bates",
-      "email": "Evelyn.Bates@rockets.utoledo.edu",
-      "@id": "https://orcid.org/0000-0002-4157-2481"
-    }
-  ],
-  "maintainer": [
-    {
-      "@type": "Person",
-      "givenName": ["Ali", "Sajid"],
-      "familyName": "Imami",
-      "email": "Ali.Sajid.Imami@gmail.com",
-      "@id": "https://orcid.org/0000-0003-3684-3539"
-    }
-  ],
+  "runtimePlatform": "R version 4.3.1 (2023-06-16)",
   "softwareSuggestions": [
     {
       "@type": "SoftwareApplication",
@@ -225,13 +193,39 @@
     },
     "10": {
       "@type": "SoftwareApplication",
+      "identifier": "AnnotationDbi",
+      "name": "AnnotationDbi",
+      "version": ">= 1.62.2",
+      "provider": {
+        "@id": "https://www.bioconductor.org",
+        "@type": "Organization",
+        "name": "Bioconductor",
+        "url": "https://www.bioconductor.org"
+      },
+      "sameAs": "https://bioconductor.org/packages/release/bioc/html/AnnotationDbi.html"
+    },
+    "11": {
+      "@type": "SoftwareApplication",
+      "identifier": "usethis",
+      "name": "usethis",
+      "version": ">= 2.1.6",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=usethis"
+    },
+    "12": {
+      "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
       "version": ">= 4.2.0"
     },
     "SystemRequirements": null
   },
-  "fileSize": "81031.866KB",
+  "fileSize": "434038.967KB",
   "releaseNotes": "https://github.com/CogDisResLab/drugfindR/blob/master/NEWS.md",
   "readme": "https://github.com/CogDisResLab/drugfindR/blob/main/README.md",
   "keywords": ["r", "ilincs", "transcriptomics", "bioinformatics", "bioinformatics-pipeline"]

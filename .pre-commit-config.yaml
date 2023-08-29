@@ -1,5 +1,6 @@
 # All available hooks: https://pre-commit.com/hooks.html
 # R specific hooks: https://github.com/lorenzwalthert/precommit
+exclude: '.*\.(csv|tsv|xls)$'
 repos:
 -   repo: local
     hooks:
@@ -31,7 +32,6 @@ repos:
           - bioc::biocthis
         args: [--style_pkg=styler, --style_fun=tidyverse_style, --transformers=biocthis::bioc_style()]
     -   id: roxygenize
-    # roxygen requires loading pkg -> add dependencies from DESCRIPTION
         additional_dependencies:
         -    httr
         -    magrittr
@@ -41,7 +41,6 @@ repos:
         -    purrr
         -    readr
         -    stringr
-
     -   id: codemeta-description-updated
     -   id: use-tidy-description
     -   id: spell-check
