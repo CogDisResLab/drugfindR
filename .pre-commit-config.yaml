@@ -19,6 +19,9 @@ repos:
         -    purrr
         -    readr
         -    stringr
+        -    usethis
+        -    Bioconductor/GenomeInfoDbData
+        -    bioc::AnnotationDbi
     -   id: codemeta-description-updated
     -   id: use-tidy-description
     -   id: spell-check
@@ -52,6 +55,7 @@ repos:
           data/.*|
           )$
     -   id: lintr
+
     -   id: readme-rmd-rendered
     -   id: parsable-R
     -   id: no-browser-statement
