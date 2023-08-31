@@ -11,7 +11,6 @@
 #' @param similarity_threshold The Similarity Threshold
 #' @param paired Logical. Whether to query iLINCS separately for up and down regulated genes
 #' @param output_cell_lines A character vector of cell lines to restrict the output search to.
-#' @param discordant Logical. Whether to look for discordant signatures
 #' @param gene_column The name of the column that has gene symbols
 #' @param logfc_column The name of the column that has log_2 fold-change values
 #' @param pval_column  The name of the column that has p-values
@@ -59,7 +58,7 @@ investigate_signature <- function(expr,
             pval_column = pval_column
         )
 
-    signature_id <- unique(expr_signature$signatureID)
+    signature_id <- unique(expr_signature[["signatureID"]])
 
     if (paired) {
         filtered_up <- expr_signature %>%
@@ -75,7 +74,7 @@ investigate_signature <- function(expr,
             get_concordants(library = output_lib, sig_direction = "Down")
 
 
-    consensus_targets <-
+        consensus_targets <-
             consensus_concordants(
                 concordant_up,
                 concordant_down,
@@ -108,18 +107,20 @@ investigate_signature <- function(expr,
             InputSignatureDirection = sig_direction
         ) %>%
         dplyr::select(
-            .data$Source,
-            .data$Target,
-            .data$Similarity,
-            .data$SourceSignature,
-            .data$SourceCellLine,
-            .data$InputSignatureDirection,
-            dplyr::any_of(c("SourceConcentration")),
-            .data$SourceTime,
-            .data$TargetSignature,
-            .data$TargetCellLine,
-            dplyr::any_of(c("TargetConcentration")),
-            .data$TargetTime
+            dplyr::any_of(
+                "Source",
+                "Target",
+                "Similarity",
+                "SourceSignature",
+                "SourceCellLine",
+                "InputSignatureDirection",
+                "SourceConcentration",
+                "SourceTime",
+                "TargetSignature",
+                "TargetCellLine",
+                "TargetConcentration",
+                "TargetTime"
+            )
         )
 
     augmented

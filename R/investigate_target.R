@@ -20,6 +20,7 @@
 #' @importFrom stringr str_to_lower
 #' @importFrom purrr map map2 map_dfr
 #' @importFrom rlang .data
+#' @importFrom magrittr %>%
 #'
 #' @examples
 #' TRUE
@@ -29,20 +30,20 @@ investigate_target <- function(target, input_lib, output_lib,
     output_cell_lines = NULL, discordant = FALSE) {
     libs <- c("OE", "KD", "CP")
 
-    if (!input_lib %in% libs | !output_lib %in% libs) {
+    if (!input_lib %in% libs || !output_lib %in% libs) {
         stop("Both input and output libraries must be one of 'OE', 'KD', 'CP'")
     }
 
-    if (missing(input_lib) | missing(output_lib)) {
+    if (missing(input_lib) || missing(output_lib)) {
         stop("Please specify both input and output libraries")
     }
 
     if (input_lib == "OE") {
-        input_metadata <- oe_metadata
+        input_metadata <- oe_metadata # nolint: object_usage_linter.
     } else if (input_lib == "KD") {
-        input_metadata <- kd_metadata
+        input_metadata <- kd_metadata # nolint: object_usage_linter.
     } else if (input_lib == "CP") {
-        input_metadata <- cp_metadata
+        input_metadata <- cp_metadata # nolint: object_usage_linter.
     } else {
         stop("Invalid input_lib")
     }
@@ -50,16 +51,16 @@ investigate_target <- function(target, input_lib, output_lib,
 
     if (!is.null(input_cell_lines)) {
         filtered_signature_ids <- input_metadata %>%
-            dplyr::filter(stringr::str_to_lower(target) == stringr::str_to_lower(.data$Source)) %>%
-            dplyr::filter(.data$SourceCellLine %in% input_cell_lines) %>%
-            dplyr::pull(.data$SourceSignature)
+            dplyr::filter(stringr::str_to_lower(target) == stringr::str_to_lower(.data[["Source"]])) %>%
+            dplyr::filter(.data[["SourceCellLine"]] %in% input_cell_lines) %>%
+            dplyr::pull(.data[["SourceSignature"]])
     } else {
         filtered_signature_ids <- input_metadata %>%
-            dplyr::filter(stringr::str_to_lower(target) == stringr::str_to_lower(.data$Source)) %>%
-            dplyr::pull(.data$SourceSignature)
+            dplyr::filter(stringr::str_to_lower(target) == stringr::str_to_lower(.data[["Source"]])) %>%
+            dplyr::pull(.data[["SourceSignature"]])
     }
 
-    if (length(filtered_signature_ids) == 0) {
+    if (length(filtered_signature_ids) == 0L) {
         stop("No signatures match the given input criteria.")
     }
 
@@ -110,11 +111,11 @@ investigate_target <- function(target, input_lib, output_lib,
         purrr::map2(filtered_signature_ids, ~ dplyr::mutate(.x, SourceSignature = .y)) %>%
         purrr::map_dfr(~ dplyr::inner_join(.x, input_metadata, by = "SourceSignature")) %>%
         dplyr::select(
-            .data$Source, .data$Target, .data$Similarity,
-            .data$SourceSignature, .data$SourceCellLine,
-            dplyr::any_of(c("SourceConcentration")), .data$SourceTime,
-            .data$TargetSignature, .data$TargetCellLine,
-            dplyr::any_of(c("TargetConcentration")), .data$TargetTime
+            dplyr::any_of(c(
+                "Source", "Target", "Similarity", "SourceSignature",
+                "SourceCellLine", "SourceConcentration", "SourceTime", "TargetSignature",
+                "TargetCellLine", "TargetConcentration", "TargetTime"
+            ))
         )
 
     augmented

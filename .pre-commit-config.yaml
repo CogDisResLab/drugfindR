@@ -5,23 +5,6 @@ repos:
 -   repo: https://github.com/lorenzwalthert/precommit
     rev: v0.3.2.9019
     hooks:
-    -   id: style-files
-        additional_dependencies:
-          - bioc::biocthis
-        args: [--style_pkg=styler, --style_fun=tidyverse_style, --transformers=biocthis::bioc_style()]
-    -   id: roxygenize
-        additional_dependencies:
-        -    httr
-        -    magrittr
-        -    tibble
-        -    rlang
-        -    dplyr
-        -    purrr
-        -    readr
-        -    stringr
-        -    usethis
-        -    Bioconductor/GenomeInfoDbData
-        -    bioc::AnnotationDbi
     -   id: codemeta-description-updated
     -   id: use-tidy-description
     -   id: spell-check
@@ -54,8 +37,6 @@ repos:
           \.github/workflows/.*|
           data/.*|
           )$
-    -   id: lintr
-
     -   id: readme-rmd-rendered
     -   id: parsable-R
     -   id: no-browser-statement
@@ -104,6 +85,16 @@ repos:
     -   id: remove-tabs
 -   repo: local
     hooks:
+    -   id: style_files
+        name: Apply bioconductor style
+        entry: >
+            Rscript -e "styler::style_pkg(transformers = biocthis::bioc_style())"
+        language: system
+    -   id: lint_files
+        name: Apply lintr
+        entry: >
+            Rscript -e "lintr::lint_package()"
+        language: system
     -   id: forbid-to-commit
         name: Don't commit common R artifacts
         entry: Cannot commit .Rhistory, .RData, .Rds or .rds.

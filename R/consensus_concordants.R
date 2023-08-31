@@ -42,11 +42,13 @@ target_rename <- function(input_names) {
 #'
 #' @examples
 #' TRUE
-consensus_concordants <- function(..., paired = FALSE, cutoff = 0.321,
+consensus_concordants <- function(...,
+    paired = FALSE,
+    cutoff = 0.321,
     cell_line = NULL) {
-    if (paired & length(list(...)) != 2) {
+    if (paired && length(list(...)) != 2L) {
         stop("Paired analysis requires two data frames")
-    } else if (!paired & length(list(...)) != 1) {
+    } else if (!paired && length(list(...)) != 1L) {
         stop("Unpaired analysis requires only one dataframe")
     }
 
@@ -54,21 +56,22 @@ consensus_concordants <- function(..., paired = FALSE, cutoff = 0.321,
 
     if (!is.null(cell_line)) {
         concordants <- concordants %>%
-            dplyr::filter(.data$cellline %in% cell_line)
+            dplyr::filter(.data[["cellline"]] %in% cell_line)
     }
 
     filtered <- concordants %>%
-        dplyr::filter(abs(.data$similarity) >= cutoff) %>%
+        dplyr::filter(abs(.data[["similarity"]]) >= cutoff) %>%
         dplyr::group_by(
             dplyr::across(dplyr::any_of(c("treatment", "compound")))
         ) %>%
-        dplyr::filter(abs(.data$similarity) == max(abs(.data$similarity))) %>%
+        dplyr::filter(abs(.data[["similarity"]]) == max(abs(.data[["similarity"]]))) %>%
         dplyr::select(
-            .data$signatureid, dplyr::any_of(c("treatment", "compound")),
-            .data$cellline, .data$time, dplyr::any_of(c("concentration")),
-            .data$similarity, .data$sig_direction
+            dplyr::any_of(c(
+                "signatureid", "treatment", "compound", "cellline", "time",
+                "concentration", "similarity", "sig_direction"
+            ))
         ) %>%
-        dplyr::arrange(dplyr::desc(abs(.data$similarity))) %>%
+        dplyr::arrange(dplyr::desc(abs(.data[["similarity"]]))) %>%
         dplyr::rename_with(target_rename) %>%
         dplyr::ungroup()
 
