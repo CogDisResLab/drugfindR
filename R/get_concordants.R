@@ -7,6 +7,7 @@
 #' @param signature A data frame with the names of genes, their expression value
 #' and optionally their p-value
 #' @param library The Library you want to search. Must be one of "OE", "KD" or "CP"
+#' @param sig_direction The direction of the signature. Must be one of "Up" or "Down"
 #' for Overexpression, Knockdown or Chemical Perturbagens
 #'
 #' @return A tibble with the list of concordant and discordant signatures
@@ -18,6 +19,7 @@
 #' @importFrom dplyr select any_of mutate filter
 #' @importFrom tibble tibble
 #' @importFrom rlang .data
+#' @importFrom magrittr %>%
 #'
 #' @examples
 #' TRUE
@@ -36,17 +38,17 @@ get_concordants <- function(signature, library = "CP", sig_direction = NULL) {
         CP = "LIB_5"
     )
 
-    if (!library %in% c("OE", "KD", "CP")) {
+    if (!library %in% c("OE", "KD", "CP")) { # nolint: undesirable_function_linter.
         stop("library must be one of 'OE', 'KD' or 'CP'")
     }
 
     url <- "http://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze"
-    query <- list(lib = lib_map[library])
+    query <- list(lib = lib_map[library]) # nolint: undesirable_function_linter.
     body <- list(file = httr::upload_file(signature_file))
 
     request <- httr::POST(url, query = query, body = body)
 
-    if (httr::status_code(request) == 200) {
+    if (httr::status_code(request) == 200L) {
         concordants <- httr::content(request) %>%
             purrr::map("concordanceTable") %>%
             purrr::flatten_dfr() %>%
@@ -55,8 +57,8 @@ get_concordants <- function(signature, library = "CP", sig_direction = NULL) {
                 "concentration", "time", "cellline", "similarity", "pValue"
             ))) %>%
             dplyr::mutate(
-                similarity = round(.data$similarity, 8),
-                pValue = round(.data$pValue, 20),
+                similarity = round(.data[["similarity"]], 8L),
+                pValue = round(.data[["pValue"]], 20L),
                 sig_direction = sig_direction
             )
     } else if (library %in% c("OE", "KD")) {
@@ -69,7 +71,7 @@ get_concordants <- function(signature, library = "CP", sig_direction = NULL) {
             pValue = NA,
             sig_drection = NA
         ) %>%
-            dplyr::filter(!is.na(.data$signatureid))
+            dplyr::filter(!is.na(.data[["signatureid"]]))
     } else {
         concordants <- tibble::tibble(
             signatureid = NA,
@@ -81,7 +83,7 @@ get_concordants <- function(signature, library = "CP", sig_direction = NULL) {
             pValue = NA,
             sig_drection = NA
         ) %>%
-            dplyr::filter(!is.na(.data$signatureid))
+            dplyr::filter(!is.na(.data[["signatureid"]]))
     }
 
     concordants

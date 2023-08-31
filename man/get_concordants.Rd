@@ -4,13 +4,15 @@
 \alias{get_concordants}
 \title{Get Concordant Signatures from iLINCS}
 \usage{
-get_concordants(signature, library = "CP")
+get_concordants(signature, library = "CP", sig_direction = NULL)
 }
 \arguments{
 \item{signature}{A data frame with the names of genes, their expression value
 and optionally their p-value}
 
-\item{library}{The Library you want to search. Must be one of "OE", "KD" or "CP"
+\item{library}{The Library you want to search. Must be one of "OE", "KD" or "CP"}
+
+\item{sig_direction}{The direction of the signature. Must be one of "Up" or "Down"
 for Overexpression, Knockdown or Chemical Perturbagens}
 }
 \value{

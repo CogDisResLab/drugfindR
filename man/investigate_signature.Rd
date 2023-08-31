@@ -12,7 +12,6 @@ investigate_signature(
   similarity_threshold = 0.2,
   paired = TRUE,
   output_cell_lines = NULL,
-  discordant = FALSE,
   gene_column = "Symbol",
   logfc_column = "logFC",
   pval_column = "PValue",
@@ -36,8 +35,6 @@ investigate_signature(
 \item{paired}{Logical. Whether to query iLINCS separately for up and down regulated genes}
 
 \item{output_cell_lines}{A character vector of cell lines to restrict the output search to.}
-
-\item{discordant}{Logical. Whether to look for discordant signatures}
 
 \item{gene_column}{The name of the column that has gene symbols}
 

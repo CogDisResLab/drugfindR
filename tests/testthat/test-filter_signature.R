@@ -2,17 +2,16 @@ library(readr)
 library(dplyr)
 library(tibble)
 library(purrr)
-library(tidyr)
 
 
 # Setup
 
 empty_signature <- tibble::tibble(
-    signatureID = rep(NA, 978),
-    ID_geneid = rep(NA, 978),
-    Name_GeneSymbol = rep(NA, 978),
-    Value_LogDiffExp = rep(NA, 978),
-    Significance_pvalue = rep(NA, 978)
+    signatureID = rep(NA, 978L),
+    ID_geneid = rep(NA, 978L),
+    Name_GeneSymbol = rep(NA, 978L),
+    Value_LogDiffExp = rep(NA, 978L),
+    Significance_pvalue = rep(NA, 978L)
 )
 
 col_names <- colnames(empty_signature)
@@ -33,7 +32,7 @@ sig_file <-
 
 signature <-
     readr::read_csv(
-        stringr::str_glue("_snaps/get_signature/{signature_id}.csv"),
+        stringr::str_glue("reference/{signature_id}.csv"),
         col_types = col_spec
     )
 
@@ -50,7 +49,7 @@ test_that("Specifying both threshold and prop causes error", {
 })
 
 test_that("empty signature when filtered is empty", {
-    expect_equal(nrow(filter_signature(empty_signature, threshold = 0)), 0)
+    expect_identical(nrow(filter_signature(empty_signature, threshold = 0.0)), 0L)
 })
 
 # Testing Filtering
