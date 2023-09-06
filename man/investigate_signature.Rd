@@ -54,6 +54,9 @@ investigate_signature(
 A tibble with the the similarity scores and signature metadata
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
+\details{
 This function takes a DGE Data frame and then finds concordant signatures to that.
 This generates an L1000 signature from the DGE dataset and then uploads that signature to
 iLINCS to find the relevant concordant (or discordant) signatures

@@ -1,5 +1,7 @@
 #' Get Concordant Signatures from iLINCS
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' This function takes a full or filtered signature and gets concordant signatures
 #' from any of the 3 LINCS databases in iLINCS. This can get Overexpression,
 #' Knockdown or Chemical Perturbagen signatures.

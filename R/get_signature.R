@@ -1,5 +1,7 @@
 #' Get the L1000 Signature from iLINCS
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' @param sig_id character. The ilincs signature_id
 #' @param l1000 boolean. If you have a known l1000 signature
 #'

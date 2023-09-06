@@ -232,31 +232,17 @@
     },
     "10": {
       "@type": "SoftwareApplication",
-      "identifier": "AnnotationDbi",
-      "name": "AnnotationDbi",
-      "version": ">= 1.62.2",
-      "provider": {
-        "@id": "https://www.bioconductor.org",
-        "@type": "Organization",
-        "name": "Bioconductor",
-        "url": "https://www.bioconductor.org"
-      },
-      "sameAs": "https://bioconductor.org/packages/release/bioc/html/AnnotationDbi.html"
-    },
-    "11": {
-      "@type": "SoftwareApplication",
-      "identifier": "usethis",
-      "name": "usethis",
-      "version": ">= 2.1.6",
+      "identifier": "lifecycle",
+      "name": "lifecycle",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=usethis"
+      "sameAs": "https://CRAN.R-project.org/package=lifecycle"
     },
-    "12": {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
@@ -267,7 +253,7 @@
   "applicationCategory": "Genomics",
   "isPartOf": "https://bioconductor.org",
   "keywords": ["LINCS", "iLINCS", "drugrepurposing", "drugdiscovery", "transcriptomics", "geneexpression", "geneknockdown", "geneoverexpression", "chemicalperturbagen", "drugfindR", "r", "ilincs", "bioinformatics", "bioinformatics-pipeline"],
-  "fileSize": "434039.395KB",
+  "fileSize": "434057.455KB",
   "releaseNotes": "https://github.com/CogDisResLab/drugfindR/blob/master/NEWS.md",
   "readme": "https://github.com/CogDisResLab/drugfindR/blob/main/README.md"
 }

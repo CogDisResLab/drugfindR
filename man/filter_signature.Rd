@@ -19,6 +19,9 @@ filter_signature(signature, direction = "any", threshold = NULL, prop = NULL)
 a tibble with the filtered L1000 Signature
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
+\details{
 This function filters the L1000 Signature to a given threshold, identifying
 up-regulated or down-regulated or both up- and down-regulated genes
 }

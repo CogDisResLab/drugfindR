@@ -15,7 +15,7 @@ get_signature(sig_id, l1000 = TRUE)
 a tibble with the L1000 Signature
 }
 \description{
-Get the L1000 Signature from iLINCS
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
 TRUE
