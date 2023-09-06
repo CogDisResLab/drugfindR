@@ -19,19 +19,19 @@ rename_columns <- function(input_names) {
     col_names
 }
 
-oe_metadata <- read_tsv("raw/LINCS-OE-Metadata.xls") %>%
+oe_metadata <- read_tsv("raw/LINCS-OE-Metadata.xls.gz") %>%
     dplyr::select(-CGSID, -is_exemplar) %>%
     rename_with(rename_columns)
 
-kd_metadata <- read_tsv("raw/LINCS-KD-Metadata.xls") %>%
+kd_metadata <- read_tsv("raw/LINCS-KD-Metadata.xls.gz") %>%
     dplyr::select(-CGSID, -is_exemplar) %>%
     rename_with(rename_columns)
 
-cp_metadata <- read_tsv("raw/LINCS-Perturbagen-Metadata.xls") %>%
+cp_metadata <- read_tsv("raw/LINCS-Perturbagen-Metadata.xls.gz") %>%
     dplyr::select(-GeneTargets, -is_exemplar) %>%
     rename_with(rename_columns)
 
-l1000_list <- read_tsv("raw/l1000_genes.tsv")
+l1000_list <- read_tsv("raw/l1000_genes.tsv.gz")
 
 l1000 <- l1000_list %>%
     pull(HGNC) %>%
