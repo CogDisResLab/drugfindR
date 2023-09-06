@@ -1,23 +1,10 @@
 # All available hooks: https://pre-commit.com/hooks.html
 # R specific hooks: https://github.com/lorenzwalthert/precommit
+exclude: '.*\.(csv|tsv|xls)$'
 repos:
 -   repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.3.2.9007
+    rev: v0.3.2.9019
     hooks:
-    -   id: style-files
-        args: [--style_pkg=styler, --style_fun=tidyverse_style]
-    -   id: roxygenize
-    # roxygen requires loading pkg -> add dependencies from DESCRIPTION
-        additional_dependencies:
-        -    httr
-        -    magrittr
-        -    tibble
-        -    rlang
-        -    dplyr
-        -    purrr
-        -    readr
-        -    stringr
-
     -   id: codemeta-description-updated
     -   id: use-tidy-description
     -   id: spell-check
@@ -50,7 +37,6 @@ repos:
           \.github/workflows/.*|
           data/.*|
           )$
-    -   id: lintr
     -   id: readme-rmd-rendered
     -   id: parsable-R
     -   id: no-browser-statement
@@ -65,17 +51,70 @@ repos:
         files: '^\.Rbuildignore$'
     -   id: end-of-file-fixer
         exclude: '\.Rd'
--   repo: https://github.com/pre-commit-ci/pre-commit-ci-config
-    rev: v1.5.1
+    -   id: check-json
+    -   id: check-merge-conflict
+    -   id: mixed-line-ending
+        args:
+        -   --fix=no
+    -   id: trailing-whitespace
+-   repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v2.4.0
     hooks:
-    -   id: check-pre-commit-ci-config
+    -   args:
+        -   build
+        -   chore
+        -   ci
+        -   docs
+        -   feat
+        -   fix
+        -   perf
+        -   refactor
+        -   revert
+        -   style
+        -   test
+        -   bump
+        id: conventional-pre-commit
+        stages:
+        -   commit-msg
+-   repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.4
+    hooks:
+    -   id: forbid-crlf
+    -   id: remove-crlf
+    -   id: forbid-tabs
+        exclude: '.*\.[xls|tsv]$'
+    -   id: remove-tabs
+        exclude: '.*\.[xls|tsv]$'
 -   repo: local
     hooks:
+    -   id: style_files
+        name: Apply bioconductor style
+        entry: >
+            Rscript -e "styler::style_pkg(transformers = biocthis::bioc_style())"
+        language: system
+    -   id: lint_files
+        name: Apply lintr
+        entry: >
+            Rscript -e "lintr::lint_package()"
+        language: system
     -   id: forbid-to-commit
         name: Don't commit common R artifacts
         entry: Cannot commit .Rhistory, .RData, .Rds or .rds.
         language: fail
         files: '\.(Rhistory|RData|Rds|rds)$'
 
-ci:
-    autoupdate_schedule: monthly
+    -   id: codemeta-json-updated
+        name: Update codemeta.json
+        entry: >
+          Rscript -e "codemetar::write_codemeta(force_update = FALSE)"
+        language: system
+        files: DESCRIPTION
+        stages: [commit]
+    -   id: bump-version
+        name: Bump version
+        entry: >
+          ./utilities/bump-version.sh
+        language: system
+        always_run: true
+        pass_filenames: false
+        stages: [post-commit]

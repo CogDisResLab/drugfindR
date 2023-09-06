@@ -12,7 +12,6 @@ investigate_signature(
   similarity_threshold = 0.2,
   paired = TRUE,
   output_cell_lines = NULL,
-  discordant = FALSE,
   gene_column = "Symbol",
   logfc_column = "logFC",
   pval_column = "PValue",
@@ -37,8 +36,6 @@ investigate_signature(
 
 \item{output_cell_lines}{A character vector of cell lines to restrict the output search to.}
 
-\item{discordant}{Logical. Whether to look for discordant signatures}
-
 \item{gene_column}{The name of the column that has gene symbols}
 
 \item{logfc_column}{The name of the column that has log_2 fold-change values}
@@ -57,6 +54,9 @@ investigate_signature(
 A tibble with the the similarity scores and signature metadata
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
+\details{
 This function takes a DGE Data frame and then finds concordant signatures to that.
 This generates an L1000 signature from the DGE dataset and then uploads that signature to
 iLINCS to find the relevant concordant (or discordant) signatures

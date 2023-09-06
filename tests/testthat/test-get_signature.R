@@ -7,11 +7,11 @@ library(tibble)
 library(purrr)
 
 empty_signature <- tibble::tibble(
-    signatureID = rep(NA, 978),
-    ID_geneid = rep(NA, 978),
-    Name_GeneSymbol = rep(NA, 978),
-    Value_LogDiffExp = rep(NA, 978),
-    Significance_pvalue = rep(NA, 978)
+    signatureID = rep(NA, 978L),
+    ID_geneid = rep(NA, 978L),
+    Name_GeneSymbol = rep(NA, 978L),
+    Value_LogDiffExp = rep(NA, 978L),
+    Significance_pvalue = rep(NA, 978L)
 )
 
 col_names <- colnames(empty_signature)
@@ -44,33 +44,31 @@ oe_signature <- get_signature(oe_signature_id) |>
 
 # Test the invalid signature
 test_that("everything NA for invalid signature", {
-    expect_equal(
-        all(purrr::flatten_lgl(purrr::map(inv_signature, is.na))),
-        TRUE
+    expect_true(
+        all(purrr::flatten_lgl(purrr::map(inv_signature, is.na)))
     )
 })
 
 test_that("correct columns for the invalid signature", {
-    expect_equal(names(inv_signature), col_names)
+    expect_named(inv_signature, col_names)
 })
 
 test_that("correct content for the invalid signature", {
-    expect_equal(inv_signature, empty_signature)
+    expect_identical(inv_signature, empty_signature)
 })
 
 # Testing the knockdown signature
 test_that("correct number of rows for the knockdown signature", {
-    expect_equal(nrow(kd_signature), 978)
+    expect_identical(nrow(kd_signature), 978L)
 })
 
 test_that("correct columns for the knockdown signature", {
-    expect_equal(names(kd_signature), col_names)
+    expect_named(inv_signature, col_names)
 })
 
 test_that("nothing NA for knockdown signature", {
-    expect_equal(
-        any(purrr::flatten_lgl(purrr::map(kd_signature, is.na))),
-        FALSE
+    expect_false(
+        any(purrr::flatten_lgl(purrr::map(kd_signature, is.na)))
     )
 })
 
@@ -80,17 +78,16 @@ test_that("correct content for the knockdown signature", {
 
 # Testing the chemical perturbagen signature
 test_that("correct number of rows for the knockdown signature", {
-    expect_equal(nrow(cp_signature), 978)
+    expect_identical(nrow(cp_signature), 978L)
 })
 
 test_that("correct columns for the knockdown signature", {
-    expect_equal(names(cp_signature), col_names)
+    expect_named(cp_signature, col_names)
 })
 
 test_that("nothing NA for knockdown signature", {
-    expect_equal(
-        any(purrr::flatten_lgl(purrr::map(cp_signature, is.na))),
-        FALSE
+    expect_false(
+        any(purrr::flatten_lgl(purrr::map(cp_signature, is.na)))
     )
 })
 
@@ -100,17 +97,16 @@ test_that("correct content for the knockdown signature", {
 
 # Testing the overexpression signature
 test_that("correct number of rows for the knockdown signature", {
-    expect_equal(nrow(oe_signature), 978)
+    expect_identical(nrow(oe_signature), 978L)
 })
 
 test_that("correct columns for the knockdown signature", {
-    expect_equal(names(oe_signature), col_names)
+    expect_named(oe_signature, col_names)
 })
 
 test_that("nothing NA for knockdown signature", {
-    expect_equal(
-        any(purrr::flatten_lgl(purrr::map(oe_signature, is.na))),
-        FALSE
+    expect_false(
+        any(purrr::flatten_lgl(purrr::map(oe_signature, is.na)))
     )
 })
 

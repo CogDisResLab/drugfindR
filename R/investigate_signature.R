@@ -1,5 +1,7 @@
 #' Investigate a given DGE dataset
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' This function takes a DGE Data frame and then finds concordant signatures to that.
 #' This generates an L1000 signature from the DGE dataset and then uploads that signature to
 #' iLINCS to find the relevant concordant (or discordant) signatures
@@ -11,7 +13,6 @@
 #' @param similarity_threshold The Similarity Threshold
 #' @param paired Logical. Whether to query iLINCS separately for up and down regulated genes
 #' @param output_cell_lines A character vector of cell lines to restrict the output search to.
-#' @param discordant Logical. Whether to look for discordant signatures
 #' @param gene_column The name of the column that has gene symbols
 #' @param logfc_column The name of the column that has log_2 fold-change values
 #' @param pval_column  The name of the column that has p-values
@@ -28,21 +29,21 @@
 #'
 #' @examples
 #' TRUE
-investigate_signature <- function(expr,
-    output_lib,
-    filter_threshold = NULL,
-    filter_prop = NULL,
-    similarity_threshold = 0.2,
-    paired = TRUE,
-    output_cell_lines = NULL,
-    discordant = FALSE,
-    gene_column = "Symbol",
-    logfc_column = "logFC",
-    pval_column = "PValue",
-    source_name = "Input",
-    source_cell_line = "NA",
-    source_time = "NA",
-    source_concentration = "NA") {
+investigate_signature <- function(
+        expr,
+        output_lib,
+        filter_threshold = NULL,
+        filter_prop = NULL,
+        similarity_threshold = 0.2,
+        paired = TRUE,
+        output_cell_lines = NULL,
+        gene_column = "Symbol",
+        logfc_column = "logFC",
+        pval_column = "PValue",
+        source_name = "Input",
+        source_cell_line = "NA",
+        source_time = "NA",
+        source_concentration = "NA") {
     libs <- c("OE", "KD", "CP")
 
     if (!output_lib %in% libs) {
@@ -60,7 +61,7 @@ investigate_signature <- function(expr,
             pval_column = pval_column
         )
 
-    signature_id <- unique(expr_signature$signatureID)
+    signature_id <- unique(expr_signature[["signatureID"]])
 
     if (paired) {
         filtered_up <- expr_signature %>%
@@ -70,10 +71,11 @@ investigate_signature <- function(expr,
             filter_signature(direction = "down", threshold = filter_threshold, prop = filter_prop)
 
         concordant_up <- filtered_up %>%
-            get_concordants(library = output_lib)
+            get_concordants(library = output_lib, sig_direction = "Up")
 
         concordant_down <- filtered_down %>%
-            get_concordants(library = output_lib)
+            get_concordants(library = output_lib, sig_direction = "Down")
+
 
         consensus_targets <-
             consensus_concordants(
@@ -81,7 +83,6 @@ investigate_signature <- function(expr,
                 concordant_down,
                 paired = paired,
                 cell_line = output_cell_lines,
-                discordant = discordant,
                 cutoff = similarity_threshold
             )
     } else {
@@ -96,7 +97,6 @@ investigate_signature <- function(expr,
                 concordants,
                 paired = paired,
                 cell_line = output_cell_lines,
-                discordant = discordant,
                 cutoff = similarity_threshold
             )
     }
@@ -106,20 +106,24 @@ investigate_signature <- function(expr,
             SourceSignature = signature_id,
             Source = source_name,
             SourceCellLine = source_cell_line,
-            SourceTime = source_time
+            SourceTime = source_time,
+            InputSignatureDirection = sig_direction
         ) %>%
         dplyr::select(
-            .data$Source,
-            .data$Target,
-            .data$Similarity,
-            .data$SourceSignature,
-            .data$SourceCellLine,
-            dplyr::any_of(c("SourceConcentration")),
-            .data$SourceTime,
-            .data$TargetSignature,
-            .data$TargetCellLine,
-            dplyr::any_of(c("TargetConcentration")),
-            .data$TargetTime
+            dplyr::any_of(
+                "Source",
+                "Target",
+                "Similarity",
+                "SourceSignature",
+                "SourceCellLine",
+                "InputSignatureDirection",
+                "SourceConcentration",
+                "SourceTime",
+                "TargetSignature",
+                "TargetCellLine",
+                "TargetConcentration",
+                "TargetTime"
+            )
         )
 
     augmented

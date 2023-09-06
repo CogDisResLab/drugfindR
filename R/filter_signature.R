@@ -1,5 +1,7 @@
 #' Filter the L1000 Signature
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' This function filters the L1000 Signature to a given threshold, identifying
 #' up-regulated or down-regulated or both up- and down-regulated genes
 #'
@@ -21,9 +23,9 @@
 filter_signature <- function(signature, direction = "any", threshold = NULL, prop = NULL) {
     stopifnot("data.frame" %in% class(signature))
 
-    if (!is.null(threshold) & !is.null(prop)) {
+    if (!is.null(threshold) && !is.null(prop)) {
         stop("Only one of prop or threshold can be specified")
-    } else if (is.null(threshold) & is.null(prop)) {
+    } else if (is.null(threshold) && is.null(prop)) {
         stop("One of prop or threshold must be specified")
     }
 
@@ -32,29 +34,32 @@ filter_signature <- function(signature, direction = "any", threshold = NULL, pro
     }
 
     if (!is.null(threshold)) {
-        if (length(threshold) == 2) {
-            down_threshold <- threshold[1]
-            up_threshold <- threshold[2]
-        } else if (length(threshold) == 1) {
+        if (length(threshold) == 2L) {
+            down_threshold <- threshold[[1L]]
+            up_threshold <- threshold[[2L]]
+        } else if (length(threshold) == 1L) {
             down_threshold <- -threshold
             up_threshold <- threshold
         } else {
             stop("Threshold must be specified as one or two values")
         }
     } else if (!is.null(prop)) {
-        down_threshold <- quantile(signature$Value_LogDiffExp, prop)
-        up_threshold <- quantile(signature$Value_LogDiffExp, 1 - prop)
+        down_threshold <- quantile(signature[["Value_LogDiffExp"]], prop)
+        up_threshold <- quantile(signature[["Value_LogDiffExp"]], 1.0 - prop)
     }
 
     if (direction == "up") {
         filtered <- signature %>%
-            dplyr::filter(.data$Value_LogDiffExp >= up_threshold)
+            dplyr::filter(.data[["Value_LogDiffExp"]] >= up_threshold)
     } else if (direction == "down") {
         filtered <- signature %>%
-            dplyr::filter(.data$Value_LogDiffExp <= down_threshold)
+            dplyr::filter(.data[["Value_LogDiffExp"]] <= down_threshold)
     } else {
         filtered <- signature %>%
-            dplyr::filter(.data$Value_LogDiffExp >= up_threshold | .data$Value_LogDiffExp <= down_threshold)
+            dplyr::filter(
+                .data[["Value_LogDiffExp"]] >= up_threshold |
+                    .data[["Value_LogDiffExp"]] <= down_threshold
+            )
     }
 
     filtered

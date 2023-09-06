@@ -1,4 +1,4 @@
-# drugfindR (development version)
+# drugfindR 0.99.4
 
 # drugfindR 0.0.3
 

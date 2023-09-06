@@ -1,0 +1,11 @@
+linters: linters_with_tags(
+    tags = c("default", "style", "misc", "potential-bug", "performance", "documentation", "risky", "package_development"),
+    line_length_linter(length = 120L),
+    indentation_linter(indent = 4L, hanging_indent_style = "tidy"),
+    undesirable_function_linter(modify_defaults(defaults = default_undesirable_functions, library = NULL)),
+    object_usage_linter = NULL,
+    object_name_linter(styles = c("snake_case", "camelCase", "PascalCase", "dotted.case")))
+encoding: "UTF-8"
+exclusions: list(
+    "renv/activate.R",
+    "vignettes/drugfindR.Rmd")

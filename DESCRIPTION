@@ -1,6 +1,6 @@
 Package: drugfindR
 Title: Investigate iLINCS for candidate repurposable drugs
-Version: 0.99.3
+Version: 0.99.538
 Authors@R: c(
     person(given = c("Ali", "Sajid"),
            family = "Imami",
@@ -16,9 +16,13 @@ Authors@R: c(
            family = "Bates",
            role = c("aut"),
            email = "Evelyn.Bates@rockets.utoledo.edu",
-           comment = c(ORCID = "0000-0002-4157-2481"))
-           )
-Description: This package provides a convenient way to access the 
+           comment = c(ORCID = "0000-0002-4157-2481")),
+    person(given = c("Smita"),
+            family = "Sahay",
+            role = c("aut"),
+            email = "Smita.Sahay@rockets.utoledo.edu",
+            comment = c(ORCID = "0009-0003-4377-8963")))
+Description: This package provides a convenient way to access the
     LINCS Signatures available in the iLINCS database. These signatures include
     Consensus Gene Knockdown Signatures, Gene Overexpression signatures and
     Chemical Perturbagen Signatures. It also provides a way to enter your own
@@ -26,11 +30,13 @@ Description: This package provides a convenient way to access the
     in the LINCS database.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
+URL: https://github.com/CogDisResLab/drugfindR
+BugReports: https://github.com/CogDisResLab/drugfindR/issues
 LazyData: false
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 biocViews: FunctionalPrediction, DifferentialExpression, GeneSetEnrichment
-Imports: 
+Imports:
     httr,
     magrittr,
     tibble,
@@ -39,11 +45,13 @@ Imports:
     purrr,
     readr,
     stringr,
-    stats
-Depends: 
+    stats,
+    lifecycle
+Depends:
     R (>= 4.2.0)
-Suggests: 
+Suggests:
     biocthis,
+    codemetar,
     devtools,
     knitr,
     rmarkdown,
@@ -51,3 +59,8 @@ Suggests:
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 VignetteBuilder: knitr
+X-schema.org-applicationCategory: Genomics
+X-schema.org-keywords: LINCS, iLINCS, drug repurposing, drug discovery,
+    transcriptomics, gene expression, gene knockdown, gene overexpression,
+    chemical perturbagen, drugfindR
+X-schema.org-isPartOf: https://bioconductor.org
