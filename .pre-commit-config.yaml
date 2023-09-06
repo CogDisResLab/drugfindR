@@ -102,6 +102,7 @@ repos:
         entry: Cannot commit .Rhistory, .RData, .Rds or .rds.
         language: fail
         files: '\.(Rhistory|RData|Rds|rds)$'
+
     -   id: codemeta-json-updated
         name: Update codemeta.json
         entry: >
