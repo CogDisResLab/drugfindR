@@ -24,6 +24,8 @@ target_rename <- function(input_names) {
 
 #' Generate a Consensus list of Targets
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' This function takes a list of (optionally split) concordance dataframes and returns
 #' a ranked list of gene or drug targets that have been chose for their maximal
 #' similarity to the signature
@@ -42,10 +44,11 @@ target_rename <- function(input_names) {
 #'
 #' @examples
 #' TRUE
-consensus_concordants <- function(...,
-    paired = FALSE,
-    cutoff = 0.321,
-    cell_line = NULL) {
+consensus_concordants <- function(
+        ...,
+        paired = FALSE,
+        cutoff = 0.321,
+        cell_line = NULL) {
     if (paired && length(list(...)) != 2L) {
         stop("Paired analysis requires two data frames")
     } else if (!paired && length(list(...)) != 1L) {

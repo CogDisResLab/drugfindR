@@ -1,5 +1,7 @@
 #' Filter the L1000 Signature
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' This function filters the L1000 Signature to a given threshold, identifying
 #' up-regulated or down-regulated or both up- and down-regulated genes
 #'

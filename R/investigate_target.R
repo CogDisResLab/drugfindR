@@ -1,5 +1,7 @@
 #' Investigate a Given Gene or Drug
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' This function takes the name of a gene or a drug and a database to use to pull signatures
 #' from and then queries iLINCS to get concordant signatures
 #'
@@ -24,10 +26,11 @@
 #'
 #' @examples
 #' TRUE
-investigate_target <- function(target, input_lib, output_lib,
-    filter_threshold = 0.85, similarity_threshold = 0.321,
-    paired = TRUE, input_cell_lines = NULL,
-    output_cell_lines = NULL, discordant = FALSE) {
+investigate_target <- function(
+        target, input_lib, output_lib,
+        filter_threshold = 0.85, similarity_threshold = 0.321,
+        paired = TRUE, input_cell_lines = NULL,
+        output_cell_lines = NULL, discordant = FALSE) {
     libs <- c("OE", "KD", "CP")
 
     if (!input_lib %in% libs || !output_lib %in% libs) {

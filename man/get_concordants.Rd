@@ -19,6 +19,9 @@ for Overexpression, Knockdown or Chemical Perturbagens}
 A tibble with the list of concordant and discordant signatures
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
+\details{
 This function takes a full or filtered signature and gets concordant signatures
 from any of the 3 LINCS databases in iLINCS. This can get Overexpression,
 Knockdown or Chemical Perturbagen signatures.

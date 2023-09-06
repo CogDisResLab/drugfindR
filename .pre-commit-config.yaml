@@ -82,7 +82,9 @@ repos:
     -   id: forbid-crlf
     -   id: remove-crlf
     -   id: forbid-tabs
+        exclude: '.*\.[xls|tsv]$'
     -   id: remove-tabs
+        exclude: '.*\.[xls|tsv]$'
 -   repo: local
     hooks:
     -   id: style_files

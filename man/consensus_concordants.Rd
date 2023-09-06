@@ -19,6 +19,9 @@ consensus_concordants(..., paired = FALSE, cutoff = 0.321, cell_line = NULL)
 A tibble with the filtered and deduplicated results
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
+\details{
 This function takes a list of (optionally split) concordance dataframes and returns
 a ranked list of gene or drug targets that have been chose for their maximal
 similarity to the signature

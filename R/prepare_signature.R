@@ -1,5 +1,7 @@
 #' Prepare an L1000 Signature froma given differential gene expression output
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' This function takes a differential gene expression output from any pipeline
 #' like edgeR or DeSeq2 or any that give you the gene symbol, log_2 fold-change and p-value
 #' and transforms that into an L1000 signature for later processing.
@@ -18,10 +20,11 @@
 #'
 #' @examples
 #' TRUE
-prepare_signature <- function(dge,
-    gene_column = "Symbol",
-    logfc_column = "logFC",
-    pval_column = "PValue") {
+prepare_signature <- function(
+        dge,
+        gene_column = "Symbol",
+        logfc_column = "logFC",
+        pval_column = "PValue") {
     if (!gene_column %in% names(dge)) {
         stop("gene_column should be present in the dataframe")
     }

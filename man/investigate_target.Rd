@@ -39,6 +39,9 @@ investigate_target(
 A tibble with the the similarity scores and signature metadata
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
+\details{
 This function takes the name of a gene or a drug and a database to use to pull signatures
 from and then queries iLINCS to get concordant signatures
 }

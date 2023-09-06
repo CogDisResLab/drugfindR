@@ -102,6 +102,7 @@ Acipimox
 acitretin
 Acitretin
 Acivicin
+Acknowledgements
 ACKR
 Aclidinium
 ACLY
@@ -282,6 +283,7 @@ AKOS
 AKR
 AKT
 AKTIP
+al
 ALAD
 alanine
 alanyldopamine
@@ -440,6 +442,7 @@ ANAPC
 Anastrozole
 ANB
 ANCV
+Andari
 Andarine
 Andreson
 Andrographolide
@@ -622,6 +625,7 @@ ARX
 Arylmorpholine
 ASA
 ASAH
+Asah
 ASB
 ASC
 ASCC
@@ -784,6 +788,7 @@ BAX
 BAYK
 BAZ
 Bazedoxifene
+bbb
 BBIP
 BBOF
 BBOX
@@ -932,7 +937,9 @@ bioconductor
 biocthis
 biocViews
 bioinformatics
+Biomedicine
 BIOMOL
+biopha
 biopterin
 Biperiden
 biphenyl
@@ -1683,6 +1690,7 @@ Clinafloxacin
 Clindamycin
 Clinofibrate
 Clioquinol
+clipPath
 CLK
 CLLU
 CLMAT
@@ -1832,6 +1840,9 @@ COTL
 Coumarin
 Coumestrol
 COV
+CoV
+Covid
+COVID
 CPAMD
 CPB
 Cpccoet
@@ -2234,6 +2245,7 @@ DEGS
 Deguelin
 Dehydrocholic
 Dehydroepiandrosterone
+DejaVu
 DEK
 del
 Delanzomib
@@ -2744,6 +2756,8 @@ EBP
 EBPL
 Ebselen
 eburnamenine
+Eby
+ec
 ECD
 ECE
 ECEL
@@ -2826,6 +2840,7 @@ ELAVL
 Elesclomol
 ELFN
 Eliprodil
+Elissar
 Ellagic
 Elliptecine
 ELMOD
@@ -3039,6 +3054,7 @@ Estrone
 estropipate
 ESX
 ESYT
+et
 ETAA
 Etabonate
 Etanidazole
@@ -3226,6 +3242,7 @@ Fdurd
 FDX
 FDXACB
 FDXR
+fe
 Febuxostat
 FECH
 Fedratinib
@@ -3257,6 +3274,7 @@ FEV
 Fexofenadine
 FEZF
 FFAR
+fff
 FG
 FGA
 FGB
@@ -3673,6 +3691,7 @@ Gibberellin
 GID
 GIGYF
 GIHCG
+Gillman
 GIMAP
 GIMD
 Gimeracil
@@ -4034,6 +4053,7 @@ HEMICHOLINIUM
 hemisuccinate
 Hemisuccinate
 HEMK
+Henkel
 HENMT
 HEPACAM
 HEPG
@@ -4764,6 +4784,7 @@ KEL
 Kenpaullone
 Kepone
 KERA
+Kerstin
 Ketanserin
 Ketoconazole
 Ketoprofen
@@ -4997,6 +5018,7 @@ Licochalcone
 Lidocaine
 Lidoflazine
 LIF
+lifecycle
 LIFR
 LIG
 LILRA
@@ -5017,6 +5039,7 @@ LINCS
 LINCSCP
 LINCSKD
 LINCSOE
+linearGradient
 Linezolid
 Linifanib
 LinkingTo
@@ -5343,6 +5366,7 @@ MCC
 MCCC
 MCCD
 Mccg
+McCullumsmith
 MCEE
 MCEMP
 MCF
@@ -5718,6 +5742,7 @@ MNS
 MNT
 MNX
 MOAP
+Moberg
 MOBP
 Mocetinostat
 Moclobemide
@@ -6493,6 +6518,9 @@ NYNRIN
 NYX
 NZE
 NZGSN
+O'Donovan
+O’donovan
+O’Donovan
 OA
 OAATK
 OARD
@@ -6720,6 +6748,7 @@ Oxymetazoline
 Oxymetholone
 Oxyphenbutazone
 Oxyphenonium
+Oxytocin’s
 Ozagrel
 PAAF
 PABPC
@@ -7074,6 +7103,7 @@ PHYHIPL
 PHYKPL
 phylloquinone
 Phylloquinone
+physiolgenomics
 Physostigmine
 PIANP
 PIAS
@@ -7488,6 +7518,7 @@ Procysteine
 PRODH
 Proglumide
 programmingLanguage
+Proimmune
 PROK
 PROKR
 Prolinal
@@ -7898,6 +7929,7 @@ Rebastinib
 Reboxetine
 RECK
 RECQL
+rect
 REELD
 REEP
 Refametinib
@@ -7905,6 +7937,7 @@ REGADENOSON
 Regorafenib
 Regretos
 Reichsteins
+Reigle
 RELA
 RELB
 RELCH
@@ -8217,6 +8250,7 @@ Ruxolitinib
 RVX
 RWDD
 RWT
+rx
 RXFP
 RXRA
 RXRB
@@ -8511,6 +8545,7 @@ Silmitasertib
 SIMC
 Simeprevir
 Simvastatin
+Sinead
 Sinensetin
 SINHCAF
 SINHCAFP
@@ -8940,6 +8975,7 @@ SUZ
 SV
 SVBP
 SVEP
+svg
 SVIL
 SVIP
 SVOP
@@ -9200,6 +9236,7 @@ Tetramisole
 tetrazol
 tetrone
 Tetroquinone
+textLength
 Tezampanel
 TF
 TFAM
@@ -9843,6 +9880,7 @@ UTP
 UTRN
 UTS
 UTY
+Uvnäs
 UVRAG
 UVSSA
 UXS
@@ -9906,6 +9944,7 @@ VEPH
 VER
 Verapamil
 Veratridine
+Verdana
 Vernakalant
 Verrucarin
 Verteporfin
@@ -10054,6 +10093,8 @@ XCR
 XDH
 XG
 XHG
+Xiaojun
+Xiaolu
 XIAP
 XIAPP
 XIRP
@@ -10062,8 +10103,10 @@ XK
 XKR
 XKRX
 XKRY
+xlink
 XM
 XMD
+xmlns
 XP
 XPA
 XPC
@@ -10184,6 +10227,7 @@ ZGLP
 ZGPAT
 ZGRF
 ZH
+Zhang
 ZHX
 Zibotentan
 ZIC
