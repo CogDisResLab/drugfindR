@@ -27,13 +27,9 @@ jobs:
         - os: macOS-latest
           bioc: release
           r: auto
-          cont: ~
-          rspm: ~
         - os: windows-latest
           bioc: release
           r: auto
-          cont: ~
-          rspm: ~
     steps:
     - if: ${{ env.ACT }}
       name: Hack container for local development
