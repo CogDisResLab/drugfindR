@@ -90,7 +90,7 @@ repos:
     -   id: style_files
         name: Apply bioconductor style
         entry: >
-            Rscript -e "styler::style_pkg(transformers = biocthis::bioc_style())"
+            Rscript -e "styler::style_pkg(transformers = styler::tidyverse_style(indent_by = 4))"
         language: system
     -   id: lint_files
         name: Apply lintr

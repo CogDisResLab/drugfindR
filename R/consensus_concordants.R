@@ -44,11 +44,10 @@ target_rename <- function(input_names) {
 #'
 #' @examples
 #' TRUE
-consensus_concordants <- function(
-        ...,
-        paired = FALSE,
-        cutoff = 0.321,
-        cell_line = NULL) {
+consensus_concordants <- function(...,
+                                  paired = FALSE,
+                                  cutoff = 0.321,
+                                  cell_line = NULL) {
     if (paired && length(list(...)) != 2L) {
         stop("Paired analysis requires two data frames")
     } else if (!paired && length(list(...)) != 1L) {

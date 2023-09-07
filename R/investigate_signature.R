@@ -29,21 +29,20 @@
 #'
 #' @examples
 #' TRUE
-investigate_signature <- function(
-        expr,
-        output_lib,
-        filter_threshold = NULL,
-        filter_prop = NULL,
-        similarity_threshold = 0.2,
-        paired = TRUE,
-        output_cell_lines = NULL,
-        gene_column = "Symbol",
-        logfc_column = "logFC",
-        pval_column = "PValue",
-        source_name = "Input",
-        source_cell_line = "NA",
-        source_time = "NA",
-        source_concentration = "NA") {
+investigate_signature <- function(expr,
+                                  output_lib,
+                                  filter_threshold = NULL,
+                                  filter_prop = NULL,
+                                  similarity_threshold = 0.2,
+                                  paired = TRUE,
+                                  output_cell_lines = NULL,
+                                  gene_column = "Symbol",
+                                  logfc_column = "logFC",
+                                  pval_column = "PValue",
+                                  source_name = "Input",
+                                  source_cell_line = "NA",
+                                  source_time = "NA",
+                                  source_concentration = "NA") {
     libs <- c("OE", "KD", "CP")
 
     if (!output_lib %in% libs) {

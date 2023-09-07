@@ -20,11 +20,10 @@
 #'
 #' @examples
 #' TRUE
-prepare_signature <- function(
-        dge,
-        gene_column = "Symbol",
-        logfc_column = "logFC",
-        pval_column = "PValue") {
+prepare_signature <- function(dge,
+                              gene_column = "Symbol",
+                              logfc_column = "logFC",
+                              pval_column = "PValue") {
     if (!gene_column %in% names(dge)) {
         stop("gene_column should be present in the dataframe")
     }
