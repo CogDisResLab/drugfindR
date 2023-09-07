@@ -246,14 +246,14 @@
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": ">= 4.2.0"
+      "version": ">= 4.3.0"
     },
     "SystemRequirements": null
   },
   "applicationCategory": "Genomics",
   "isPartOf": "https://bioconductor.org",
   "keywords": ["LINCS", "iLINCS", "drugrepurposing", "drugdiscovery", "transcriptomics", "geneexpression", "geneknockdown", "geneoverexpression", "chemicalperturbagen", "drugfindR", "r", "ilincs", "bioinformatics", "bioinformatics-pipeline"],
-  "fileSize": "434057.455KB",
+  "fileSize": "1244.553KB",
   "releaseNotes": "https://github.com/CogDisResLab/drugfindR/blob/master/NEWS.md",
   "readme": "https://github.com/CogDisResLab/drugfindR/blob/main/README.md"
 }
