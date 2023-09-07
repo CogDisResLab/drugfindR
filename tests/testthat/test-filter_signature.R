@@ -30,14 +30,6 @@ sig_dir <- tempdir()
 sig_file <-
     file.path(sig_dir, stringr::str_glue("{signature_id}.csv"))
 
-signature <-
-    readr::read_csv(
-        stringr::str_glue("reference/{signature_id}.csv"),
-        col_types = col_spec
-    )
-
-
-
 # Test Input Validation
 
 test_that("Not specifying threshold and prop causes error", {
