@@ -48,7 +48,7 @@ Imports:
     stats,
     lifecycle
 Depends:
-    R (>= 4.2.0)
+    R (>= 4.3.0)
 Suggests:
     biocthis,
     codemetar,
