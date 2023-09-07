@@ -38,8 +38,8 @@ jobs:
     - if: ${{ env.ACT }}
       name: Hack container for local development
       run: |
-        curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-        sudo apt-get install -y nodejs qpdf rsync
+        sudo apt-get update && sudo apt-get upgrade -y
+        sudo apt-get install -y nodejs qpdf rsync build-essential
       shell: bash {0}
     - uses: neurogenomics/rworkflows@master
       with:
@@ -49,7 +49,7 @@ jobs:
         run_vignettes: ${{ true }}
         has_testthat: ${{ true }}
         run_covr: ${{ true }}
-        run_pkgdown: ${{ true }}
+        run_pkgdown: ${{ false }}
         has_runit: ${{ false }}
         has_latex: ${{ false }}
         GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
