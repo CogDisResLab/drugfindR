@@ -696,6 +696,7 @@ ATRN
 ATRNL
 ATRX
 ATU
+atx
 ATXN
 AUH
 AUN
@@ -10284,4 +10285,3 @@ ZYG
 ZYX
 ZYXP
 ZZEF
-bumpversion
