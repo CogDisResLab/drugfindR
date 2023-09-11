@@ -8,7 +8,7 @@
 #'
 #' @param signature A data frame with the names of genes, their expression value
 #' and optionally their p-value
-#' @param library The Library you want to search. Must be one of "OE", "KD" or "CP"
+#' @param ilincs_library The Library you want to search. Must be one of "OE", "KD" or "CP"
 #' @param sig_direction The direction of the signature. Must be one of "Up" or "Down"
 #' for Overexpression, Knockdown or Chemical Perturbagens
 #'
@@ -25,7 +25,7 @@
 #'
 #' @examples
 #' TRUE
-get_concordants <- function(signature, library = "CP", sig_direction = NULL) {
+get_concordants <- function(signature, ilincs_library = "CP", sig_direction = NULL) {
     if (!"data.frame" %in% class(signature)) {
         stop("signature must be a data frame or data frame like object")
     } else {
@@ -40,12 +40,12 @@ get_concordants <- function(signature, library = "CP", sig_direction = NULL) {
         CP = "LIB_5"
     )
 
-    if (!library %in% c("OE", "KD", "CP")) { # nolint: undesirable_function_linter.
+    if (!ilincs_library %in% c("OE", "KD", "CP")) {
         stop("library must be one of 'OE', 'KD' or 'CP'")
     }
 
     url <- "http://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze"
-    query <- list(lib = lib_map[library]) # nolint: undesirable_function_linter.
+    query <- list(lib = lib_map[ilincs_library])
     body <- list(file = httr::upload_file(signature_file))
 
     request <- httr::POST(url, query = query, body = body)
@@ -63,7 +63,7 @@ get_concordants <- function(signature, library = "CP", sig_direction = NULL) {
                 pValue = round(.data[["pValue"]], 20L),
                 sig_direction = sig_direction
             )
-    } else if (library %in% c("OE", "KD")) {
+    } else if (ilincs_library %in% c("OE", "KD")) {
         concordants <- tibble::tibble(
             signatureid = NA,
             treatment = NA,
