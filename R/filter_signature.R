@@ -7,7 +7,10 @@
 #'
 #' @param signature A dataframe with the L1000 signature
 #' @param direction Direction to filter to. Must be one of "up", "down" or "any". Defaults to "any"
-#' @param threshold A Log Fold-Change Threshold to filter at. Cannot be specified with prop
+#' @param threshold A Log Fold-Change Threshold to filter at. This can either be a single value
+#' or a vector of two values. If a single value is given, then it is assumed to be a symmetric threshold.
+#' If two values are given, then the first value is the down-regulated threshold and the second value is
+#' the up-regulated threshold. Cannot be specified with prop
 #' @param prop A proportion of genes to take from top and bottom. Cannot be specified with threshold
 #'
 #' @return a tibble with the filtered L1000 Signature
@@ -28,7 +31,6 @@ filter_signature <- function(signature, direction = "any", threshold = NULL, pro
     } else if (is.null(threshold) && is.null(prop)) {
         stop("One of prop or threshold must be specified")
     }
-
     if (!direction %in% c("up", "down", "any")) {
         stop("Direction must be one of 'up', 'down' or 'any'")
     }
