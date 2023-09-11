@@ -25,7 +25,7 @@ signature_col_names <- function() {
 
 example_signature <- function() {
     if (file.exists(file.path(test_path(), "fixtures", "example_signature.csv"))) {
-        readr::read_csv(file.path(test_path(), "fixtures", "example_signature.csv"))
+        readr::read_csv(file.path(test_path(), "fixtures", "example_signature.csv"), col_types = "cccnn")
     } else {
         get_signature("LINCSKD_28")
     }
