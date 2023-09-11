@@ -4,6 +4,8 @@
 ^README\.Rmd$
 ^\.Rproj\.user$
 ^\.github$
+^\.markdownlint\.json$
+^\.markdownlintignore$
 ^\.pre-commit-config.yaml$
 ^\.travis\.yml$
 ^codemeta\.json$
