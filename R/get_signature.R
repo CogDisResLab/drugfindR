@@ -36,6 +36,7 @@ get_signature <- function(sig_id, l1000 = TRUE) {
             purrr::flatten_dfr() %>%
             dplyr::select(-"PROBE") %>%
             dplyr::mutate(
+                ID_geneid = as.character(.data[["ID_geneid"]]),
                 Value_LogDiffExp = round(.data[["Value_LogDiffExp"]], 12L),
                 Significance_pvalue = round(.data[["Significance_pvalue"]], 12L)
             )
