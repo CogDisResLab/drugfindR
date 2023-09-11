@@ -1,5 +1,6 @@
 name: Continuous Integration / R Workflows
 on:
+  workflow_dispatch:
   push:
     branches:
     - master
