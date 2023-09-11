@@ -50,6 +50,7 @@ Imports:
 Depends:
     R (>= 4.3.0)
 Suggests:
+    AnnotationDbi,
     biocthis,
     codemetar,
     devtools,
