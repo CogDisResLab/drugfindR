@@ -70,10 +70,10 @@ investigate_signature <- function(expr,
             filter_signature(direction = "down", threshold = filter_threshold, prop = filter_prop)
 
         concordant_up <- filtered_up %>%
-            get_concordants(library = output_lib, sig_direction = "Up")
+            get_concordants(ilincs_library = output_lib, sig_direction = "Up")
 
         concordant_down <- filtered_down %>%
-            get_concordants(library = output_lib, sig_direction = "Down")
+            get_concordants(ilincs_library = output_lib, sig_direction = "Down")
 
 
         consensus_targets <-
@@ -89,7 +89,7 @@ investigate_signature <- function(expr,
             filter_signature(direction = "any", threshold = filter_threshold, prop = filter_prop)
 
         concordants <- filtered %>%
-            get_concordants(library = output_lib)
+            get_concordants(ilincs_library = output_lib)
 
         consensus_targets <-
             consensus_concordants(
