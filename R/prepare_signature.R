@@ -38,39 +38,37 @@ prepare_signature <- function(dge,
 
     if (!is.na(pval_column)) {
         filtered_l1000 <- dge %>%
-            dplyr::filter(.data[[gene_column]] %in% l1000[["SYMBOL"]]) %>%
+            dplyr::filter(!!gene_column %in% l1000[["SYMBOL"]]) %>%
             dplyr::select(dplyr::any_of(c(gene_column, logfc_column, pval_column)))
 
         signature <- l1000 %>%
             dplyr::inner_join(filtered_l1000, by = c(SYMBOL = gene_column)) %>%
             dplyr::rename(
-                ID_geneid = .data[["ENTREZID"]],
-                Name_GeneSymbol = .data[["L1000"]],
-                Value_LogDiffExp = .data[[logfc_column]],
-                Significance_pvalue = .data[[pval_column]]
+                ID_geneid = !!"ENTREZID",
+                Name_GeneSymbol = !!"L1000",
+                Value_LogDiffExp = !!logfc_column,
+                Significance_pvalue = !!pval_column
             ) %>%
             dplyr::mutate(signatureID = "InputSig") %>%
             dplyr::select(
-                .data[["signatureID"]], .data[["ID_geneid"]], .data[["Name_GeneSymbol"]],
-                .data[["Value_LogDiffExp"]], .data[["Significance_pvalue"]]
+                any_of(c("signatureID", "ID_geneid", "Name_GeneSymbol", "Value_LogDiffExp", "Significance_pvalue"))
             ) %>%
             unique()
     } else {
         filtered_l1000 <- dge %>%
-            dplyr::filter(.data[[gene_column]] %in% l1000[["SYMBOL"]]) %>%
+            dplyr::filter(!!gene_column %in% l1000[["SYMBOL"]]) %>%
             dplyr::select(dplyr::any_of(c(gene_column, logfc_column)))
 
         signature <- l1000 %>%
             dplyr::inner_join(filtered_l1000, by = c(SYMBOL = gene_column)) %>%
             dplyr::rename(
-                ID_geneid = .data[["ENTREZID"]],
-                Name_GeneSymbol = .data[["L1000"]],
-                Value_LogDiffExp = .data[[logfc_column]]
+                ID_geneid = !!"ENTREZID",
+                Name_GeneSymbol = !!"L1000",
+                Value_LogDiffExp = !!logfc_column
             ) %>%
             dplyr::mutate(signatureID = "InputSig") %>%
             dplyr::select(
-                .data[["signatureID"]], .data[["ID_geneid"]], .data[["Name_GeneSymbol"]],
-                .data[["Value_LogDiffExp"]]
+                any_of(c("signatureID", "ID_geneid", "Name_GeneSymbol", "Value_LogDiffExp", "Significance_pvalue"))
             ) %>%
             unique()
     }
