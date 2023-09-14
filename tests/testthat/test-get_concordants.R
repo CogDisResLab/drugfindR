@@ -6,11 +6,19 @@ test_that("Input signature must be a data frame or data frame like object", {
     expect_error(get_concordants("LINCSKD_28"))
 })
 
-test_that("library must be one of 'OE', 'KD' or 'CP'", {
+test_that("Library must be one of 'OE', 'KD' or 'CP'", {
     expect_error(get_concordants(example_signature(), "INVALID"))
 })
 
 # Test invalid signature
+
+test_that("Function errors if it receives an error response", {
+    webmockr::stub_request("post", "http://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze") %>%
+        webmockr::to_return(status = 500L)
+    webmockr::httr_mock()
+    expect_error(get_concordants(example_signature()))
+    webmockr::httr_mock(FALSE)
+})
 
 
 # Test valid signature

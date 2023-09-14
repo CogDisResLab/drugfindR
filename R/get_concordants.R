@@ -63,30 +63,8 @@ get_concordants <- function(signature, ilincs_library = "CP", sig_direction = NU
                 pValue = round(.data[["pValue"]], 20L),
                 sig_direction = sig_direction
             )
-    } else if (ilincs_library %in% c("OE", "KD")) {
-        concordants <- tibble::tibble(
-            signatureid = NA,
-            treatment = NA,
-            time = NA,
-            cellline = NA,
-            similarity = NA,
-            pValue = NA,
-            sig_drection = NA
-        ) %>%
-            dplyr::filter(!is.na(.data[["signatureid"]]))
+        return(concordants)
     } else {
-        concordants <- tibble::tibble(
-            signatureid = NA,
-            compound = NA,
-            concentration = NA,
-            time = NA,
-            cellline = NA,
-            similarity = NA,
-            pValue = NA,
-            sig_drection = NA
-        ) %>%
-            dplyr::filter(!is.na(.data[["signatureid"]]))
+        httr::stop_for_status(request, "get concardant signatures")
     }
-
-    concordants
 }
