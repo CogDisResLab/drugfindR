@@ -15,6 +15,8 @@ Workflows](https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflow
 pre-releases)](https://img.shields.io/github/v/release/CogDisResLab/drugfindR?include_prereleases&label=latest-release)
 [![GitHub
 license](https://img.shields.io/github/license/CogDisResLab/drugfindR)](https://github.com/CogDisResLab/drugfindR/blob/main/LICENSE)
+
+[![DOI](https://zenodo.org/badge/338354715.svg)](https://zenodo.org/badge/latestdoi/338354715)
 <!-- badges: end -->
 
 drugfindR allows convenient access to the iLINCS Gene Knockdown, Gene
