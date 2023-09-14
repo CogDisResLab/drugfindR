@@ -40,15 +40,8 @@ get_signature <- function(sig_id, l1000 = TRUE) {
                 Value_LogDiffExp = round(.data[["Value_LogDiffExp"]], 12L),
                 Significance_pvalue = round(.data[["Significance_pvalue"]], 12L)
             )
+        signature
     } else {
-        signature <- tibble::tibble(
-            signatureID = rep(NA, num_genes),
-            ID_geneid = rep(NA, num_genes),
-            Name_GeneSymbol = rep(NA, num_genes),
-            Value_LogDiffExp = rep(NA, num_genes),
-            Significance_pvalue = rep(NA, num_genes)
-        )
+        stop("Error: ", httr::status_code(request))
     }
-
-    signature
 }

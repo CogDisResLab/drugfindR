@@ -1,20 +1,6 @@
 # Test the invalid signature
 test_that("everything NA for invalid signature", {
-    invalid_signature <- get_signature("LINCS_INV")
-
-    expect_true(
-        all(purrr::flatten_lgl(purrr::map(invalid_signature, is.na)))
-    )
-})
-
-test_that("correct columns for the invalid signature", {
-    invalid_signature <- get_signature("LINCS_INV")
-    expect_named(invalid_signature, signature_col_names())
-})
-
-test_that("correct content for the invalid signature", {
-    invalid_signature <- get_signature("LINCS_INV")
-    expect_identical(invalid_signature, empty_signature())
+    expect_error(get_signature("LINCS_INV"))
 })
 
 # Testing the retrieved signature
