@@ -91,12 +91,12 @@ repos:
     -   id: style_files
         name: Apply bioconductor style
         entry: >
-            Rscript -e "styler::style_pkg(transformers = styler::tidyverse_style(indent_by = 4))"
+            Rscript --vanilla -e "styler::style_pkg(transformers = styler::tidyverse_style(indent_by = 4))"
         language: system
     -   id: lint_files
         name: Apply lintr
         entry: >
-            Rscript -e "lintr::lint_package()"
+            Rscript --vanilla -e "lintr::lint_package()"
         language: system
     -   id: forbid-to-commit
         name: Don't commit common R artifacts
@@ -107,7 +107,7 @@ repos:
     -   id: codemeta-json-updated
         name: Update codemeta.json
         entry: >
-          Rscript -e "codemetar::write_codemeta(force_update = FALSE)"
+          Rscript --vanilla -e "codemetar::write_codemeta(force_update = FALSE)"
         language: system
         files: DESCRIPTION
         stages: [commit]

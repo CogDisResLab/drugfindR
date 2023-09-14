@@ -2295,6 +2295,7 @@ DESVENLAFAXINE
 DET
 DEUP
 Devazepide
+developmentStatus
 devtools
 dexamethasone
 Dexamethasone
@@ -8250,6 +8251,7 @@ RUVBL
 Ruxolitinib
 RVX
 RWDD
+rworkflows
 RWT
 rx
 RXFP
@@ -9922,6 +9924,7 @@ VCL
 VCP
 VCPIP
 VCPKMT
+vcr
 vcs
 VCX
 VCY
@@ -10042,6 +10045,7 @@ WDPCP
 WDR
 WDSUB
 WDTC
+webmockr
 WFDC
 WFIKKN
 WFS
@@ -10159,6 +10163,7 @@ ylsulfonamido
 ylsulfonylphenyl
 YM
 YME
+yml
 ynyl
 YOD
 Yohimbine
