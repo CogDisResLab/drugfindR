@@ -3,7 +3,7 @@
 exclude: '.*\.(csv|tsv|xls)$'
 repos:
 -   repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.3.2.9019
+    rev: v0.3.2.9021
     hooks:
     -   id: codemeta-description-updated
     -   id: use-tidy-description

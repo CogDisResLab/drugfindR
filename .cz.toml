@@ -1,0 +1,9 @@
+[tool]
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "v0.99.558"
+tag_format = "v$major.$minor.$patch"
+gpg_sign = true
+update_changelog_on_bump = true
+changelog_incremental = false
+changelog_file = "NEWS.md"

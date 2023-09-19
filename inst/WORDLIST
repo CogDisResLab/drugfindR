@@ -1501,6 +1501,7 @@ CHAC
 CHADL
 Chaetocin
 CHAF
+changelog
 CHCHD
 CHD
 CHDH
@@ -1812,6 +1813,7 @@ COLGALT
 COLQ
 Coluracetam
 COMMD
+commitizen
 ComputerLanguage
 COMT
 COMTD
@@ -2119,6 +2121,7 @@ Cytochalasin
 CYTOR
 Cytosporone
 CYYR
+cz
 CZIB
 CZR
 DAAM
@@ -3838,6 +3841,7 @@ GPBP
 GPC
 GPCPD
 GPER
+gpg
 GPH
 GPHA
 GPHB
@@ -6521,8 +6525,6 @@ NYX
 NZE
 NZGSN
 O'Donovan
-O’donovan
-O’Donovan
 OA
 OAATK
 OARD
@@ -6752,6 +6754,8 @@ Oxyphenbutazone
 Oxyphenonium
 Oxytocin’s
 Ozagrel
+O’donovan
+O’Donovan
 PAAF
 PABPC
 PABPN
