@@ -42,6 +42,6 @@ get_signature <- function(sig_id, l1000 = TRUE) {
             )
         signature
     } else {
-        stop("Error: ", httr::status_code(request), " ", httr::content(request))
+        stop(httr::status_code(request), " ", httr::content(request))
     }
 }
