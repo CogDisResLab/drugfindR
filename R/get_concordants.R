@@ -2,14 +2,17 @@
 #'
 #' `r lifecycle::badge("experimental")`
 #'
-#' This function takes a full or filtered signature and gets concordant signatures
+#' This function takes a full or filtered signature
+#' and gets concordant signatures
 #' from any of the 3 LINCS databases in iLINCS. This can get Overexpression,
 #' Knockdown or Chemical Perturbagen signatures.
 #'
 #' @param signature A data frame with the names of genes, their expression value
 #' and optionally their p-value
-#' @param ilincs_library The Library you want to search. Must be one of "OE", "KD" or "CP"
-#' @param sig_direction The direction of the signature. Must be one of "Up" or "Down"
+#' @param ilincs_library The Library you want to search.
+#' Must be one of "OE", "KD" or "CP"
+#' @param sig_direction The direction of the signature.
+#' Must be one of "Up" or "Down"
 #' for Overexpression, Knockdown or Chemical Perturbagens
 #'
 #' @return A tibble with the list of concordant and discordant signatures
@@ -25,7 +28,8 @@
 #'
 #' @examples
 #' TRUE
-get_concordants <- function(signature, ilincs_library = "CP", sig_direction = NULL) {
+get_concordants <- function(signature, ilincs_library = "CP",
+                            sig_direction = NULL) {
     if (!"data.frame" %in% class(signature)) {
         stop("signature must be a data frame or data frame like object")
     } else {

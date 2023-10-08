@@ -2,7 +2,8 @@
 #'
 #' `r lifecycle::badge("experimental")`
 #'
-#' This function takes the name of a gene or a drug and a database to use to pull signatures
+#' This function takes the name of a gene or a drug and a
+#' database to use to pull signatures
 #' from and then queries iLINCS to get concordant signatures
 #'
 #' @param target The name of the gene or drug
@@ -10,9 +11,12 @@
 #' @param output_lib One of "OE", "KD" or "CP". Marks the database to query.
 #' @param filter_threshold The Filtering threshold.
 #' @param similarity_threshold The Similarity Threshold
-#' @param paired Logical. Whether to query iLINCS separately for up and down regulated genes
-#' @param input_cell_lines A character vector of cell lines to restrict our search for input signatures to.
-#' @param output_cell_lines A character vetor of cell lines to restrict the output search to.
+#' @param paired Logical. Whether to query iLINCS separately
+#' for up and down regulated genes
+#' @param input_cell_lines A character vector of cell lines to
+#' restrict our search for input signatures to.
+#' @param output_cell_lines A character vetor of cell lines to
+#' restrict the output search to.
 #' @param discordant Logical. Whether to look for discordant signatures
 #'
 #' @return A tibble with the the similarity scores and signature metadata
@@ -26,8 +30,10 @@
 #'
 #' @examples
 #' TRUE
-investigate_target <- function(target, input_lib, output_lib,
-                               filter_threshold = 0.85, similarity_threshold = 0.321,
+investigate_target <- function(target,
+                               input_lib, output_lib,
+                               filter_threshold = 0.85,
+                               similarity_threshold = 0.321,
                                paired = TRUE, input_cell_lines = NULL,
                                output_cell_lines = NULL, discordant = FALSE) {
     libs <- c("OE", "KD", "CP")
@@ -53,12 +59,18 @@ investigate_target <- function(target, input_lib, output_lib,
 
     if (!is.null(input_cell_lines)) {
         filtered_signature_ids <- input_metadata %>%
-            dplyr::filter(stringr::str_to_lower(target) == stringr::str_to_lower(.data[["Source"]])) %>%
+            dplyr::filter(
+                stringr::str_to_lower(target) ==
+                    stringr::str_to_lower(.data[["Source"]])
+            ) %>%
             dplyr::filter(.data[["SourceCellLine"]] %in% input_cell_lines) %>%
             dplyr::pull(.data[["SourceSignature"]])
     } else {
         filtered_signature_ids <- input_metadata %>%
-            dplyr::filter(stringr::str_to_lower(target) == stringr::str_to_lower(.data[["Source"]])) %>%
+            dplyr::filter(
+                stringr::str_to_lower(target) ==
+                    stringr::str_to_lower(.data[["Source"]])
+            ) %>%
             dplyr::pull(.data[["SourceSignature"]])
     }
 
@@ -71,10 +83,16 @@ investigate_target <- function(target, input_lib, output_lib,
 
     if (paired) {
         filtered_up <- all_signatures %>%
-            purrr::map(~ filter_signature(.x, direction = "up", threshold = filter_threshold))
+            purrr::map(~ filter_signature(.x,
+                direction = "up",
+                threshold = filter_threshold
+            ))
 
         filtered_down <- all_signatures %>%
-            purrr::map(~ filter_signature(.x, direction = "down", threshold = filter_threshold))
+            purrr::map(~ filter_signature(.x,
+                direction = "down",
+                threshold = filter_threshold
+            ))
 
         concordant_up <- filtered_up %>%
             purrr::map(~ get_concordants(.x, library = output_lib))
@@ -93,7 +111,10 @@ investigate_target <- function(target, input_lib, output_lib,
         )
     } else {
         filtered <- all_signatures %>%
-            purrr::map(~ filter_signature(.x, direction = "any", threshold = filter_threshold))
+            purrr::map(~ filter_signature(.x,
+                direction = "any",
+                threshold = filter_threshold
+            ))
 
         concordants <- filtered %>%
             purrr::map(~ get_concordants(.x, library = output_lib))
@@ -110,13 +131,27 @@ investigate_target <- function(target, input_lib, output_lib,
     }
 
     augmented <- consensus_targets %>%
-        purrr::map2(filtered_signature_ids, ~ dplyr::mutate(.x, SourceSignature = .y)) %>%
-        purrr::map_dfr(~ dplyr::inner_join(.x, input_metadata, by = "SourceSignature")) %>%
+        purrr::map2(
+            filtered_signature_ids,
+            ~ dplyr::mutate(.x, SourceSignature = .y)
+        ) %>%
+        purrr::map_dfr(~ dplyr::inner_join(.x,
+            input_metadata,
+            by = "SourceSignature"
+        )) %>%
         dplyr::select(
             dplyr::any_of(c(
-                "Source", "Target", "Similarity", "SourceSignature",
-                "SourceCellLine", "SourceConcentration", "SourceTime", "TargetSignature",
-                "TargetCellLine", "TargetConcentration", "TargetTime"
+                "Source",
+                "Target",
+                "Similarity",
+                "SourceSignature",
+                "SourceCellLine",
+                "SourceConcentration",
+                "SourceTime",
+                "TargetSignature",
+                "TargetCellLine",
+                "TargetConcentration",
+                "TargetTime"
             ))
         )
 

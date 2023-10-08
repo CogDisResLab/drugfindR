@@ -26,12 +26,15 @@ target_rename <- function(input_names) {
 #'
 #' `r lifecycle::badge("experimental")`
 #'
-#' This function takes a list of (optionally split) concordance dataframes and returns
-#' a ranked list of gene or drug targets that have been chose for their maximal
+#' This function takes a list of (optionally split)
+#' concordance dataframes and returns
+#' a ranked list of gene or drug targets that have
+#' been chose for their maximal
 #' similarity to the signature
 #'
 #' @param ... One or Two (see paired) Data Frames with the concordants
-#' @param paired Logical indicating whether you split the dataframes by up and down regulated in prior analysis
+#' @param paired Logical indicating whether you split the
+#' dataframes by up and down regulated in prior analysis
 #' @param cutoff A similarity cutoff value. Defaults to 0.321
 #' @param cell_line A character vector of Cell Lines you are interested in.
 #'
@@ -39,7 +42,8 @@ target_rename <- function(input_names) {
 #' @export
 #'
 #' @importFrom magrittr %>%
-#' @importFrom dplyr filter arrange any_of group_by across select bind_rows rename_with ungroup
+#' @importFrom dplyr filter arrange any_of group_by across
+#' select bind_rows rename_with ungroup
 #' @importFrom rlang .data
 #'
 #' @examples
@@ -66,7 +70,9 @@ consensus_concordants <- function(...,
         dplyr::group_by(
             dplyr::across(dplyr::any_of(c("treatment", "compound")))
         ) %>%
-        dplyr::filter(abs(.data[["similarity"]]) == max(abs(.data[["similarity"]]))) %>%
+        dplyr::filter(
+            abs(.data[["similarity"]]) == max(abs(.data[["similarity"]]))
+        ) %>%
         dplyr::select(
             dplyr::any_of(c(
                 "signatureid", "treatment", "compound", "cellline", "time",

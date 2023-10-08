@@ -9,14 +9,18 @@ filter_signature(signature, direction = "any", threshold = NULL, prop = NULL)
 \arguments{
 \item{signature}{A dataframe with the L1000 signature}
 
-\item{direction}{Direction to filter to. Must be one of "up", "down" or "any". Defaults to "any"}
+\item{direction}{Direction to filter to. Must be one of "up",
+"down" or "any". Defaults to "any"}
 
-\item{threshold}{A Log Fold-Change Threshold to filter at. This can either be a single value
-or a vector of two values. If a single value is given, then it is assumed to be a symmetric threshold.
-If two values are given, then the first value is the down-regulated threshold and the second value is
+\item{threshold}{A Log Fold-Change Threshold to filter at.
+This can either be a single value or a vector of two values.
+If a single value is given, then it is assumed to be a symmetric threshold.
+If two values are given, then the first value is the down-regulated
+threshold and the second value is
 the up-regulated threshold. Cannot be specified with prop}
 
-\item{prop}{A proportion of genes to take from top and bottom. Cannot be specified with threshold}
+\item{prop}{A proportion of genes to take from top and bottom.
+Cannot be specified with threshold}
 }
 \value{
 a tibble with the filtered L1000 Signature

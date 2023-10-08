@@ -12,7 +12,8 @@ prepare_signature(
 )
 }
 \arguments{
-\item{dge}{A dataframe-like object that has the differential gene expression information}
+\item{dge}{A dataframe-like object that has the differential
+gene expression information}
 
 \item{gene_column}{The name of the column that has gene symbols}
 
@@ -28,7 +29,8 @@ A tibble with the L1000 signature.
 }
 \details{
 This function takes a differential gene expression output from any pipeline
-like edgeR or DeSeq2 or any that give you the gene symbol, log_2 fold-change and p-value
+like edgeR or DeSeq2 or any that give you the gene symbol,
+log_2 fold-change and p-value
 and transforms that into an L1000 signature for later processing.
 }
 \examples{
