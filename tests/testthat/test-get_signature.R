@@ -1,7 +1,13 @@
 # Test the invalid signature
-test_that("everything NA for invalid signature", {
-    expect_error(get_signature("LINCS_INV"))
-})
+
+vcr::use_cassette(
+    "test_invalid",
+    {
+        test_that("everything NA for invalid signature", {
+            expect_error(get_signature("LINCS_INV"))
+        })
+    }
+)
 
 # Testing the retrieved signature
 test_that("correct number of rows for the retrieved signature", {
