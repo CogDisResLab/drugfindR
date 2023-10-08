@@ -1,3 +1,4 @@
+\.gitkeep$
 ^.bumpversion.cfg$
 ^.lintr$
 ^LICENSE\.md$
@@ -5,7 +6,6 @@
 ^\.Rproj\.user$
 ^\.cz\.toml$
 ^\.github$
-^\.gitkeep$
 ^\.markdownlint\.json$
 ^\.markdownlintignore$
 ^\.pre-commit-config.yaml$
