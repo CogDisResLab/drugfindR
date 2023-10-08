@@ -32,9 +32,11 @@ investigate_signature(
 
 \item{similarity_threshold}{The Similarity Threshold}
 
-\item{paired}{Logical. Whether to query iLINCS separately for up and down regulated genes}
+\item{paired}{Logical. Whether to query iLINCS separately
+for up and down regulated genes}
 
-\item{output_cell_lines}{A character vector of cell lines to restrict the output search to.}
+\item{output_cell_lines}{A character vector of cell lines
+to restrict the output search to.}
 
 \item{gene_column}{The name of the column that has gene symbols}
 
@@ -42,13 +44,17 @@ investigate_signature(
 
 \item{pval_column}{The name of the column that has p-values}
 
-\item{source_name}{(Optional) An annotation column to identify the signature by name}
+\item{source_name}{(Optional) An annotation column to identify
+the signature by name}
 
-\item{source_cell_line}{(Optional) An annotation column to specify the cell line for the input data}
+\item{source_cell_line}{(Optional) An annotation column to specify
+the cell line for the input data}
 
-\item{source_time}{(Optional) An annotation column to specify the time for the input data}
+\item{source_time}{(Optional) An annotation column to specify the
+time for the input data}
 
-\item{source_concentration}{(Optional) An annotation column to specify the concentration for the input data}
+\item{source_concentration}{(Optional) An annotation column to specify
+the concentration for the input data}
 }
 \value{
 A tibble with the the similarity scores and signature metadata
@@ -57,8 +63,10 @@ A tibble with the the similarity scores and signature metadata
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \details{
-This function takes a DGE Data frame and then finds concordant signatures to that.
-This generates an L1000 signature from the DGE dataset and then uploads that signature to
+This function takes a DGE Data frame and then
+finds concordant signatures to that.
+This generates an L1000 signature from the DGE
+dataset and then uploads that signature to
 iLINCS to find the relevant concordant (or discordant) signatures
 }
 \examples{

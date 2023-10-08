@@ -3,10 +3,12 @@
 #' `r lifecycle::badge("experimental")`
 #'
 #' This function takes a differential gene expression output from any pipeline
-#' like edgeR or DeSeq2 or any that give you the gene symbol, log_2 fold-change and p-value
+#' like edgeR or DeSeq2 or any that give you the gene symbol,
+#' log_2 fold-change and p-value
 #' and transforms that into an L1000 signature for later processing.
 #'
-#' @param dge A dataframe-like object that has the differential gene expression information
+#' @param dge A dataframe-like object that has the differential
+#' gene expression information
 #' @param gene_column The name of the column that has gene symbols
 #' @param logfc_column The name of the column that has log_2 fold-change values
 #' @param pval_column  The name of the column that has p-values
@@ -39,7 +41,11 @@ prepare_signature <- function(dge,
     if (!is.na(pval_column)) {
         filtered_l1000 <- dge %>%
             dplyr::filter(!!gene_column %in% l1000[["SYMBOL"]]) %>%
-            dplyr::select(dplyr::any_of(c(gene_column, logfc_column, pval_column)))
+            dplyr::select(
+                dplyr::any_of(
+                    c(gene_column, logfc_column, pval_column)
+                )
+            )
 
         signature <- l1000 %>%
             dplyr::inner_join(filtered_l1000, by = c(SYMBOL = gene_column)) %>%
@@ -51,7 +57,13 @@ prepare_signature <- function(dge,
             ) %>%
             dplyr::mutate(signatureID = "InputSig") %>%
             dplyr::select(
-                any_of(c("signatureID", "ID_geneid", "Name_GeneSymbol", "Value_LogDiffExp", "Significance_pvalue"))
+                any_of(c(
+                    "signatureID",
+                    "ID_geneid",
+                    "Name_GeneSymbol",
+                    "Value_LogDiffExp",
+                    "Significance_pvalue"
+                ))
             ) %>%
             unique()
     } else {
@@ -68,7 +80,13 @@ prepare_signature <- function(dge,
             ) %>%
             dplyr::mutate(signatureID = "InputSig") %>%
             dplyr::select(
-                any_of(c("signatureID", "ID_geneid", "Name_GeneSymbol", "Value_LogDiffExp", "Significance_pvalue"))
+                any_of(c(
+                    "signatureID",
+                    "ID_geneid",
+                    "Name_GeneSymbol",
+                    "Value_LogDiffExp",
+                    "Significance_pvalue"
+                ))
             ) %>%
             unique()
     }

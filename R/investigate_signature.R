@@ -2,8 +2,10 @@
 #'
 #' `r lifecycle::badge("experimental")`
 #'
-#' This function takes a DGE Data frame and then finds concordant signatures to that.
-#' This generates an L1000 signature from the DGE dataset and then uploads that signature to
+#' This function takes a DGE Data frame and then
+#' finds concordant signatures to that.
+#' This generates an L1000 signature from the DGE
+#' dataset and then uploads that signature to
 #' iLINCS to find the relevant concordant (or discordant) signatures
 #'
 #' @param expr A dataframe that has differential gene expression analysis
@@ -11,15 +13,21 @@
 #' @param filter_threshold The Filtering threshold.
 #' @param filter_prop The Filtering proportion.
 #' @param similarity_threshold The Similarity Threshold
-#' @param paired Logical. Whether to query iLINCS separately for up and down regulated genes
-#' @param output_cell_lines A character vector of cell lines to restrict the output search to.
+#' @param paired Logical. Whether to query iLINCS separately
+#' for up and down regulated genes
+#' @param output_cell_lines A character vector of cell lines
+#' to restrict the output search to.
 #' @param gene_column The name of the column that has gene symbols
 #' @param logfc_column The name of the column that has log_2 fold-change values
 #' @param pval_column  The name of the column that has p-values
-#' @param source_name (Optional) An annotation column to identify the signature by name
-#' @param source_cell_line (Optional) An annotation column to specify the cell line for the input data
-#' @param source_time (Optional) An annotation column to specify the time for the input data
-#' @param source_concentration (Optional) An annotation column to specify the concentration for the input data
+#' @param source_name (Optional) An annotation column to identify
+#' the signature by name
+#' @param source_cell_line (Optional) An annotation column to specify
+#' the cell line for the input data
+#' @param source_time (Optional) An annotation column to specify the
+#' time for the input data
+#' @param source_concentration (Optional) An annotation column to specify
+#' the concentration for the input data
 #'
 #' @return A tibble with the the similarity scores and signature metadata
 #' @export
@@ -64,10 +72,18 @@ investigate_signature <- function(expr,
 
     if (paired) {
         filtered_up <- expr_signature %>%
-            filter_signature(direction = "up", threshold = filter_threshold, prop = filter_prop)
+            filter_signature(
+                direction = "up",
+                threshold = filter_threshold,
+                prop = filter_prop
+            )
 
         filtered_down <- expr_signature %>%
-            filter_signature(direction = "down", threshold = filter_threshold, prop = filter_prop)
+            filter_signature(
+                direction = "down",
+                threshold = filter_threshold,
+                prop = filter_prop
+            )
 
         concordant_up <- filtered_up %>%
             get_concordants(ilincs_library = output_lib, sig_direction = "Up")
@@ -86,7 +102,11 @@ investigate_signature <- function(expr,
             )
     } else {
         filtered <- expr_signature %>%
-            filter_signature(direction = "any", threshold = filter_threshold, prop = filter_prop)
+            filter_signature(
+                direction = "any",
+                threshold = filter_threshold,
+                prop = filter_prop
+            )
 
         concordants <- filtered %>%
             get_concordants(ilincs_library = output_lib)

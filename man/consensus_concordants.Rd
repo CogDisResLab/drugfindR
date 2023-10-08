@@ -9,7 +9,8 @@ consensus_concordants(..., paired = FALSE, cutoff = 0.321, cell_line = NULL)
 \arguments{
 \item{...}{One or Two (see paired) Data Frames with the concordants}
 
-\item{paired}{Logical indicating whether you split the dataframes by up and down regulated in prior analysis}
+\item{paired}{Logical indicating whether you split the
+dataframes by up and down regulated in prior analysis}
 
 \item{cutoff}{A similarity cutoff value. Defaults to 0.321}
 
@@ -22,8 +23,10 @@ A tibble with the filtered and deduplicated results
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \details{
-This function takes a list of (optionally split) concordance dataframes and returns
-a ranked list of gene or drug targets that have been chose for their maximal
+This function takes a list of (optionally split)
+concordance dataframes and returns
+a ranked list of gene or drug targets that have
+been chose for their maximal
 similarity to the signature
 }
 \examples{

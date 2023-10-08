@@ -27,11 +27,14 @@ investigate_target(
 
 \item{similarity_threshold}{The Similarity Threshold}
 
-\item{paired}{Logical. Whether to query iLINCS separately for up and down regulated genes}
+\item{paired}{Logical. Whether to query iLINCS separately
+for up and down regulated genes}
 
-\item{input_cell_lines}{A character vector of cell lines to restrict our search for input signatures to.}
+\item{input_cell_lines}{A character vector of cell lines to
+restrict our search for input signatures to.}
 
-\item{output_cell_lines}{A character vetor of cell lines to restrict the output search to.}
+\item{output_cell_lines}{A character vetor of cell lines to
+restrict the output search to.}
 
 \item{discordant}{Logical. Whether to look for discordant signatures}
 }
@@ -42,7 +45,8 @@ A tibble with the the similarity scores and signature metadata
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \details{
-This function takes the name of a gene or a drug and a database to use to pull signatures
+This function takes the name of a gene or a drug and a
+database to use to pull signatures
 from and then queries iLINCS to get concordant signatures
 }
 \examples{

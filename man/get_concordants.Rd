@@ -10,9 +10,11 @@ get_concordants(signature, ilincs_library = "CP", sig_direction = NULL)
 \item{signature}{A data frame with the names of genes, their expression value
 and optionally their p-value}
 
-\item{ilincs_library}{The Library you want to search. Must be one of "OE", "KD" or "CP"}
+\item{ilincs_library}{The Library you want to search.
+Must be one of "OE", "KD" or "CP"}
 
-\item{sig_direction}{The direction of the signature. Must be one of "Up" or "Down"
+\item{sig_direction}{The direction of the signature.
+Must be one of "Up" or "Down"
 for Overexpression, Knockdown or Chemical Perturbagens}
 }
 \value{
@@ -22,7 +24,8 @@ A tibble with the list of concordant and discordant signatures
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \details{
-This function takes a full or filtered signature and gets concordant signatures
+This function takes a full or filtered signature
+and gets concordant signatures
 from any of the 3 LINCS databases in iLINCS. This can get Overexpression,
 Knockdown or Chemical Perturbagen signatures.
 }
