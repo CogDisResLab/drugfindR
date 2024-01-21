@@ -13,7 +13,9 @@ test_that("Library must be one of 'OE', 'KD' or 'CP'", {
 # Test invalid signature
 
 test_that("Function errors if it receives an error response", {
-    webmockr::stub_request("post", "http://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze") %>%
+    webmockr::stub_request(
+        "post", "http://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze"
+    ) |>
         webmockr::to_return(status = 500L)
     webmockr::httr_mock()
     expect_error(get_concordants(example_signature()))

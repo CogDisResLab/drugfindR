@@ -56,8 +56,10 @@ concordants_cp_paired <- function() {
     if (file.exists(rds_path)) {
         readr::read_rds(rds_path)
     } else {
-        signature_upregulated <- example_signature() |> filter_signature(threshold = 1.0, direction = "up")
-        signature_downregulated <- example_signature() |> filter_signature(threshold = 1.0, direction = "down")
+        signature_upregulated <- example_signature() |>
+            filter_signature(threshold = 1.0, direction = "up")
+        signature_downregulated <- example_signature() |>
+            filter_signature(threshold = 1.0, direction = "down")
         up_concordants <- get_concordants(
             signature_upregulated,
             "CP",
@@ -103,6 +105,6 @@ consensus_concordants_col_names <- function() { # nolint: object_length_linter.
 
 ## Consensus OE Concordants Column Names
 
-consensus_concordants_oe_col_names <- function() { # nolint: object_length_linter.
+consensus_concordants_oe_col_names <- function() { # nolint: object_length_linter, line_length_linter.
     colnames(consensus_concordants(concordants_oe()))
 }
