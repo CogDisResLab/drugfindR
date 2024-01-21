@@ -40,7 +40,7 @@ prepare_signature <- function(dge,
 
     if (!is.na(pval_column)) {
         filtered_l1000 <- dge %>%
-            dplyr::filter(!!gene_column %in% l1000[["SYMBOL"]]) %>%
+            dplyr::filter(.data[[gene_column]] %in% l1000[["SYMBOL"]]) %>%
             dplyr::select(
                 dplyr::any_of(
                     c(gene_column, logfc_column, pval_column)
