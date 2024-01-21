@@ -13,7 +13,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.3.1 (2023-06-16)",
+  "runtimePlatform": "R version 4.3.2 (2023-10-31)",
   "author": [
     {
       "@type": "Person",
@@ -290,7 +290,7 @@
   "applicationCategory": "Genomics",
   "isPartOf": "https://bioconductor.org",
   "keywords": ["LINCS", "iLINCS", "drugrepurposing", "drugdiscovery", "transcriptomics", "geneexpression", "geneknockdown", "geneoverexpression", "chemicalperturbagen", "drugfindR", "r", "ilincs", "bioinformatics", "bioinformatics-pipeline"],
-  "fileSize": "1848.598KB",
+  "fileSize": "1853.5KB",
   "releaseNotes": "https://github.com/CogDisResLab/drugfindR/blob/master/NEWS.md",
-  "readme": "https://github.com/CogDisResLab/drugfindR/blob/main/README.md"
+  "readme": "https://github.com/CogDisResLab/drugfindR/blob/devel/README.md"
 }
