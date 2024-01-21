@@ -2,6 +2,7 @@
 ^.bumpversion.cfg$
 ^.lintr$
 ^LICENSE\.md$
+^Meta$
 ^README\.Rmd$
 ^\.Rproj\.user$
 ^\.cz\.toml$
@@ -12,6 +13,7 @@
 ^\.travis\.yml$
 ^codemeta\.json$
 ^data-raw$
+^doc$
 ^drugfindR\.Rproj$
 ^drugfindR\.code-workspace$
 ^raw$
