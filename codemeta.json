@@ -290,7 +290,7 @@
   "applicationCategory": "Genomics",
   "isPartOf": "https://bioconductor.org",
   "keywords": ["LINCS", "iLINCS", "drugrepurposing", "drugdiscovery", "transcriptomics", "geneexpression", "geneknockdown", "geneoverexpression", "chemicalperturbagen", "drugfindR", "r", "ilincs", "bioinformatics", "bioinformatics-pipeline"],
-  "fileSize": "1853.5KB",
+  "fileSize": "1866.998KB",
   "releaseNotes": "https://github.com/CogDisResLab/drugfindR/blob/master/NEWS.md",
   "readme": "https://github.com/CogDisResLab/drugfindR/blob/devel/README.md"
 }
