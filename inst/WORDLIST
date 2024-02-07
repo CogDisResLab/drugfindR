@@ -2285,6 +2285,7 @@ DERPC
 DES
 Desacetoxymatricarin
 DeSeq
+DESeq
 DESI
 Desipramine
 Desloratadine
@@ -2640,6 +2641,7 @@ Dorsomorphin
 Dorzolamide
 Dovitinib
 downloadSignature
+downregulated
 Doxapram
 Doxazosin
 Doxepin
@@ -3156,6 +3158,7 @@ EXOC
 EXOG
 EXOSC
 EXPH
+expliclty
 EXTL
 EYA
 EYN
@@ -4449,6 +4452,7 @@ IKY
 IKZF
 ILDR
 ILF
+iLICNS
 iLINCS
 ilincs
 ilincsR
@@ -4523,6 +4527,7 @@ INOSINE
 INP
 INPP
 INPPL
+inpur
 InputSig
 INSC
 INSIG
@@ -6620,6 +6625,7 @@ Omecamtiv
 omeprazole
 Omeprazole
 OMG
+omics
 OMP
 Ondansetron
 ONECUT
@@ -6770,6 +6776,7 @@ O’Donovan
 PAAF
 PABPC
 PABPN
+pacakge
 PACC
 PACERR
 PACRG
@@ -8378,6 +8385,7 @@ SCP
 SCPEP
 SCRG
 SCRIB
+scriptable
 Scriptaid
 SCRN
 SCRT
@@ -8552,6 +8560,7 @@ SIGIRR
 SIGLEC
 SIGLECL
 SIGMAR
+signagture
 signatureid
 signatureID
 SignatureId
@@ -9864,6 +9873,7 @@ UPB
 UPF
 UPK
 UPP
+upregulated
 UPRT
 UQCC
 UQCR
@@ -10235,6 +10245,7 @@ ZDHHC
 Zearalenone
 ZEB
 Zebularine
+Zenodo
 ZER
 Zeranol
 ZFAND
