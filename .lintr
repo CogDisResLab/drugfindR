@@ -8,4 +8,6 @@ linters: linters_with_tags(
 encoding: "UTF-8"
 exclusions: list(
     "renv/activate.R",
-    "vignettes/drugfindR.Rmd")
+    "vignettes/drugfindR.Rmd",
+    "vignettes/drugfindR.R",
+    "doc/")
