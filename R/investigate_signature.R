@@ -129,7 +129,7 @@ investigate_signature <- function(expr,
             InputSignatureDirection = sig_direction
         ) %>%
         dplyr::select(
-            dplyr::any_of(
+            dplyr::any_of(c(
                 "Source",
                 "Target",
                 "Similarity",
@@ -142,7 +142,7 @@ investigate_signature <- function(expr,
                 "TargetCellLine",
                 "TargetConcentration",
                 "TargetTime"
-            )
+            ))
         )
 
     augmented
