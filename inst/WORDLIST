@@ -3715,6 +3715,7 @@ GIP
 GIPC
 GIPR
 github
+githubPullRequests
 givenName
 Givinostat
 GJA
@@ -4436,6 +4437,7 @@ IGLV
 IGLVI
 IGLVIV
 IGLVV
+ignoredPullRequestBranches
 IGSF
 Iguratimod
 IHH
