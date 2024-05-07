@@ -89,7 +89,7 @@ into R from a remote URL.
 ```{r load_signature}
 # Load the signature from the paper
 
-diffexp <- read_tsv("https://zenodo.org/records/10265182/files/dCovid_diffexp.tsv")
+diffexp <- read_tsv(system.file("extdata", "dCovid_diffexp.tsv.tar.xz", package = "drugfindR"))
 
 # Take a look at the signature
 
