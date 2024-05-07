@@ -47,7 +47,6 @@ Imports:
     stringr,
     stats,
     lifecycle,
-    usethis (>= 2.2.3)
 Depends:
     R (>= 4.4.0)
 Suggests:
@@ -59,6 +58,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     tidyverse,
+    usethis,
     vcr (>= 0.6.0),
     webmockr
 Config/testthat/edition: 3
