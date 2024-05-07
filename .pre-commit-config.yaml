@@ -17,9 +17,9 @@ repos:
           .*\.png|
           .*\.py|
           .*\.RData|
-          .*\.rds|
-          .*\.Rds|
-          .*\.RDS|
+          .*\.rd(s|a)|
+          .*\.Rd(s|a)|
+          .*\.RD(S|A)|
           .*\.Rproj|
           .*\.sh|
           (.*/|)\.gitignore|
@@ -106,7 +106,7 @@ repos:
     -   id: codemeta-json-updated
         name: Update codemeta.json
         entry: >
-          Rscript --vanilla -e "codemetar::write_codemeta(force_update = FALSE)"
+          Rscript --vanilla -e "codemetar::write_codemeta()"
         language: system
         files: DESCRIPTION
         stages: [commit]

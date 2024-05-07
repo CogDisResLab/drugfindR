@@ -1,3 +1,8 @@
+#' @include utilities.R
+#' @include getSignature.R prepareSignature.R
+#' @include getConcordants.R consensusConcordants.R filterSignature.R
+NULL
+
 #' Investigate a given DGE dataset
 #'
 #' `r lifecycle::badge("experimental")`
@@ -9,24 +14,24 @@
 #' iLINCS to find the relevant concordant (or discordant) signatures
 #'
 #' @param expr A dataframe that has differential gene expression analysis
-#' @param output_lib The library to search
-#' @param filter_threshold The Filtering threshold.
-#' @param filter_prop The Filtering proportion.
-#' @param similarity_threshold The Similarity Threshold
+#' @param outputLib The library to search
+#' @param filterThreshold The Filtering threshold.
+#' @param filterProp The Filtering proportion.
+#' @param similarityThreshold The Similarity Threshold
 #' @param paired Logical. Whether to query iLINCS separately
 #' for up and down regulated genes
-#' @param output_cell_lines A character vector of cell lines
+#' @param outputCellLines A character vector of cell lines
 #' to restrict the output search to.
-#' @param gene_column The name of the column that has gene symbols
-#' @param logfc_column The name of the column that has log_2 fold-change values
-#' @param pval_column  The name of the column that has p-values
-#' @param source_name (Optional) An annotation column to identify
+#' @param geneColumn The name of the column that has gene symbols
+#' @param logfcColumn The name of the column that has log_2 fold-change values
+#' @param pvalColumn  The name of the column that has p-values
+#' @param sourceName (Optional) An annotation column to identify
 #' the signature by name
-#' @param source_cell_line (Optional) An annotation column to specify
+#' @param sourceCellLine (Optional) An annotation column to specify
 #' the cell line for the input data
-#' @param source_time (Optional) An annotation column to specify the
+#' @param sourceTime (Optional) An annotation column to specify the
 #' time for the input data
-#' @param source_concentration (Optional) An annotation column to specify
+#' @param sourceConcentration (Optional) An annotation column to specify
 #' the concentration for the input data
 #'
 #' @return A tibble with the the similarity scores and signature metadata
@@ -63,9 +68,9 @@ investigateSignature <- function(expr,
 
     exprSignature <- expr %>%
         prepareSignature(
-            gene_column = geneColumn,
-            logfc_column = logfcColumn,
-            pval_column = pvalColumn
+            geneColumn = geneColumn,
+            logfcColumn = logfcColumn,
+            pvalColumn = pvalColumn
         )
 
     signatureId <- unique(exprSignature[["signatureID"]])
@@ -86,10 +91,10 @@ investigateSignature <- function(expr,
             )
 
         concordantUp <- filteredUp %>%
-            getConcordants(ilincs_library = outputLib, sig_direction = "Up")
+            getConcordants(ilincsLibrary = outputLib, sigDirection = "Up")
 
         concordantDown <- filteredDown %>%
-            getConcordants(ilincs_library = outputLib, sig_direction = "Down")
+            getConcordants(ilincsLibrary = outputLib, sigDirection = "Down")
 
 
         consensusTargets <-
@@ -97,7 +102,7 @@ investigateSignature <- function(expr,
                 concordantUp,
                 concordantDown,
                 paired = paired,
-                cell_line = outputCellLines,
+                cellLine = outputCellLines,
                 cutoff = similarityThreshold
             )
     } else {
@@ -109,13 +114,13 @@ investigateSignature <- function(expr,
             )
 
         concordants <- filtered %>%
-            getConcordants(ilincs_library = outputLib)
+            getConcordants(ilincsLibrary = outputLib)
 
         consensusTargets <-
             consensusConcordants(
                 concordants,
                 paired = paired,
-                cell_line = outputCellLines,
+                cellLine = outputCellLines,
                 cutoff = similarityThreshold
             )
     }
@@ -126,7 +131,6 @@ investigateSignature <- function(expr,
             Source = sourceName,
             SourceCellLine = sourceCellLine,
             SourceTime = sourceTime,
-            InputSignatureDirection = sigDirection
         ) %>%
         dplyr::select(
             dplyr::any_of(c(

@@ -57,15 +57,15 @@ filterSignature <- function(signature, direction = "any",
 
     if (direction == "up") {
         filtered <- signature %>%
-            dplyr::filter(.data[["Value_LogDiffExp"]] >= up_threshold)
+            dplyr::filter(.data[["Value_LogDiffExp"]] >= upThreshold)
     } else if (direction == "down") {
         filtered <- signature %>%
-            dplyr::filter(.data[["Value_LogDiffExp"]] <= down_threshold)
+            dplyr::filter(.data[["Value_LogDiffExp"]] <= downThreshold)
     } else {
         filtered <- signature %>%
             dplyr::filter(
-                .data[["Value_LogDiffExp"]] >= up_threshold |
-                    .data[["Value_LogDiffExp"]] <= down_threshold
+                .data[["Value_LogDiffExp"]] >= upThreshold |
+                    .data[["Value_LogDiffExp"]] <= downThreshold
             )
     }
 

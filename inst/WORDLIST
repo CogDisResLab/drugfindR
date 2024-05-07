@@ -1824,6 +1824,7 @@ concordants
 Config
 Conivaptan
 conn
+consensusConcordants
 contIntegration
 COPA
 COPB
@@ -1860,6 +1861,7 @@ CPHXL
 CPLANE
 CPLX
 CPM
+cpMetadata
 CPN
 CPNE
 Cpnq
@@ -2934,6 +2936,7 @@ ENTHD
 Entinostat
 ENTPD
 ENTR
+entrypoint
 ENY
 Enzalutamide
 Enzastaurin
@@ -3321,6 +3324,7 @@ FIGNL
 fileSize
 FILIP
 FILNC
+filterSignature
 Finasteride
 Fingolimod
 FIP
@@ -3666,6 +3670,8 @@ Geraniol
 Geranyl
 Geranylgeraniol
 Gestrinone
+getConcordants
+getSignature
 GF
 GFAP
 GFER
@@ -4542,6 +4548,8 @@ INSYN
 INTS
 INTU
 INV
+investigateSignature
+investigateTarget
 INVS
 io
 Iobenguane
@@ -4797,6 +4805,7 @@ KD
 KDELR
 KDF
 KDM
+kdMetadata
 KDR
 KDSR
 KEAP
@@ -6579,6 +6588,7 @@ ODF
 Odq
 ODR
 OEAWH
+oeMetadata
 OEMND
 OEPX
 OEPXT
@@ -7481,6 +7491,7 @@ Preladenant
 PRELID
 PRELP
 Prenylamine
+prepareSignature
 PREPL
 PRESTWICK
 PREX
@@ -8318,6 +8329,7 @@ SAMMSON
 SAMSN
 SAPCD
 Sapitinib
+sAPP
 Sappanone
 Saquinavir
 SAQUINAVIR

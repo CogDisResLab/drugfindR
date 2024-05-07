@@ -5,7 +5,7 @@ library(tibble)
 
 ## Create Empty Signature
 
-empty_signature <- function() {
+emptySignature <- function() {
     tibble::tibble(
         signatureID = rep(NA, 978L),
         ID_geneid = rep(NA, 978L),
@@ -17,94 +17,116 @@ empty_signature <- function() {
 
 ## Signature Column names
 
-signature_col_names <- function() {
-    colnames(empty_signature())
+signatureColNames <- function() {
+    colnames(emptySignature())
 }
 
 ## Return an example signature
 
-example_signature <- function() {
-    rds_path <- file.path(test_path(), "fixtures", "example_signature.RDS")
-    if (file.exists(rds_path)) {
-        readr::read_rds(rds_path)
+exampleSignature <- function() {
+    rdsPath <- file.path(test_path(), "fixtures", "exampleSignature.RDS")
+    if (file.exists(rdsPath)) {
+        readr::read_rds(rdsPath)
     } else {
-        get_signature("LINCSKD_28") |>
-            saveRDS(file = rds_path)
+        getSignature("LINCSKD_28") |>
+            saveRDS(file = rdsPath)
     }
 }
 
 ## Generate concordants for a signature
 
-concordants_cp <- function() {
-    rds_path <- file.path(test_path(), "fixtures", "concordants_cp.RDS")
-    if (file.exists(rds_path)) {
-        readr::read_rds(rds_path)
+concordantsCp <- function() {
+    rdsPath <- file.path(test_path(), "fixtures", "concordantsCp.RDS")
+    if (file.exists(rdsPath)) {
+        readr::read_rds(rdsPath)
     } else {
-        get_concordants(
+        getConcordants(
             {
-                example_signature() |> filter_signature(threshold = 1.0)
+                exampleSignature() |> filterSignature(threshold = 1.0)
             },
             "CP",
             "any"
         ) |>
-            saveRDS(file = rds_path, compress = "xz")
+            saveRDS(file = rdsPath, compress = "xz")
     }
 }
 
-concordants_cp_paired <- function() {
-    rds_path <- file.path(test_path(), "fixtures", "concordants_cp_paired.RDS")
-    if (file.exists(rds_path)) {
-        readr::read_rds(rds_path)
+concordantsCpPaired <- function() {
+    rdsPath <- file.path(test_path(), "fixtures", "concordantsCpPaired.RDS")
+    if (file.exists(rdsPath)) {
+        readr::read_rds(rdsPath)
     } else {
-        signature_upregulated <- example_signature() |>
-            filter_signature(threshold = 1.0, direction = "up")
-        signature_downregulated <- example_signature() |>
-            filter_signature(threshold = 1.0, direction = "down")
-        up_concordants <- get_concordants(
-            signature_upregulated,
+        signatureUpregulated <- exampleSignature() |>
+            filterSignature(threshold = 1.0, direction = "up")
+        signatureDownregulated <- exampleSignature() |>
+            filterSignature(threshold = 1.0, direction = "down")
+        upConcordants <- getConcordants(
+            signatureUpregulated,
             "CP",
             "up"
         )
-        down_concordants <- get_concordants(
-            signature_downregulated,
+        downConcordants <- getConcordants(
+            signatureDownregulated,
             "CP",
             "down"
         )
-        list(up_concordants, down_concordants) |>
-            saveRDS(file = rds_path, compress = "xz")
+        list(upConcordants, downConcordants) |>
+            saveRDS(file = rdsPath, compress = "xz")
     }
 }
 
-concordants_oe <- function() {
-    rds_path <- file.path(test_path(), "fixtures", "concordants_oe.RDS")
-    if (file.exists(rds_path)) {
-        readr::read_rds(rds_path)
+concordantsOe <- function() {
+    rdsPath <- file.path(test_path(), "fixtures", "concordantsOe.RDS")
+    if (file.exists(rdsPath)) {
+        readr::read_rds(rdsPath)
     } else {
-        get_concordants(
+        getConcordants(
             {
-                example_signature() |> filter_signature(threshold = 1.0)
+                exampleSignature() |> filterSignature(threshold = 1.0)
             },
             "OE",
             "any"
         ) |>
-            saveRDS(file = rds_path, compress = "xz")
+            saveRDS(file = rdsPath, compress = "xz")
+    }
+}
+
+consensusConcordantsCpPaired <- function() {
+    rdsPath <- file.path(
+        test_path(),
+        "fixtures",
+        "consensusConcordantsCpPaired.RDS"
+    )
+    if (file.exists(rdsPath)) {
+        readr::read_rds(rdsPath)
+    } else {
+        concordants <- concordantsCpPaired()
+        upConcordants <- concordants[[1L]]
+        downConcordants <- concordants[[2L]]
+        consensusConcordants(upConcordants, downConcordants,
+            paired = TRUE
+        ) |>
+            saveRDS(file = rdsPath, compress = "xz")
     }
 }
 
 # Concordants Column Names
 
-concordants_col_names <- function() {
-    colnames(concordants_cp())
+concordantsColNames <- function() {
+    colnames(concordantsCp())
 }
 
 ## Consensus CP Concordants Column Names
 
-consensus_concordants_col_names <- function() { # nolint: object_length_linter.
-    colnames(consensus_concordants(concordants_cp()))
+consensusConcordantsColNames <- function() { # nolint: object_length_linter.
+    c(
+        "TargetSignature", "Target", "TargetCellLine",
+        "TargetTime", "TargetConcentration", "Similarity", "SignatureDirection"
+    )
 }
 
 ## Consensus OE Concordants Column Names
 
-consensus_concordants_oe_col_names <- function() { # nolint: object_length_linter, line_length_linter.
-    colnames(consensus_concordants(concordants_oe()))
+consensusConcordantsOeColNames <- function() { # nolint: object_length_linter, line_length_linter.
+    colnames(consensusConcordants(concordantsOe()))
 }

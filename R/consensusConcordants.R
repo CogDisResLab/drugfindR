@@ -1,6 +1,6 @@
 #' Rename the Target-Related Columns
 #'
-#' @param input_names A character vector of input_names
+#' @param inputNames A character vector of input_names
 #'
 #' @return A character vector of new names
 #'
@@ -10,12 +10,13 @@ targetRename <- function(inputNames) {
     if ("treatment" %in% inputNames) {
         newCols <- c(
             "TargetSignature", "Target", "TargetCellLine",
-            "TargetTime", "Similarity", "sig_direction"
+            "TargetTime", "Similarity", "SignatureDirection"
         )
     } else {
         newCols <- c(
             "TargetSignature", "Target", "TargetCellLine",
-            "TargetTime", "TargetConcentration", "Similarity", "sig_direction"
+            "TargetTime", "TargetConcentration", "Similarity",
+            "SignatureDirection"
         )
     }
 
@@ -36,7 +37,7 @@ targetRename <- function(inputNames) {
 #' @param paired Logical indicating whether you split the
 #' dataframes by up and down regulated in prior analysis
 #' @param cutoff A similarity cutoff value. Defaults to 0.321
-#' @param cell_line A character vector of Cell Lines you are interested in.
+#' @param cellLine A character vector of Cell Lines you are interested in.
 #'
 #' @return A tibble with the filtered and deduplicated results
 #' @export
@@ -52,13 +53,14 @@ consensusConcordants <- function(...,
                                  paired = FALSE,
                                  cutoff = 0.321,
                                  cellLine = NULL) {
-    if (paired && length(list(...)) != 2L) {
+    dots <- list(...)
+    if (paired && length(dots) != 2L) {
         stop("Paired analysis requires two data frames")
-    } else if (!paired && length(list(...)) != 1L) {
+    } else if (!paired && length(dots) != 1L) {
         stop("Unpaired analysis requires only one dataframe")
     }
 
-    concordants <- dplyr::bind_rows(list(...))
+    concordants <- dplyr::bind_rows(dots)
 
     if (!is.null(cellLine)) {
         concordants <- concordants %>%

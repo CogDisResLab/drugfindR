@@ -8,7 +8,7 @@
 #' if you are trying to retrieve a different transcriptomic signature, that is also supported
 #' by setting the `l1000` parameter to `FALSE`.
 #'
-#' @param sig_id character. The ilincs signature_id
+#' @param sigId character. The ilincs signature_id
 #' @param l1000 boolean. If you have a known l1000 signature
 #'
 #' @return a tibble with the L1000 Signature
@@ -36,7 +36,7 @@ getSignature <- function(sigId, l1000 = TRUE) {
     if (l1000) {
         numGenes <- 978L
     } else {
-        numGenes <- 25000L
+        numGenes <- 25000L # TODO - Change this to `Inf` to ensure all genes are returned
     }
 
     query <- list(sigID = sigId, noOfTopGenes = numGenes)

@@ -9,9 +9,9 @@
 #'
 #' @param dge A dataframe-like object that has the differential
 #' gene expression information
-#' @param gene_column The name of the column that has gene symbols
-#' @param logfc_column The name of the column that has log_2 fold-change values
-#' @param pval_column  The name of the column that has p-values
+#' @param geneColumn The name of the column that has gene symbols
+#' @param logfcColumn The name of the column that has log_2 fold-change values
+#' @param pvalColumn  The name of the column that has p-values
 #'
 #' @return A tibble with the L1000 signature.
 #' @export
@@ -27,15 +27,15 @@ prepareSignature <- function(dge,
                              logfcColumn = "logFC",
                              pvalColumn = "PValue") {
     if (!geneColumn %in% names(dge)) {
-        stop("gene_column should be present in the dataframe")
+        stop("geneColumn should be present in the dataframe")
     }
 
     if (!logfcColumn %in% names(dge)) {
-        stop("logfc_column should be present in the dataframe")
+        stop("logfcColumn should be present in the dataframe")
     }
 
     if (!pvalColumn %in% names(dge) && !is.na(pvalColumn)) {
-        stop("pval_column should be present in the dataframe")
+        stop("pvalColumn should be present in the dataframe")
     }
 
     if (!is.na(pvalColumn)) {

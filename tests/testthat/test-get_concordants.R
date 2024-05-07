@@ -1,13 +1,13 @@
-# Test the `get_concordants` function
+# Test the `getConcordants` function
 
 # Test Invalid inputs
 
 test_that("Input signature must be a data frame or data frame like object", {
-    expect_error(get_concordants("LINCSKD_28"))
+    expect_error(getConcordants("LINCSKD_28"))
 })
 
 test_that("Library must be one of 'OE', 'KD' or 'CP'", {
-    expect_error(get_concordants(example_signature(), "INVALID"))
+    expect_error(getConcordants(exampleSignature(), "INVALID"))
 })
 
 # Test invalid signature
@@ -18,20 +18,20 @@ test_that("Function errors if it receives an error response", {
     ) |>
         webmockr::to_return(status = 500L)
     webmockr::httr_mock()
-    expect_error(get_concordants(example_signature()))
+    expect_error(getConcordants(exampleSignature()))
     webmockr::httr_mock(FALSE)
 })
 
 
 # Test valid signature
 
-test_that("get_concordants correct value", {
-    input_signature <- example_signature() |>
-        filter_signature(threshold = 1.0)
-    concordants_list <- get_concordants(input_signature, "CP", "any")
-    expect_s3_class(concordants_list, "tbl_df")
-    expect_equal(concordants_list, concordants_cp(), tolerance = 1e-12)
-    expect_identical(ncol(concordants_list), 8L)
-    expect_identical(nrow(concordants_list), 14337L)
-    expect_identical(unique(concordants_list[["sig_direction"]]), "any")
+test_that("getConcordants correct value", {
+    inputSignature <- exampleSignature() |>
+        filterSignature(threshold = 1.0)
+    concordantsList <- getConcordants(inputSignature, "CP", "any")
+    expect_s3_class(concordantsList, "tbl_df")
+    expect_equal(concordantsList, concordantsCp(), tolerance = 1e-12)
+    expect_identical(ncol(concordantsList), 8L)
+    expect_identical(nrow(concordantsList), 14337L)
+    expect_identical(unique(concordantsList[["sig_direction"]]), "any")
 })

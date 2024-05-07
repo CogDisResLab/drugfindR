@@ -1,3 +1,8 @@
+#' @include utilities.R
+#' @include getSignature.R prepareSignature.R
+#' @include getConcordants.R consensusConcordants.R filterSignature.R
+NULL
+
 #' Investigate a Given Gene or Drug
 #'
 #' `r lifecycle::badge("experimental")`
@@ -7,15 +12,15 @@
 #' from and then queries iLINCS to get concordant signatures
 #'
 #' @param target The name of the gene or drug
-#' @param input_lib One of "OE", "KD" or "CP". Marks the database to use.
-#' @param output_lib One of "OE", "KD" or "CP". Marks the database to query.
-#' @param filter_threshold The Filtering threshold.
-#' @param similarity_threshold The Similarity Threshold
+#' @param inputLib One of "OE", "KD" or "CP". Marks the database to use.
+#' @param outputLib One of "OE", "KD" or "CP". Marks the database to query.
+#' @param filterThreshold The Filtering threshold.
+#' @param similarityThreshold The Similarity Threshold
 #' @param paired Logical. Whether to query iLINCS separately
 #' for up and down regulated genes
-#' @param input_cell_lines A character vector of cell lines to
+#' @param inputCellLines A character vector of cell lines to
 #' restrict our search for input signatures to.
-#' @param output_cell_lines A character vetor of cell lines to
+#' @param outputCellLines A character vetor of cell lines to
 #' restrict the output search to.
 #' @param discordant Logical. Whether to look for discordant signatures
 #'
@@ -42,9 +47,6 @@ investigateTarget <- function(target,
         stop("Both input and output libraries must be one of 'OE', 'KD', 'CP'")
     }
 
-    if (missing(inputLib) || missing(outputLib)) {
-        stop("Please specify both input and output libraries")
-    }
 
     if (inputLib == "OE") {
         inputMetadata <- oeMetadata # nolint: object_usage_linter.
@@ -53,7 +55,7 @@ investigateTarget <- function(target,
     } else if (inputLib == "CP") {
         inputMetadata <- cpMetadata # nolint: object_usage_linter.
     } else {
-        stop("Invalid input_lib")
+        stop("Invalid inputLib")
     }
 
 
@@ -66,7 +68,7 @@ investigateTarget <- function(target,
             dplyr::filter(.data[["SourceCellLine"]] %in% inputCellLines) %>%
             dplyr::pull(.data[["SourceSignature"]])
     } else {
-        filteredSignatureIds <- input_metadata %>%
+        filteredSignatureIds <- inputMetadata %>%
             dplyr::filter(
                 stringr::str_to_lower(target) ==
                     stringr::str_to_lower(.data[["Source"]])
@@ -104,7 +106,7 @@ investigateTarget <- function(target,
             concordantUp, concordantDown,
             ~ consensusConcordants(.x, .y,
                 paired = paired,
-                cell_line = outputCellLines,
+                cellLine = outputCellLines,
                 discordant = discordant,
                 cutoff = similarityThreshold
             )
@@ -123,7 +125,7 @@ investigateTarget <- function(target,
             concordants,
             ~ consensusConcordants(.x,
                 paired = paired,
-                cell_line = outputCellLines,
+                cellLine = outputCellLines,
                 discordant = discordant,
                 cutoff = similarityThreshold
             )
@@ -132,7 +134,7 @@ investigateTarget <- function(target,
 
     augmented <- consensusTargets %>%
         purrr::map2(
-            filtered_signature_ids,
+            filteredSignatureIds,
             ~ dplyr::mutate(.x, SourceSignature = .y)
         ) %>%
         purrr::map_dfr(~ dplyr::inner_join(.x,

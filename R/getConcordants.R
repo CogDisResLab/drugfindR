@@ -9,9 +9,9 @@
 #'
 #' @param signature A data frame with the names of genes, their expression value
 #' and optionally their p-value
-#' @param ilincs_library The Library you want to search.
+#' @param ilincsLibrary The Library you want to search.
 #' Must be one of "OE", "KD" or "CP"
-#' @param sig_direction The direction of the signature.
+#' @param sigDirection The direction of the signature.
 #' Must be one of "Up" or "Down"
 #' for Overexpression, Knockdown or Chemical Perturbagens
 #'
@@ -50,7 +50,7 @@ getConcordants <- function(signature, ilincsLibrary = "CP",
 
     url <- "http://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze"
     query <- list(lib = libMap[ilincsLibrary])
-    body <- list(file = httr::upload_file(signature_file))
+    body <- list(file = httr::upload_file(signatureFile))
 
     request <- httr::POST(url, query = query, body = body)
 

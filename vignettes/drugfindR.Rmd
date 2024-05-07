@@ -57,18 +57,18 @@ two primary use cases:
 ## Package Design
 
 This pacakge provides two different ways to achieve these use cases. First, there is a set of five
-functions that can be deployed in a pipeline for the results. Then, there are two functions `investiage_target()` and
-`investigate_signature()` that perform the entire pipeline in one function call with sensible defaults.
+functions that can be deployed in a pipeline for the results. Then, there are two functions `investiageTarget()` and
+`investigateSignature()` that perform the entire pipeline in one function call with sensible defaults.
 
 ### Pipeline Components
 
 The five pipeline functions are:
 
-1. `get_signature()`: This function takes a LINCS ID and returns the corresponding signature.
-2. `prepare_signature()`: This function takes a transcriptomic signature and prepares it for analysis by `drugfindR`.
-3. `filter_signature()`: This function takes a signature and filters it to given thresholds.
-4. `get_concordants()`: This function takes a signature and returns the concordant signatures from the iLINCS database.
-5. `consensus_concordants()`: This function takes a list of concordant signatures and returns a list of consensus signature.
+1. `getSignature()`: This function takes a LINCS ID and returns the corresponding signature.
+2. `prepareSignature()`: This function takes a transcriptomic signature and prepares it for analysis by `drugfindR`.
+3. `filterSignature()`: This function takes a signature and filters it to given thresholds.
+4. `getConcordants()`: This function takes a signature and returns the concordant signatures from the iLINCS database.
+5. `consensusConcordants()`: This function takes a list of concordant signatures and returns a list of consensus signature.
 
 ## Use Case 1: Identifying Candidate Drugs from an Input Signature
 
@@ -105,20 +105,20 @@ of what you would get from [edgeR](https://bioconductor.org/packages/release/bio
 
 The next step is to prepare the signature for analysis by `drugfindR`. This step is necessary because the signature
 can be in many different formats, with different names for columns. iLICNS needs columns to be in a specific order
-and with specific names. The `prepare_signature()` function takes care of this for us.
+and with specific names. The `prepareSignature()` function takes care of this for us.
 
-`prepare_signature()` takes three optional arguments:
+`prepareSignature()` takes three optional arguments:
 
-1. `gene_column`: The name of the column in the input that contains the gene names. The default is `"Symbol"`.
-2. `logfc_column`: The name of the column in the input that contains the log fold change values. The default is `"logFC"`.
-3. `pval_column`: The name of the column in the input that contains the p-values. The default is `"PValue"`.
+1. `geneColumn`: The name of the column in the input that contains the gene names. The default is `"Symbol"`.
+2. `logfcColumn`: The name of the column in the input that contains the log fold change values. The default is `"logFC"`.
+3. `pvalColumn`: The name of the column in the input that contains the p-values. The default is `"PValue"`.
 
-```{r prepare_signature}
+```{r prepareSignature}
 # Prepare the signature for analysis
 # The only thing that is different from the defaults is the gene_column
 # However, we will specify all three arguments for clarity
 
-signature <- prepare_signature(diffexp, gene_column = "hgnc_symbol", logfc_column = "logFC", pval_column = "PValue")
+signature <- prepareSignature(diffexp, geneColumn = "hgnc_symbol", logfcColumn = "logFC", pvalColumn = "PValue")
 
 # Take a look at the signature
 
@@ -134,35 +134,35 @@ is now `names(signature)[2]`, and the third column is now `names(signature)[3]`,
 Now that we have the signature in the correct format and filtered to the L1000 genes, we can filter it to the thresholds
 that we want. This filter step is necessary because we would like to use the genes that have a high enough change for it to matter.
 
-The `filter_signature()` function can filter based on logFC values in two ways:
+The `filterSignature()` function can filter based on logFC values in two ways:
 
 1. Absolute Threshold: You can give an absolute threshold (or a pair of absolute thresholds) for the logFC values. Any genes
 that do not meet the threshold will be removed from the signature.
 2. Percentile Threshold: You can give a percentile threshold (or a pair of percentile thresholds) for the logFC values. Any genes
 that do not meet the threshold will be removed from the signature.
 
-The `filter_signature()` function takes three arguments:
+The `filterSignature()` function takes three arguments:
 
 1. `signature`: The signature to filter.
 2. `direction`: This argument specifies whether to filter for upregulated genes, downregulated genes, or both. The default is `"any"`.
 3. One of `threshold` or `prop`: The threshold argument is used to specify an absolute threshold (or a pair of absolute thresholds) for the logFC values.
 The prop argument is used to specify a percentile threshold (or a pair of percentile thresholds) for the logFC values. They can not be specified together.
 
-```{r filter_signature_up}
+```{r filterSignatureUp}
 # Filter the signature to only include genes that are upregulated by at least 1.5 logFC
 
-filtered_signature_up <- filter_signature(signature, direction = "up", threshold = 1.5)
+filteredSignatureUp <- filterSignature(signature, direction = "up", threshold = 1.5)
 
-filtered_signature_up |>
+filteredSignatureUp |>
     head() |>
     knitr::kable()
 ```
 
-```{r filter_signature_dn}
+```{r filterSignature_dn}
 # Filter the signature to only include genes that are downregulated by at least 1.5 logFC
-filtered_signature_dn <- filter_signature(signature, direction = "down", threshold = 1.5)
+filteredSignatureDn <- filterSignature(signature, direction = "down", threshold = 1.5)
 
-filtered_signature_dn |>
+filteredSignatureDn |>
     head() |>
     knitr::kable()
 ```
@@ -170,29 +170,29 @@ filtered_signature_dn |>
 ### Step 4: Get the Concordant Signatures
 
 Now that we have the filtered signatures for both upregulated and downregulated genes, we can get the concordant signatures
-from the iLINCS database. The `get_concordants()` function takes a signature and returns the concordant signatures from the iLINCS database.
+from the iLINCS database. The `getConcordants()` function takes a signature and returns the concordant signatures from the iLINCS database.
 It also requires specification of the database to target for the concordant signatures.
 
-The `get_concordants()` function takes the following arguments:
+The `getConcordants()` function takes the following arguments:
 
 1. `signature`: The signature to get concordant signatures for.
-2. `ilincs_library`: The iLINCS library to target for concordant signatures. This can be one of c("OE", "KD", "CP"), standing for overexpression, knockdown, and chemical perturbagens, respectively.
+2. `ilincsLibrary`: The iLINCS library to target for concordant signatures. This can be one of c("OE", "KD", "CP"), standing for overexpression, knockdown, and chemical perturbagens, respectively.
 3. `direction`: This argument specifies whether the input signature is upregulated or downregulated. This is useful to annotate the output. This is `NULL` by default.
 
-```{r get_concordants}
+```{r getConcordants}
 # Get the concordant signatures for the upregulated signature
 
-up_concordants <- get_concordants(filtered_signature_up, ilincs_library = "CP", sig_direction = "up")
+upConcordants <- getConcordants(filteredSignatureUp, ilincsLibrary = "CP", sigDirection = "up")
 
-up_concordants |>
+upConcordants |>
     head() |>
     knitr::kable()
 
 # Get the concordant signatures for the downregulated signature
 
-dn_concordants <- get_concordants(filtered_signature_dn, ilincs_library = "CP", sig_direction = "down")
+dnConcordants <- getConcordants(filteredSignatureDn, ilincsLibrary = "CP", sigDirection = "down")
 
-dn_concordants |>
+dnConcordants |>
     head() |>
     knitr::kable()
 ```
@@ -200,7 +200,7 @@ dn_concordants |>
 ### Step 5: Get the list of Consensus Concordant Signatures
 
 Now that we have the concordant signatures for both the upregulated and downregulated signatures, we can get the list of consensus
-concordant signatures. The `consensus_concordants()` function takes a list of concordant signatures and returns a list of consensus signatures.
+concordant signatures. The `consensusConcordants()` function takes a list of concordant signatures and returns a list of consensus signatures.
 This function also takes a number of optional arguments that can be used to control the consensus list generation.
 
 By default the consensus list performs the following steps:
@@ -210,17 +210,17 @@ By default the consensus list performs the following steps:
 
 Additionally we can filter by the cell line to only include the cell lines of interest.
 
-The `consensus_concordants()` function takes the following arguments:
+The `consensusConcordants()` function takes the following arguments:
 
 1. `...`: One or Two (see paired) Data Frames with the concordants
 2. `paired`: A logical value indicating whether the input is a single data frame with paired signatures or two data frames with unpaired signatures. The default is `FALSE`.
-3. `cell_lines`: A character vector of cell lines to filter the consensus list to. The default is `NULL`, which means no filtering.
+3. `cellLines`: A character vector of cell lines to filter the consensus list to. The default is `NULL`, which means no filtering.
 4. `cutoff`: The absolute cutoff value of similarity to use when filtering the consensus list. The default is `0.321`.
 
-```{r consensus_concordants}
+```{r consensusConcordants}
 # Get the consensus concordant signatures for the upregulated signature
 
-consensus <- consensus_concordants(up_concordants, dn_concordants, paired = TRUE, cutoff = 0.2)
+consensus <- consensusConcordants(upConcordants, dnConcordants, paired = TRUE, cutoff = 0.2)
 
 consensus |>
     head() |>
@@ -230,33 +230,33 @@ consensus |>
 ### Alternate One-Step Method
 
 The above method breaks down the entire method into five steps. However, `drugfindR` also provides two functions that perform the entire
-pipeline in one function call with sensible defaults. These functions are `investigate_target()` and `investigate_signature()`.
+pipeline in one function call with sensible defaults. These functions are `investigate_target()` and `investigateSignature()`.
 
-For this use case, `investigate_signature()` is the function that we want to use. It takes the following required arguments:
+For this use case, `investigateSignature()` is the function that we want to use. It takes the following required arguments:
 
 1. `expr`: The signature to investigate.
-2. `output_lib`: The iLINCS library to target for concordant signatures. This can be one of c("OE", "KD", "CP"), standing for overexpression, knockdown, and chemical perturbagens, respectively.
-3. `filter_threshold`: The absolute threshold (or a pair of absolute thresholds) for the logFC values. Any genes that do not meet the threshold will be removed from the signature.
-4. `filter_prop`: The percentile threshold (or a pair of percentile thresholds) for the logFC values. Any genes that do not meet the threshold will be removed from the signature.
+2. `outputLib`: The iLINCS library to target for concordant signatures. This can be one of c("OE", "KD", "CP"), standing for overexpression, knockdown, and chemical perturbagens, respectively.
+3. `filterThreshold`: The absolute threshold (or a pair of absolute thresholds) for the logFC values. Any genes that do not meet the threshold will be removed from the signature.
+4. `filterProp`: The percentile threshold (or a pair of percentile thresholds) for the logFC values. Any genes that do not meet the threshold will be removed from the signature.
 
 Other arguments that have sensible defaults are:
 
-1. `similarity_threshold`: The absolute cutoff value of similarity to use when filtering the consensus list. The default is `0.2`.
+1. `similarityThreshold`: The absolute cutoff value of similarity to use when filtering the consensus list. The default is `0.2`.
 2. `paired`: A logical value indicating whether the to split the input dataframe in up and downregulated signatures. The default is `TRUE`.
-3. `output_cell_lines`: A character vector of cell lines to filter the consensus list to. The default is `NULL`, which means no filtering.
-4. `gene_column`: The name of the column in the input that contains the gene names. The default is `"Symbol"`.
-5. `logfc_column`: The name of the column in the input that contains the log fold change values. The default is `"logFC"`.
-6. `pval_column`: The name of the column in the input that contains the p-values. The default is `"PValue"`.
-7. `source_name`: The name of the source of the signature. The default is `"Input"`.
-8. `source_cell_line`: The cell line of the source of the signature. The default is `"NA"`.
-9. `source_time`: The time of the source of the signature. The default is `"NA"`.
-10. `source_concentration`: The concentration of the source of the signature. The default is `"NA"`.
+3. `outputCellLines`: A character vector of cell lines to filter the consensus list to. The default is `NULL`, which means no filtering.
+4. `geneColumn`: The name of the column in the input that contains the gene names. The default is `"Symbol"`.
+5. `logfcColumn`: The name of the column in the input that contains the log fold change values. The default is `"logFC"`.
+6. `pvalColumn`: The name of the column in the input that contains the p-values. The default is `"PValue"`.
+7. `sourceName`: The name of the source of the signature. The default is `"Input"`.
+8. `sourceCellLine`: The cell line of the source of the signature. The default is `"NA"`.
+9. `sourceTime`: The time of the source of the signature. The default is `"NA"`.
+10. `sourceConcentration`: The concentration of the source of the signature. The default is `"NA"`.
 
 
-```{r investigate_signature}
-investigated <- investigate_signature(diffexp,
-    output_lib = "CP", filter_threshold = 1.5,
-    gene_column = "hgnc_symbol", logfc_column = "logFC", pval_column = "PValue"
+```{r investigateSignature}
+investigated <- investigateSignature(diffexp,
+    outputLib = "CP", filterThreshold = 1.5,
+    geneColumn = "hgnc_symbol", logfcColumn = "logFC", pvalColumn = "PValue"
 )
 
 investigated |>
