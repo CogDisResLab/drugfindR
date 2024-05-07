@@ -1,6 +1,6 @@
 ---
 title: "drugfindR"
-output: rmarkdown::html_vignette
+output: BiocStyle::html_document
 vignette: >
   %\VignetteIndexEntry{drugfindR}
   %\VignetteEngine{knitr::rmarkdown}

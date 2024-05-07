@@ -51,6 +51,7 @@ Depends:
     R (>= 4.4.0)
 Suggests:
     AnnotationDbi,
+    BiocStyle,
     biocthis,
     codemetar,
     devtools,
