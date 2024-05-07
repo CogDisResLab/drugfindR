@@ -21,7 +21,7 @@ library(drugfindR)
 
 ## Introduction
 
-`drugfindR` provides end-users a convenient method for accessing
+`drugfindR` provides end-users with a convenient method for accessing
 the Library of Integrated Network-Based Cellular Signatures (LINCS).
 The LINCS project aims to create a network-based understanding of biology
 by systematically cataloging changes in cellular processes, namely gene expression,
@@ -48,16 +48,16 @@ devtools::install_github("CogDisResLab/drugfindR")
 ## Use Cases
 
 `drugfindR` has multiple features that make interfacing with the iLINCS database
-and analyzing LINCS data simple and efficient. However, the package is expliclty designed for
+and analyzing LINCS data simple and efficient. However, the package is explicitly designed for
 two primary use cases:
 
-1. Using an inpur transcriptomic signagture to identify candidate drugs in the iLINCS database
+1. Using an input transcriptomic signature to identify candidate drugs in the iLINCS database
 2. Identifying drugs or other genes that are similar (or opposite) in function to a given drug or gene.
 
 ## Package Design
 
-This pacakge provides two different ways to achieve these use cases. First, there is a set of five
-functions that can be deployed in a pipeline for the results. Then, there are two functions `investiageTarget()` and
+This package provides two different ways to achieve these use cases. First, there is a set of five
+functions that can be deployed in a pipeline for the results. Then, there are two functions `investigateTarget()` and
 `investigateSignature()` that perform the entire pipeline in one function call with sensible defaults.
 
 ### Pipeline Components
@@ -75,10 +75,9 @@ The five pipeline functions are:
 For this case, we will use one of the signatures that was used in the paper
 ["Identification of candidate repurposable drugs to combat COVID‑19 using a signature‑based approach" by O'Donovan, Imami, et al](https://www.nature.com/articles/s41598-021-84044-9).
 
-In that paper  the authors used the available gene expression data from cells infected with SARS-CoV-2 to identify potential
+In that paper, the authors used the available gene expression data from cells infected with SARS-CoV-2 to identify potential
 drugs that could be repurposed to treat COVID-19. We will use one of the signatures that they have provided in their paper to showcase
 how `drugfindR` can be used to identify candidate drugs from an input signature. We will use the `dCovid_diffexp.tsv` signature from the paper.
-
 
 ### Step 1: Get the Signature
 
@@ -136,7 +135,8 @@ that we want. This filter step is necessary because we would like to use the gen
 
 The `filterSignature()` function can filter based on logFC values in two ways:
 
-1. Absolute Threshold: You can give an absolute threshold (or a pair of absolute thresholds) for the logFC values. Any genes
+1. Absolute Threshold: You can give an absolute threshold (
+or a pair of absolute thresholds) for the logFC values. Any genes
 that do not meet the threshold will be removed from the signature.
 2. Percentile Threshold: You can give a percentile threshold (or a pair of percentile thresholds) for the logFC values. Any genes
 that do not meet the threshold will be removed from the signature.
@@ -208,7 +208,7 @@ By default the consensus list performs the following steps:
 1. Combine the list of concordant signatures into a single data frame.
 2. For each individual signature origin (Gene or Drug), choose the one with the largest absolute concordance value.
 
-Additionally we can filter by the cell line to only include the cell lines of interest.
+Additionally, we can filter by the cell line to only include the cell lines of interest.
 
 The `consensusConcordants()` function takes the following arguments:
 
