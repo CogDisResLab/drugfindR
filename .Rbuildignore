@@ -18,6 +18,7 @@
 ^drugfindR\.Rproj$
 ^drugfindR\.code-workspace$
 ^raw$
+^renovate\.json$
 ^renv$
 ^renv\.lock$
 ^utilities$
