@@ -89,6 +89,22 @@
       ],
       "Hash": "47e968dfe563c1b22c2e20a067ec21d5"
     },
+    "BiocStyle": {
+      "Package": "BiocStyle",
+      "Version": "2.32.0",
+      "Source": "Bioconductor",
+      "Repository": "Bioconductor 3.19",
+      "Requirements": [
+        "BiocManager",
+        "bookdown",
+        "knitr",
+        "rmarkdown",
+        "stats",
+        "utils",
+        "yaml"
+      ],
+      "Hash": "d93773e50f3776f134734d8320bec61f"
+    },
     "BiocVersion": {
       "Package": "BiocVersion",
       "Version": "3.19.1",
@@ -381,6 +397,23 @@
         "vctrs"
       ],
       "Hash": "40415719b5a479b87949f3aa0aee737c"
+    },
+    "bookdown": {
+      "Package": "bookdown",
+      "Version": "0.39",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "htmltools",
+        "jquerylib",
+        "knitr",
+        "rmarkdown",
+        "tinytex",
+        "xfun",
+        "yaml"
+      ],
+      "Hash": "cb4f7066855b6f936e8d25edc9a9cff9"
     },
     "brew": {
       "Package": "brew",
