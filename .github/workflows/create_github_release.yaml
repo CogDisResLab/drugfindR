@@ -23,5 +23,5 @@ jobs:
         id: r
       - name: debug
         run: |
-          echo "R version: ${{ steps.r.outputs.r-version }}"
+          echo "R version: ${{ steps.r.outputs.installed-r-version }}"
           echo "Platform: ${{ runner.os }}"
