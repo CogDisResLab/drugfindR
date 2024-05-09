@@ -230,7 +230,7 @@ consensus |>
 ### Alternate One-Step Method
 
 The above method breaks down the entire method into five steps. However, `drugfindR` also provides two functions that perform the entire
-pipeline in one function call with sensible defaults. These functions are `investigate_target()` and `investigateSignature()`.
+pipeline in one function call with sensible defaults. These functions are `investigateTarget()` and `investigateSignature()`.
 
 For this use case, `investigateSignature()` is the function that we want to use. It takes the following required arguments:
 
