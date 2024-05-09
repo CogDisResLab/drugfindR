@@ -658,6 +658,7 @@ ASPN
 ASPRV
 ASPSCR
 ASRGL
+assignees
 assinex
 ASTE
 Astemizole
@@ -782,6 +783,7 @@ BARHL
 Baricitinib
 BARX
 BAS
+baseBranches
 BASP
 BATF
 Batimastat
@@ -1110,6 +1112,7 @@ BugReports
 Bulleyaconitine
 Bumetanide
 bumpversion
+bumpVersion
 Bunolol
 Buparlisib
 bupivacaine
@@ -1823,6 +1826,7 @@ COMTD
 Concneorine
 concordants
 Config
+config
 Conivaptan
 conn
 consensusConcordants
@@ -2277,6 +2281,7 @@ Deoxyglucose
 Deoxyrhapontin
 Deoxyuridine
 DEPDC
+dependencyDashboard
 Dephostatin
 DEPTOR
 Deptropine
@@ -7279,6 +7284,7 @@ PLAAT
 PLAC
 PLAG
 PLAGL
+platformCommit
 Platin
 PLAU
 PLAUR
@@ -7990,6 +7996,7 @@ Reminertant
 Remoxipride
 REN
 RENBP
+renovatebot
 Repaglinide
 Reparixin
 REPIN
@@ -8463,6 +8470,7 @@ Selumetinib
 SEM
 SEMA
 Semagacestat
+semanticCommits
 Semaxanib
 SEMG
 SemVer
