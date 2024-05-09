@@ -9,9 +9,9 @@
 #'
 #' @param signature A data frame with the names of genes, their expression value
 #' and optionally their p-value
-#' @param ilincs_library The Library you want to search.
+#' @param ilincsLibrary The Library you want to search.
 #' Must be one of "OE", "KD" or "CP"
-#' @param sig_direction The direction of the signature.
+#' @param sigDirection The direction of the signature.
 #' Must be one of "Up" or "Down"
 #' for Overexpression, Knockdown or Chemical Perturbagens
 #'
@@ -28,29 +28,29 @@
 #'
 #' @examples
 #' TRUE
-get_concordants <- function(signature, ilincs_library = "CP",
-                            sig_direction = NULL) {
+getConcordants <- function(signature, ilincsLibrary = "CP",
+                           sigDirection = NULL) {
     if (!"data.frame" %in% class(signature)) {
         stop("signature must be a data frame or data frame like object")
     } else {
-        signature_file <- tempfile(pattern = "ilincs_sig", fileext = ".xls")
+        signatureFile <- tempfile(pattern = "ilincs_sig", fileext = ".xls")
         signature %>%
-            readr::write_tsv(signature_file)
+            readr::write_tsv(signatureFile)
     }
 
-    lib_map <- c(
+    libMap <- c(
         OE = "LIB_11",
         KD = "LIB_6",
         CP = "LIB_5"
     )
 
-    if (!ilincs_library %in% c("OE", "KD", "CP")) {
+    if (!ilincsLibrary %in% c("OE", "KD", "CP")) {
         stop("library must be one of 'OE', 'KD' or 'CP'")
     }
 
     url <- "http://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze"
-    query <- list(lib = lib_map[ilincs_library])
-    body <- list(file = httr::upload_file(signature_file))
+    query <- list(lib = libMap[ilincsLibrary])
+    body <- list(file = httr::upload_file(signatureFile))
 
     request <- httr::POST(url, query = query, body = body)
 
@@ -65,7 +65,7 @@ get_concordants <- function(signature, ilincs_library = "CP",
             dplyr::mutate(
                 similarity = round(.data[["similarity"]], 8L),
                 pValue = round(.data[["pValue"]], 20L),
-                sig_direction = sig_direction
+                sig_direction = sigDirection
             )
         return(concordants)
     } else {

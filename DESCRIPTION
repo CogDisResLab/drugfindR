@@ -1,6 +1,6 @@
 Package: drugfindR
 Title: Investigate iLINCS for candidate repurposable drugs
-Version: 0.99.581
+Version: 0.99.593
 Authors@R: c(
     person(given = c("Ali", "Sajid"),
            family = "Imami",
@@ -46,11 +46,12 @@ Imports:
     readr,
     stringr,
     stats,
-    lifecycle
+    lifecycle,
 Depends:
-    R (>= 4.3.0)
+    R (>= 4.4.0)
 Suggests:
     AnnotationDbi,
+    BiocStyle,
     biocthis,
     codemetar,
     devtools,
@@ -58,6 +59,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     tidyverse,
+    usethis,
     vcr (>= 0.6.0),
     webmockr
 Config/testthat/edition: 3
@@ -68,3 +70,13 @@ X-schema.org-keywords: LINCS, iLINCS, drug repurposing, drug discovery,
     transcriptomics, gene expression, gene knockdown, gene overexpression,
     chemical perturbagen, drugfindR
 X-schema.org-isPartOf: https://bioconductor.org
+Collate:
+    'consensusConcordants.R'
+    'drugfindR-package.R'
+    'filterSignature.R'
+    'getConcordants.R'
+    'getSignature.R'
+    'prepareSignature.R'
+    'utilities.R'
+    'investigateSignature.R'
+    'investigateTarget.R'

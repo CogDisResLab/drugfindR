@@ -2,7 +2,13 @@
 #'
 #' `r lifecycle::badge("experimental")`
 #'
-#' @param sig_id character. The ilincs signature_id
+#' This function acts as the entrypoint to the iLINCS database.
+#' This takes in an ID and returns the signature after making a call to the iLINCS
+#' database. The default mode for `drugfindR` is to use L1000 signatures. However,
+#' if you are trying to retrieve a different transcriptomic signature, that is also supported
+#' by setting the `l1000` parameter to `FALSE`.
+#'
+#' @param sigId character. The ilincs signature_id
 #' @param l1000 boolean. If you have a known l1000 signature
 #'
 #' @return a tibble with the L1000 Signature
@@ -16,17 +22,24 @@
 #' @importFrom purrr map_dfr
 #'
 #' @examples
-#' TRUE
-get_signature <- function(sig_id, l1000 = TRUE) {
+#' \dontrun{
+#'
+#' # Get the L1000 signature for LINCSKD_28
+#' kd_signature <- getSignature("LINCSKD_28")
+#'
+#' # Get the non-L1000 signature for EBI_1001
+#' ebi_signature <- getSignature("EBI_1001")
+#' }
+getSignature <- function(sigId, l1000 = TRUE) {
     url <- "http://www.ilincs.org/api/ilincsR/downloadSignature"
 
     if (l1000) {
-        num_genes <- 978L
+        numGenes <- 978L
     } else {
-        num_genes <- 25000L
+        numGenes <- 25000L # TODO - Change this to `Inf` to ensure all genes are returned
     }
 
-    query <- list(sigID = sig_id, noOfTopGenes = num_genes)
+    query <- list(sigID = sigId, noOfTopGenes = numGenes)
 
     request <- httr::POST(url, query = query)
 

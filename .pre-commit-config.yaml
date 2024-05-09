@@ -3,7 +3,7 @@
 exclude: '.*\.(csv|tsv|xls)$'
 repos:
 -   repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.4.0
+    rev: v0.4.2
     hooks:
     -   id: use-tidy-description
     -   id: codemeta-description-updated
@@ -17,9 +17,9 @@ repos:
           .*\.png|
           .*\.py|
           .*\.RData|
-          .*\.rds|
-          .*\.Rds|
-          .*\.RDS|
+          .*\.rd(s|a)|
+          .*\.Rd(s|a)|
+          .*\.RD(S|A)|
           .*\.Rproj|
           .*\.sh|
           (.*/|)\.gitignore|
@@ -37,6 +37,7 @@ repos:
           (.*/|)WORDLIST|
           \.github/workflows/.*|
           data/.*|
+          .*\.(gz|xz|bz2)|
           )$
     -   id: readme-rmd-rendered
     -   id: parsable-R
@@ -44,7 +45,7 @@ repos:
     -   id: no-debug-statement
     -   id: deps-in-desc
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v4.6.0
     hooks:
     -   id: check-added-large-files
         args: ['--maxkb=500']
@@ -58,8 +59,14 @@ repos:
         args:
         -   --fix=no
     -   id: trailing-whitespace
+    - id: no-commit-to-branch
+      args:
+        - --branch
+        - devel
+        - --branch
+        - RELEASE.*
 -   repo: https://github.com/compilerla/conventional-pre-commit
-    rev: v3.1.0
+    rev: v3.2.0
     hooks:
     -   args:
         -   build
@@ -78,7 +85,7 @@ repos:
         stages:
         -   commit-msg
 -   repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.5.4
+    rev: v1.5.5
     hooks:
     -   id: forbid-crlf
     -   id: remove-crlf
@@ -106,7 +113,7 @@ repos:
     -   id: codemeta-json-updated
         name: Update codemeta.json
         entry: >
-          Rscript --vanilla -e "codemetar::write_codemeta(force_update = FALSE)"
+          Rscript --vanilla -e "codemetar::write_codemeta()"
         language: system
         files: DESCRIPTION
         stages: [commit]

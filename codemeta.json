@@ -7,13 +7,13 @@
   "codeRepository": "https://github.com/CogDisResLab/drugfindR",
   "issueTracker": "https://github.com/CogDisResLab/drugfindR/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.99.581",
+  "version": "0.99.593",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.3.2 (2023-10-31)",
+  "runtimePlatform": "R version 4.4.0 (2024-04-24)",
   "author": [
     {
       "@type": "Person",
@@ -65,6 +65,18 @@
         "url": "https://www.bioconductor.org"
       },
       "sameAs": "https://bioconductor.org/packages/release/bioc/html/AnnotationDbi.html"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "BiocStyle",
+      "name": "BiocStyle",
+      "provider": {
+        "@id": "https://www.bioconductor.org",
+        "@type": "Organization",
+        "name": "Bioconductor",
+        "url": "https://www.bioconductor.org"
+      },
+      "sameAs": "https://bioconductor.org/packages/release/bioc/html/BiocStyle.html"
     },
     {
       "@type": "SoftwareApplication",
@@ -150,6 +162,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyverse"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "usethis",
+      "name": "usethis",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=usethis"
     },
     {
       "@type": "SoftwareApplication",
@@ -295,14 +319,16 @@
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": ">= 4.3.0"
+      "version": ">= 4.4.0"
     },
     "SystemRequirements": null
   },
   "applicationCategory": "Genomics",
   "isPartOf": "https://bioconductor.org",
   "keywords": ["LINCS", "iLINCS", "drugrepurposing", "drugdiscovery", "transcriptomics", "geneexpression", "geneknockdown", "geneoverexpression", "chemicalperturbagen", "drugfindR", "r", "ilincs", "bioinformatics", "bioinformatics-pipeline"],
-  "fileSize": "1867.023KB",
+  "fileSize": "1971.094KB",
   "releaseNotes": "https://github.com/CogDisResLab/drugfindR/blob/master/NEWS.md",
-  "readme": "https://github.com/CogDisResLab/drugfindR/blob/devel/README.md"
+  "readme": "https://github.com/CogDisResLab/drugfindR/blob/devel/README.md",
+  "contIntegration": ["https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml", "https://codecov.io/gh/CogDisResLab/drugfindR"],
+  "developmentStatus": "https://lifecycle.r-lib.org/articles/stages.html#experimental"
 }

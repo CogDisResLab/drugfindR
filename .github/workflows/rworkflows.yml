@@ -2,7 +2,7 @@ name: Continuous Integration / R Workflows
 on:
   workflow_dispatch:
   push:
-    branches:
+    branches-ignore:
     - master
     - main
     - RELEASE_**
@@ -26,10 +26,10 @@ jobs:
           cont: bioconductor/bioconductor_docker:devel
           rspm: https://packagemanager.rstudio.com/cran/__linux__/focal/release
         - os: macOS-latest
-          bioc: release
+          bioc: devel
           r: auto
         - os: windows-latest
-          bioc: release
+          bioc: devel
           r: auto
     steps:
     - if: ${{ env.ACT }}

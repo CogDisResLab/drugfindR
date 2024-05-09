@@ -1,27 +1,29 @@
 # Test Input Validation
 
 test_that("Not specifying threshold and prop causes error", {
-    expect_error(filter_signature(example_signature()))
+    expect_error(filterSignature(exampleSignature()))
 })
 
 test_that("Specifying both threshold and prop causes error", {
-    expect_error(filter_signature(kd_signature, threshold = 0.1, prop = 0.1))
+    expect_error(filterSignature(exampleSignature(),
+        threshold = 0.1, prop = 0.1
+    ))
 })
 
 test_that("Impty signature when filtered is empty", {
     expect_identical(
-        nrow(filter_signature(empty_signature(), threshold = 0.0)),
+        nrow(filterSignature(emptySignature(), threshold = 0.0)),
         0L
     )
 })
 
 test_that("Invalid signature direction causes error", {
-    expect_error(filter_signature(example_signature(), direction = "invalid"))
+    expect_error(filterSignature(exampleSignature(), direction = "invalid"))
 })
 
 test_that("More than two threshold values causes error", {
     expect_error(
-        filter_signature(example_signature(), threshold = c(0.0, 0.1, 0.2))
+        filterSignature(exampleSignature(), threshold = c(0.0, 0.1, 0.2))
     )
 })
 
@@ -31,19 +33,19 @@ test_that("More than two threshold values causes error", {
 
 test_that("Filter by threshold works", {
     expect_identical(
-        nrow(filter_signature(example_signature(), threshold = 0.0)),
+        nrow(filterSignature(exampleSignature(), threshold = 0.0)),
         978L
     )
 })
 
 test_that("Filter by Threshold works with non-zero threshold", {
-    filtered <- filter_signature(example_signature(), threshold = 1.0)
+    filtered <- filterSignature(exampleSignature(), threshold = 1.0)
     expect_true(all(abs(filtered[["Value_LogDiffExp"]]) >= 1.0))
 })
 
 test_that("Filter by Threshold works with non-zero threshold and explicity any", { # nolint: line_length_linter.
-    filtered <- filter_signature(
-        example_signature(),
+    filtered <- filterSignature(
+        exampleSignature(),
         threshold = 1.0, direction = "any"
     )
     expect_true(all(
@@ -52,16 +54,16 @@ test_that("Filter by Threshold works with non-zero threshold and explicity any",
 })
 
 test_that("Filter by Threshold works on up-regulated genes", {
-    filtered <- filter_signature(
-        example_signature(),
+    filtered <- filterSignature(
+        exampleSignature(),
         threshold = 1.0, direction = "up"
     )
     expect_true(all(filtered[["Value_LogDiffExp"]] >= 1.0))
 })
 
 test_that("Filter by Threshold works on down-regulated genes", {
-    filtered <- filter_signature(
-        example_signature(),
+    filtered <- filterSignature(
+        exampleSignature(),
         threshold = 1.0, direction = "down"
     )
     expect_true(all(filtered[["Value_LogDiffExp"]] <= -1.0))
@@ -70,47 +72,47 @@ test_that("Filter by Threshold works on down-regulated genes", {
 ## Testing with two threshold values
 
 test_that("Filter by Threshold works with two threshold values", {
-    filtered <- filter_signature(example_signature(), threshold = c(-0.75, 1.0))
-    filtered_up <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
-    filtered_down <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
-    expect_true(all(filtered_up[["Value_LogDiffExp"]] >= 1.0))
-    expect_true(all(filtered_down[["Value_LogDiffExp"]] <= -0.75))
+    filtered <- filterSignature(exampleSignature(), threshold = c(-0.75, 1.0))
+    filteredUp <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
+    filteredDown <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
+    expect_true(all(filteredUp[["Value_LogDiffExp"]] >= 1.0))
+    expect_true(all(filteredDown[["Value_LogDiffExp"]] <= -0.75))
     expect_identical(nrow(filtered), 458L)
 })
 
 test_that("Filter by Threshold works with two threshold values with explicit any", { # nolint: line_length_linter.
-    filtered <- filter_signature(
-        example_signature(),
+    filtered <- filterSignature(
+        exampleSignature(),
         threshold = c(-0.75, 1.0), direction = "any"
     )
-    filtered_up <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
-    filtered_down <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
-    expect_true(all(filtered_up[["Value_LogDiffExp"]] >= 1.0))
-    expect_true(all(filtered_down[["Value_LogDiffExp"]] <= -0.75))
+    filteredUp <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
+    filteredDown <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
+    expect_true(all(filteredUp[["Value_LogDiffExp"]] >= 1.0))
+    expect_true(all(filteredDown[["Value_LogDiffExp"]] <= -0.75))
     expect_identical(nrow(filtered), 458L)
 })
 
 test_that("Filter by Threshold works with two threshold values on up-regulated genes", { # nolint: line_length_linter.
-    filtered <- filter_signature(
-        example_signature(),
+    filtered <- filterSignature(
+        exampleSignature(),
         threshold = c(-0.75, 1.0), direction = "up"
     )
-    filtered_up <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
-    filtered_down <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
-    expect_true(all(filtered_up[["Value_LogDiffExp"]] >= 1.0))
-    expect_identical(nrow(filtered_down), 0L)
+    filteredUp <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
+    filteredDown <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
+    expect_true(all(filteredUp[["Value_LogDiffExp"]] >= 1.0))
+    expect_identical(nrow(filteredDown), 0L)
     expect_identical(nrow(filtered), 202L)
 })
 
 test_that("Filter by Threshold works with two threshold values on down-regulated genes", { # nolint: line_length_linter.
-    filtered <- filter_signature(
-        example_signature(),
+    filtered <- filterSignature(
+        exampleSignature(),
         threshold = c(-0.75, 1.0), direction = "down"
     )
-    filtered_up <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
-    filtered_down <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
-    expect_identical(nrow(filtered_up), 0L)
-    expect_true(all(filtered_down[["Value_LogDiffExp"]] <= -0.75))
+    filteredUp <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
+    filteredDown <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
+    expect_identical(nrow(filteredUp), 0L)
+    expect_true(all(filteredDown[["Value_LogDiffExp"]] <= -0.75))
     expect_identical(nrow(filtered), 256L)
 })
 
@@ -118,78 +120,78 @@ test_that("Filter by Threshold works with two threshold values on down-regulated
 
 test_that("Filter by proportion works", {
     expect_identical(
-        nrow(filter_signature(example_signature(), prop = 1.0)),
+        nrow(filterSignature(exampleSignature(), prop = 1.0)),
         978L
     )
 })
 
 test_that("Filter by proportion works with non-zero proportion", {
-    example_signatue_data <- example_signature()
-    example_up_threshold <- quantile(
-        example_signatue_data[["Value_LogDiffExp"]], 0.9
+    exampleSignatueData <- exampleSignature()
+    exampleUpThreshold <- quantile(
+        exampleSignatueData[["Value_LogDiffExp"]], 0.9
     )
-    example_down_threshold <- quantile(
-        example_signatue_data[["Value_LogDiffExp"]], 0.1
+    exampleDownThreshold <- quantile(
+        exampleSignatueData[["Value_LogDiffExp"]], 0.1
     )
-    filtered <- filter_signature(example_signature(), prop = 0.1)
-    filtered_up <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
-    filtered_down <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
-    expect_true(all(filtered_up[["Value_LogDiffExp"]] >= example_up_threshold))
+    filtered <- filterSignature(exampleSignature(), prop = 0.1)
+    filteredUp <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
+    filteredDown <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
+    expect_true(all(filteredUp[["Value_LogDiffExp"]] >= exampleUpThreshold))
     expect_true(
-        all(filtered_down[["Value_LogDiffExp"]] <= example_down_threshold)
+        all(filteredDown[["Value_LogDiffExp"]] <= exampleDownThreshold)
     )
 })
 
 test_that("Filter by proportion works with non-zero proportion and explicit any", { # nolint: line_length_linter.
-    example_signatue_data <- example_signature()
-    example_up_threshold <- quantile(
-        example_signatue_data[["Value_LogDiffExp"]], 0.9
+    exampleSignatueData <- exampleSignature()
+    exampleUpThreshold <- quantile(
+        exampleSignatueData[["Value_LogDiffExp"]], 0.9
     )
-    example_down_threshold <- quantile(
-        example_signatue_data[["Value_LogDiffExp"]], 0.1
+    exampleDownThreshold <- quantile(
+        exampleSignatueData[["Value_LogDiffExp"]], 0.1
     )
-    filtered <- filter_signature(
-        example_signature(),
+    filtered <- filterSignature(
+        exampleSignature(),
         prop = 0.1, direction = "any"
     )
-    filtered_up <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
-    filtered_down <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
+    filteredUp <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
+    filteredDown <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
     expect_true(
-        all(filtered_up[["Value_LogDiffExp"]] >= example_up_threshold)
+        all(filteredUp[["Value_LogDiffExp"]] >= exampleUpThreshold)
     )
     expect_true(
-        all(filtered_down[["Value_LogDiffExp"]] <= example_down_threshold)
+        all(filteredDown[["Value_LogDiffExp"]] <= exampleDownThreshold)
     )
 })
 
 test_that("Filter by proportion works on up-regulated genes", {
-    example_signatue_data <- example_signature()
-    example_up_threshold <- quantile(
-        example_signatue_data[["Value_LogDiffExp"]], 0.9
+    exampleSignatueData <- exampleSignature()
+    exampleUpThreshold <- quantile(
+        exampleSignatueData[["Value_LogDiffExp"]], 0.9
     )
-    filtered <- filter_signature(
-        example_signature(),
+    filtered <- filterSignature(
+        exampleSignature(),
         prop = 0.1, direction = "up"
     )
-    filtered_up <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
-    filtered_down <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
-    expect_true(all(filtered_up[["Value_LogDiffExp"]] >= example_up_threshold))
-    expect_identical(nrow(filtered_down), 0L)
+    filteredUp <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
+    filteredDown <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
+    expect_true(all(filteredUp[["Value_LogDiffExp"]] >= exampleUpThreshold))
+    expect_identical(nrow(filteredDown), 0L)
 })
 
 test_that("Filter by proportion works on down-regulated genes", {
-    example_signatue_data <- example_signature()
-    example_down_threshold <- quantile(
-        example_signatue_data[["Value_LogDiffExp"]], 0.1
+    exampleSignatueData <- exampleSignature()
+    exampleDownThreshold <- quantile(
+        exampleSignatueData[["Value_LogDiffExp"]], 0.1
     )
-    filtered <- filter_signature(
-        example_signature(),
+    filtered <- filterSignature(
+        exampleSignature(),
         prop = 0.1, direction = "down"
     )
-    filtered_up <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
-    filtered_down <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
-    expect_identical(nrow(filtered_up), 0L)
+    filteredUp <- filtered[filtered[["Value_LogDiffExp"]] >= 0.0, ]
+    filteredDown <- filtered[filtered[["Value_LogDiffExp"]] <= 0.0, ]
+    expect_identical(nrow(filteredUp), 0L)
     expect_true(
-        all(filtered_down[["Value_LogDiffExp"]] <= example_down_threshold)
+        all(filteredDown[["Value_LogDiffExp"]] <= exampleDownThreshold)
     )
 })

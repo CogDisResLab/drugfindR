@@ -322,5 +322,12 @@ inst/doc
 *.html
 
 # End of https://www.toptal.com/developers/gitignore/api/r,macos,archive,archives,compressedarchive,linux,git
+
+# Additional ignores
+
 /doc/
 /Meta/
+
+# Ignore overrides
+
+!inst/extdata/*

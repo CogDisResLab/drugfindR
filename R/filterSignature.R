@@ -27,8 +27,8 @@
 #'
 #' @examples
 #' TRUE
-filter_signature <- function(signature, direction = "any",
-                             threshold = NULL, prop = NULL) {
+filterSignature <- function(signature, direction = "any",
+                            threshold = NULL, prop = NULL) {
     stopifnot("data.frame" %in% class(signature))
 
     if (!is.null(threshold) && !is.null(prop)) {
@@ -42,30 +42,30 @@ filter_signature <- function(signature, direction = "any",
 
     if (!is.null(threshold)) {
         if (length(threshold) == 2L) {
-            down_threshold <- threshold[[1L]]
-            up_threshold <- threshold[[2L]]
+            downThreshold <- threshold[[1L]]
+            upThreshold <- threshold[[2L]]
         } else if (length(threshold) == 1L) {
-            down_threshold <- -threshold
-            up_threshold <- threshold
+            downThreshold <- -threshold
+            upThreshold <- threshold
         } else {
             stop("Threshold must be specified as one or two values")
         }
     } else if (!is.null(prop)) {
-        down_threshold <- quantile(signature[["Value_LogDiffExp"]], prop)
-        up_threshold <- quantile(signature[["Value_LogDiffExp"]], 1.0 - prop)
+        downThreshold <- quantile(signature[["Value_LogDiffExp"]], prop)
+        upThreshold <- quantile(signature[["Value_LogDiffExp"]], 1.0 - prop)
     }
 
     if (direction == "up") {
         filtered <- signature %>%
-            dplyr::filter(.data[["Value_LogDiffExp"]] >= up_threshold)
+            dplyr::filter(.data[["Value_LogDiffExp"]] >= upThreshold)
     } else if (direction == "down") {
         filtered <- signature %>%
-            dplyr::filter(.data[["Value_LogDiffExp"]] <= down_threshold)
+            dplyr::filter(.data[["Value_LogDiffExp"]] <= downThreshold)
     } else {
         filtered <- signature %>%
             dplyr::filter(
-                .data[["Value_LogDiffExp"]] >= up_threshold |
-                    .data[["Value_LogDiffExp"]] <= down_threshold
+                .data[["Value_LogDiffExp"]] >= upThreshold |
+                    .data[["Value_LogDiffExp"]] <= downThreshold
             )
     }
 

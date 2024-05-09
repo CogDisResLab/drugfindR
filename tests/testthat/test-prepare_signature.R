@@ -1,47 +1,47 @@
-# Test prepare_signature
+# Test prepareSignature
 
 ## Test Invalid Inputs
 
-test_that("prepare_signature throws an error if gene_column is not present", {
+test_that("prepareSignature throws an error if geneColumn is not present", {
     expect_error(
-        prepare_signature(example_signature(),
-            gene_column = "Gene",
-            logfc_column = "Value_LogDiffExp",
-            pval_column = "Significance_pvalue"
+        prepareSignature(exampleSignature(),
+            geneColumn = "Gene",
+            logfcColumn = "Value_LogDiffExp",
+            pvalColumn = "Significance_pvalue"
         ),
-        "gene_column should be present in the dataframe"
+        "geneColumn should be present in the dataframe"
     )
 })
 
-test_that("prepare_signature throws an error if logfc_column is not present", {
+test_that("prepareSignature throws an error if logfcColumn is not present", {
     expect_error(
-        prepare_signature(example_signature(),
-            gene_column = "Name_GeneSymbol",
-            logfc_column = "logFC2",
-            pval_column = "Significance_pvalue"
+        prepareSignature(exampleSignature(),
+            geneColumn = "Name_GeneSymbol",
+            logfcColumn = "logFC2",
+            pvalColumn = "Significance_pvalue"
         ),
-        "logfc_column should be present in the dataframe"
+        "logfcColumn should be present in the dataframe"
     )
 })
 
-test_that("prepare_signature throws an error if pval_column is not present", {
+test_that("prepareSignature throws an error if pvalColumn is not present", {
     expect_error(
-        prepare_signature(example_signature(),
-            gene_column = "Name_GeneSymbol",
-            logfc_column = "Value_LogDiffExp",
-            pval_column = "PValue2"
+        prepareSignature(exampleSignature(),
+            geneColumn = "Name_GeneSymbol",
+            logfcColumn = "Value_LogDiffExp",
+            pvalColumn = "PValue2"
         ),
-        "pval_column should be present in the dataframe"
+        "pvalColumn should be present in the dataframe"
     )
 })
 
 ## Test Valid Inputs With PValue
 
-test_that("prepare_signature returns a dataframe with the correct columns", {
-    signature <- prepare_signature(example_signature(),
-        gene_column = "Name_GeneSymbol",
-        logfc_column = "Value_LogDiffExp",
-        pval_column = "Significance_pvalue"
+test_that("prepareSignature returns a dataframe with the correct columns", {
+    signature <- prepareSignature(exampleSignature(),
+        geneColumn = "Name_GeneSymbol",
+        logfcColumn = "Value_LogDiffExp",
+        pvalColumn = "Significance_pvalue"
     )
     expect_named(
         signature,
@@ -56,24 +56,24 @@ test_that("prepare_signature returns a dataframe with the correct columns", {
 })
 
 test_that(
-    "prepare_signature returns a dataframe with the correct number of rows",
+    "prepareSignature returns a dataframe with the correct number of rows",
     {
-        signature <- prepare_signature(example_signature(),
-            gene_column = "Name_GeneSymbol",
-            logfc_column = "Value_LogDiffExp",
-            pval_column = "Significance_pvalue"
+        signature <- prepareSignature(exampleSignature(),
+            geneColumn = "Name_GeneSymbol",
+            logfcColumn = "Value_LogDiffExp",
+            pvalColumn = "Significance_pvalue"
         )
         expect_lte(nrow(signature), 978L)
     }
 )
 
 test_that(
-    "prepare_signature returns a dataframe with the correct gene symbols",
+    "prepareSignature returns a dataframe with the correct gene symbols",
     {
-        signature <- prepare_signature(example_signature(),
-            gene_column = "Name_GeneSymbol",
-            logfc_column = "Value_LogDiffExp",
-            pval_column = "Significance_pvalue"
+        signature <- prepareSignature(exampleSignature(),
+            geneColumn = "Name_GeneSymbol",
+            logfcColumn = "Value_LogDiffExp",
+            pvalColumn = "Significance_pvalue"
         )
         expect_true(all(signature[["Name_GeneSymbol"]] %in% l1000[["L1000"]]))
     }
@@ -82,10 +82,10 @@ test_that(
 
 ## Test Valid Inputs Without PValue
 
-test_that("prepare_signature returns a dataframe with the correct columns", {
-    signature <- prepare_signature(example_signature(),
-        gene_column = "Name_GeneSymbol",
-        logfc_column = "Value_LogDiffExp", pval_column = NA
+test_that("prepareSignature returns a dataframe with the correct columns", {
+    signature <- prepareSignature(exampleSignature(),
+        geneColumn = "Name_GeneSymbol",
+        logfcColumn = "Value_LogDiffExp", pvalColumn = NA
     )
     expect_named(
         signature,
@@ -94,24 +94,24 @@ test_that("prepare_signature returns a dataframe with the correct columns", {
 })
 
 test_that(
-    "prepare_signature returns a dataframe with the correct number of rows",
+    "prepareSignature returns a dataframe with the correct number of rows",
     {
-        signature <- prepare_signature(example_signature(),
-            gene_column = "Name_GeneSymbol",
-            logfc_column = "Value_LogDiffExp",
-            pval_column = NA
+        signature <- prepareSignature(exampleSignature(),
+            geneColumn = "Name_GeneSymbol",
+            logfcColumn = "Value_LogDiffExp",
+            pvalColumn = NA
         )
         expect_lte(nrow(signature), 978L)
     }
 )
 
 test_that(
-    "prepare_signature returns a dataframe with the correct gene symbols",
+    "prepareSignature returns a dataframe with the correct gene symbols",
     {
-        signature <- prepare_signature(example_signature(),
-            gene_column = "Name_GeneSymbol",
-            logfc_column = "Value_LogDiffExp",
-            pval_column = NA
+        signature <- prepareSignature(exampleSignature(),
+            geneColumn = "Name_GeneSymbol",
+            logfcColumn = "Value_LogDiffExp",
+            pvalColumn = NA
         )
         expect_true(all(signature[["Name_GeneSymbol"]] %in% l1000[["L1000"]]))
     }
