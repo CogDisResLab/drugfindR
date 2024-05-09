@@ -59,6 +59,12 @@ repos:
         args:
         -   --fix=no
     -   id: trailing-whitespace
+    - id: no-commit-to-branch
+      args:
+        - --branch
+        - devel
+        - --branch
+        - RELEASE.*
 -   repo: https://github.com/compilerla/conventional-pre-commit
     rev: v3.2.0
     hooks:
