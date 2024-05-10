@@ -12,20 +12,47 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  create_release:
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      tag_version: ${{ steps.get_tag.outputs.tag_version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b # v4.1.5
+      - name: Get most recent tag
+        id: get_tag
+        run: echo "tag_version=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
+      - name: Create Release
+        id: create_release
+        run: |
+          tag_version=$(grep tag_version $GITHUB_OUTPUT | cut -d'=' -f2)
+          echo "Creating release for tag $tag_version"
+          gh release create $tag_version --title "Release $tag_version" --notes "Release $tag_version" --target devel
+  create_release_artifacts:
+    needs: [create-release]
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         r_version: ['release', 'devel', 'next']
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b # v4.1.5
-      - uses: r-lib/actions/setup-r@929c772977a3a13c8733b363bf5a2f685c25dd91 # v2.9.0
+      - name: Checkout
+        uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b # v4.1.5
+      - name: Setup R
+        uses: r-lib/actions/setup-r@929c772977a3a13c8733b363bf5a2f685c25dd91 # v2.9.0
         with:
           r-version: ${{ matrix.r_version }}
           use-public-rspm: true
         id: r
+      - name: Install dependencies
+        uses: r-lib/actions/setup-renv@929c772977a3a13c8733b363bf5a2f685c25dd91 # v2.9.0
+      - name: Build Package
+        run: R CMD build --md5 .
+      - name: Rename Package
+        run: ./utilities/rename_package.sh *.tar.gz
       - name: debug
         run: |
           echo "R version: ${{ steps.r.outputs.installed-r-version }}"
           echo "Platform: ${{ runner.os }}"
+      - name: Upload Release Artifact
+        run: gh release upload ${{ needs.create-release.outputs.tag_version }} *.tar.gz
