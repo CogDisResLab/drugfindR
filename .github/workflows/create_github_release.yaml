@@ -14,6 +14,9 @@ concurrency:
 jobs:
   create-release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     outputs:
       tag_version: ${{ steps.get_tag.outputs.tag_version }}
     steps:
@@ -24,6 +27,8 @@ jobs:
         run: echo "tag_version=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
       - name: Create Release
         id: create_release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           tag_version=$(grep tag_version $GITHUB_OUTPUT | cut -d'=' -f2)
           echo "Creating release for tag $tag_version"
