@@ -15,8 +15,7 @@ jobs:
   create-release:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write
+      contents: write
     outputs:
       tag_version: ${{ steps.get_tag.outputs.tag_version }}
     steps:
