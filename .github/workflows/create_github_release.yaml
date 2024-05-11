@@ -29,10 +29,10 @@ jobs:
         id: create_release
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          TAG_VERSION: ${{ steps.get_tag.outputs.tag_version }}
         run: |
-          tag_version=$(grep tag_version $GITHUB_OUTPUT | cut -d'=' -f2)
-          echo "Creating release for tag $tag_version"
-          gh release create $tag_version --title "Release $tag_version" --notes "Release $tag_version" --target devel
+          echo "Creating release for tag $TAG_VERSION"
+          gh release create $TAG_VERSION --title "Release $TAG_VERSION" --notes "Release $TAG_VERSION" --target devel
   create_release_artifacts:
     needs: [create-release]
     strategy:
