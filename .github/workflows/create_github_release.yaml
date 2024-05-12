@@ -61,7 +61,7 @@ jobs:
       - name: Install dependencies
         uses: r-lib/actions/setup-renv@929c772977a3a13c8733b363bf5a2f685c25dd91 # v2.9.0
       - name: Build Package
-        run: R CMD build --md5 .
+        run: R CMD build .
       - name: Rename Package
         run: ./utilities/rename_package.sh *.tar.gz
       - name: debug
