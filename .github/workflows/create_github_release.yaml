@@ -67,7 +67,7 @@ jobs:
       - name: Build Package
         run: R CMD build .
       - name: Rename Package
-        run: ./utilities/rename_package.sh *.tar.gz
+        run: ./utilities/rename-package.R *.tar.gz
       - name: debug
         run: |
           echo "R version: ${{ steps.r.outputs.installed-r-version }}"
