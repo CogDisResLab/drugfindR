@@ -55,7 +55,7 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: |
           brew install libxml2 openssl curl \
-          harfbuzz fribidi pandoc
+          harfbuzz fribidi pandoc glib-openssl
       - name: Setup R
         uses: r-lib/actions/setup-r@929c772977a3a13c8733b363bf5a2f685c25dd91 # v2.9.0
         with:
