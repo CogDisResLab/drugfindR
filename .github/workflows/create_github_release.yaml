@@ -24,6 +24,7 @@ jobs:
         with:
           fetch-tags: true
       - name: Get most recent tag
+        id: get_tag
         run: echo "TAG_VERSION=$(git describe --tags --abbrev=0)" >> "$GITHUB_ENV"
       - name: Create Release
         id: create_release
@@ -31,7 +32,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           echo "Creating release for tag $TAG_VERSION"
-          gh release create $TAG_VERSION --title "Release $TAG_VERSION" --notes "Release $TAG_VERSION" --target devel
+          gh release create $TAG_VERSION --title "Release $TAG_VERSION" --notes "Release $TAG_VERSION" --target ${{ github.ref }}
   create_release_artifacts:
     needs: [create-release]
     strategy:
