@@ -33,6 +33,7 @@ jobs:
         run: |
           echo "Creating release for tag $TAG_VERSION"
           gh release create $TAG_VERSION --title "Release $TAG_VERSION" --notes "Release $TAG_VERSION" --target ${{ github.ref }}
+          echo "tag_version=$TAG_VERSION" >> "$GITHUB_OUTPUT"
   create_release_artifacts:
     needs: [create-release]
     strategy:
