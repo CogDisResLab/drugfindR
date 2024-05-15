@@ -22,7 +22,6 @@ newName <- paste(
         getRversion(),
         sep = "-"
     ),
-    R.version[["platform"]],
     paste0("v", packageVersion),
     sep = "_"
 )
