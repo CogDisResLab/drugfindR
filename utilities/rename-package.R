@@ -32,6 +32,8 @@ value <- file.rename(args[[1L]], newName)
 
 if (value) {
     message("Successfully renamed package to: ", newName)
+    cat(newName)
 } else {
     stop("Failed to rename package to: ", newName)
+    cat("")
 }
