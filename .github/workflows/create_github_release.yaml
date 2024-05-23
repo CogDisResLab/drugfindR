@@ -78,4 +78,4 @@ jobs:
       - name: Upload Release Artifact
         env:
           RELEASE_TAG: ${{ needs.create-release.outputs.tag_version }}
-        run: gh release upload $RELEASE_TAG *.tar.gz
+        run: gh release upload ${{ env.RELEASE_TAG }} ${{ env.NEWNAME }}
