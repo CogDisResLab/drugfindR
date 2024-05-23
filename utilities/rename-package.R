@@ -1,4 +1,4 @@
-#!/usr/bin/env Rscript --vanilla
+#!/usr/bin/env -S Rscript --vanilla
 
 # This script takes in a name and renames it to include the current R
 # version and the current platform. It is intended to be used to rename
