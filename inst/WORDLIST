@@ -713,6 +713,7 @@ AURKBP
 AURKC
 Austricin
 aut
+automerge
 AUY
 Avagacestat
 Avanafil
@@ -3673,6 +3674,7 @@ GeneSymbol
 GeneTargets
 Genistein
 Genz
+geometricPrecision
 Geraniol
 Geranyl
 Geranylgeraniol
@@ -4484,6 +4486,7 @@ Imami
 Imatinib
 IMD
 IMEXON
+img
 imidazo
 imidazol
 imidazolidine
@@ -5375,6 +5378,7 @@ MASCRNA
 Masitinib
 MASP
 MASTL
+matchManagers
 MATK
 MATN
 MATR
@@ -6798,6 +6802,7 @@ PABPN
 pacakge
 PACC
 PACERR
+packageRules
 PACRG
 PACRGL
 PACS

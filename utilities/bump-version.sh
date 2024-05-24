@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 # Get the commit message of the latest commit
 commit_message=$(git log -1 --pretty=%B)
