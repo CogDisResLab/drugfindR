@@ -18,6 +18,14 @@
   "pre-commit": {
     "enabled": true
   },
+  "packageRules": [
+    {
+        "automerge": true,
+        "matchManagers": [
+            "pre-commit"
+        ]
+    }
+],
   "platformCommit": true,
   "schedule": [
       "after 10pm and before 5am every weekday",
