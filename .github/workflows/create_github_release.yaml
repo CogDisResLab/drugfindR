@@ -45,7 +45,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        r_version: ['release', 'devel', 'next']
+        r_version: ['release', 'devel']
     runs-on: ubuntu-latest
     steps:
       - name: Install Act dependencies
