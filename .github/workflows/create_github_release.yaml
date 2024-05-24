@@ -17,7 +17,7 @@ jobs:
     permissions:
       contents: write
     outputs:
-      tag_version: ${{ steps.get_tag.outputs.tag_version }}
+      tag_version: ${{ steps.create_release.outputs.tag_version }}
     steps:
       - name: Install Act dependencies
         if: ${{ env.ACT }}
