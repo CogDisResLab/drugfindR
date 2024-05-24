@@ -40,6 +40,8 @@ jobs:
           echo "tag_version=$TAG_VERSION" >> "$GITHUB_OUTPUT"
   create_release_artifacts:
     needs: [create-release]
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       matrix:
@@ -78,4 +80,5 @@ jobs:
       - name: Upload Release Artifact
         env:
           RELEASE_TAG: ${{ needs.create-release.outputs.tag_version }}
+          GH_TOKEN: ${{ github.token }}
         run: gh release upload ${{ env.RELEASE_TAG }} ${{ env.NEWNAME }}
