@@ -15,7 +15,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
 
       - uses: r-lib/actions/setup-r@929c772977a3a13c8733b363bf5a2f685c25dd91 # v2
         with:
