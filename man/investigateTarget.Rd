@@ -13,8 +13,7 @@ investigateTarget(
   similarityThreshold = 0.321,
   paired = TRUE,
   inputCellLines = NULL,
-  outputCellLines = NULL,
-  discordant = FALSE
+  outputCellLines = NULL
 )
 }
 \arguments{
@@ -36,8 +35,6 @@ restrict our search for input signatures to.}
 
 \item{outputCellLines}{A character vetor of cell lines to
 restrict the output search to.}
-
-\item{discordant}{Logical. Whether to look for discordant signatures}
 }
 \value{
 A tibble with the the similarity scores and signature metadata

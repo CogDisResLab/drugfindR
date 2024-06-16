@@ -45,10 +45,12 @@ NULL
 #' )
 #'
 #' # Doing a paired analysis
-#' filteredUp <- kdSignature %>%
-#'     filterSignature(direction = "up", threshold = 0.5)
-#' filteredDown <- kdSignature %>%
-#'     filterSignature(direction = "down", threshold = -0.5)
+#' filteredUp <- filterSignature(kdSignature,
+#'     direction = "up", threshold = 0.5
+#' )
+#' filteredDown <- filterSignature(kdSignature,
+#'     direction = "down", threshold = -0.5
+#' )
 #'
 #' concordants_up <- getConcordants(filteredUp, ilincsLibrary = "KD")
 #' concordants_down <- getConcordants(filteredDown, ilincsLibrary = "KD")

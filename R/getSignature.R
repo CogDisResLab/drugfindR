@@ -26,16 +26,13 @@
 #' @examples
 #' # Get the L1000 signature for LINCSKD_28
 #' kdSignature <- getSignature("LINCSKD_28")
-#'
-#' # Get the non-L1000 signature for EBI_1001
-#' ebi_Signature <- getSignature("EBI_1001", l1000 = FALSE)
 getSignature <- function(sigId, l1000 = TRUE) {
     url <- "http://www.ilincs.org/api/ilincsR/downloadSignature"
 
     if (l1000) {
         numGenes <- 978L
     } else {
-        numGenes <- 25000L # TODO - Change this to `Inf` to ensure all genes are returned
+        numGenes <- Inf
     }
 
     query <- list(sigID = sigId, noOfTopGenes = numGenes)

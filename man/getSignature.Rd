@@ -28,7 +28,4 @@ by setting the \code{l1000} parameter to \code{FALSE}.
 \examples{
 # Get the L1000 signature for LINCSKD_28
 kdSignature <- getSignature("LINCSKD_28")
-
-# Get the non-L1000 signature for EBI_1001
-ebi_Signature <- getSignature("EBI_1001", l1000 = FALSE)
 }
