@@ -44,8 +44,7 @@ concordantsCp <- function() {
             {
                 exampleSignature() |> filterSignature(threshold = 1.0)
             },
-            "CP",
-            "any"
+            "CP"
         ) |>
             saveRDS(file = rdsPath, compress = "xz")
     }
@@ -62,13 +61,11 @@ concordantsCpPaired <- function() {
             filterSignature(threshold = 1.0, direction = "down")
         upConcordants <- getConcordants(
             signatureUpregulated,
-            "CP",
-            "up"
+            "CP"
         )
         downConcordants <- getConcordants(
             signatureDownregulated,
-            "CP",
-            "down"
+            "CP"
         )
         list(upConcordants, downConcordants) |>
             saveRDS(file = rdsPath, compress = "xz")
@@ -84,8 +81,7 @@ concordantsOe <- function() {
             {
                 exampleSignature() |> filterSignature(threshold = 1.0)
             },
-            "OE",
-            "any"
+            "OE"
         ) |>
             saveRDS(file = rdsPath, compress = "xz")
     }
@@ -121,7 +117,8 @@ concordantsColNames <- function() {
 consensusConcordantsColNames <- function() { # nolint: object_length_linter.
     c(
         "TargetSignature", "Target", "TargetCellLine",
-        "TargetTime", "TargetConcentration", "Similarity", "SignatureDirection"
+        "TargetTime", "TargetConcentration", "Similarity",
+        "SignatureDirection", "pValue"
     )
 }
 
