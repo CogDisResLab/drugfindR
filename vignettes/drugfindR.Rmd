@@ -8,7 +8,7 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(
+knitr::opts_chunk$set( # nolint: extraction_operator_linter.
     collapse = TRUE,
     comment = "#>"
 )
@@ -108,9 +108,11 @@ file.
 ```{r load_signature}
 # Load the signature from the paper
 
-diffexp <- read_tsv(system.file("extdata", "dCovid_diffexp.tsv.tar.xz",
-    package = "drugfindR"
-))
+diffexp <- read_tsv(
+    system.file("extdata", "dCovid_diffexp.tsv.tar.xz",
+        package = "drugfindR"
+    )
+)
 
 # Take a look at the signature
 

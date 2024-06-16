@@ -44,12 +44,13 @@ NULL
 #' )
 #' }
 #'
-investigateTarget <- function(target,
-                              inputLib, outputLib,
-                              filterThreshold = 0.85,
-                              similarityThreshold = 0.321,
-                              paired = TRUE, inputCellLines = NULL,
-                              outputCellLines = NULL) {
+investigateTarget <- function(
+    target,
+    inputLib, outputLib,
+    filterThreshold = 0.85,
+    similarityThreshold = 0.321,
+    paired = TRUE, inputCellLines = NULL,
+    outputCellLines = NULL) {
     libs <- c("OE", "KD", "CP")
 
     if (!inputLib %in% libs || !outputLib %in% libs) {
@@ -94,13 +95,15 @@ investigateTarget <- function(target,
 
     if (paired) {
         filteredUp <- allSignatures %>%
-            purrr::map(~ filterSignature(.x,
+            purrr::map(~ filterSignature(
+                .x,
                 direction = "up",
                 threshold = filterThreshold
             ))
 
         filteredDown <- allSignatures %>%
-            purrr::map(~ filterSignature(.x,
+            purrr::map(~ filterSignature(
+                .x,
                 direction = "down",
                 threshold = filterThreshold
             ))
@@ -121,7 +124,8 @@ investigateTarget <- function(target,
         )
     } else {
         filtered <- allSignatures %>%
-            purrr::map(~ filterSignature(.x,
+            purrr::map(~ filterSignature(
+                .x,
                 direction = "any",
                 threshold = filterThreshold
             ))
@@ -144,7 +148,8 @@ investigateTarget <- function(target,
             filteredSignatureIds,
             ~ dplyr::mutate(.x, SourceSignature = .y)
         ) %>%
-        purrr::map_dfr(~ dplyr::inner_join(.x,
+        purrr::map_dfr(~ dplyr::inner_join(
+            .x,
             inputMetadata,
             by = "SourceSignature"
         )) %>%

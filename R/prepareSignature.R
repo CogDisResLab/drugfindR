@@ -33,10 +33,11 @@
 #' )
 #'
 #' head(signature)
-prepareSignature <- function(dge,
-                             geneColumn = "Symbol",
-                             logfcColumn = "logFC",
-                             pvalColumn = "PValue") {
+prepareSignature <- function(
+    dge,
+    geneColumn = "Symbol",
+    logfcColumn = "logFC",
+    pvalColumn = "PValue") {
     if (!geneColumn %in% names(dge)) {
         stop("geneColumn should be present in the dataframe")
     }

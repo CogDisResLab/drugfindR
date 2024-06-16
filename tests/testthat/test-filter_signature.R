@@ -5,7 +5,8 @@ test_that("Not specifying threshold and prop causes error", {
 })
 
 test_that("Specifying both threshold and prop causes error", {
-    expect_error(filterSignature(exampleSignature(),
+    expect_error(filterSignature(
+        exampleSignature(),
         threshold = 0.1, prop = 0.1
     ))
 })

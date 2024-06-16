@@ -60,10 +60,11 @@ NULL
 #'     paired = TRUE
 #' )
 #'
-consensusConcordants <- function(...,
-                                 paired = FALSE,
-                                 cutoff = 0.321,
-                                 cellLine = NULL) {
+consensusConcordants <- function(
+    ...,
+    paired = FALSE,
+    cutoff = 0.321,
+    cellLine = NULL) {
     dots <- list(...)
     if (paired && length(dots) != 2L) {
         stop("Paired analysis requires two data frames")

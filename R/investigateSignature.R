@@ -59,20 +59,21 @@ NULL
 #'     logfcColumn = "logFC",
 #'     pvalColumn = "PValue"
 #' )
-investigateSignature <- function(expr,
-                                 outputLib,
-                                 filterThreshold = NULL,
-                                 filterProp = NULL,
-                                 similarityThreshold = 0.2,
-                                 paired = TRUE,
-                                 outputCellLines = NULL,
-                                 geneColumn = "Symbol",
-                                 logfcColumn = "logFC",
-                                 pvalColumn = "PValue",
-                                 sourceName = "Input",
-                                 sourceCellLine = "NA",
-                                 sourceTime = "NA",
-                                 sourceConcentration = "NA") {
+investigateSignature <- function(
+    expr,
+    outputLib,
+    filterThreshold = NULL,
+    filterProp = NULL,
+    similarityThreshold = 0.2,
+    paired = TRUE,
+    outputCellLines = NULL,
+    geneColumn = "Symbol",
+    logfcColumn = "logFC",
+    pvalColumn = "PValue",
+    sourceName = "Input",
+    sourceCellLine = "NA",
+    sourceTime = "NA",
+    sourceConcentration = "NA") {
     libs <- c("OE", "KD", "CP")
 
     if (!outputLib %in% libs) {

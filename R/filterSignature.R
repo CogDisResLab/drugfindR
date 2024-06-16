@@ -47,8 +47,9 @@
 #' filteredSignature <- filterSignature(kdSignature,
 #'     threshold = c(-0.75, 0.5)
 #' )
-filterSignature <- function(signature, direction = "any",
-                            threshold = NULL, prop = NULL) {
+filterSignature <- function(
+    signature, direction = "any",
+    threshold = NULL, prop = NULL) {
     stopifnot("data.frame" %in% class(signature))
 
     if (!is.null(threshold) && !is.null(prop)) {
