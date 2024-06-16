@@ -1,42 +1,43 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "assignees": [
-      "AliSajid"
-  ],
-  "baseBranches": [
-      "devel"
-  ],
-  "dependencyDashboard": true,
-  "bumpVersion": "patch",
-  "extends": [
-      "config:best-practices",
-      "group:definitelyTyped",
-      "group:githubArtifactActions",
-      "group:linters"
-  ],
-  "labels": [
-      "dependencies",
-      "renovate"
-  ],
-  "pre-commit": {
-    "enabled": true
-  },
-  "packageRules": [
-    {
-        "automerge": true,
-        "matchManagers": [
-            "pre-commit",
-            "github-actions"
-        ],
-        "schedule": [
-            "before 5am on every weekday"
-        ]
-    }
-],
-  "platformCommit": true,
-  "schedule": [
-      "after 10pm and before 5am every weekday",
-      "every weekend"
-  ],
-  "semanticCommits": "enabled"
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "assignees": [
+        "AliSajid"
+    ],
+    "baseBranches": [
+        "devel"
+    ],
+    "dependencyDashboard": true,
+    "bumpVersion": "patch",
+    "extends": [
+        "config:best-practices",
+        "group:definitelyTyped",
+        "group:githubArtifactActions",
+        "group:linters"
+    ],
+    "labels": [
+        "dependencies",
+        "renovate"
+    ],
+    "pre-commit": {
+        "enabled": true
+    },
+    "packageRules": [
+        {
+            "automerge": true,
+            "matchManagers": [
+                "pre-commit",
+                "github-actions"
+            ],
+            "schedule": [
+                "before 5am every weekday"
+            ]
+        }
+    ],
+    "platformCommit": true,
+    "schedule": [
+        "after 10pm every weekday",
+        "every weekend",
+        "before 5am every weekday"
+    ],
+    "semanticCommits": "enabled"
 }
