@@ -88,7 +88,9 @@ into R from a remote URL.
 ```{r load_signature}
 # Load the signature from the paper
 
-diffexp <- read_tsv(system.file("extdata", "dCovid_diffexp.tsv.tar.xz", package = "drugfindR"))
+diffexp <- read_tsv(system.file("extdata", "dCovid_diffexp.tsv.tar.xz",
+    package = "drugfindR"
+))
 
 # Take a look at the signature
 
@@ -117,7 +119,10 @@ and with specific names. The `prepareSignature()` function takes care of this fo
 # The only thing that is different from the defaults is the gene_column
 # However, we will specify all three arguments for clarity
 
-signature <- prepareSignature(diffexp, geneColumn = "hgnc_symbol", logfcColumn = "logFC", pvalColumn = "PValue")
+signature <- prepareSignature(diffexp,
+    geneColumn = "hgnc_symbol",
+    logfcColumn = "logFC", pvalColumn = "PValue"
+)
 
 # Take a look at the signature
 
@@ -151,7 +156,10 @@ The prop argument is used to specify a percentile threshold (or a pair of percen
 ```{r filterSignatureUp}
 # Filter the signature to only include genes that are upregulated by at least 1.5 logFC
 
-filteredSignatureUp <- filterSignature(signature, direction = "up", threshold = 1.5)
+filteredSignatureUp <- filterSignature(signature,
+    direction = "up",
+    threshold = 1.5
+)
 
 filteredSignatureUp |>
     head() |>
@@ -160,7 +168,10 @@ filteredSignatureUp |>
 
 ```{r filterSignature_dn}
 # Filter the signature to only include genes that are downregulated by at least 1.5 logFC
-filteredSignatureDn <- filterSignature(signature, direction = "down", threshold = 1.5)
+filteredSignatureDn <- filterSignature(signature,
+    direction = "down",
+    threshold = 1.5
+)
 
 filteredSignatureDn |>
     head() |>
@@ -182,7 +193,7 @@ The `getConcordants()` function takes the following arguments:
 ```{r getConcordants}
 # Get the concordant signatures for the upregulated signature
 
-upConcordants <- getConcordants(filteredSignatureUp, ilincsLibrary = "CP", sigDirection = "up")
+upConcordants <- getConcordants(filteredSignatureUp, ilincsLibrary = "CP")
 
 upConcordants |>
     head() |>
@@ -190,7 +201,7 @@ upConcordants |>
 
 # Get the concordant signatures for the downregulated signature
 
-dnConcordants <- getConcordants(filteredSignatureDn, ilincsLibrary = "CP", sigDirection = "down")
+dnConcordants <- getConcordants(filteredSignatureDn, ilincsLibrary = "CP")
 
 dnConcordants |>
     head() |>
@@ -220,7 +231,9 @@ The `consensusConcordants()` function takes the following arguments:
 ```{r consensusConcordants}
 # Get the consensus concordant signatures for the upregulated signature
 
-consensus <- consensusConcordants(upConcordants, dnConcordants, paired = TRUE, cutoff = 0.2)
+consensus <- consensusConcordants(upConcordants, dnConcordants,
+    paired = TRUE, cutoff = 0.2
+)
 
 consensus |>
     head() |>
@@ -256,7 +269,8 @@ Other arguments that have sensible defaults are:
 ```{r investigateSignature}
 investigated <- investigateSignature(diffexp,
     outputLib = "CP", filterThreshold = 1.5,
-    geneColumn = "hgnc_symbol", logfcColumn = "logFC", pvalColumn = "PValue"
+    geneColumn = "hgnc_symbol", logfcColumn = "logFC",
+    pvalColumn = "PValue"
 )
 
 investigated |>
