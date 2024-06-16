@@ -28,5 +28,37 @@ been chose for their maximal
 similarity to the signature
 }
 \examples{
-TRUE
+# Get the L1000 signature for LINCSKD_28
+kdSignature <- getSignature("LINCSKD_28")
+
+# Get concordant gene knockdown signatures
+concordantSignatures <- getConcordants(kdSignature, ilincsLibrary = "KD")
+
+# Get the consensus list of signatures with defaults
+consensus <- consensusConcordants(concordantSignatures)
+
+# Get the consensus list of signatures with a different cutoff
+consensus <- consensusConcordants(concordantSignatures,
+    cutoff = 0.5
+)
+
+# Get the consensus list of signatures with a specified cell lines
+consensus <- consensusConcordants(concordantSignatures,
+    cellLine = c("A549", "MCF7")
+)
+
+# Doing a paired analysis
+filteredUp <- kdSignature \%>\%
+    filterSignature(direction = "up", threshold = 0.5)
+filteredDown <- kdSignature \%>\%
+    filterSignature(direction = "down", threshold = -0.5)
+
+concordants_up <- getConcordants(filteredUp, ilincsLibrary = "KD")
+concordants_down <- getConcordants(filteredDown, ilincsLibrary = "KD")
+
+consensus <- consensusConcordants(concordants_up,
+    concordants_down,
+    paired = TRUE
+)
+
 }

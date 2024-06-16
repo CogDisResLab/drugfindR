@@ -10,8 +10,6 @@
 #' and optionally their p-value
 #' @param ilincsLibrary The Library you want to search.
 #' Must be one of "OE", "KD" or "CP"
-#' @param sigDirection The direction of the signature.
-#' Must be one of "Up" or "Down"
 #' for Overexpression, Knockdown or Chemical Perturbagens
 #'
 #' @return A tibble with the list of concordant and discordant signatures
@@ -26,15 +24,29 @@
 #' @importFrom magrittr %>%
 #'
 #' @examples
-#' TRUE
-getConcordants <- function(signature, ilincsLibrary = "CP",
-                           sigDirection = NULL) {
+#' # Get the L1000 signature for LINCSKD_28
+#' kdSignature <- getSignature("LINCSKD_28")
+#'
+#' # Get concordant gene knockdown signatures
+#'
+#' concordant_signatures <- getConcordants(kdSignature, ilincsLibrary = "KD")
+#'
+#' head(concordant_signatures)
+getConcordants <- function(signature, ilincsLibrary = "CP") {
     if (!"data.frame" %in% class(signature)) {
         stop("signature must be a data frame or data frame like object")
     } else {
         signatureFile <- tempfile(pattern = "ilincs_sig", fileext = ".xls")
         signature %>%
             readr::write_tsv(signatureFile)
+    }
+
+    sigDirection <- if (all(signature[["Value_LogDiffExp"]] > 0L)) {
+        "Up"
+    } else if (all(signature[["Value_LogDiffExp"]] < 0L)) {
+        "Down"
+    } else {
+        "Any"
     }
 
     libMap <- c(

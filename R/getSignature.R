@@ -24,14 +24,11 @@
 #' @importFrom purrr map_dfr
 #'
 #' @examples
-#' \dontrun{
-#'
 #' # Get the L1000 signature for LINCSKD_28
-#' kd_signature <- getSignature("LINCSKD_28")
+#' kdSignature <- getSignature("LINCSKD_28")
 #'
 #' # Get the non-L1000 signature for EBI_1001
-#' ebi_signature <- getSignature("EBI_1001")
-#' }
+#' ebi_Signature <- getSignature("EBI_1001", l1000 = FALSE)
 getSignature <- function(sigId, l1000 = TRUE) {
     url <- "http://www.ilincs.org/api/ilincsR/downloadSignature"
 

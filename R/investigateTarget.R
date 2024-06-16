@@ -33,7 +33,18 @@ NULL
 #' @importFrom magrittr %>%
 #'
 #' @examples
-#' TRUE
+#' \donttest{
+#'
+#' # Search the whole iLINCS database for top concordant signatures for an
+#' # ABL2 knockdown signature
+#'
+#' investigatedSignature <- investigateTarget("ABL2",
+#'     inputLib = "KD",
+#'     outputLib = "CP",
+#'     filterThreshold = 0.5
+#' )
+#' }
+#'
 investigateTarget <- function(target,
                               inputLib, outputLib,
                               filterThreshold = 0.85,

@@ -71,12 +71,12 @@ X-schema.org-keywords: LINCS, iLINCS, drug repurposing, drug discovery,
     chemical perturbagen, drugfindR
 X-schema.org-isPartOf: https://bioconductor.org
 Collate:
+    'utilities.R'
     'consensusConcordants.R'
     'drugfindR-package.R'
     'filterSignature.R'
     'getConcordants.R'
     'getSignature.R'
     'prepareSignature.R'
-    'utilities.R'
     'investigateSignature.R'
     'investigateTarget.R'

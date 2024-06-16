@@ -68,5 +68,26 @@ dataset and then uploads that signature to
 iLINCS to find the relevant concordant (or discordant) signatures
 }
 \examples{
-TRUE
+
+# Investigate a signature
+
+\donttest{
+
+# Load and prepare the signature
+inputSignature <- read.table(system.file("extdata",
+    "dCovid_diffexp.tsv.tar.xz",
+    package = "drugfindR"
+), header = TRUE)
+
+
+# Investigate the signature
+
+investigatedSignature <- investigateSignature(signature,
+    outputLib = "CP",
+    filterThreshold = 0.5,
+    geneColumn = "hgnc_symbol",
+    logfcColumn = "logFC", pvalColumn = "PValue"
+)
+}
+
 }

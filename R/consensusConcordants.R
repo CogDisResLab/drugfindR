@@ -1,27 +1,5 @@
-#' Rename the Target-Related Columns
-#'
-#' @param inputNames A character vector of input_names
-#'
-#' @return A character vector of new names
-#'
-#' @examples
-#' TRUE
-targetRename <- function(inputNames) {
-    if ("treatment" %in% inputNames) {
-        newCols <- c(
-            "TargetSignature", "Target", "TargetCellLine",
-            "TargetTime", "Similarity", "SignatureDirection"
-        )
-    } else {
-        newCols <- c(
-            "TargetSignature", "Target", "TargetCellLine",
-            "TargetTime", "TargetConcentration", "Similarity",
-            "SignatureDirection"
-        )
-    }
-
-    newCols
-}
+#' @include utilities.R
+NULL
 
 #' Generate a Consensus list of Targets
 #' `r lifecycle::badge("experimental")`
@@ -47,7 +25,39 @@ targetRename <- function(inputNames) {
 #' @importFrom rlang .data
 #'
 #' @examples
-#' TRUE
+#' # Get the L1000 signature for LINCSKD_28
+#' kdSignature <- getSignature("LINCSKD_28")
+#'
+#' # Get concordant gene knockdown signatures
+#' concordantSignatures <- getConcordants(kdSignature, ilincsLibrary = "KD")
+#'
+#' # Get the consensus list of signatures with defaults
+#' consensus <- consensusConcordants(concordantSignatures)
+#'
+#' # Get the consensus list of signatures with a different cutoff
+#' consensus <- consensusConcordants(concordantSignatures,
+#'     cutoff = 0.5
+#' )
+#'
+#' # Get the consensus list of signatures with a specified cell lines
+#' consensus <- consensusConcordants(concordantSignatures,
+#'     cellLine = c("A549", "MCF7")
+#' )
+#'
+#' # Doing a paired analysis
+#' filteredUp <- kdSignature %>%
+#'     filterSignature(direction = "up", threshold = 0.5)
+#' filteredDown <- kdSignature %>%
+#'     filterSignature(direction = "down", threshold = -0.5)
+#'
+#' concordants_up <- getConcordants(filteredUp, ilincsLibrary = "KD")
+#' concordants_down <- getConcordants(filteredDown, ilincsLibrary = "KD")
+#'
+#' consensus <- consensusConcordants(concordants_up,
+#'     concordants_down,
+#'     paired = TRUE
+#' )
+#'
 consensusConcordants <- function(...,
                                  paired = FALSE,
                                  cutoff = 0.321,
@@ -77,7 +87,7 @@ consensusConcordants <- function(...,
         dplyr::select(
             dplyr::any_of(c(
                 "signatureid", "treatment", "compound", "cellline", "time",
-                "concentration", "similarity", "sig_direction"
+                "concentration", "similarity", "sig_direction", "pValue"
             ))
         ) %>%
         dplyr::arrange(dplyr::desc(abs(.data[["similarity"]]))) %>%

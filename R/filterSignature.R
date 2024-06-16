@@ -25,7 +25,28 @@
 #' @importFrom stats quantile
 #'
 #' @examples
-#' TRUE
+#' # Get the L1000 signature for LINCSKD_28
+#' kdSignature <- getSignature("LINCSKD_28")
+#'
+#' # Filter signature by a specific threshold
+#' filteredSignature <- filterSignature(kdSignature, threshold = 0.5)
+#'
+#' # Filter signature by a proportion
+#'
+#' filteredSignature <- filterSignature(kdSignature, prop = 0.1)
+#'
+#' # Filter Signature to up-regulated genes only by a threshold
+#'
+#' filteredSignature <- filterSignature(kdSignature,
+#'     direction = "up", threshold = 0.5
+#' )
+#'
+#' # Filter the signature using differing thresholds for up and
+#' # down-regulated genes
+#'
+#' filteredSignature <- filterSignature(kdSignature,
+#'     threshold = c(-0.75, 0.5)
+#' )
 filterSignature <- function(signature, direction = "any",
                             threshold = NULL, prop = NULL) {
     stopifnot("data.frame" %in% class(signature))

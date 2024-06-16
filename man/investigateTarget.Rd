@@ -48,5 +48,16 @@ database to use to pull signatures
 from and then queries iLINCS to get concordant signatures
 }
 \examples{
-TRUE
+\donttest{
+
+# Search the whole iLINCS database for top concordant signatures for an
+# ABL2 knockdown signature
+
+investigatedSignature <- investigateTarget("ABL2",
+    inputLib = "KD",
+    outputLib = "CP",
+    filterThreshold = 0.5
+)
+}
+
 }
