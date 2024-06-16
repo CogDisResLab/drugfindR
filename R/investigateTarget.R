@@ -21,7 +21,6 @@ NULL
 #' restrict our search for input signatures to.
 #' @param outputCellLines A character vetor of cell lines to
 #' restrict the output search to.
-#' @param discordant Logical. Whether to look for discordant signatures
 #'
 #' @return A tibble with the the similarity scores and signature metadata
 #' @export
@@ -50,7 +49,7 @@ investigateTarget <- function(target,
                               filterThreshold = 0.85,
                               similarityThreshold = 0.321,
                               paired = TRUE, inputCellLines = NULL,
-                              outputCellLines = NULL, discordant = FALSE) {
+                              outputCellLines = NULL) {
     libs <- c("OE", "KD", "CP")
 
     if (!inputLib %in% libs || !outputLib %in% libs) {
@@ -107,17 +106,16 @@ investigateTarget <- function(target,
             ))
 
         concordantUp <- filteredUp %>%
-            purrr::map(~ getConcordants(.x, library = outputLib))
+            purrr::map(~ getConcordants(.x, ilincsLibrary = outputLib))
 
         concordantDown <- filteredDown %>%
-            purrr::map(~ getConcordants(.x, library = outputLib))
+            purrr::map(~ getConcordants(.x, ilincsLibrary = outputLib))
 
         consensusTargets <- purrr::map2(
             concordantUp, concordantDown,
             ~ consensusConcordants(.x, .y,
                 paired = paired,
                 cellLine = outputCellLines,
-                discordant = discordant,
                 cutoff = similarityThreshold
             )
         )
@@ -129,14 +127,13 @@ investigateTarget <- function(target,
             ))
 
         concordants <- filtered %>%
-            purrr::map(~ getConcordants(.x, library = outputLib))
+            purrr::map(~ getConcordants(.x, ilincsLibrary = outputLib))
 
         consensusTargets <- purrr::map(
             concordants,
             ~ consensusConcordants(.x,
                 paired = paired,
                 cellLine = outputCellLines,
-                discordant = discordant,
                 cutoff = similarityThreshold
             )
         )
