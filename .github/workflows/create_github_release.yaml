@@ -25,7 +25,7 @@ jobs:
           fetch-depth: 0
       - name: Get most recent tag
         id: get_tag
-        run: echo "TAG_VERSION=$(git describe --tags --abbrev=0)" >> "$GITHUB_ENV"
+        run: echo "TAG_VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))" >> "$GITHUB_ENV"
       - name: Create Release
         id: create_release
         env:
