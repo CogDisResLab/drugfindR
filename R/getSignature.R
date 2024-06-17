@@ -22,6 +22,7 @@
 #' @importFrom rlang .data
 #' @importFrom dplyr select
 #' @importFrom purrr map_dfr
+#' @importFrom S4Vectors DataFrame
 #'
 #' @examples
 #' # Get the L1000 signature for LINCSKD_28
@@ -49,7 +50,8 @@ getSignature <- function(sigId, l1000 = TRUE) {
                 Value_LogDiffExp = round(.data[["Value_LogDiffExp"]], 12L),
                 Significance_pvalue = round(.data[["Significance_pvalue"]], 12L)
             )
-        signature
+        signature %>%
+            S4Vectors::DataFrame()
     } else {
         stop(httr::status_code(request), " ", httr::content(request))
     }

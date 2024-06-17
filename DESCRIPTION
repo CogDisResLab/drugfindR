@@ -47,6 +47,7 @@ Imports:
     stringr,
     stats,
     lifecycle,
+    S4Vectors
 Depends:
     R (>= 4.4.0)
 Suggests:
