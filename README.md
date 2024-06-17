@@ -10,11 +10,11 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 [![Continuous Integration / R
 Workflows](https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml/badge.svg)](https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml)
-[![codecov](https://codecov.io/gh/CogDisResLab/drugfindR/branch/main/graph/badge.svg?token=FeAvIeTAiz)](https://codecov.io/gh/CogDisResLab/drugfindR)
-\[![latest-version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcogdisreslab.r-universe.dev%2Fapi%2Fpackages%2FdrugfindR&query=%24.Version&style=flat&label=latest-release&color=orange)\]
+[![latest-version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcogdisreslab.r-universe.dev%2Fapi%2Fpackages%2FdrugfindR&query=%24.Version&style=flat&label=latest-release&color=orange)](https://github.com/CogDisResLab/drugfindR/releases/latest)
 [![license](https://img.shields.io/github/license/CogDisResLab/drugfindR)](https://github.com/CogDisResLab/drugfindR/blob/main/LICENSE)
-
 [![DOI](https://zenodo.org/badge/338354715.svg)](https://zenodo.org/badge/latestdoi/338354715)
+[![Codecov test
+coverage](https://codecov.io/gh/CogDisResLab/drugfindR/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/CogDisResLab/drugfindR?branch=devel)
 <!-- badges: end -->
 
 drugfindR allows convenient access to the iLINCS Gene Knockdown, Gene
