@@ -8,7 +8,7 @@ if ! [ -x "$(command -v cz)" ]; then
 fi
 
 # Get the most recent tag
-tag=$(git describe --abbrev=0 --tags)
+tag=$(git describe --tags $(git rev-list --tags --max-count=1))
 
 # Update the changelog. Assume this is not the first tag
 cz changelog
