@@ -51,23 +51,9 @@ investigateTarget <- function(
     similarityThreshold = 0.321,
     paired = TRUE, inputCellLines = NULL,
     outputCellLines = NULL) {
-    libs <- c("OE", "KD", "CP")
+    stopIfInvalidLibraries(c(inputLib, outputLib))
 
-    if (!inputLib %in% libs || !outputLib %in% libs) {
-        stop("Both input and output libraries must be one of 'OE', 'KD', 'CP'")
-    }
-
-
-    if (inputLib == "OE") {
-        inputMetadata <- oeMetadata # nolint: object_usage_linter.
-    } else if (inputLib == "KD") {
-        inputMetadata <- kdMetadata # nolint: object_usage_linter.
-    } else if (inputLib == "CP") {
-        inputMetadata <- cpMetadata # nolint: object_usage_linter.
-    } else {
-        stop("Invalid inputLib")
-    }
-
+    inputMetadata <- loadMetadata(inputLib)
 
     if (!is.null(inputCellLines)) {
         filteredSignatureIds <- inputMetadata %>%

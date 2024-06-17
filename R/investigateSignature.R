@@ -74,12 +74,7 @@ investigateSignature <- function(
     sourceCellLine = "NA",
     sourceTime = "NA",
     sourceConcentration = "NA") {
-    libs <- c("OE", "KD", "CP")
-
-    if (!outputLib %in% libs) {
-        stop("Output library must be one of 'OE', 'KD', 'CP'")
-    }
-
+    stopIfInvalidLibraries(outputLib)
     if (missing(outputLib)) {
         stop("Please specify an output library")
     }
