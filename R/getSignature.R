@@ -51,7 +51,8 @@ getSignature <- function(sigId, l1000 = TRUE) {
                 Significance_pvalue = round(.data[["Significance_pvalue"]], 12L)
             )
         signature %>%
-            S4Vectors::DataFrame()
+            S4Vectors::DataFrame() %>%
+            as_tibble()
     } else {
         stop(httr::status_code(request), " ", httr::content(request))
     }
