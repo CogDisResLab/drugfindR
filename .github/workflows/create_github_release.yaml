@@ -52,13 +52,13 @@ jobs:
           libharfbuzz-dev libfribidi-dev \
           pandoc
       - name: Setup R
-        uses: r-lib/actions/setup-r@929c772977a3a13c8733b363bf5a2f685c25dd91 # v2.9.0
+        uses: r-lib/actions/setup-r@d1a6cbabea8dd2f137598ba2a70ae37ac82d7941 # v2.10.0
         with:
           r-version: ${{ matrix.r_version }}
           use-public-rspm: true
         id: r
       - name: Install dependencies
-        uses: r-lib/actions/setup-renv@929c772977a3a13c8733b363bf5a2f685c25dd91 # v2.9.0
+        uses: r-lib/actions/setup-renv@d1a6cbabea8dd2f137598ba2a70ae37ac82d7941 # v2.10.0
       - name: Build Package
         run: R CMD build .
       - name: Rename Package
