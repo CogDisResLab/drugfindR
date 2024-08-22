@@ -13,5 +13,6 @@ targetRename(inputNames)
 A character vector of new names
 }
 \description{
-Rename the Target-Related Columns
+This function is used to standardize the names
+of the columns output at the end of the result.
 }

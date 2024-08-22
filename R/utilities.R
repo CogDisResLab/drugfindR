@@ -1,5 +1,8 @@
 #' Rename the Target-Related Columns
 #'
+#' This function is used to standardize the names
+#' of the columns output at the end of the result.
+#'
 #' @param inputNames A character vector of input_names
 #'
 #' @return A character vector of new names
