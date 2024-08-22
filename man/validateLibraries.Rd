@@ -13,5 +13,6 @@ validateLibraries(libs)
 a boolean
 }
 \description{
-Check if the libraries input are valid
+This function confirms that the library parameter
+is one of the allowed ones.
 }

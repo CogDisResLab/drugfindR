@@ -29,6 +29,9 @@ targetRename <- function(inputNames) {
 
 #' Check if the libraries input are valid
 #'
+#' This function confirms that the library parameter
+#' is one of the allowed ones.
+#'
 #' @param libs a character vector of libraries
 #'
 #' @return a boolean
