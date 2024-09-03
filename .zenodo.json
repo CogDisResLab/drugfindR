@@ -1,0 +1,25 @@
+{
+  "creators": [
+    {
+      "orcid": "0000-0003-3684-3539",
+      "name": "Imami, Ali Sajid",
+      "affiliation": "The University of Toledo, Department of Neurosciences"
+    },
+    {
+      "orcid": "0009-0003-4377-8963",
+      "name": "Sahay, Smita",
+      "affiliation": "The University of Toledo, Department of Neurosciences"
+    },
+    {
+      "orcid": "0000-0003-3123-8401",
+      "name": "Creeden, Justin Fortune",
+      "affiliation": "The University of Toledo, Department of Neurosciences"
+    },
+    {
+      "orcid": "0000-0003-3123-8401",
+      "name": "Bates, Evelyn Alden",
+      "affiliation": "University of Kentucky, College of Medicine"
+    }
+  ],
+  "license": "GPL-3.0"
+}
