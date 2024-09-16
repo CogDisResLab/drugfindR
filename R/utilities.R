@@ -21,6 +21,14 @@ targetRename <- function(inputNames) {
     }
 }
 
+#' Parametrize the base URL for the iLINCS API
+#'
+#'
+#' @return a fixed string URL
+.ilincsBaseUrl <- function() {
+    "http:/www.ilincs.org/api/ilincsR"
+}
+
 #' Check if the library is valid
 #'
 #' @param lib a string of libraries
