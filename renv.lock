@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.4.0",
+    "Version": "4.4.1",
     "Repositories": [
       {
         "Name": "BioCsoft",
@@ -619,13 +619,13 @@
     },
     "curl": {
       "Package": "curl",
-      "Version": "5.2.1",
+      "Version": "5.2.2",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "https://cran.r-project.org",
       "Requirements": [
         "R"
       ],
-      "Hash": "411ca2c03b1ce5f548345d2fc2685f7a"
+      "Hash": "8f27335f2bcff4d6035edcc82d7d46de"
     },
     "data.table": {
       "Package": "data.table",
@@ -1196,7 +1196,7 @@
     },
     "httr2": {
       "Package": "httr2",
-      "Version": "1.0.1",
+      "Version": "1.0.4",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1213,7 +1213,7 @@
         "vctrs",
         "withr"
       ],
-      "Hash": "03d741c92fda96d98c3a3f22494e3b4a"
+      "Hash": "836e9564fbeca3bb390bb429a53cd401"
     },
     "ids": {
       "Package": "ids",
