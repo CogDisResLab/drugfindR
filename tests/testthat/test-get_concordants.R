@@ -17,9 +17,9 @@ test_that("Function errors if it receives an error response", {
         "post", "http://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze"
     ) |>
         webmockr::to_return(status = 500L)
-    webmockr::httr_mock()
+    webmockr::httr2_mock()
     expect_error(getConcordants(exampleSignature()))
-    webmockr::httr_mock(FALSE)
+    webmockr::httr2_mock(FALSE)
 })
 
 

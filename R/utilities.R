@@ -21,12 +21,12 @@ targetRename <- function(inputNames) {
     }
 }
 
-#' Parametrize the base URL for the iLINCS API
+#' Parameterize the base URL for the iLINCS API
 #'
 #'
 #' @return a fixed string URL
 .ilincsBaseUrl <- function() {
-    "http:/www.ilincs.org/api/ilincsR"
+    "http://www.ilincs.org/api"
 }
 
 #' Check if the library is valid
@@ -76,4 +76,22 @@ loadMetadata <- function(lib) {
     } else {
         stop("Invalid library")
     }
+}
+
+
+#' Return the internal iLINCS Library ID for a given library
+#'
+#' @param lib A library name. Can be one of "OE", "KD" or "CP"
+#'
+#' @return A string with the associated library ID
+.return_library <- function(lib) {
+    stopIfInvalidLibraries(lib)
+
+    libMap <- c(
+        OE = "LIB_11",
+        KD = "LIB_6",
+        CP = "LIB_5"
+    )
+
+    libMap[lib]
 }

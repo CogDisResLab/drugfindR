@@ -17,11 +17,13 @@
 #'
 #' @importFrom readr write_tsv
 #' @importFrom httr POST status_code content upload_file
+#' @importFrom httr2 request req_method req_url_query req_user_agent req_url_path_append req_perform resp_status resp_body_json resp_body_string
 #' @importFrom purrr map flatten_dfr
 #' @importFrom dplyr select any_of mutate filter
 #' @importFrom tibble tibble
 #' @importFrom rlang .data
-#' @importFrom magrittr %>%
+#' @importFrom stringr str_glue
+#' @importFrom curl form_file
 #'
 #' @examples
 #' # Get the L1000 signature for LINCSKD_28
@@ -37,7 +39,7 @@ getConcordants <- function(signature, ilincsLibrary = "CP") {
         stop("signature must be a data frame or data frame like object")
     } else {
         signatureFile <- tempfile(pattern = "ilincs_sig", fileext = ".xls")
-        signature %>%
+        signature |>
             readr::write_tsv(signatureFile)
     }
 
@@ -55,24 +57,25 @@ getConcordants <- function(signature, ilincsLibrary = "CP") {
         CP = "LIB_5"
     )
 
-    if (!ilincsLibrary %in% c("OE", "KD", "CP")) {
-        stop("library must be one of 'OE', 'KD' or 'CP'")
-    }
+    stopIfInvalidLibraries(ilincsLibrary)
 
-    url <- "http://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze"
-    query <- list(lib = libMap[ilincsLibrary])
-    body <- list(file = httr::upload_file(signatureFile))
+    request <- httr2::request(.ilincsBaseUrl()) |>
+        httr2::req_url_path_append("SignatureMeta") |>
+        httr2::req_url_path_append("uploadAndAnalyze") |>
+        httr2::req_url_query(lib = libMap[ilincsLibrary]) |>
+        httr2::req_body_multipart(file = curl::form_file(signatureFile)) |>
+        httr2::req_method("POST") |>
+        httr2::req_user_agent(stringr::str_glue("drugfindR/v{packageVersion('drugfindR')}; https://github.com/CogDisResLab/drugfindR")) |>
+        httr2::req_perform()
 
-    request <- httr::POST(url, query = query, body = body)
-
-    if (httr::status_code(request) == 200L) {
-        concordants <- httr::content(request) %>%
-            purrr::map("concordanceTable") %>%
-            purrr::flatten_dfr() %>%
+    if (httr2::resp_status(request) == 200L) {
+        concordants <- httr2::resp_body_json(request) |>
+            purrr::map("concordanceTable") |>
+            purrr::flatten_dfr() |>
             dplyr::select(dplyr::any_of(c(
                 "signatureid", "compound", "treatment",
                 "concentration", "time", "cellline", "similarity", "pValue"
-            ))) %>%
+            ))) |>
             dplyr::mutate(
                 similarity = round(.data[["similarity"]], 8L),
                 pValue = round(.data[["pValue"]], 20L),
@@ -80,6 +83,6 @@ getConcordants <- function(signature, ilincsLibrary = "CP") {
             )
         return(concordants)
     } else {
-        httr::stop_for_status(request, "get concardant signatures")
+        stop(httr2::resp_status(request), " ", httr2::resp_body_string(request))
     }
 }

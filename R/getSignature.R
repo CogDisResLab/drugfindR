@@ -35,6 +35,7 @@ getSignature <- function(sigId, l1000 = TRUE) {
     }
 
     request <- httr2::request(.ilincsBaseUrl()) |>
+        httr2::req_url_path_append("ilincsR") |>
         httr2::req_url_path_append("downloadSignature") |>
         httr2::req_url_query(sigID = sigId, noOfTopGenes = numGenes) |>
         httr2::req_method("POST") |>
