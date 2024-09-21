@@ -4,7 +4,7 @@
 NULL
 
 #' Investigate a given DGE dataset
-#' `r lifecycle::badge("experimental")`
+#' `r lifecycle::badge("stable")`
 #'
 #' This function takes a DGE Data frame and then
 #' finds concordant signatures to that.

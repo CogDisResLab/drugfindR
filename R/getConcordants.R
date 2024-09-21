@@ -1,5 +1,5 @@
 #' Get Concordant Signatures from iLINCS
-#' `r lifecycle::badge("experimental")`
+#' `r lifecycle::badge("stable")`
 #'
 #' This function takes a full or filtered signature
 #' and gets concordant signatures

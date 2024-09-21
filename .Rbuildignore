@@ -19,6 +19,7 @@
 ^doc$
 ^drugfindR\.Rproj$
 ^drugfindR\.code-workspace$
+^ltex\..*$
 ^raw$
 ^renovate\.json$
 ^renv$

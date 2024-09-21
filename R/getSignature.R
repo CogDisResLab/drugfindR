@@ -1,5 +1,5 @@
 #' Get the L1000 Signature from iLINCS
-#' `r lifecycle::badge("experimental")`
+#' `r lifecycle::badge("stable")`
 #'
 #' This function acts as the entrypoint to the iLINCS database.
 #' This takes in an ID and returns the signature after making a

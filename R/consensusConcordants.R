@@ -2,7 +2,7 @@
 NULL
 
 #' Generate a Consensus list of Targets
-#' `r lifecycle::badge("experimental")`
+#' `r lifecycle::badge("stable")`
 #'
 #' This function takes a list of (optionally split)
 #' concordance dataframes and returns

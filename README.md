@@ -5,8 +5,13 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+experimental](man/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 
+![GitHub repo size](https://img.shields.io/github/repo-size/CogDisResLab/drugfindR)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/CogDisResLab/drugfindR)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/CogDisResLab/drugfindR)
+![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/CogDisResLab/drugfindR)
+[![CodeFactor](https://www.codefactor.io/repository/github/cogdisreslab/drugfindr/badge)](https://www.codefactor.io/repository/github/cogdisreslab/drugfindr)![REUSE Compliance](https://img.shields.io/reuse/compliance/github.com%2FCogDisResLab%2FdrugfindR.git)
 [![Continuous Integration / R
 Workflows](https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml/badge.svg)](https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml)
 [![latest-version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcogdisreslab.r-universe.dev%2Fapi%2Fpackages%2FdrugfindR&query=%24.Version&style=flat&label=latest-release&color=orange)](https://github.com/CogDisResLab/drugfindR/releases/latest)

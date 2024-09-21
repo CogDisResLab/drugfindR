@@ -4,7 +4,7 @@
 NULL
 
 #' Investigate a Given Gene or Drug
-#' `r lifecycle::badge("experimental")`
+#' `r lifecycle::badge("stable")`
 #'
 #' This function takes the name of a gene or a drug and a
 #' database to use to pull signatures
