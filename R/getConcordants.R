@@ -16,7 +16,6 @@
 #' @export
 #'
 #' @importFrom readr write_tsv
-#' @importFrom httr POST status_code content upload_file
 #' @importFrom httr2 request req_method req_url_query req_user_agent req_url_path_append req_perform resp_status resp_body_json resp_body_string
 #' @importFrom purrr map flatten_dfr
 #' @importFrom dplyr select any_of mutate filter

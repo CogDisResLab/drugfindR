@@ -16,7 +16,6 @@
 #' @return a tibble with the L1000 Signature
 #' @export
 #'
-#' @importFrom httr POST content status_code
 #' @importFrom httr2 request req_method req_url_query req_user_agent req_url_path_append req_perform resp_status resp_body_json resp_body_string
 #' @importFrom tibble tibble as_tibble
 #' @importFrom rlang .data

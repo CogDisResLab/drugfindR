@@ -1,6 +1,6 @@
 Package: drugfindR
 Title: Investigate iLINCS for candidate repurposable drugs
-Version: 0.99.985
+Version: 0.99.986
 Authors@R: c(
     person(given = c("Ali", "Sajid"),
            family = "Imami",
@@ -37,7 +37,6 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 biocViews: FunctionalPrediction, DifferentialExpression, GeneSetEnrichment
 Imports:
-    httr,
     magrittr,
     tibble,
     rlang,

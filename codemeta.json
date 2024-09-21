@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/CogDisResLab/drugfindR",
   "issueTracker": "https://github.com/CogDisResLab/drugfindR/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.99.985",
+  "version": "0.99.986",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -204,18 +204,6 @@
   "softwareRequirements": {
     "1": {
       "@type": "SoftwareApplication",
-      "identifier": "httr",
-      "name": "httr",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=httr"
-    },
-    "2": {
-      "@type": "SoftwareApplication",
       "identifier": "magrittr",
       "name": "magrittr",
       "provider": {
@@ -226,7 +214,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=magrittr"
     },
-    "3": {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "tibble",
       "name": "tibble",
@@ -238,7 +226,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tibble"
     },
-    "4": {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "rlang",
       "name": "rlang",
@@ -250,7 +238,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rlang"
     },
-    "5": {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "dplyr",
       "name": "dplyr",
@@ -262,7 +250,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=dplyr"
     },
-    "6": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "purrr",
       "name": "purrr",
@@ -274,7 +262,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=purrr"
     },
-    "7": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "readr",
       "name": "readr",
@@ -286,7 +274,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=readr"
     },
-    "8": {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "stringr",
       "name": "stringr",
@@ -298,12 +286,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stringr"
     },
-    "9": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "stats",
       "name": "stats"
     },
-    "10": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "lifecycle",
       "name": "lifecycle",
@@ -315,7 +303,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lifecycle"
     },
-    "11": {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "S4Vectors",
       "name": "S4Vectors",
@@ -327,7 +315,7 @@
       },
       "sameAs": "https://bioconductor.org/packages/release/bioc/html/S4Vectors.html"
     },
-    "12": {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "httr2",
       "name": "httr2",
@@ -339,7 +327,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=httr2"
     },
-    "13": {
+    "12": {
       "@type": "SoftwareApplication",
       "identifier": "curl",
       "name": "curl",
@@ -351,7 +339,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=curl"
     },
-    "14": {
+    "13": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
@@ -362,7 +350,7 @@
   "applicationCategory": "Genomics",
   "isPartOf": "https://bioconductor.org",
   "keywords": ["LINCS", "iLINCS", "drugrepurposing", "drugdiscovery", "transcriptomics", "geneexpression", "geneknockdown", "geneoverexpression", "chemicalperturbagen", "drugfindR", "r", "ilincs", "bioinformatics", "bioinformatics-pipeline"],
-  "fileSize": "2085.696KB",
+  "fileSize": "2085.479KB",
   "releaseNotes": "https://github.com/CogDisResLab/drugfindR/blob/master/NEWS.md",
   "readme": "https://github.com/CogDisResLab/drugfindR/blob/devel/README.md",
   "contIntegration": ["https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml", "https://app.codecov.io/gh/CogDisResLab/drugfindR?branch=devel"],
