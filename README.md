@@ -1,7 +1,6 @@
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# drugfindR
+# drugfindR: An R package to search iLINCS databases for small molecules
 
 <!-- badges: start -->
 
@@ -15,6 +14,7 @@ Workflows](https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflow
 [![DOI](https://zenodo.org/badge/338354715.svg)](https://zenodo.org/badge/latestdoi/338354715)
 [![Codecov test
 coverage](https://codecov.io/gh/CogDisResLab/drugfindR/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/CogDisResLab/drugfindR?branch=devel)
+
 <!-- badges: end -->
 
 drugfindR allows convenient access to the iLINCS Gene Knockdown, Gene
@@ -27,7 +27,7 @@ drugs.
 You can install the released version of drugfindR from
 [r-universe](https://cogdisreslab.r-universe.dev/drugfindR) with:
 
-``` r
+```r
 install.packages("drugfindR",
     repos = c(
         "https://cogdisreslab.r-universe.dev",
@@ -38,7 +38,7 @@ install.packages("drugfindR",
 
 And the development version from [GitHub](https://github.com/) with:
 
-``` r
+```r
 if (!requireNamespace("devtools", quietly = TRUE)) {
     install.packages("devtools")
 }
