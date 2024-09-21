@@ -1,24 +1,25 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# drugfindR: An R package to search iLINCS databases for small molecules
+# drugfindR: An R package to search iLINCS databases for small molecules [![Lifecycle: stable](man/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 
 <!-- badges: start -->
 
-[![Lifecycle:
-experimental](man/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![drugfindR status badge](https://cogdisreslab.r-universe.dev/badges/drugfindR)](https://cogdisreslab.r-universe.dev/drugfindR)
+![GitHub R package version](https://img.shields.io/github/r-package/v/CogDisResLab/drugfindR)
+[![latest-version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcogdisreslab.r-universe.dev%2Fapi%2Fpackages%2FdrugfindR&query=%24.Version&style=flat&label=latest-release&color=orange)](https://github.com/CogDisResLab/drugfindR/releases/latest)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8346520.svg)](https://doi.org/10.5281/zenodo.8346520)
+[![license](https://img.shields.io/github/license/CogDisResLab/drugfindR)](https://github.com/CogDisResLab/drugfindR/blob/main/LICENSE)
+
+[![Continuous Integration / R Workflows](https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml/badge.svg)](https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml)
+[![Codecov test coverage](https://codecov.io/gh/CogDisResLab/drugfindR/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/CogDisResLab/drugfindR?branch=devel)
+
+![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/CogDisResLab/drugfindR)
+[![CodeFactor](https://www.codefactor.io/repository/github/cogdisreslab/drugfindr/badge)](https://www.codefactor.io/repository/github/cogdisreslab/drugfindr)
+![REUSE Compliance](https://img.shields.io/reuse/compliance/github.com%2FCogDisResLab%2FdrugfindR.git)
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/CogDisResLab/drugfindR)
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/CogDisResLab/drugfindR)
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/CogDisResLab/drugfindR)
-![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/CogDisResLab/drugfindR)
-[![CodeFactor](https://www.codefactor.io/repository/github/cogdisreslab/drugfindr/badge)](https://www.codefactor.io/repository/github/cogdisreslab/drugfindr)![REUSE Compliance](https://img.shields.io/reuse/compliance/github.com%2FCogDisResLab%2FdrugfindR.git)
-[![Continuous Integration / R
-Workflows](https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml/badge.svg)](https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml)
-[![latest-version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcogdisreslab.r-universe.dev%2Fapi%2Fpackages%2FdrugfindR&query=%24.Version&style=flat&label=latest-release&color=orange)](https://github.com/CogDisResLab/drugfindR/releases/latest)
-[![license](https://img.shields.io/github/license/CogDisResLab/drugfindR)](https://github.com/CogDisResLab/drugfindR/blob/main/LICENSE)
-[![DOI](https://zenodo.org/badge/338354715.svg)](https://zenodo.org/badge/latestdoi/338354715)
-[![Codecov test
-coverage](https://codecov.io/gh/CogDisResLab/drugfindR/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/CogDisResLab/drugfindR?branch=devel)
+![GitHub Issues](https://img.shields.io/github/issues/CogDisResLab/drugfindR)
+![GitHub Pull Requests](https://img.shields.io/github/issues-pr/CogDisResLab/drugfindR)
 
 <!-- badges: end -->
 
