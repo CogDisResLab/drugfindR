@@ -16,6 +16,7 @@
 ![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/CogDisResLab/drugfindR)
 [![CodeFactor](https://www.codefactor.io/repository/github/cogdisreslab/drugfindr/badge)](https://www.codefactor.io/repository/github/cogdisreslab/drugfindr)
 ![REUSE Compliance](https://img.shields.io/reuse/compliance/github.com%2FCogDisResLab%2FdrugfindR.git)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9473/badge)](https://www.bestpractices.dev/projects/9473)
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/CogDisResLab/drugfindR)
 ![GitHub Issues](https://img.shields.io/github/issues/CogDisResLab/drugfindR)
