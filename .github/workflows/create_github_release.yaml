@@ -11,8 +11,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  optimize_ci:
+      runs-on: ubuntu-latest
+      outputs:
+        skip: ${{ steps.check_skip.outputs.skip }}
+      steps:
+        - name: Optimize CI
+          id: check_skip
+          uses: withgraphite/graphite-ci-action@main
+          with:
+            graphite_token: ${{secrets.GRAPHITE_TOKEN}}
   create-release:
     runs-on: ubuntu-latest
+    needs: [optimize_ci]
+    if: needs.optimize_ci.outputs.skip == 'false'
     permissions:
       contents: write
     outputs:
