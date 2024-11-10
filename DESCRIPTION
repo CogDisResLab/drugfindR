@@ -1,6 +1,6 @@
 Package: drugfindR
 Title: Investigate iLINCS for candidate repurposable drugs
-Version: 0.99.1014
+Version: 0.99.1015
 Authors@R: c(
     person(given = c("Ali", "Sajid"),
            family = "Imami",
@@ -16,7 +16,7 @@ Authors@R: c(
            family = "Creeden",
            role = c("aut"),
            email = "Justin.Creeden@rockets.utoledo.edu",
-           comment = c(ORCID = "0000-0003-3123-8401")),
+           comment = c(ORCID = "0000-0003-3123-8401"))
     )
 Description: This package provides a convenient way to access the
     LINCS Signatures available in the iLINCS database. These signatures include

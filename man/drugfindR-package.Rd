@@ -58,11 +58,10 @@ Ali Sajid Imami
 
 \section{Contributors}{
 
-Justin Fortune Creeden
 Smita Sahay
+Justin Fortune Creeden
 Sinead M. O'Donovan
 Hunter Eby
-Evelyn Alden Bates
 }
 
 \section{License}{
@@ -96,9 +95,8 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Justin Fortune Creeden \email{Justin.Creeden@rockets.utoledo.edu} (\href{https://orcid.org/0000-0003-3123-8401}{ORCID})
-  \item Evelyn Alden Bates \email{Evelyn.Bates@rockets.utoledo.edu} (\href{https://orcid.org/0000-0002-4157-2481}{ORCID})
   \item Smita Sahay \email{Smita.Sahay@rockets.utoledo.edu} (\href{https://orcid.org/0009-0003-4377-8963}{ORCID})
+  \item Justin Fortune Creeden \email{Justin.Creeden@rockets.utoledo.edu} (\href{https://orcid.org/0000-0003-3123-8401}{ORCID})
 }
 
 }
