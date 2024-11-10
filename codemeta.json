@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/CogDisResLab/drugfindR",
   "issueTracker": "https://github.com/CogDisResLab/drugfindR/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.99.1019",
+  "version": "0.99.1016",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -367,7 +367,7 @@
     "bioinformatics",
     "bioinformatics-pipeline"
   ],
-  "fileSize": "2087.859KB",
+  "fileSize": "2087.188KB",
   "readme": "https://github.com/CogDisResLab/drugfindR/blob/devel/README.md",
   "contIntegration": [
     "https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml",
