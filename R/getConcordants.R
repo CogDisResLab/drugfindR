@@ -16,13 +16,16 @@
 #' @export
 #'
 #' @importFrom readr write_tsv
-#' @importFrom httr2 request req_method req_url_query req_user_agent req_url_path_append req_perform resp_status resp_body_json resp_body_string
+#' @importFrom httr2 request req_method req_url_query req_user_agent
+#' @importFrom httr2 req_url_path_append req_perform resp_status
+#' @importFrom httr2 resp_body_json resp_body_string
 #' @importFrom purrr map flatten_dfr
 #' @importFrom dplyr select any_of mutate filter
 #' @importFrom tibble tibble
 #' @importFrom rlang .data
 #' @importFrom stringr str_glue
 #' @importFrom curl form_file
+#' @importFrom utils packageVersion
 #'
 #' @examples
 #' # Get the L1000 signature for LINCSKD_28
@@ -64,7 +67,7 @@ getConcordants <- function(signature, ilincsLibrary = "CP") {
         httr2::req_url_query(lib = libMap[ilincsLibrary]) |>
         httr2::req_body_multipart(file = curl::form_file(signatureFile)) |>
         httr2::req_method("POST") |>
-        httr2::req_user_agent(stringr::str_glue("drugfindR/v{packageVersion('drugfindR')}; https://github.com/CogDisResLab/drugfindR")) |>
+        httr2::req_user_agent(.return_user_agent()) |>
         httr2::req_perform()
 
     if (httr2::resp_status(request) == 200L) {
