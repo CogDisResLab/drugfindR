@@ -16,12 +16,15 @@
 #' @return a tibble with the L1000 Signature
 #' @export
 #'
-#' @importFrom httr2 request req_method req_url_query req_user_agent req_url_path_append req_perform resp_status resp_body_json resp_body_string
+#' @importFrom httr2 request req_method req_url_query req_user_agent
+#' @importFrom httr2 req_url_path_append req_perform resp_status
+#' @importFrom httr2 resp_body_json resp_body_string
 #' @importFrom tibble tibble as_tibble
 #' @importFrom rlang .data
 #' @importFrom dplyr select
 #' @importFrom purrr map_dfr
 #' @importFrom S4Vectors DataFrame
+#' @importFrom utils packageVersion
 #'
 #' @examples
 #' # Get the L1000 signature for LINCSKD_28
@@ -38,7 +41,7 @@ getSignature <- function(sigId, l1000 = TRUE) {
         httr2::req_url_path_append("downloadSignature") |>
         httr2::req_url_query(sigID = sigId, noOfTopGenes = numGenes) |>
         httr2::req_method("POST") |>
-        httr2::req_user_agent("drugfindR/v0.99.980; https://github.com/CogDisResLab/drugfindR") |>
+        httr2::req_user_agent(.return_user_agent()) |>
         httr2::req_perform()
 
 

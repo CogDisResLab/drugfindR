@@ -100,3 +100,11 @@ loadMetadata <- function(lib) {
 
     libMap[lib]
 }
+
+#' Return a string suitable as a User-Agent for the iLINCS API
+#'
+#' @keywords internal
+#' @return a string
+.return_user_agent <- function() {
+    paste0("drugfindR/", utils::packageVersion("drugfindR"), "; https://github.com/CogDisResLab/drugfindR")
+}
