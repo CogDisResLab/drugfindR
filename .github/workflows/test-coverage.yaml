@@ -29,11 +29,11 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
-      - uses: r-lib/actions/setup-r@e6be4b3706e0f39bc7a4cf4496a5f2c4cb840040 # v2
+      - uses: r-lib/actions/setup-r@e8c60692f29164895fbcdbebf2fde501a1f7e07f # v2
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@e6be4b3706e0f39bc7a4cf4496a5f2c4cb840040 # v2
+      - uses: r-lib/actions/setup-r-dependencies@e8c60692f29164895fbcdbebf2fde501a1f7e07f # v2
         with:
           extra-packages: any::covr
           needs: coverage
