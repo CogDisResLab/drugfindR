@@ -29,11 +29,11 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
-      - uses: r-lib/actions/setup-r@e6be4b3706e0f39bc7a4cf4496a5f2c4cb840040 # v2
+      - uses: r-lib/actions/setup-r@473c68190595b311a74f208fba61a8d8c0d4c247 # v2
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@e6be4b3706e0f39bc7a4cf4496a5f2c4cb840040 # v2
+      - uses: r-lib/actions/setup-r-dependencies@473c68190595b311a74f208fba61a8d8c0d4c247 # v2
         with:
           extra-packages: any::covr
           needs: coverage
@@ -56,7 +56,7 @@ jobs:
 
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4
         with:
           name: coverage-test-failures
           path: ${{ runner.temp }}/package
