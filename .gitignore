@@ -327,6 +327,8 @@ inst/doc
 
 /doc/
 /Meta/
+**/*.log
+test.tsv
 
 # Ignore overrides
 
