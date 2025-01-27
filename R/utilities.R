@@ -26,7 +26,7 @@ targetRename <- function(inputNames) {
 #' @keywords internal
 #' @return a fixed string URL
 .ilincsBaseUrl <- function() {
-    "http://www.ilincs.org/api"
+    "https://www.ilincs.org/api"
 }
 
 #' Check if the library is valid
