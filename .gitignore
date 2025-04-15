@@ -335,3 +335,5 @@ test.tsv
 !inst/extdata/*
 
 *.bak
+*.pdf
+*.jats
