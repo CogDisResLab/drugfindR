@@ -1,4 +1,5 @@
 \.gitkeep$
+^.*\.log$
 ^.bumpversion.cfg$
 ^.lintr$
 ^.zenodo\.json$
@@ -19,9 +20,11 @@
 ^doc$
 ^drugfindR\.Rproj$
 ^drugfindR\.code-workspace$
+^joss$
 ^ltex\..*$
 ^raw$
 ^renovate\.json$
 ^renv$
 ^renv\.lock$
+^test\.tsv$
 ^utilities$

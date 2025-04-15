@@ -99,5 +99,10 @@ Authors:
   \item Justin Fortune Creeden \email{Justin.Creeden@rockets.utoledo.edu} (\href{https://orcid.org/0000-0003-3123-8401}{ORCID})
 }
 
+Other contributors:
+\itemize{
+  \item Robert Erne McCullumsmith \email{Robert.McCullumsmith@utoledo.edu} (\href{https://orcid.org/0000-0001-6921-7150}{ORCID}) [contributor, funder]
+}
+
 }
 \keyword{internal}

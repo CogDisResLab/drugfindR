@@ -1,6 +1,6 @@
 Package: drugfindR
 Title: Investigate iLINCS for candidate repurposable drugs
-Version: 0.99.1045
+Version: 0.99.1046
 Authors@R: c(
     person(given = c("Ali", "Sajid"),
            family = "Imami",
@@ -16,14 +16,12 @@ Authors@R: c(
            family = "Creeden",
            role = c("aut"),
            email = "Justin.Creeden@rockets.utoledo.edu",
-           comment = c(ORCID = "0000-0003-3123-8401"))
-    ),
+           comment = c(ORCID = "0000-0003-3123-8401")),
     person(given = c("Robert", "Erne"),
           family = "McCullumsmith",
           role = c("ctb", "fnd"),
           email = "Robert.McCullumsmith@utoledo.edu",
-          comment = c(ORCID = "0000-0001-6921-7150")
-    )
+          comment = c(ORCID = "0000-0001-6921-7150"))
     )
 Description: This package provides a convenient way to access the
     LINCS Signatures available in the iLINCS database. These signatures include
@@ -76,6 +74,7 @@ X-schema.org-keywords: LINCS, iLINCS, drug repurposing, drug discovery,
     chemical perturbagen, drugfindR
 X-schema.org-isPartOf: https://bioconductor.org
 Collate:
+    'classes.R'
     'utilities.R'
     'consensusConcordants.R'
     'drugfindR-package.R'
