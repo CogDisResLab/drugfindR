@@ -333,3 +333,5 @@ test.tsv
 # Ignore overrides
 
 !inst/extdata/*
+
+*.bak
