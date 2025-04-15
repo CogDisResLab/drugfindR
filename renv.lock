@@ -34,7 +34,7 @@
   "Packages": {
     "AnnotationDbi": {
       "Package": "AnnotationDbi",
-      "Version": "1.66.0",
+      "Version": "1.68.0",
       "Source": "Bioconductor",
       "Title": "Manipulation of SQLite-based annotations in Bioconductor",
       "Description": "Implements a user-friendly interface for querying SQLite-based annotation data packages.",
@@ -80,10 +80,10 @@
       "VignetteBuilder": "knitr",
       "Collate": "00RTobjs.R AllGenerics.R AllClasses.R unlist2.R utils.R SQL.R FlatBimap.R AnnDbObj-lowAPI.R Bimap.R GOTerms.R BimapFormatting.R Bimap-envirAPI.R flatten.R methods-AnnotationDb.R methods-SQLiteConnection.R methods-geneCentricDbs.R methods-geneCentricDbs-keys.R methods-ReactomeDb.R methods-OrthologyDb.R loadDb.R createAnnObjs-utils.R createAnnObjs.NCBIORG_DBs.R createAnnObjs.NCBICHIP_DBs.R createAnnObjs.ORGANISM_DB.R createAnnObjs.YEASTCHIP_DB.R createAnnObjs.COELICOLOR_DB.R createAnnObjs.ARABIDOPSISCHIP_DB.R createAnnObjs.MALARIA_DB.R createAnnObjs.YEAST_DB.R createAnnObjs.YEASTNCBI_DB.R createAnnObjs.ARABIDOPSIS_DB.R createAnnObjs.GO_DB.R createAnnObjs.KEGG_DB.R createAnnObjs.PFAM_DB.R AnnDbPkg-templates-common.R AnnDbPkg-checker.R print.probetable.R makeMap.R inpIDMapper.R test_AnnotationDbi_package.R",
       "git_url": "https://git.bioconductor.org/packages/AnnotationDbi",
-      "git_branch": "RELEASE_3_19",
-      "git_last_commit": "989c1dc",
-      "git_last_commit_date": "2024-04-30",
-      "Repository": "Bioconductor 3.19",
+      "git_branch": "RELEASE_3_20",
+      "git_last_commit": "6a2aa33",
+      "git_last_commit_date": "2024-10-29",
+      "Repository": "Bioconductor 3.20",
       "NeedsCompilation": "no"
     },
     "Biobase": {
@@ -214,11 +214,11 @@
     },
     "BiocStyle": {
       "Package": "BiocStyle",
-      "Version": "2.32.1",
+      "Version": "2.34.0",
       "Source": "Bioconductor",
       "Title": "Standard styles for vignettes and other Bioconductor documents",
       "Description": "Provides standard formatting styles for Bioconductor PDF and HTML documents. Package vignettes illustrate use and functionality.",
-      "Authors@R": "c( person(\"Andrzej\", \"Oleś\", role = \"aut\", comment = c(ORCID = \"0000-0003-0285-2787\") ),  person(\"Mike\", \"Smith\", role = \"ctb\", comment = c(ORCID = \"0000-0002-7800-3848\") ), person(\"Martin\", \"Morgan\", role = \"ctb\"), person(\"Wolfgang\", \"Huber\", role = \"ctb\"), person(\"Bioconductor Package\", role = \"cre\", email = \"maintainer@bioconductor.org\") )",
+      "Authors@R": "c( person(\"Andrzej\", \"Oleś\", role = \"aut\", comment = c(ORCID = \"0000-0003-0285-2787\") ),  person(\"Mike\", \"Smith\", role = \"ctb\", comment = c(ORCID = \"0000-0002-7800-3848\") ), person(\"Martin\", \"Morgan\", role = \"ctb\"), person(\"Wolfgang\", \"Huber\", role = \"ctb\"), person(\"Bioconductor Package Maintainer\", role = \"cre\", email = \"maintainer@bioconductor.org\") )",
       "Imports": [
         "bookdown",
         "knitr (>= 1.30)",
@@ -241,13 +241,13 @@
       "BugReports": "https://github.com/Bioconductor/BiocStyle/issues",
       "RoxygenNote": "6.1.0",
       "git_url": "https://git.bioconductor.org/packages/BiocStyle",
-      "git_branch": "RELEASE_3_19",
-      "git_last_commit": "bd5e829",
-      "git_last_commit_date": "2024-06-15",
-      "Repository": "Bioconductor 3.19",
+      "git_branch": "RELEASE_3_20",
+      "git_last_commit": "0a04242",
+      "git_last_commit_date": "2024-10-29",
+      "Repository": "Bioconductor 3.20",
       "NeedsCompilation": "no",
-      "Author": "Andrzej Oleś [aut] (<https://orcid.org/0000-0003-0285-2787>), Mike Smith [ctb] (<https://orcid.org/0000-0002-7800-3848>), Martin Morgan [ctb], Wolfgang Huber [ctb], Bioconductor Package [cre]",
-      "Maintainer": "Bioconductor Package <maintainer@bioconductor.org>"
+      "Author": "Andrzej Oleś [aut] (<https://orcid.org/0000-0003-0285-2787>), Mike Smith [ctb] (<https://orcid.org/0000-0002-7800-3848>), Martin Morgan [ctb], Wolfgang Huber [ctb], Bioconductor Package Maintainer [cre]",
+      "Maintainer": "Bioconductor Package Maintainer <maintainer@bioconductor.org>"
     },
     "BiocVersion": {
       "Package": "BiocVersion",
@@ -274,7 +274,7 @@
     },
     "Biostrings": {
       "Package": "Biostrings",
-      "Version": "2.72.1",
+      "Version": "2.74.1",
       "Source": "Bioconductor",
       "Title": "Efficient manipulation of biological strings",
       "Description": "Memory efficient string containers, string matching algorithms, and other utilities, for fast manipulation of large biological sequences or sets of sequences.",
@@ -283,7 +283,7 @@
       "BugReports": "https://github.com/Bioconductor/Biostrings/issues",
       "License": "Artistic-2.0",
       "Encoding": "UTF-8",
-      "Authors@R": "c( person(\"Hervé\", \"Pagès\", role=c(\"aut\", \"cre\"), email=\"hpages.on.github@gmail.com\"), person(\"Patrick\", \"Aboyoun\", role=\"aut\"), person(\"Robert\", \"Gentleman\", role=\"aut\"), person(\"Saikat\", \"DebRoy\", role=\"aut\"), person(\"Vince\", \"Carey\", role=\"ctb\"), person(\"Nicolas\", \"Delhomme\", role=\"ctb\"), person(\"Felix\", \"Ernst\", role=\"ctb\"), person(\"Wolfgang\", \"Huber\", role=\"ctb\", comment=\"'matchprobes' vignette\"), person(\"Haleema\", \"Khan\", role=\"ctb\", comment=\"Converted 'matchprobes' vignette from Sweave to RMarkdown\"), person(\"Aidan\", \"Lakshman\", role=\"ctb\"), person(\"Kieran\", \"O'Neill\", role=\"ctb\"), person(\"Valerie\", \"Obenchain\", role=\"ctb\"), person(\"Marcel\", \"Ramos\", role=\"ctb\"), person(\"Albert\", \"Vill\", role=\"ctb\"), person(\"Jen\", \"Wokaty\", role=\"ctb\", comment=\"Converted 'matchprobes' vignette from Sweave to RMarkdown\"), person(\"Erik\", \"Wright\", role=\"ctb\"))",
+      "Authors@R": "c( person(\"Hervé\", \"Pagès\", role=c(\"aut\", \"cre\"), email=\"hpages.on.github@gmail.com\"), person(\"Patrick\", \"Aboyoun\", role=\"aut\"), person(\"Robert\", \"Gentleman\", role=\"aut\"), person(\"Saikat\", \"DebRoy\", role=\"aut\"), person(\"Vince\", \"Carey\", role=\"ctb\"), person(\"Nicolas\", \"Delhomme\", role=\"ctb\"), person(\"Felix\", \"Ernst\", role=\"ctb\"), person(\"Wolfgang\", \"Huber\", role=\"ctb\", comment=\"'matchprobes' vignette\"), person(\"Beryl\", \"Kanali\", role=\"ctb\", comment=\"Converted 'MultipleAlignments' vignette from Sweave to RMarkdown\"), person(\"Haleema\", \"Khan\", role=\"ctb\", comment=\"Converted 'matchprobes' vignette from Sweave to RMarkdown\"), person(\"Aidan\", \"Lakshman\", role=\"ctb\"), person(\"Kieran\", \"O'Neill\", role=\"ctb\"), person(\"Valerie\", \"Obenchain\", role=\"ctb\"), person(\"Marcel\", \"Ramos\", role=\"ctb\"), person(\"Albert\", \"Vill\", role=\"ctb\"), person(\"Jen\", \"Wokaty\", role=\"ctb\", comment=\"Converted 'matchprobes' vignette from Sweave to RMarkdown\"), person(\"Erik\", \"Wright\", role=\"ctb\"))",
       "Depends": [
         "R (>= 4.0.0)",
         "BiocGenerics (>= 0.37.0)",
@@ -320,17 +320,19 @@
         "affydata (>= 1.11.5)",
         "RUnit",
         "BiocStyle",
-        "knitr"
+        "knitr",
+        "testthat (>= 3.0.0)",
+        "covr"
       ],
       "VignetteBuilder": "knitr",
       "Collate": "utils.R IUPAC_CODE_MAP.R AMINO_ACID_CODE.R GENETIC_CODE.R XStringCodec-class.R seqtype.R coloring.R XString-class.R XStringSet-class.R XStringSet-comparison.R XStringViews-class.R MaskedXString-class.R XStringSetList-class.R seqinfo-methods.R xscat.R XStringSet-io.R letter.R getSeq.R letterFrequency.R dinucleotideFrequencyTest.R chartr.R reverseComplement.R translate.R toComplex.R replaceAt.R replaceLetterAt.R injectHardMask.R padAndClip.R strsplit-methods.R misc.R SparseList-class.R MIndex-class.R lowlevel-matching.R match-utils.R matchPattern.R maskMotif.R matchLRPatterns.R trimLRPatterns.R matchProbePair.R matchPWM.R findPalindromes.R PDict-class.R matchPDict.R XStringPartialMatches-class.R XStringQuality-class.R QualityScaledXStringSet.R pmatchPattern.R needwunsQS.R MultipleAlignment.R matchprobes.R moved_to_pwalign.R zzz.R",
       "git_url": "https://git.bioconductor.org/packages/Biostrings",
-      "git_branch": "RELEASE_3_19",
-      "git_last_commit": "959b3ba",
-      "git_last_commit_date": "2024-05-31",
-      "Repository": "Bioconductor 3.19",
+      "git_branch": "RELEASE_3_20",
+      "git_last_commit": "b5de574",
+      "git_last_commit_date": "2024-12-14",
+      "Repository": "Bioconductor 3.20",
       "NeedsCompilation": "yes",
-      "Author": "Hervé Pagès [aut, cre], Patrick Aboyoun [aut], Robert Gentleman [aut], Saikat DebRoy [aut], Vince Carey [ctb], Nicolas Delhomme [ctb], Felix Ernst [ctb], Wolfgang Huber [ctb] ('matchprobes' vignette), Haleema Khan [ctb] (Converted 'matchprobes' vignette from Sweave to RMarkdown), Aidan Lakshman [ctb], Kieran O'Neill [ctb], Valerie Obenchain [ctb], Marcel Ramos [ctb], Albert Vill [ctb], Jen Wokaty [ctb] (Converted 'matchprobes' vignette from Sweave to RMarkdown), Erik Wright [ctb]",
+      "Author": "Hervé Pagès [aut, cre], Patrick Aboyoun [aut], Robert Gentleman [aut], Saikat DebRoy [aut], Vince Carey [ctb], Nicolas Delhomme [ctb], Felix Ernst [ctb], Wolfgang Huber [ctb] ('matchprobes' vignette), Beryl Kanali [ctb] (Converted 'MultipleAlignments' vignette from Sweave to RMarkdown), Haleema Khan [ctb] (Converted 'matchprobes' vignette from Sweave to RMarkdown), Aidan Lakshman [ctb], Kieran O'Neill [ctb], Valerie Obenchain [ctb], Marcel Ramos [ctb], Albert Vill [ctb], Jen Wokaty [ctb] (Converted 'matchprobes' vignette from Sweave to RMarkdown), Erik Wright [ctb]",
       "Maintainer": "Hervé Pagès <hpages.on.github@gmail.com>"
     },
     "DBI": {
@@ -500,7 +502,7 @@
     },
     "KEGGREST": {
       "Package": "KEGGREST",
-      "Version": "1.44.1",
+      "Version": "1.46.0",
       "Source": "Bioconductor",
       "Title": "Client-side REST access to the Kyoto Encyclopedia of Genes and Genomes (KEGG)",
       "Authors@R": "c( person(\"Dan\", \"Tenenbaum\", role = \"aut\"), person(\"Bioconductor Package\", \"Maintainer\", role = c(\"aut\", \"cre\"), email = \"maintainer@bioconductor.org\"), person(\"Martin\", \"Morgan\", role = \"ctb\"), person(\"Kozo\", \"Nishida\", role = \"ctb\"), person(\"Marcel\", \"Ramos\", role = \"ctb\"), person(\"Kristina\", \"Riemer\", role = \"ctb\"), person(\"Lori\", \"Shepherd\", role = \"ctb\"), person(\"Jeremy\", \"Volkening\", role = \"ctb\") )",
@@ -516,6 +518,7 @@
       "Suggests": [
         "RUnit",
         "BiocGenerics",
+        "BiocStyle",
         "knitr",
         "markdown"
       ],
@@ -526,11 +529,12 @@
       "VignetteBuilder": "knitr",
       "biocViews": "Annotation, Pathways, ThirdPartyClient, KEGG",
       "RoxygenNote": "7.1.1",
+      "Date": "2024-06-17",
       "git_url": "https://git.bioconductor.org/packages/KEGGREST",
-      "git_branch": "RELEASE_3_19",
-      "git_last_commit": "eb52061",
-      "git_last_commit_date": "2024-06-17",
-      "Repository": "Bioconductor 3.19",
+      "git_branch": "RELEASE_3_20",
+      "git_last_commit": "b34820c",
+      "git_last_commit_date": "2024-10-29",
+      "Repository": "Bioconductor 3.20",
       "NeedsCompilation": "no",
       "Author": "Dan Tenenbaum [aut], Bioconductor Package Maintainer [aut, cre], Martin Morgan [ctb], Kozo Nishida [ctb], Marcel Ramos [ctb], Kristina Riemer [ctb], Lori Shepherd [ctb], Jeremy Volkening [ctb]",
       "Maintainer": "Bioconductor Package Maintainer <maintainer@bioconductor.org>"
@@ -3935,7 +3939,7 @@
     },
     "org.Hs.eg.db": {
       "Package": "org.Hs.eg.db",
-      "Version": "3.19.1",
+      "Version": "3.20.0",
       "Source": "Bioconductor",
       "Title": "Genome wide annotation for Human",
       "Description": "Genome wide annotation for Human, primarily based on mapping using Entrez Gene identifiers.",
@@ -3944,7 +3948,7 @@
       "Depends": [
         "R (>= 2.7.0)",
         "methods",
-        "AnnotationDbi (>= 1.65.2)"
+        "AnnotationDbi (>= 1.67.0)"
       ],
       "Suggests": [
         "DBI",
