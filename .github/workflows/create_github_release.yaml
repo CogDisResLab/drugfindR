@@ -11,20 +11,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  optimize_ci:
-      runs-on: ubuntu-latest
-      outputs:
-        skip: ${{ steps.check_skip.outputs.skip }}
-      steps:
-        - name: Optimize CI
-          id: check_skip
-          uses: withgraphite/graphite-ci-action@main
-          with:
-            graphite_token: ${{secrets.GRAPHITE_TOKEN}}
   create-release:
     runs-on: ubuntu-latest
-    needs: [optimize_ci]
-    if: needs.optimize_ci.outputs.skip == 'false'
     permissions:
       contents: write
     outputs:
@@ -34,17 +22,12 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
-      - name: Get most recent tag
-        id: get_tag
-        run: echo "TAG_VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))" >> "$GITHUB_ENV"
       - name: Create Release
         id: create_release
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          echo "Creating release for tag $TAG_VERSION"
-          gh release create $TAG_VERSION --title "Release $TAG_VERSION" --notes "Release $TAG_VERSION" --target ${{ github.ref }}
-          echo "tag_version=$TAG_VERSION" >> "$GITHUB_OUTPUT"
+        run: ./utilities/create-github-release.sh
+
   create_release_artifacts:
     needs: [create-release]
     permissions:
