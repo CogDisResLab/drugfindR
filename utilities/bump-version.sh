@@ -1,43 +1,50 @@
 #!/bin/bash
 set -euo pipefail
 
-# Define file paths
+# --- Configuration ---
+
 DESCRIPTION_FILE="DESCRIPTION"
 CODEMETA_FILE="codemeta.json"
 
-# Extract the base version (MAJOR.MINOR) from the DESCRIPTION file
-BASE_VERSION=$(grep '^Version:' $DESCRIPTION_FILE | awk '{print $2}' | cut -d. -f1,2)
+# --- Get base version (e.g., 0.99) from DESCRIPTION file ---
+# Assumes DESCRIPTION contains: Version: X.Y.Z
+BASE_VERSION=$(grep '^Version:' "$DESCRIPTION_FILE" | awk '{print $2}' | cut -d. -f1,2)
 
-# Get the total number of commits in the Git history (this will be used as the patch number)
+# --- Use total commit count as patch number ---
 PATCH_NUMBER=$(git rev-list --count HEAD)
 
-# Combine the base version with the patch number
+# --- Compose new version: MAJOR.MINOR.PATCH ---
 NEW_VERSION="$BASE_VERSION.$PATCH_NUMBER"
 
-# Get the current version from the DESCRIPTION file
-CURRENT_VERSION=$(grep '^Version:' $DESCRIPTION_FILE | awk '{print $2}' || true)
+# --- Get current version from DESCRIPTION ---
+CURRENT_VERSION=$(grep '^Version:' "$DESCRIPTION_FILE" | awk '{print $2}' || true)
 
-# Check if the version is already up to date
+# --- If already up to date, skip ---
 if [[ "$CURRENT_VERSION" == "$NEW_VERSION" ]]; then
   echo "Version is already up-to-date: $NEW_VERSION"
   exit 0
 fi
 
-echo "Updating version to: $NEW_VERSION"
+echo "🔧 Updating version from $CURRENT_VERSION to $NEW_VERSION"
 
+# --- Set environment variable to skip CI jobs if needed ---
 export SKIP="bump-version,codemeta-json-updated"
 
-# Update the DESCRIPTION file with the new version
+# --- Update DESCRIPTION file ---
+# macOS `sed` needs backup extension, GNU sed does not
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  sed -i '' "s/Version: $CURRENT_VERSION/Version: $NEW_VERSION/" $DESCRIPTION_FILE
+  sed -i '' "s/^Version: $CURRENT_VERSION/Version: $NEW_VERSION/" "$DESCRIPTION_FILE"
 else
-  sed -i "s/Version: $CURRENT_VERSION/Version: $NEW_VERSION/" $DESCRIPTION_FILE
+  sed -i "s/^Version: $CURRENT_VERSION/Version: $NEW_VERSION/" "$DESCRIPTION_FILE"
 fi
 
-# Update the codemeta.json file with the new version (assuming the version is under a "version" key)
-jq --arg new_version "$NEW_VERSION" '.version = $new_version' "$CODEMETA_FILE" >tmp.$$.json && mv tmp.$$.json "$CODEMETA_FILE"
+# --- Update codemeta.json using jq ---
+# Overwrites the version key
+tmpfile=$(mktemp)
+jq --arg new_version "$NEW_VERSION" '.version = $new_version' "$CODEMETA_FILE" >"$tmpfile"
+mv "$tmpfile" "$CODEMETA_FILE"
 
-# Stage the updated files
-git add $DESCRIPTION_FILE $CODEMETA_FILE
+# --- Stage updated files for git commit ---
+git add "$DESCRIPTION_FILE" "$CODEMETA_FILE"
 
-echo "Version updated to $NEW_VERSION."
+echo "✅ Version updated and staged: $NEW_VERSION"
