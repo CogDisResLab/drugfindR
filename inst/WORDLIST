@@ -2720,6 +2720,8 @@ Droxinostat
 DRP
 drugdiscovery
 drugfindR
+drugfindRCoreData
+drugfindRSignature
 drugrepurposing
 DS
 DSC
@@ -3709,6 +3711,8 @@ Geranylgeraniol
 Gestrinone
 getConcordants
 getSignature
+getters
+Getters
 GF
 GFAP
 GFER
