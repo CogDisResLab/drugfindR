@@ -3,7 +3,7 @@
 exclude: '.*\.(csv|tsv|xls)$'
 repos:
 -   repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.4.3
+    rev: v0.4.3.9009
     hooks:
     -   id: use-tidy-description
     -   id: codemeta-description-updated
@@ -130,7 +130,7 @@ repos:
     -   id: create-version-tag
         name: Create Version Tag
         entry: >
-          ./utilities/create_tag.sh
+          ./utilities/create-tag.sh
         language: system
         pass_filenames: false
         always_run: true
