@@ -1,7 +1,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://www.ilincs.org/api/ilincsR/downloadSignature?sigID=LINCS_INV&noOfTopGenes=978
+    uri: https://www.ilincs.org/api/ilincsR/downloadSignature?sigID=LINCS_INV&noOfTopGenes=978
     body:
       encoding: ''
       string: ''

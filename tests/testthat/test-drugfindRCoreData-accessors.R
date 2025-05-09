@@ -1,47 +1,73 @@
-test_that("getters and setters work correctly for all slots", {
-    sig <- tibble::tibble(Gene = c("A", "B"), Value_LogDiffExp = c(-1, 1))
-    concordants <- tibble::tibble(Drug = "Aspirin", Score = 0.9)
-    obj <- drugfindRCoreData(signature = sig)
+test_that("drugfindRCoreData slot accessors work as expected", {
+    # Create a mock instance of drugfindRCoreData
+    obj <- new("drugfindRCoreData",
+        signature = exampleSignature(),
+        filteredSignature = {
+            exampleSignature() |> filter(abs(Value_LogDiffExp) > 1)
+        },
+        filterThresholdUp = 1.0,
+        filterThresholdDown = -1.0,
+        concordanceLimitUp = 0.5,
+        concordanceLimitDown = -0.5,
+        unfilteredConcordants = concordantsCp(),
+        filteredConcordants = consensusConcordantsCpPaired()
+    )
 
-    # signature
-    expect_equal(getCoreSignature(obj), sig)
-    new_sig <- tibble::tibble(Gene = "C", Value_LogDiffExp = 2)
-    setCoreSignature(obj) <- new_sig
-    expect_equal(getCoreSignature(obj), new_sig)
+    ## Signature
+    expect_equal(getCoreSignature(obj), exampleSignature())
+    setCoreSignature(obj) <- emptySignature()
+    expect_equal(getCoreSignature(obj), emptySignature())
 
-    # thresholds
-    setFilterThresholdUp(obj) <- 0.75
-    expect_equal(getFilterThresholdUp(obj), 0.75)
+    ## Filtered Signature
+    expect_equal(getFilteredSignature(obj), {
+        exampleSignature() |> filter(abs(Value_LogDiffExp) > 1)
+    })
+    setFilteredSignature(obj) <- emptySignature()
+    expect_equal(getFilteredSignature(obj), emptySignature())
 
-    setFilterThresholdDown(obj) <- -0.5
-    expect_equal(getFilterThresholdDown(obj), -0.5)
+    ## Filter Thresholds
+    expect_equal(getFilterThresholdUp(obj), 1.0)
+    expect_equal(getFilterThresholdDown(obj), -1.0)
+    expect_equal(getFilterThresholds(obj), c(-1.0, 1.0))
 
-    setFilterThresholds(obj) <- 0.25
-    expect_equal(getFilterThresholdUp(obj), 0.25)
-    expect_equal(getFilterThresholdDown(obj), -0.25)
-    expect_equal(getFilterThresholds(obj), c(-0.25, 0.25))
+    setFilterThresholdUp(obj) <- 2.0
+    expect_equal(getFilterThresholdUp(obj), 2.0)
 
-    # filteredSignature
-    filtered <- tibble::tibble(Gene = "C", Value_LogDiffExp = 2)
-    setFilteredSignature(obj) <- filtered
-    expect_equal(getFilteredSignature(obj), filtered)
+    setFilterThresholdDown(obj) <- -2.0
+    expect_equal(getFilterThresholdDown(obj), -2.0)
 
-    # concordance limits
-    setConcordanceLimitUp(obj) <- 0.8
-    expect_equal(getConcordanceLimitUp(obj), 0.8)
+    setFilterThresholds(obj) <- 3.0
+    expect_equal(getFilterThresholds(obj), c(-3.0, 3.0))
 
-    setConcordanceLimitDown(obj) <- -0.8
-    expect_equal(getConcordanceLimitDown(obj), -0.8)
+    setFilterThresholds(obj) <- c(-4.0, 4.0)
+    expect_equal(getFilterThresholds(obj), c(-4.0, 4.0))
 
-    setConcordanceLimits(obj) <- 0.25
-    expect_equal(getConcordanceLimitUp(obj), 0.25)
-    expect_equal(getConcordanceLimitDown(obj), -0.25)
-    expect_equal(getConcordanceLimits(obj), c(-0.25, 0.25))
+    expect_error(setFilterThresholds(obj) <- c(1, 2, 3), "Incorrect number of items in length")
 
-    # concordants
-    setUnfilteredConcordants(obj) <- concordants
-    expect_equal(getUnfilteredConcordants(obj), concordants)
+    ## Concordance Limits
+    expect_equal(getConcordanceLimitUp(obj), 0.5)
+    expect_equal(getConcordanceLimitDown(obj), -0.5)
+    expect_equal(getConcordanceLimits(obj), c(-0.5, 0.5))
 
-    setFilteredConcordants(obj) <- concordants
-    expect_equal(getFilteredConcordants(obj), concordants)
+    setConcordanceLimitUp(obj) <- 1.5
+    expect_equal(getConcordanceLimitUp(obj), 1.5)
+
+    setConcordanceLimitDown(obj) <- -1.5
+    expect_equal(getConcordanceLimitDown(obj), -1.5)
+
+    setConcordanceLimits(obj) <- 2.0
+    expect_equal(getConcordanceLimits(obj), c(-2.0, 2.0))
+
+    setConcordanceLimits(obj) <- c(-2.5, 2.5)
+    expect_equal(getConcordanceLimits(obj), c(-2.5, 2.5))
+
+    expect_error(setConcordanceLimits(obj) <- c(1, 2, 3), "Incorrect number of items in length")
+
+    expect_equal(getUnfilteredConcordants(obj), concordantsCp())
+    setUnfilteredConcordants(obj) <- concordantsOe()
+    expect_equal(getUnfilteredConcordants(obj), concordantsOe())
+
+    expect_equal(getFilteredConcordants(obj), consensusConcordantsCpPaired())
+    setFilteredConcordants(obj) <- concordantsOe()
+    expect_equal(getFilteredConcordants(obj), concordantsOe())
 })

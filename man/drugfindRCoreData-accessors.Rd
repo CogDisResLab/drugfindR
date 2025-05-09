@@ -2,9 +2,8 @@
 % Please edit documentation in R/drugfindRCoreData-accessors.R
 \name{drugfindRCoreData-accessors}
 \alias{drugfindRCoreData-accessors}
-\alias{getCoreSignature,drugfindRCoreData-method}
+\alias{getCoreSignature}
 \alias{setCoreSignature<-}
-\alias{setCoreSignature<-,drugfindRCoreData-method}
 \alias{getFilteredSignature}
 \alias{setFilteredSignature<-}
 \alias{getFilterThresholdUp}
@@ -23,62 +22,70 @@
 \alias{setUnfilteredConcordants<-}
 \alias{getFilteredConcordants}
 \alias{setFilteredConcordants<-}
-\title{Getters and Setters for drugfindRCoreData slots}
+\title{Accessor Methods for drugfindRCoreData Slots}
 \usage{
 getCoreSignature(object)
-
-\S4method{getCoreSignature}{drugfindRCoreData}(object)
-
-setCoreSignature(object) <- value
-
-\S4method{setCoreSignature}{drugfindRCoreData}(object) <- value
-
-getFilteredSignature(object)
-
-setFilteredSignature(object) <- value
-
-getFilterThresholdUp(object)
-
-setFilterThresholdUp(object) <- value
-
-getFilterThresholdDown(object)
-
-setFilterThresholdDown(object) <- value
-
-getFilterThresholds(object)
-
-setFilterThresholds(object) <- value
-
-getConcordanceLimitUp(object)
-
-setConcordanceLimitUp(object) <- value
-
-getConcordanceLimitDown(object)
-
-setConcordanceLimitDown(object) <- value
-
-getConcordanceLimits(object)
-
-setConcordanceLimits(object) <- value
-
-getUnfilteredConcordants(object)
-
-setUnfilteredConcordants(object) <- value
-
-getFilteredConcordants(object)
-
-setFilteredConcordants(object) <- value
 }
 \arguments{
-\item{object}{A \code{drugfindRCoreData} object.}
+\item{object}{A \code{\link{drugfindRCoreData}} object.}
 
-\item{value}{The new value to assign to the slot.}
+\item{value}{The value to assign to a slot (for setters only).}
 }
 \value{
-The value of the slot (for getters) or the modified object (for setters).
+For getters, the value stored in the relevant slot. For setters, the updated object.
 }
 \description{
-These functions provide access to the individual slots of a
-\code{drugfindRCoreData} object.
+These functions provide internal access to the individual slots of a
+\code{drugfindRCoreData} object used in the drugfindR pipeline.
 }
+\section{Core Signature}{
+
+\itemize{
+\item \code{getCoreSignature(object)} returns the core gene signature.
+\item \code{setCoreSignature(object) <- value} sets the core gene signature.
+}
+}
+
+\section{Filtered Signature}{
+
+\itemize{
+\item \code{getFilteredSignature(object)} returns the filtered signature.
+\item \code{setFilteredSignature(object) <- value} sets the filtered signature.
+}
+}
+
+\section{Filter Thresholds}{
+
+\itemize{
+\item \code{getFilterThresholdUp(object)} returns the upper filter threshold.
+\item \code{setFilterThresholdUp(object) <- value} sets the upper threshold.
+\item \code{getFilterThresholdDown(object)} returns the lower filter threshold.
+\item \code{setFilterThresholdDown(object) <- value} sets the lower threshold.
+\item \code{getFilterThresholds(object)} returns both thresholds as a vector.
+\item \code{setFilterThresholds(object) <- value} sets both thresholds from a vector of length 1 or 2.
+}
+}
+
+\section{Concordance Limits}{
+
+\itemize{
+\item \code{getConcordanceLimitUp(object)} returns the upper concordance limit.
+\item \code{setConcordanceLimitUp(object) <- value} sets the upper limit.
+\item \code{getConcordanceLimitDown(object)} returns the lower concordance limit.
+\item \code{setConcordanceLimitDown(object) <- value} sets the lower limit.
+\item \code{getConcordanceLimits(object)} returns both concordance limits as a vector.
+\item \code{setConcordanceLimits(object) <- value} sets both concordance limits from a vector of length 1 or 2.
+}
+}
+
+\section{Concordants}{
+
+\itemize{
+\item \code{getUnfilteredConcordants(object)} returns unfiltered concordant drugs.
+\item \code{setUnfilteredConcordants(object) <- value} sets unfiltered concordants.
+\item \code{getFilteredConcordants(object)} returns filtered concordant drugs.
+\item \code{setFilteredConcordants(object) <- value} sets filtered concordants.
+}
+}
+
 \keyword{internal}
