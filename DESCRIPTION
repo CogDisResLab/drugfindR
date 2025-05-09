@@ -1,6 +1,6 @@
 Package: drugfindR
 Title: Investigate iLINCS for candidate repurposable drugs
-Version: 0.99.1053
+Version: 0.99.1054
 Authors@R: c(
     person(given = c("Ali", "Sajid"),
            family = "Imami",
@@ -75,10 +75,14 @@ X-schema.org-keywords: LINCS, iLINCS, drug repurposing, drug discovery,
     chemical perturbagen, drugfindR
 X-schema.org-isPartOf: https://bioconductor.org
 Collate:
+    'class-drugfindRCoreData.R'
+    'class-drugfindRSignature.R'
     'utilities.R'
     'consensusConcordants.R'
     'drugfindR-package.R'
     'drugfindRCoreData-accessors.R'
+    'drugfindRCoreData.R'
+    'drugfindRDataset.R'
     'filterSignature.R'
     'getConcordants.R'
     'getSignature.R'
@@ -86,3 +90,4 @@ Collate:
     'investigateSignature.R'
     'investigateTarget.R'
     'restore.R'
+    'summary.drugfindRCoreData.R'

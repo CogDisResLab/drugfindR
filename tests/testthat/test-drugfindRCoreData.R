@@ -34,6 +34,7 @@ test_that("drugfindRCoreData handles full input correctly", {
     expect_equal(core@filteredSignature, filtered)
     expect_equal(core@unfilteredConcordants, concordants)
     expect_equal(core@concordanceLimitUp, 0.75)
+    expect_equal(core@concordanceLimitDown, -0.75)
 })
 
 test_that("drugfindRCoreData errors on non-tibble input", {

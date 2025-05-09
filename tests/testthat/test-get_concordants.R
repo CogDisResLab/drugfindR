@@ -14,7 +14,7 @@ test_that("Library must be one of 'OE', 'KD' or 'CP'", {
 
 test_that("Function errors if it receives an error response", {
     webmockr::stub_request(
-        "post", "http://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze"
+        "post", "https://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze"
     ) |>
         webmockr::to_return(status = 500L)
     webmockr::httr2_mock()
