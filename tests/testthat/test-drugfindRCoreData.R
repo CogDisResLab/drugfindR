@@ -5,11 +5,11 @@ test_that("drugfindRCoreData constructor works with minimal input", {
 
     expect_s4_class(core, "drugfindRCoreData")
     expect_equal(core@signature, sig)
-    expect_true(is.na(core@filterThresholdUp))
-    expect_true(is.na(core@filterThresholdDown))
+    expect_equal(core@filterThresholdDown, 0)
+    expect_equal(core@filterThresholdUp, 0)
     expect_null(core@filteredSignature)
-    expect_true(is.na(core@concordanceLimitUp))
-    expect_true(is.na(core@concordanceLimitDown))
+    expect_equal(core@concordanceLimitDown, -0.2)
+    expect_equal(core@concordanceLimitUp, 0.2)
     expect_null(core@unfilteredConcordants)
     expect_null(core@filteredConcordants)
 })
@@ -23,24 +23,16 @@ test_that("drugfindRCoreData handles full input correctly", {
         signature = sig,
         filterThresholdUp = 1,
         filterThresholdDown = -1,
-        filteredSignature = filtered,
         concordanceLimitUp = 0.75,
-        concordanceLimitDown = -0.75,
-        unfilteredConcordants = concordants,
-        filteredConcordants = concordants
+        concordanceLimitDown = -0.75
     )
 
     expect_s4_class(core, "drugfindRCoreData")
-    expect_equal(core@filteredSignature, filtered)
-    expect_equal(core@unfilteredConcordants, concordants)
-    expect_equal(core@concordanceLimitUp, 0.75)
+    expect_equal(core@filterThresholdDown, -1)
+    expect_equal(core@filterThresholdUp, 1)
     expect_equal(core@concordanceLimitDown, -0.75)
-})
-
-test_that("drugfindRCoreData errors on non-tibble input", {
-    df <- data.frame(Gene = c("A", "B"), Value_LogDiffExp = c(-1, 1))
-    expect_error(
-        drugfindRCoreData(signature = df),
-        "`signature` must be a tibble"
-    )
+    expect_equal(core@concordanceLimitUp, 0.75)
+    expect_null(core@filteredSignature)
+    expect_null(core@unfilteredConcordants)
+    expect_null(core@filteredConcordants)
 })

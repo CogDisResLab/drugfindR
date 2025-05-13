@@ -1,3 +1,6 @@
+#' @include drugfindRDataset.R
+NULL
+
 #' Get the L1000 Signature from iLINCS
 #' `r lifecycle::badge("stable")`
 #'
@@ -58,4 +61,6 @@ getSignature <- function(sigId, l1000 = TRUE) {
     } else {
         stop(httr2::resp_status(request), " ", httr2::resp_body_string(request))
     }
+
+    drugfindRDataset(signature)
 }

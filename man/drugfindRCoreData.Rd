@@ -6,31 +6,34 @@
 \usage{
 drugfindRCoreData(
   signature,
-  filterThresholdUp = NA_real_,
-  filterThresholdDown = NA_real_,
-  filteredSignature = NULL,
-  concordanceLimitUp = NA_real_,
-  concordanceLimitDown = NA_real_,
-  unfilteredConcordants = NULL,
-  filteredConcordants = NULL
+  inputLibrary = NULL,
+  outputLibrary = NULL,
+  pairedAnalysis = TRUE,
+  cellLines = NULL,
+  filterThresholdUp = 0,
+  filterThresholdDown = 0,
+  concordanceLimitUp = 0.2,
+  concordanceLimitDown = -0.2
 )
 }
 \arguments{
 \item{signature}{A tibble containing the original gene expression data.}
 
+\item{inputLibrary}{The library to search the input from. One of c("OE", "CP", "KD")}
+
+\item{outputLibrary}{The library to search the output from. One of c("OE", "CP", "KD")}
+
+\item{pairedAnalysis}{A logical indicating whether a \code{\link{pairedAnalysis}} should be performed}
+
+\item{cellLines}{A character vector of cell lines to restrict the analysis to}
+
 \item{filterThresholdUp}{Upper logFC threshold used in filtering.}
 
 \item{filterThresholdDown}{Lower logFC threshold used in filtering.}
 
-\item{filteredSignature}{A filtered tibble of genes meeting the threshold.}
-
 \item{concordanceLimitUp}{Upper threshold for selecting concordant compounds.}
 
 \item{concordanceLimitDown}{Lower threshold for selecting concordant compounds.}
-
-\item{unfilteredConcordants}{All raw compound concordance scores (optional).}
-
-\item{filteredConcordants}{Filtered set of top compound concordants (optional).}
 }
 \value{
 A \code{drugfindRCoreData} S4 object
