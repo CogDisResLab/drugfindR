@@ -5,13 +5,19 @@
 \title{Dimensions for a drugfindRDataset}
 \usage{
 \S4method{dim}{drugfindRDataset}(x)
+
+\S4method{dim}{drugfindRDataset}(x)
 }
 \arguments{
 \item{x}{A drugfindRDataset x}
 }
 \value{
 Integer vector: rows and columns of the signature data
+
+Character vector: rows and columns of the signature data
 }
 \description{
 Dimensions for a drugfindRDataset
+
+Dimension names for a drugfindRDataset
 }
