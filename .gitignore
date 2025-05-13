@@ -337,3 +337,4 @@ test.tsv
 *.bak
 *.pdf
 *.jats
+*.Rproj

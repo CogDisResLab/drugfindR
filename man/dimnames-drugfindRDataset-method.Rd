@@ -5,19 +5,13 @@
 \title{Dimension names for a drugfindRDataset}
 \usage{
 \S4method{dimnames}{drugfindRDataset}(x)
-
-\S4method{dimnames}{drugfindRDataset}(x)
 }
 \arguments{
 \item{x}{A drugfindRDataset x}
 }
 \value{
 Character vector: rows and columns of the signature data
-
-Character vector: rows and columns of the signature data
 }
 \description{
-Dimension names for a drugfindRDataset
-
 Dimension names for a drugfindRDataset
 }

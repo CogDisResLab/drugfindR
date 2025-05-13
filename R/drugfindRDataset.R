@@ -7,7 +7,7 @@ NULL
 #' `drugfindRDataset` S4 object, for standardized manipulation in the
 #' `drugfindR` pipeline.
 #'
-#' @param dflike A data-like object — `data.frame`, `tibble`, or `DataFrame`
+#' @param input A data-like object — `data.frame`, `tibble`, or `DataFrame`
 #'
 #' @return An S4 object of class `drugfindRDataset`
 #' @export
@@ -18,14 +18,10 @@ NULL
 #' df <- tibble::tibble(Gene = letters[1:5], Value_LogDiffExp = c(-1, -0.5, 0, 0.5, 1))
 #' sig <- drugfindRDataset(df)
 #' sig
-drugfindRDataset <- function(dflike) {
-    if (!inherits(dflike, c("data.frame", "tbl_df", "DFrame"))) {
-        stop("Input must be a data.frame, tibble, or S4Vectors::DataFrame.")
-    }
-
-    df <- as_tibble(dflike)
+drugfindRDataset <- function(input) {
+    df <- as_tibble(input)
     core <- drugfindRCoreData(signature = df)
-    source_class <- class(dflike)[1]
+    source_class <- class(input)[1]
 
     methods::new("drugfindRDataset", core = core, source_class = source_class)
 }

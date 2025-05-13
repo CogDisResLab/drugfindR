@@ -4,10 +4,10 @@
 \alias{drugfindRDataset}
 \title{Construct a drugfindRDataset Object}
 \usage{
-drugfindRDataset(dflike)
+drugfindRDataset(input)
 }
 \arguments{
-\item{dflike}{A data-like object — \code{data.frame}, \code{tibble}, or \code{DataFrame}}
+\item{input}{A data-like object — \code{data.frame}, \code{tibble}, or \code{DataFrame}}
 }
 \value{
 An S4 object of class \code{drugfindRDataset}
