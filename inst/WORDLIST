@@ -1840,6 +1840,7 @@ ComputerLanguage
 COMT
 COMTD
 Concneorine
+concordanceLimits
 concordants
 Config
 config
@@ -2722,6 +2723,7 @@ drugdiscovery
 drugfindR
 drugfindRCoreData
 drugfindRDataset
+drugfindRResult
 drugfindRSignature
 drugrepurposing
 DS
@@ -3712,6 +3714,7 @@ Geranylgeraniol
 Gestrinone
 getConcordants
 getSignature
+Getter
 getters
 Getters
 GF
@@ -4582,6 +4585,7 @@ INP
 INPP
 INPPL
 inpur
+inputLibrary
 InputSig
 INSC
 INSIG
@@ -6770,6 +6774,7 @@ OTULIN
 OTULINL
 OTX
 Ouabain
+outputLibrary
 OV
 OVAAL
 Ovasterol

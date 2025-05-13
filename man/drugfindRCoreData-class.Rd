@@ -8,12 +8,20 @@
 This class is used to store a standardized internal representation of
 drug signature data within the drugfindR pipeline. It includes the original
 input signature, filtering thresholds, and concordance results. This class
-is \strong{not intended for direct user interaction}.
+is \strong{not} intended for direct user interaction**.
 }
 \section{Slots}{
 
 \describe{
 \item{\code{signature}}{A tibble containing the original gene expression signature.}
+
+\item{\code{inputLibrary}}{The library to search the input from. One of c("OE", "CP", "KD")}
+
+\item{\code{outputLibrary}}{The library to search the output from. One of c("OE", "CP", "KD")}
+
+\item{\code{pairedAnalysis}}{A logical indicating whether a \code{\link{pairedAnalysis}} should be performed}
+
+\item{\code{cellLines}}{A character vector of cell lines to restrict the analysis to}
 
 \item{\code{filterThresholdUp}}{The upper log fold-change threshold used in filtering.}
 

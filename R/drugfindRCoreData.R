@@ -8,36 +8,38 @@ NULL
 #' incrementally during filtering and concordance analysis.
 #'
 #' @param signature A tibble containing the original gene expression data.
+#' @param inputLibrary The library to search the input from. One of c("OE", "CP", "KD")
+#' @param outputLibrary The library to search the output from. One of c("OE", "CP", "KD")
+#' @param pairedAnalysis A logical indicating whether a [`pairedAnalysis`] should be performed
+#' @param cellLines A character vector of cell lines to restrict the analysis to
 #' @param filterThresholdUp Upper logFC threshold used in filtering.
 #' @param filterThresholdDown Lower logFC threshold used in filtering.
-#' @param filteredSignature A filtered tibble of genes meeting the threshold.
 #' @param concordanceLimitUp Upper threshold for selecting concordant compounds.
 #' @param concordanceLimitDown Lower threshold for selecting concordant compounds.
-#' @param unfilteredConcordants All raw compound concordance scores (optional).
-#' @param filteredConcordants Filtered set of top compound concordants (optional).
 #'
 #' @return A `drugfindRCoreData` S4 object
 #' @keywords internal
 drugfindRCoreData <- function(signature,
-                              filterThresholdUp = NA_real_,
-                              filterThresholdDown = NA_real_,
-                              filteredSignature = NULL,
-                              concordanceLimitUp = NA_real_,
-                              concordanceLimitDown = NA_real_,
-                              unfilteredConcordants = NULL,
-                              filteredConcordants = NULL) {
-    if (!inherits(signature, "tbl_df")) {
-        stop("`signature` must be a tibble.")
-    }
-
+                              inputLibrary = NULL,
+                              outputLibrary = NULL,
+                              pairedAnalysis = TRUE,
+                              cellLines = NULL,
+                              filterThresholdUp = 0,
+                              filterThresholdDown = 0,
+                              concordanceLimitUp = 0.2,
+                              concordanceLimitDown = -0.2) {
     methods::new("drugfindRCoreData",
         signature = signature,
+        inputLibrary = inputLibrary,
+        outputLibrary = outputLibrary,
+        pairedAnalysis = pairedAnalysis,
+        cellLines = cellLines,
         filterThresholdUp = filterThresholdUp,
         filterThresholdDown = filterThresholdDown,
-        filteredSignature = filteredSignature,
+        filteredSignature = NULL,
         concordanceLimitUp = concordanceLimitUp,
         concordanceLimitDown = concordanceLimitDown,
-        unfilteredConcordants = unfilteredConcordants,
-        filteredConcordants = filteredConcordants
+        unfilteredConcordants = NULL,
+        filteredConcordants = NULL
     )
 }

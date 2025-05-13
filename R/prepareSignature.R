@@ -1,3 +1,6 @@
+#' @include drugfindRDataset.R
+NULL
+
 #' Prepare an L1000 Signature froma given differential gene expression output
 #' `r lifecycle::badge("stable")`
 #'

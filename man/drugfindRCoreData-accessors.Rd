@@ -3,25 +3,21 @@
 \name{drugfindRCoreData-accessors}
 \alias{drugfindRCoreData-accessors}
 \alias{getCoreSignature}
-\alias{setCoreSignature<-}
 \alias{getFilteredSignature}
-\alias{setFilteredSignature<-}
 \alias{getFilterThresholdUp}
-\alias{setFilterThresholdUp<-}
 \alias{getFilterThresholdDown}
-\alias{setFilterThresholdDown<-}
 \alias{getFilterThresholds}
-\alias{setFilterThresholds<-}
 \alias{getConcordanceLimitUp}
-\alias{setConcordanceLimitUp<-}
 \alias{getConcordanceLimitDown}
-\alias{setConcordanceLimitDown<-}
 \alias{getConcordanceLimits}
+\alias{setFilterThresholdUp<-}
+\alias{setFilterThresholdDown<-}
+\alias{setFilterThresholds<-}
+\alias{setConcordanceLimitUp<-}
+\alias{setConcordanceLimitDown<-}
 \alias{setConcordanceLimits<-}
 \alias{getUnfilteredConcordants}
-\alias{setUnfilteredConcordants<-}
 \alias{getFilteredConcordants}
-\alias{setFilteredConcordants<-}
 \title{Accessor Methods for drugfindRCoreData Slots}
 \usage{
 getCoreSignature(object)
@@ -33,59 +29,48 @@ getCoreSignature(object)
 }
 \value{
 For getters, the value stored in the relevant slot. For setters, the updated object.
+\subsection{Getter methods}{
+\subsection{Input Parameters}{
+\itemize{
+\item \code{getCoreSignature(object)} returns the core gene signature.
+\item \code{getFilterThresholds(object)} returns both thresholds as a vector.
+\item \code{getConcordanceLimits(object)} returns both concordance limits as a vector.
+}
+}
+
+\subsection{Intermediate and Final Results}{
+\itemize{
+\item \code{getFilteredSignature(object)} returns the filtered signature.
+\item \code{getUnfilteredConcordants(object)} returns unfiltered concordant drugs.
+\item \code{getFilteredConcordants(object)} returns filtered concordant drugs.
+}
+}
+
+}
+
+\subsection{Setter methods}{
+\subsection{Input Parameters}{
+\itemize{
+\item \code{setFilterThresholdUp(object) <- value} sets the upper threshold.
+\item \code{setFilterThresholdDown(object) <- value} sets the lower threshold.
+\item \code{setFilterThresholds(object) <- value} sets both thresholds from a vector of length 1 or 2.
+\item \code{setConcordanceLimitUp(object) <- value} sets the upper limit.
+\item \code{setConcordanceLimitDown(object) <- value} sets the lower limit.
+\item \code{setConcordanceLimits(object) <- value} sets both concordance limits from a vector of length 1 or 2.
+}
+}
+
+\subsection{Intermediate and Final Results}{
+\itemize{
+\item \code{setFilteredSignature(object) <- value} sets the filtered signature.
+\item \code{setFilteredConcordants(object) <- value} sets filtered concordants.
+}
+}
+
+}
 }
 \description{
 These functions provide internal access to the individual slots of a
 \code{drugfindRCoreData} object used in the drugfindR pipeline.
 }
-\section{Core Signature}{
-
-\itemize{
-\item \code{getCoreSignature(object)} returns the core gene signature.
-\item \code{setCoreSignature(object) <- value} sets the core gene signature.
-}
-}
-
-\section{Filtered Signature}{
-
-\itemize{
-\item \code{getFilteredSignature(object)} returns the filtered signature.
-\item \code{setFilteredSignature(object) <- value} sets the filtered signature.
-}
-}
-
-\section{Filter Thresholds}{
-
-\itemize{
-\item \code{getFilterThresholdUp(object)} returns the upper filter threshold.
-\item \code{setFilterThresholdUp(object) <- value} sets the upper threshold.
-\item \code{getFilterThresholdDown(object)} returns the lower filter threshold.
-\item \code{setFilterThresholdDown(object) <- value} sets the lower threshold.
-\item \code{getFilterThresholds(object)} returns both thresholds as a vector.
-\item \code{setFilterThresholds(object) <- value} sets both thresholds from a vector of length 1 or 2.
-}
-}
-
-\section{Concordance Limits}{
-
-\itemize{
-\item \code{getConcordanceLimitUp(object)} returns the upper concordance limit.
-\item \code{setConcordanceLimitUp(object) <- value} sets the upper limit.
-\item \code{getConcordanceLimitDown(object)} returns the lower concordance limit.
-\item \code{setConcordanceLimitDown(object) <- value} sets the lower limit.
-\item \code{getConcordanceLimits(object)} returns both concordance limits as a vector.
-\item \code{setConcordanceLimits(object) <- value} sets both concordance limits from a vector of length 1 or 2.
-}
-}
-
-\section{Concordants}{
-
-\itemize{
-\item \code{getUnfilteredConcordants(object)} returns unfiltered concordant drugs.
-\item \code{setUnfilteredConcordants(object) <- value} sets unfiltered concordants.
-\item \code{getFilteredConcordants(object)} returns filtered concordant drugs.
-\item \code{setFilteredConcordants(object) <- value} sets filtered concordants.
-}
-}
-
 \keyword{internal}
