@@ -19,6 +19,6 @@ can be restored to the same structure after internal transformations.
 \item{\code{core}}{An internal \code{drugfindRCoreData} object storing the data
 as a \code{tibble}}
 
-\item{\code{source_class}}{A character vector describing the original input class}
+\item{\code{sourceClass}}{A character vector describing the original input class}
 }}
 

@@ -12,13 +12,13 @@ NULL
 #' and converts the result to that input when tested.
 #'
 #' @slot core An internal `drugfindRCoreData` object
-#' @slot source_class A character vector describing the original input class
+#' @slot sourceClass A character vector describing the original input class
 #'
 #' @export
 setClass("drugfindRResult",
     slots = c(
         result = "drugfindRCoreData",
-        source_class = "character"
+        sourceClass = "character"
     )
 )
 
@@ -41,9 +41,9 @@ setClass("drugfindRResult",
 #' @name validObject.drugfindRResult
 setValidity("drugfindRResult", function(object) {
     if (is.null(object@core@unfilteredConcordants)) {
-        return("A `drugfindRCoreData` object cannot have the @unfilteredConcordants slot unpopulated")
+        "A `drugfindRCoreData` object cannot have the @unfilteredConcordants slot unpopulated"
     } else if (is.null(object@core@filteredConcordants)) {
-        return("A `drugfindRCoreData` object cannot have the @filteredConcordants slot unpopulated")
+        "A `drugfindRCoreData` object cannot have the @filteredConcordants slot unpopulated"
     } else {
         TRUE
     }

@@ -18,7 +18,10 @@ This function wraps a \code{tibble}, \code{data.frame}, or \code{DataFrame} into
 \code{drugfindR} pipeline.
 }
 \examples{
-df <- tibble::tibble(Gene = letters[1:5], Value_LogDiffExp = c(-1, -0.5, 0, 0.5, 1))
+df <- tibble::tibble(
+    Gene = letters[1:5],
+    Value_LogDiffExp = c(-1, -0.5, 0, 0.5, 1)
+)
 sig <- drugfindRDataset(df)
 sig
 }

@@ -60,7 +60,10 @@ validateLibraries <- function(libs) {
 #' @return a stop if the libraries are invalid
 stopIfInvalidLibraries <- function(libs) {
     if (!validateLibraries(libs)) {
-        stop("Both input and output libraries must be one of 'OE', 'KD', 'CP'")
+        stop(
+            "Both input and output libraries must be one of 'OE', 'KD', 'CP'",
+            call. = FALSE
+        )
     }
 }
 
@@ -117,7 +120,7 @@ loadMetadata <- function(lib) {
     } else if (lib == "CP") {
         cpMetadata
     } else {
-        stop("Invalid library")
+        stop("Invalid library", call. = TRUE)
     }
 }
 
@@ -128,7 +131,7 @@ loadMetadata <- function(lib) {
 #'
 #' @keywords internal
 #' @return A string with the associated library ID
-.return_library <- function(lib) {
+.returnLibrary <- function(lib) {
     stopIfInvalidLibraries(lib)
 
     libMap <- c(
@@ -144,6 +147,6 @@ loadMetadata <- function(lib) {
 #'
 #' @keywords internal
 #' @return a string
-.return_user_agent <- function() {
+.returnUserAgent <- function() {
     paste0("drugfindR/", utils::packageVersion("drugfindR"), "; https://github.com/CogDisResLab/drugfindR")
 }

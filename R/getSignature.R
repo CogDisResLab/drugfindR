@@ -44,7 +44,7 @@ getSignature <- function(sigId, l1000 = TRUE) {
         httr2::req_url_path_append("downloadSignature") |>
         httr2::req_url_query(sigID = sigId, noOfTopGenes = numGenes) |>
         httr2::req_method("POST") |>
-        httr2::req_user_agent(.return_user_agent()) |>
+        httr2::req_user_agent(.returnUserAgent()) |>
         httr2::req_perform()
 
 
@@ -59,7 +59,10 @@ getSignature <- function(sigId, l1000 = TRUE) {
                 Significance_pvalue = round(.data[["Significance_pvalue"]], 12L)
             )
     } else {
-        stop(httr2::resp_status(request), " ", httr2::resp_body_string(request))
+        stop(httr2::resp_status(request), " ",
+            httr2::resp_body_string(request),
+            call. = FALSE
+        )
     }
 
     drugfindRDataset(signature)

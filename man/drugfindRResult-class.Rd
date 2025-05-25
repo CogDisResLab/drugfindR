@@ -19,6 +19,6 @@ and converts the result to that input when tested.
 \describe{
 \item{\code{core}}{An internal \code{drugfindRCoreData} object}
 
-\item{\code{source_class}}{A character vector describing the original input class}
+\item{\code{sourceClass}}{A character vector describing the original input class}
 }}
 
