@@ -14,17 +14,17 @@ NULL
 #'
 #' @slot core An internal `drugfindRCoreData` object storing the data
 #' as a `tibble`
-#' @slot source_class A character vector describing the original input class
+#' @slot sourceClass A character vector describing the original input class
 #'
 #' @export
 setClass("drugfindRDataset",
     slots = c(
         core = "drugfindRCoreData",
-        source_class = "character"
+        sourceClass = "character"
     ),
     prototype = list(
         core = drugfindRCoreData(tibble::tibble()),
-        source_class = "tbl_df"
+        sourceClass = "tbl_df"
     )
 )
 
@@ -47,9 +47,9 @@ setClass("drugfindRDataset",
 #' @name validObject.drugfindRDataset
 setValidity("drugfindRDataset", function(object) {
     if (!is.null(object@core@unfilteredConcordants)) {
-        return("A `drugfindRCoreData` object cannot have the @unfilteredConcordants slot populated")
+        "A `drugfindRCoreData` object cannot have the @unfilteredConcordants slot populated"
     } else if (!is.null(object@core@filteredConcordants)) {
-        return("A `drugfindRCoreData` object cannot have the @filteredConcordants slot populated")
+        "A `drugfindRCoreData` object cannot have the @filteredConcordants slot populated"
     } else {
         TRUE
     }

@@ -1,6 +1,6 @@
 Package: drugfindR
 Title: Investigate iLINCS for candidate repurposable drugs
-Version: 0.99.1063
+Version: 0.99.1064
 Authors@R: c(
     person(given = c("Ali", "Sajid"),
            family = "Imami",
@@ -84,8 +84,8 @@ Collate:
     'drugfindR-package.R'
     'drugfindRCoreData-accessors.R'
     'drugfindRDataset.R'
-    'filterSignature.R'
-    'getConcordants.R'
+    'filterSignature.drugfindRCoreData.R'
+    'getConcordants.drugfindRCoreData.R'
     'getSignature.R'
     'prepareSignature.R'
     'investigateSignature.R'

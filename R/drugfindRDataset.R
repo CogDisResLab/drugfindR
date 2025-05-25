@@ -15,13 +15,16 @@ NULL
 #' @importFrom methods new
 #'
 #' @examples
-#' df <- tibble::tibble(Gene = letters[1:5], Value_LogDiffExp = c(-1, -0.5, 0, 0.5, 1))
+#' df <- tibble::tibble(
+#'     Gene = letters[1:5],
+#'     Value_LogDiffExp = c(-1, -0.5, 0, 0.5, 1)
+#' )
 #' sig <- drugfindRDataset(df)
 #' sig
 drugfindRDataset <- function(input) {
     df <- as_tibble(input)
     core <- drugfindRCoreData(signature = df)
-    source_class <- class(input)[1]
+    sourceClass <- class(input)[1L]
 
-    methods::new("drugfindRDataset", core = core, source_class = source_class)
+    methods::new("drugfindRDataset", core = core, sourceClass = sourceClass)
 }
