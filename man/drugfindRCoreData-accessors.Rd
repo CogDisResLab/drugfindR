@@ -2,25 +2,25 @@
 % Please edit documentation in R/drugfindRCoreData-accessors.R
 \name{drugfindRCoreData-accessors}
 \alias{drugfindRCoreData-accessors}
-\alias{getCoreSignature}
-\alias{getFilteredSignature}
-\alias{getFilterThresholdUp}
-\alias{getFilterThresholdDown}
-\alias{getFilterThresholds}
-\alias{getConcordanceLimitUp}
-\alias{getConcordanceLimitDown}
-\alias{getConcordanceLimits}
-\alias{setFilterThresholdUp<-}
-\alias{setFilterThresholdDown<-}
-\alias{setFilterThresholds<-}
-\alias{setConcordanceLimitUp<-}
-\alias{setConcordanceLimitDown<-}
-\alias{setConcordanceLimits<-}
-\alias{getUnfilteredConcordants}
-\alias{getFilteredConcordants}
+\alias{coreSignature}
+\alias{filteredSignature}
+\alias{filterThresholdUp}
+\alias{filterThresholdDown}
+\alias{filterThresholds}
+\alias{concordanceLimitUp}
+\alias{concordanceLimitDown}
+\alias{concordanceLimits}
+\alias{filterThresholdUp<-}
+\alias{filterThresholdDown<-}
+\alias{filterThresholds<-}
+\alias{concordanceLimitUp<-}
+\alias{concordanceLimitDown<-}
+\alias{concordanceLimits<-}
+\alias{unfilteredConcordants}
+\alias{filteredConcordants}
 \title{Accessor Methods for drugfindRCoreData Slots}
 \usage{
-getCoreSignature(object)
+coreSignature(object, ...)
 }
 \arguments{
 \item{object}{A \code{\link{drugfindRCoreData}} object.}
@@ -28,21 +28,22 @@ getCoreSignature(object)
 \item{value}{The value to assign to a slot (for setters only).}
 }
 \value{
-For getters, the value stored in the relevant slot. For setters, the updated object.
+For getters, the value stored in the relevant slot.
+For setters, the updated object.
 \subsection{Getter methods}{
 \subsection{Input Parameters}{
 \itemize{
-\item \code{getCoreSignature(object)} returns the core gene signature.
-\item \code{getFilterThresholds(object)} returns both thresholds as a vector.
-\item \code{getConcordanceLimits(object)} returns both concordance limits as a vector.
+\item \code{coreSignature(object)} returns the core gene signature.
+\item \code{filterThresholds(object)} returns both thresholds as a vector.
+\item \code{concordanceLimits(object)} returns both concordance limits as a vector.
 }
 }
 
 \subsection{Intermediate and Final Results}{
 \itemize{
-\item \code{getFilteredSignature(object)} returns the filtered signature.
-\item \code{getUnfilteredConcordants(object)} returns unfiltered concordant drugs.
-\item \code{getFilteredConcordants(object)} returns filtered concordant drugs.
+\item \code{filteredSignature(object)} returns the filtered signature.
+\item \code{unfilteredConcordants(object)} returns unfiltered concordant drugs.
+\item \code{filteredConcordants(object)} returns filtered concordant drugs.
 }
 }
 
@@ -51,19 +52,21 @@ For getters, the value stored in the relevant slot. For setters, the updated obj
 \subsection{Setter methods}{
 \subsection{Input Parameters}{
 \itemize{
-\item \code{setFilterThresholdUp(object) <- value} sets the upper threshold.
-\item \code{setFilterThresholdDown(object) <- value} sets the lower threshold.
-\item \code{setFilterThresholds(object) <- value} sets both thresholds from a vector of length 1 or 2.
-\item \code{setConcordanceLimitUp(object) <- value} sets the upper limit.
-\item \code{setConcordanceLimitDown(object) <- value} sets the lower limit.
-\item \code{setConcordanceLimits(object) <- value} sets both concordance limits from a vector of length 1 or 2.
+\item \code{filterThresholdUp(object) <- value} sets the upper threshold.
+\item \code{filterThresholdDown(object) <- value} sets the lower threshold.
+\item \code{filterThresholds(object) <- value} sets both thresholds from a vector
+of length 1 or 2.
+\item \code{concordanceLimitUp(object) <- value} sets the upper limit.
+\item \code{concordanceLimitDown(object) <- value} sets the lower limit.
+\item \code{concordanceLimits(object) <- value} sets both concordance limits
+from a vector of length 1 or 2.
 }
 }
 
 \subsection{Intermediate and Final Results}{
 \itemize{
-\item \code{setFilteredSignature(object) <- value} sets the filtered signature.
-\item \code{setFilteredConcordants(object) <- value} sets filtered concordants.
+\item \code{filteredSignature(object) <- value} sets the filtered signature.
+\item \code{filteredConcordants(object) <- value} sets filtered concordants.
 }
 }
 

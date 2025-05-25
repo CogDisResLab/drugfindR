@@ -5,25 +5,20 @@
 \title{Construct a drugfindRCoreData Object}
 \usage{
 drugfindRCoreData(
-  signature,
+  coreSignature,
   inputLibrary = NULL,
   outputLibrary = NULL,
   pairedAnalysis = TRUE,
   cellLines = NULL,
-  filterThresholdUp = 0,
-  filterThresholdDown = 0,
+  filterThresholdUp = 0L,
+  filterThresholdDown = 0L,
   concordanceLimitUp = 0.2,
   concordanceLimitDown = -0.2
 )
 }
 \arguments{
-\item{signature}{A tibble containing the original gene expression data.}
-
-\item{inputLibrary}{The library to search the input from. One of c("OE", "CP", "KD")}
-
-\item{outputLibrary}{The library to search the output from. One of c("OE", "CP", "KD")}
-
-\item{pairedAnalysis}{A logical indicating whether a \code{\link{pairedAnalysis}} should be performed}
+\item{pairedAnalysis}{A logical indicating whether a \code{\link{pairedAnalysis}}
+should be performed}
 
 \item{cellLines}{A character vector of cell lines to restrict the analysis to}
 
@@ -33,7 +28,10 @@ drugfindRCoreData(
 
 \item{concordanceLimitUp}{Upper threshold for selecting concordant compounds.}
 
-\item{concordanceLimitDown}{Lower threshold for selecting concordant compounds.}
+\item{concordanceLimitDown}{Lower threshold for selecting concordant
+compounds.}
+
+\item{signature}{A tibble containing the original gene expression data.}
 }
 \value{
 A \code{drugfindRCoreData} S4 object
@@ -43,4 +41,14 @@ This internal constructor creates a standardized signature container
 for use in the drugfindR pipeline. Most fields are optional and may be filled
 incrementally during filtering and concordance analysis.
 }
+\section{Slots}{
+
+\describe{
+\item{\code{inputLibrary}}{The library to search the input from.
+This has to be one of c("OE", "CP", "KD")}
+
+\item{\code{outputLibrary}}{The library to search the output from.
+This has to be one of c("OE", "CP", "KD")}
+}}
+
 \keyword{internal}
