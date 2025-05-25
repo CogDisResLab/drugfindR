@@ -15,16 +15,22 @@ setClassUnion("characterOrNULL", c("character", "NULL"))
 #' input signature, filtering thresholds, and concordance results. This class
 #' is **not** intended for direct user interaction**.
 #'
-#' @slot signature A tibble containing the original gene expression signature.
-#' @slot inputLibrary The library to search the input from. One of c("OE", "CP", "KD")
-#' @slot outputLibrary The library to search the output from. One of c("OE", "CP", "KD")
-#' @slot pairedAnalysis A logical indicating whether a [`pairedAnalysis`] should be performed
+#' @slot coreSignature A tibble containing the original gene expression signature.
+#' @slot inputLibrary The library to search the input from.
+#' This has to be one of c("OE", "CP", "KD")
+#' @slot outputLibrary The library to search the output from.
+#' This has to be one of c("OE", "CP", "KD")
+#' @slot pairedAnalysis A logical indicating whether a [`pairedAnalysis`]
+#' should be performed
 #' @slot cellLines A character vector of cell lines to restrict the analysis to
-#' @slot filterThresholdUp The upper log fold-change threshold used in filtering.
-#' @slot filterThresholdDown The lower log fold-change threshold used in filtering.
+#' @slot filterThresholdUp The upper log fold-change threshold
+#' used in filtering.
+#' @slot filterThresholdDown The lower log fold-change threshold
+#' used in filtering.
 #' @slot filteredSignature A tibble of genes after filtering.
 #' @slot concordanceLimitUp The upper threshold for compound concordance scores.
-#' @slot concordanceLimitDown The lower threshold for compound concordance scores.
+#' @slot concordanceLimitDown The lower threshold for compound
+#' concordance scores.
 #' @slot unfilteredConcordants A tibble of all concordant compounds.
 #' @slot filteredConcordants A tibble of filtered concordant compounds.
 #'
@@ -32,7 +38,7 @@ setClassUnion("characterOrNULL", c("character", "NULL"))
 #' @keywords internal
 setClass("drugfindRCoreData",
     slots = c(
-        signature = "tbl_df",
+        coreSignature = "tbl_df",
         inputLibrary = "characterOrNULL",
         outputLibrary = "characterOrNULL",
         pairedAnalysis = "logical",
@@ -46,13 +52,13 @@ setClass("drugfindRCoreData",
         filteredConcordants = "tbl_dfOrNULL"
     ),
     prototype = list(
-        signature = tibble::tibble(),
+        coreSignature = tibble::tibble(),
         inputLibrary = NULL,
         outputLibrary = NULL,
         pairedAnalysis = TRUE,
         cellLines = NULL,
-        filterThresholdUp = 0,
-        filterThresholdDown = 0,
+        filterThresholdUp = 0L,
+        filterThresholdDown = 0L,
         filteredSignature = NULL,
         concordanceLimitUp = 0.2,
         concordanceLimitDown = -0.2,
@@ -83,15 +89,19 @@ setClass("drugfindRCoreData",
 #' @name validObject.drugfindRCoreData
 setValidity("drugfindRCoreData", function(object) {
     if (!validateLibraries(object@inputLibrary)) {
-        return("@inputLibrary must be one of 'OE', 'KD' or 'CP'")
+        "@inputLibrary must be one of 'OE', 'KD' or 'CP'"
     } else if (!validateLibraries(object@outputLibrary)) {
-        return("@outputLibrary must be one of 'OE', 'KD' or 'CP'")
+        "@outputLibrary must be one of 'OE', 'KD' or 'CP'"
     } else if (!validateCellLines(object@cellLines)) {
-        return("@cellLines  must be one of the valid cell lines")
-    } else if (object@concordanceLimitUp > 1 | object@concordanceLimitUp < -1) {
-        return("@concordanceLimitUp must be between -1 and 1")
-    } else if (object@concordanceLimitDown > 1 | object@concordanceLimitDown < -1) {
-        return("@concordanceLimitDown must be between -1 and 1")
+        "@cellLines  must be one of the valid cell lines"
+    } else if (
+        object@concordanceLimitUp > 1L |
+            object@concordanceLimitUp < -1L) {
+        "@concordanceLimitUp must be between -1 and 1"
+    } else if (
+        object@concordanceLimitDown > 1L |
+            object@concordanceLimitDown < -1L) {
+        "@concordanceLimitDown must be between -1 and 1"
     } else {
         TRUE
     }

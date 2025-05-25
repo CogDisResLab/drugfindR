@@ -1,9 +1,9 @@
 test_that("drugfindRCoreData slot accessors work as expected", {
     # Create a mock instance of drugfindRCoreData
     obj <- new("drugfindRCoreData",
-        signature = exampleSignature(),
+        coreSignature = exampleSignature(),
         filteredSignature = {
-            exampleSignature() |> filter(abs(Value_LogDiffExp) > 1)
+            exampleSignature() |> filter(abs(Value_LogDiffExp) > 1L)
         },
         filterThresholdUp = 1.0,
         filterThresholdDown = -1.0,
@@ -14,52 +14,61 @@ test_that("drugfindRCoreData slot accessors work as expected", {
     )
 
     ## Signature
-    expect_equal(getCoreSignature(obj), exampleSignature())
+    expect_identical(coreSignature(obj), exampleSignature())
 
     ## Filtered Signature
-    expect_equal(getFilteredSignature(obj), {
-        exampleSignature() |> filter(abs(Value_LogDiffExp) > 1)
+    expect_identical(filteredSignature(obj), {
+        exampleSignature() |> filter(abs(Value_LogDiffExp) > 1L)
     })
 
     ## Filter Thresholds
-    expect_equal(getFilterThresholdUp(obj), 1.0)
-    expect_equal(getFilterThresholdDown(obj), -1.0)
-    expect_equal(getFilterThresholds(obj), c(-1.0, 1.0))
+    expect_equal(filterThresholdUp(obj), 1.0)
+    expect_equal(filterThresholdDown(obj), -1.0)
+    expect_equal(filterThresholds(obj), c(-1.0, 1.0))
 
-    setFilterThresholdUp(obj) <- 2.0
-    expect_equal(getFilterThresholdUp(obj), 2.0)
+    filterThresholdUp(obj) <- 2.0
+    expect_equal(filterThresholdUp(obj), 2.0)
 
-    setFilterThresholdDown(obj) <- -2.0
-    expect_equal(getFilterThresholdDown(obj), -2.0)
+    filterThresholdDown(obj) <- -2.0
+    expect_equal(filterThresholdDown(obj), -2.0)
 
-    setFilterThresholds(obj) <- 3.0
-    expect_equal(getFilterThresholds(obj), c(-3.0, 3.0))
+    filterThresholds(obj) <- 3.0
+    expect_equal(filterThresholds(obj), c(-3.0, 3.0))
 
-    setFilterThresholds(obj) <- c(-4.0, 4.0)
-    expect_equal(getFilterThresholds(obj), c(-4.0, 4.0))
+    filterThresholds(obj) <- c(-4.0, 4.0)
+    expect_equal(filterThresholds(obj), c(-4.0, 4.0))
 
-    expect_error(setFilterThresholds(obj) <- c(1, 2, 3), "Incorrect number of items in length")
+    expect_error(
+        filterThresholds(obj) <- c(1L, 2L, 3L),
+        "Incorrect number of items in length"
+    )
 
     ## Concordance Limits
-    expect_equal(getConcordanceLimitUp(obj), 0.5)
-    expect_equal(getConcordanceLimitDown(obj), -0.5)
-    expect_equal(getConcordanceLimits(obj), c(-0.5, 0.5))
+    expect_equal(concordanceLimitUp(obj), 0.5)
+    expect_equal(concordanceLimitDown(obj), -0.5)
+    expect_equal(concordanceLimits(obj), c(-0.5, 0.5))
 
-    setConcordanceLimitUp(obj) <- 1.0
-    expect_equal(getConcordanceLimitUp(obj), 1.0)
+    concordanceLimitUp(obj) <- 1.0
+    expect_equal(concordanceLimitUp(obj), 1.0)
 
-    setConcordanceLimitDown(obj) <- -1.0
-    expect_equal(getConcordanceLimitDown(obj), -1.0)
+    concordanceLimitDown(obj) <- -1.0
+    expect_equal(concordanceLimitDown(obj), -1.0)
 
-    setConcordanceLimits(obj) <- 0.85
-    expect_equal(getConcordanceLimits(obj), c(-0.85, 0.85))
+    concordanceLimits(obj) <- 0.85
+    expect_equal(concordanceLimits(obj), c(-0.85, 0.85))
 
-    setConcordanceLimits(obj) <- c(-0.5, 0.5)
-    expect_equal(getConcordanceLimits(obj), c(-0.5, 0.5))
+    concordanceLimits(obj) <- c(-0.5, 0.5)
+    expect_equal(concordanceLimits(obj), c(-0.5, 0.5))
 
-    expect_error(setConcordanceLimits(obj) <- c(1, 2, 3), "Incorrect number of items in length")
+    expect_error(
+        concordanceLimits(obj) <- c(1L, 2L, 3L),
+        "Incorrect number of items in length"
+    )
 
-    expect_equal(getUnfilteredConcordants(obj), concordantsCp())
+    expect_identical(unfilteredConcordants(obj), concordantsCp())
 
-    expect_equal(getFilteredConcordants(obj), consensusConcordantsCpPaired())
+    expect_identical(
+        filteredConcordants(obj),
+        consensusConcordantsCpPaired()
+    )
 })

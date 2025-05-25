@@ -13,25 +13,31 @@ is \strong{not} intended for direct user interaction**.
 \section{Slots}{
 
 \describe{
-\item{\code{signature}}{A tibble containing the original gene expression signature.}
+\item{\code{coreSignature}}{A tibble containing the original gene expression signature.}
 
-\item{\code{inputLibrary}}{The library to search the input from. One of c("OE", "CP", "KD")}
+\item{\code{inputLibrary}}{The library to search the input from.
+This has to be one of c("OE", "CP", "KD")}
 
-\item{\code{outputLibrary}}{The library to search the output from. One of c("OE", "CP", "KD")}
+\item{\code{outputLibrary}}{The library to search the output from.
+This has to be one of c("OE", "CP", "KD")}
 
-\item{\code{pairedAnalysis}}{A logical indicating whether a \code{\link{pairedAnalysis}} should be performed}
+\item{\code{pairedAnalysis}}{A logical indicating whether a \code{\link{pairedAnalysis}}
+should be performed}
 
 \item{\code{cellLines}}{A character vector of cell lines to restrict the analysis to}
 
-\item{\code{filterThresholdUp}}{The upper log fold-change threshold used in filtering.}
+\item{\code{filterThresholdUp}}{The upper log fold-change threshold
+used in filtering.}
 
-\item{\code{filterThresholdDown}}{The lower log fold-change threshold used in filtering.}
+\item{\code{filterThresholdDown}}{The lower log fold-change threshold
+used in filtering.}
 
 \item{\code{filteredSignature}}{A tibble of genes after filtering.}
 
 \item{\code{concordanceLimitUp}}{The upper threshold for compound concordance scores.}
 
-\item{\code{concordanceLimitDown}}{The lower threshold for compound concordance scores.}
+\item{\code{concordanceLimitDown}}{The lower threshold for compound
+concordance scores.}
 
 \item{\code{unfilteredConcordants}}{A tibble of all concordant compounds.}
 
