@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/CogDisResLab/drugfindR",
   "issueTracker": "https://github.com/CogDisResLab/drugfindR/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.99.1057",
+  "version": "0.99.1060",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -17,7 +17,10 @@
   "author": [
     {
       "@type": "Person",
-      "givenName": ["Ali", "Sajid"],
+      "givenName": [
+        "Ali",
+        "Sajid"
+      ],
       "familyName": "Imami",
       "email": "Ali.Sajid.Imami@gmail.com",
       "@id": "https://orcid.org/0000-0003-3684-3539"
@@ -31,7 +34,10 @@
     },
     {
       "@type": "Person",
-      "givenName": ["Justin", "Fortune"],
+      "givenName": [
+        "Justin",
+        "Fortune"
+      ],
       "familyName": "Creeden",
       "email": "Justin.Creeden@rockets.utoledo.edu",
       "@id": "https://orcid.org/0000-0003-3123-8401"
@@ -40,7 +46,10 @@
   "contributor": [
     {
       "@type": "Person",
-      "givenName": ["Robert", "Erne"],
+      "givenName": [
+        "Robert",
+        "Erne"
+      ],
       "familyName": "McCullumsmith",
       "email": "Robert.McCullumsmith@utoledo.edu",
       "@id": "https://orcid.org/0000-0001-6921-7150"
@@ -49,7 +58,10 @@
   "funder": [
     {
       "@type": "Person",
-      "givenName": ["Robert", "Erne"],
+      "givenName": [
+        "Robert",
+        "Erne"
+      ],
       "familyName": "McCullumsmith",
       "email": "Robert.McCullumsmith@utoledo.edu",
       "@id": "https://orcid.org/0000-0001-6921-7150"
@@ -58,7 +70,10 @@
   "maintainer": [
     {
       "@type": "Person",
-      "givenName": ["Ali", "Sajid"],
+      "givenName": [
+        "Ali",
+        "Sajid"
+      ],
       "familyName": "Imami",
       "email": "Ali.Sajid.Imami@gmail.com",
       "@id": "https://orcid.org/0000-0003-3684-3539"
@@ -366,9 +381,12 @@
   "applicationCategory": "Genomics",
   "isPartOf": "https://bioconductor.org",
   "keywords": ["LINCS", "iLINCS", "drugrepurposing", "drugdiscovery", "transcriptomics", "geneexpression", "geneknockdown", "geneoverexpression", "chemicalperturbagen", "drugfindR", "r", "ilincs", "bioinformatics", "bioinformatics-pipeline"],
-  "fileSize": "2155.693KB",
+  "fileSize": "2161.787KB",
   "releaseNotes": "https://github.com/CogDisResLab/drugfindR/blob/master/NEWS.md",
   "readme": "https://github.com/CogDisResLab/drugfindR/blob/devel/README.md",
-  "contIntegration": ["https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml", "https://app.codecov.io/gh/CogDisResLab/drugfindR?branch=devel"],
+  "contIntegration": [
+    "https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml",
+    "https://app.codecov.io/gh/CogDisResLab/drugfindR?branch=devel"
+  ],
   "developmentStatus": "https://lifecycle.r-lib.org/articles/stages.html#experimental"
 }
