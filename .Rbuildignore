@@ -6,6 +6,7 @@
 ^LICENSE\.md$
 ^Meta$
 ^README\.Rmd$
+^R\.new$
 ^\.Rproj\.user$
 ^\.cz\.toml$
 ^\.github$
@@ -27,4 +28,5 @@
 ^renv$
 ^renv\.lock$
 ^test\.tsv$
+^tests\.new$
 ^utilities$
