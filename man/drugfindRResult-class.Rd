@@ -17,7 +17,7 @@ and converts the result to that input when tested.
 \section{Slots}{
 
 \describe{
-\item{\code{core}}{An internal \code{drugfindRCoreData} object}
+\item{\code{result}}{An internal \code{drugfindRCoreData} object}
 
 \item{\code{sourceClass}}{A character vector describing the original input class}
 }}

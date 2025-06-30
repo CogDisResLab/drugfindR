@@ -23,7 +23,7 @@ NULL
 #' sig
 drugfindRDataset <- function(input) {
     df <- as_tibble(input)
-    core <- drugfindRCoreData(signature = df)
+    core <- drugfindRCoreData(coreSignature = df)
     sourceClass <- class(input)[1L]
 
     methods::new("drugfindRDataset", core = core, sourceClass = sourceClass)

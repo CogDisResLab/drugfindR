@@ -1,4 +1,5 @@
-#' @include utilities.R
+#' @include specialGenerics.R
+#' @include class-drugfindRCoreData.R
 NULL
 
 #' Generate a Consensus list of Targets
@@ -60,42 +61,39 @@ NULL
 #'     paired = TRUE
 #' )
 #'
-consensusConcordants <- function(
-    ...,
-    paired = FALSE,
-    cutoff = 0.321,
-    cellLine = NULL) {
-    dots <- list(...)
-    if (paired && length(dots) != 2L) {
-        stop("Paired analysis requires two data frames")
-    } else if (!paired && length(dots) != 1L) {
-        stop("Unpaired analysis requires only one dataframe")
+setMethod(
+    "consensusConcordants", "drugfindRCoreData",
+    function(object) {
+        if (!is.null(object@cellLines)) {
+            concordants <- dplyr::filter(
+                object@unfilteredConcordants,
+                cellline %in% object@cellLines
+            )
+        }
+
+        filtered <- concordants |>
+            dplyr::filter(
+                similarity < concordanceLimitDown(object) |
+                    similarity > concordanceLimitUp(object)
+            ) |>
+            dplyr::group_by(
+                dplyr::across(dplyr::any_of(c("treatment", "compound")))
+            ) |>
+            dplyr::filter(
+                abs(similarity) == max(abs(similarity))
+            ) |>
+            dplyr::select(
+                dplyr::any_of(c(
+                    "signatureid", "treatment", "compound", "cellline", "time",
+                    "concentration", "similarity", "sig_direction", "pValue"
+                ))
+            ) |>
+            dplyr::arrange(dplyr::desc(abs(similarity))) |>
+            dplyr::rename_with(targetRename) |>
+            dplyr::ungroup()
+
+        object@filteredConcordants <- filtered
+        validObject(object)
+        object
     }
-
-    concordants <- dplyr::bind_rows(dots)
-
-    if (!is.null(cellLine)) {
-        concordants <- concordants %>%
-            dplyr::filter(.data[["cellline"]] %in% cellLine)
-    }
-
-    filtered <- concordants %>%
-        dplyr::filter(abs(.data[["similarity"]]) >= cutoff) %>%
-        dplyr::group_by(
-            dplyr::across(dplyr::any_of(c("treatment", "compound")))
-        ) %>%
-        dplyr::filter(
-            abs(.data[["similarity"]]) == max(abs(.data[["similarity"]]))
-        ) %>%
-        dplyr::select(
-            dplyr::any_of(c(
-                "signatureid", "treatment", "compound", "cellline", "time",
-                "concentration", "similarity", "sig_direction", "pValue"
-            ))
-        ) %>%
-        dplyr::arrange(dplyr::desc(abs(.data[["similarity"]]))) %>%
-        dplyr::rename_with(targetRename) %>%
-        dplyr::ungroup()
-
-    filtered
-}
+)

@@ -1,10 +1,6 @@
+#' @include specialGenerics.R
 #' @include utilities.R
 NULL
-
-setGeneric(
-    "getConcordants",
-    function(object) standardGeneric("getConcordants")
-)
 
 #' Get the concordant signatures from the designated library
 #'
@@ -27,9 +23,9 @@ setGeneric(
 setMethod("getConcordants", "drugfindRCoreData", function(object) {
     signatureFile <- tempfile(pattern = "ilincs_sig", fileext = ".xls")
 
-    readr::write_tsv(object@signature, signatureFile)
+    readr::write_tsv(object@coreSignature, signatureFile)
 
-    sigDirection <- determineSignatureDirection(object@signature)
+    sigDirection <- determineSignatureDirection(object@coreSignature)
 
     request <- httr2::request(.ilincsBaseUrl()) |>
         httr2::req_url_path_append("SignatureMeta") |>

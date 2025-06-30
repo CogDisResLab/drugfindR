@@ -11,7 +11,7 @@ NULL
 #' This class retains the original class of the input signature
 #' and converts the result to that input when tested.
 #'
-#' @slot core An internal `drugfindRCoreData` object
+#' @slot result An internal `drugfindRCoreData` object
 #' @slot sourceClass A character vector describing the original input class
 #'
 #' @export

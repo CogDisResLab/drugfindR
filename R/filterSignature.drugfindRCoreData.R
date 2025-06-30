@@ -6,6 +6,7 @@ setGeneric(
     "filterSignature",
     function(object) standardGeneric("filterSignature")
 )
+
 #' Filter the signature to the defined parameters
 #'
 #' This function performs the filtering step. The filtering

@@ -42,15 +42,15 @@ prepareSignature <- function(
     logfcColumn = "logFC",
     pvalColumn = "PValue") {
     if (!geneColumn %in% names(dge)) {
-        stop("geneColumn should be present in the dataframe")
+        stop("geneColumn should be present in the dataframe", call. = FALSE)
     }
 
     if (!logfcColumn %in% names(dge)) {
-        stop("logfcColumn should be present in the dataframe")
+        stop("logfcColumn should be present in the dataframe", call. = FALSE)
     }
 
     if (!pvalColumn %in% names(dge) && !is.na(pvalColumn)) {
-        stop("pvalColumn should be present in the dataframe")
+        stop("pvalColumn should be present in the dataframe", call. = FALSE)
     }
 
     if (!is.na(pvalColumn)) {
