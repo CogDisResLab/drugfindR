@@ -3,7 +3,7 @@
   "assignees": [
     "AliSajid"
   ],
-  "baseBranches": [
+  "baseBranchPatterns": [
     "devel"
   ],
   "dependencyDashboard": true,
