@@ -337,3 +337,6 @@ test.tsv
 *.bak
 *.pdf
 *.jats
+
+
+.vscode/
