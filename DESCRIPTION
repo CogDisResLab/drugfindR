@@ -1,6 +1,6 @@
 Package: drugfindR
 Title: Investigate iLINCS for candidate repurposable drugs
-Version: 0.99.1233
+Version: 0.99.1234
 Authors@R: c(
     person(given = c("Ali", "Sajid"),
            family = "Imami",
@@ -49,7 +49,8 @@ Imports:
     lifecycle,
     S4Vectors,
     httr2,
-    curl
+    curl,
+    DFplyr
 Depends:
     R (>= 4.4.0)
 Suggests:
