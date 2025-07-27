@@ -56,6 +56,9 @@ getSignature <- function(sigId, l1000 = TRUE) {
                 Significance_pvalue = round(.data[["Significance_pvalue"]], 12L)
             )
     } else {
-        stop(httr2::resp_status(request), " ", httr2::resp_body_string(request))
+        stop(httr2::resp_status(request), " ",
+            httr2::resp_body_string(request),
+            call. = FALSE
+        )
     }
 }

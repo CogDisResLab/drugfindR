@@ -8,49 +8,127 @@
 filterSignature(signature, direction = "any", threshold = NULL, prop = NULL)
 }
 \arguments{
-\item{signature}{A dataframe with the L1000 signature}
+\item{signature}{A data.frame, tibble, or DataFrame containing the L1000 signature.
+Must contain a column named "Value_LogDiffExp" with log fold-change values.}
 
-\item{direction}{Direction to filter to. Must be one of "up",
-"down" or "any". Defaults to "any"}
+\item{direction}{Character string specifying the direction to filter.
+Must be one of "up" (up-regulated genes only), "down" (down-regulated genes only),
+or "any" (both up- and down-regulated genes). Defaults to "any".}
 
-\item{threshold}{A Log Fold-Change Threshold to filter at.
-This can either be a single value or a vector of two values.
-If a single value is given, then it is assumed to be a symmetric threshold.
-If two values are given, then the first value is the down-regulated
-threshold and the second value is
-the up-regulated threshold. Cannot be specified with prop}
+\item{threshold}{Numeric value or vector specifying the log fold-change threshold(s).
+Can be:
+\itemize{
+\item A single positive value: Creates symmetric thresholds (\eqn{\pm threshold})
+\item A vector of two values: First value is the down-regulated threshold,
+second value is the up-regulated threshold
+}
+Cannot be specified together with \code{prop}. One of \code{threshold} or
+\code{prop} must be provided.}
 
-\item{prop}{A proportion of genes to take from top and bottom.
-Cannot be specified with threshold}
+\item{prop}{Numeric value between 0 and 1 specifying the proportion of genes
+to select from the top and bottom of the expression distribution. For example,
+\code{prop = 0.1} selects the top 10\% most up-regulated and bottom 10\%
+most down-regulated genes. Cannot be specified together with \code{threshold}.}
 }
 \value{
-a tibble with the filtered L1000 Signature
+A tibble containing the filtered L1000 signature with the same structure
+as the input but containing only genes that meet the filtering criteria.
 }
 \description{
-This function filters the L1000 Signature to a given threshold, identifying
-up-regulated or down-regulated or both up- and down-regulated genes
+This function filters the L1000 signature to a given threshold, identifying
+up-regulated, down-regulated, or both up- and down-regulated genes. The
+function supports both absolute threshold filtering and proportional filtering
+based on quantiles of the expression data.
+}
+\details{
+The filtering process follows these steps:
+\enumerate{
+\item Input validation: Checks data frame structure and parameter consistency
+\item Threshold calculation: Computes filtering thresholds based on either
+absolute values (\code{threshold}) or quantiles (\code{prop})
+\item Direction-based filtering: Applies the computed thresholds according
+to the specified direction
+}
+
+When using \code{threshold}:
+\itemize{
+\item Single value: Genes with |logFC| >= threshold are retained
+\item Two values: Genes with logFC <= threshold\link{1} OR logFC >= threshold\link{2}
+}
+
+When using \code{prop}:
+\itemize{
+\item Thresholds are calculated as quantiles of the expression distribution
+\item Down threshold = quantile(logFC, prop)
+\item Up threshold = quantile(logFC, 1 - prop)
+}
 }
 \examples{
 # Get the L1000 signature for LINCSKD_28
 kdSignature <- getSignature("LINCSKD_28")
 
-# Filter signature by a specific threshold
-filteredSignature <- filterSignature(kdSignature, threshold = 0.5)
+# Example 1: Filter by symmetric absolute threshold
+# Keeps genes with |logFC| >= 0.5
+filteredSymmetric <- filterSignature(kdSignature, threshold = 0.5)
 
-# Filter signature by a proportion
+# Example 2: Filter by asymmetric absolute thresholds
+# Keeps genes with logFC <= -0.75 OR logFC >= 0.5
+filteredAsymmetric <- filterSignature(kdSignature, threshold = c(-0.75, 0.5))
 
-filteredSignature <- filterSignature(kdSignature, prop = 0.1)
+# Example 3: Filter by proportion (top and bottom 10\%)
+filteredProportion <- filterSignature(kdSignature, prop = 0.1)
 
-# Filter Signature to up-regulated genes only by a threshold
-
-filteredSignature <- filterSignature(kdSignature,
-    direction = "up", threshold = 0.5
+# Example 4: Filter only up-regulated genes by threshold
+upRegulated <- filterSignature(kdSignature,
+    direction = "up",
+    threshold = 0.5
 )
 
-# Filter the signature using differing thresholds for up and
-# down-regulated genes
-
-filteredSignature <- filterSignature(kdSignature,
-    threshold = c(-0.75, 0.5)
+# Example 5: Filter only down-regulated genes by threshold
+downRegulated <- filterSignature(kdSignature,
+    direction = "down",
+    threshold = 0.5
 )
+
+# Example 6: Filter top 5\% most extreme genes in either direction
+topExtreme <- filterSignature(kdSignature, prop = 0.05)
+
+# Example 7: Filter only up-regulated genes using proportion
+# Gets top 20\% most up-regulated genes
+topUpregulated <- filterSignature(kdSignature,
+    direction = "up",
+    prop = 0.2
+)
+
+# Example 8: Working with different data frame types
+# Convert to base data.frame
+kdSignature_df <- as.data.frame(kdSignature)
+filtered_df <- filterSignature(kdSignature_df, threshold = 1.0)
+
+# Convert to Bioconductor DataFrame
+kdSignature_DF <- S4Vectors::DataFrame(kdSignature)
+filtered_DF <- filterSignature(kdSignature_DF, threshold = 1.0)
+
+# Example 9: Comparative analysis with different thresholds
+# Conservative filtering (high threshold)
+conservative <- filterSignature(kdSignature, threshold = 2.0)
+
+# Liberal filtering (low threshold)
+liberal <- filterSignature(kdSignature, threshold = 0.3)
+
+# Compare number of genes
+cat("Conservative:", nrow(conservative), "genes\n")
+cat("Liberal:", nrow(liberal), "genes\n")
+
+# Example 10: Direction-specific proportion filtering
+# Get top 15\% down-regulated genes only
+topDownregulated <- filterSignature(kdSignature,
+    direction = "down",
+    prop = 0.15
+)
+}
+\seealso{
+\code{\link{getSignature}} for retrieving L1000 signatures from iLINCS,
+\code{\link{prepareSignature}} for preparing custom signatures,
+\code{\link{getConcordants}} for finding concordant signatures
 }

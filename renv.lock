@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.5.0",
+    "Version": "4.5.1",
     "Repositories": [
       {
         "Name": "BioCsoft",
@@ -386,6 +386,52 @@
       "Author": "R Special Interest Group on Databases (R-SIG-DB) [aut], Hadley Wickham [aut], Kirill Müller [aut, cre] (<https://orcid.org/0000-0002-1416-3412>), R Consortium [fnd]",
       "Maintainer": "Kirill Müller <kirill@cynkra.com>",
       "Repository": "CRAN"
+    },
+    "DFplyr": {
+      "Package": "DFplyr",
+      "Version": "1.2.0",
+      "Source": "Bioconductor",
+      "Title": "A `DataFrame` (`S4Vectors`) backend for `dplyr`",
+      "Authors@R": "person(\"Jonathan\", \"Carroll\",  email = \"rpkg@jcarroll.com.au\",  role = c(\"aut\", \"cre\"),  comment = c(ORCID = \"0000-0002-1404-5264\"))",
+      "Description": "Provides `dplyr` verbs (`mutate`, `select`, `filter`, etc...)  supporting `S4Vectors::DataFrame` objects. Importantly, this is achieved  without conversion to an intermediate `tibble`. Adds grouping  infrastructure to `DataFrame` which is respected by the transformation  verbs.",
+      "biocViews": "DataRepresentation, Infrastructure, Software",
+      "License": "GPL-3",
+      "Encoding": "UTF-8",
+      "RoxygenNote": "7.2.3",
+      "URL": "https://github.com/jonocarroll/DFplyr",
+      "BugReports": "https://github.com/jonocarroll/DFplyr/issues",
+      "Depends": [
+        "dplyr"
+      ],
+      "Imports": [
+        "BiocGenerics",
+        "methods",
+        "rlang",
+        "S4Vectors",
+        "tidyselect"
+      ],
+      "Suggests": [
+        "BiocStyle",
+        "GenomeInfoDb",
+        "GenomicRanges",
+        "IRanges",
+        "knitr",
+        "rmarkdown",
+        "sessioninfo",
+        "testthat (>= 3.0.0)",
+        "tibble"
+      ],
+      "VignetteBuilder": "knitr",
+      "Config/testthat/edition": "3",
+      "Roxygen": "list(markdown = TRUE)",
+      "git_url": "https://git.bioconductor.org/packages/DFplyr",
+      "git_branch": "RELEASE_3_21",
+      "git_last_commit": "70d0e55",
+      "git_last_commit_date": "2025-04-15",
+      "Repository": "Bioconductor 3.21",
+      "NeedsCompilation": "no",
+      "Author": "Jonathan Carroll [aut, cre] (ORCID: <https://orcid.org/0000-0002-1404-5264>)",
+      "Maintainer": "Jonathan Carroll <rpkg@jcarroll.com.au>"
     },
     "GenomeInfoDb": {
       "Package": "GenomeInfoDb",
@@ -3286,8 +3332,7 @@
         "testthat"
       ],
       "NeedsCompilation": "no",
-      "Repository": "CRAN",
-      "Encoding": "UTF-8"
+      "Repository": "CRAN"
     },
     "isoband": {
       "Package": "isoband",
@@ -4180,8 +4225,7 @@
       ],
       "Collate": "'adjective.R' 'adverb.R' 'exclamation.R' 'verb.R' 'rpackage.R' 'package.R'",
       "NeedsCompilation": "no",
-      "Repository": "CRAN",
-      "Encoding": "UTF-8"
+      "Repository": "CRAN"
     },
     "prettyunits": {
       "Package": "prettyunits",
@@ -6426,8 +6470,7 @@
       ],
       "RoxygenNote": "6.1.1",
       "NeedsCompilation": "no",
-      "Repository": "CRAN",
-      "Encoding": "UTF-8"
+      "Repository": "CRAN"
     },
     "withr": {
       "Package": "withr",
@@ -6611,8 +6654,7 @@
       "License": "GPL (>= 2)",
       "Repository": "CRAN",
       "NeedsCompilation": "no",
-      "Author": "David B. Dahl [aut], David Scott [aut, cre], Charles Roosen [aut], Arni Magnusson [aut], Jonathan Swinton [aut], Ajay Shah [ctb], Arne Henningsen [ctb], Benno Puetz [ctb], Bernhard Pfaff [ctb], Claudio Agostinelli [ctb], Claudius Loehnert [ctb], David Mitchell [ctb], David Whiting [ctb], Fernando da Rosa [ctb], Guido Gay [ctb], Guido Schulz [ctb], Ian Fellows [ctb], Jeff Laake [ctb], John Walker [ctb], Jun Yan [ctb], Liviu Andronic [ctb], Markus Loecher [ctb], Martin Gubri [ctb], Matthieu Stigler [ctb], Robert Castelo [ctb], Seth Falcon [ctb], Stefan Edwards [ctb], Sven Garbade [ctb], Uwe Ligges [ctb]",
-      "Encoding": "UTF-8"
+      "Author": "David B. Dahl [aut], David Scott [aut, cre], Charles Roosen [aut], Arni Magnusson [aut], Jonathan Swinton [aut], Ajay Shah [ctb], Arne Henningsen [ctb], Benno Puetz [ctb], Bernhard Pfaff [ctb], Claudio Agostinelli [ctb], Claudius Loehnert [ctb], David Mitchell [ctb], David Whiting [ctb], Fernando da Rosa [ctb], Guido Gay [ctb], Guido Schulz [ctb], Ian Fellows [ctb], Jeff Laake [ctb], John Walker [ctb], Jun Yan [ctb], Liviu Andronic [ctb], Markus Loecher [ctb], Martin Gubri [ctb], Matthieu Stigler [ctb], Robert Castelo [ctb], Seth Falcon [ctb], Stefan Edwards [ctb], Sven Garbade [ctb], Uwe Ligges [ctb]"
     },
     "yaml": {
       "Package": "yaml",

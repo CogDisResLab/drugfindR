@@ -33,6 +33,21 @@ exampleSignature <- function() {
     }
 }
 
+exampleSignatureUpFilter <- function() {
+    exampleSignature() %>%
+        filter(Value_LogDiffExp >= 1.5)
+}
+
+exampleSignatureDownFilter <- function() {
+    exampleSignature() %>%
+        filter(Value_LogDiffExp <= -1.5)
+}
+
+exampleSignatureAnyFilter <- function() {
+    exampleSignature() %>%
+        filter(abs(Value_LogDiffExp) >= 1.5)
+}
+
 ## Generate concordants for a signature
 
 concordantsCp <- function() {

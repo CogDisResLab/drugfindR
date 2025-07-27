@@ -2196,6 +2196,7 @@ Darunavir
 DASA
 Dasatinib
 Dasb
+DataFrame
 Daunorubicin
 DAW
 DAXX
@@ -2350,6 +2351,7 @@ DFFA
 DFFB
 DFFBP
 DFNB
+DFplyr
 DG
 DGAT
 DGCR
@@ -2670,6 +2672,7 @@ Dorzolamide
 Dovitinib
 downloadSignature
 downregulated
+downThreshold
 Doxapram
 Doxazosin
 Doxepin
@@ -9368,6 +9371,7 @@ TGM
 TGOLN
 TGS
 TGX
+th
 THADA
 Thaney
 THAP
@@ -9948,6 +9952,7 @@ UPK
 UPP
 upregulated
 UPRT
+upThreshold
 UQCC
 UQCR
 UQCRB
