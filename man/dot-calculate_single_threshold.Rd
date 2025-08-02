@@ -12,10 +12,10 @@ threshold for filtering.}
 }
 \value{
 A named list with two elements:
-\begin{itemize}
+\itemize{
 \item{downThreshold}{The negative threshold (-threshold)}
 \item{upThreshold}{The positive threshold (threshold)}
-\end{itemize}
+}
 }
 \description{
 This internal function creates symmetric filtering thresholds from a single

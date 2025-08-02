@@ -53,7 +53,7 @@ to the specified direction
 When using \code{threshold}:
 \itemize{
 \item Single value: Genes with |logFC| >= threshold are retained
-\item Two values: Genes with logFC <= threshold\link{1} OR logFC >= threshold\link{2}
+\item Two values: Genes with logFC <= \code{threshold[1]} OR logFC >= \code{threshold[2]}
 }
 
 When using \code{prop}:

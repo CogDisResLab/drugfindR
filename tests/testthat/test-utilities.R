@@ -78,12 +78,27 @@ test_that("validateLibraries works correctly for invalid library vectors", {
 test_that("stopIfInvalidLibraries stops for invalid libraries", {
     expect_error(
         stopIfInvalidLibraries(c("CP", "INVALID")),
-        "Both input and output libraries must be one of 'OE', 'KD', 'CP'"
+        "Invalid library specification\\(s\\): INVALID"
     )
     expect_error(
         stopIfInvalidLibraries("INVALID"),
-        "Both input and output libraries must be one of 'OE', 'KD', 'CP'"
+        "Invalid library specification\\(s\\): INVALID"
     )
+    expect_error(
+        stopIfInvalidLibraries(c("CP", "XYZ", "INVALID")),
+        "Invalid library specification\\(s\\): XYZ, INVALID"
+    )
+})
+
+test_that("stopIfInvalidLibraries provides helpful error messages", {
+    # Test that error message includes expected libraries
+    errorMsg <- testthat::capture_error(stopIfInvalidLibraries("INVALID"))$message
+
+    expect_true(grepl("Invalid library specification", errorMsg))
+    expect_true(grepl("INVALID", errorMsg))
+    expect_true(grepl("'OE' \\(Overexpression\\)", errorMsg))
+    expect_true(grepl("'KD' \\(Knockdown\\)", errorMsg))
+    expect_true(grepl("'CP' \\(Chemical Perturbagen\\)", errorMsg))
 })
 
 test_that("stopIfInvalidLibraries doesn't stop for valid libraries", {
@@ -92,32 +107,38 @@ test_that("stopIfInvalidLibraries doesn't stop for valid libraries", {
     expect_silent(stopIfInvalidLibraries(c("OE", "CP", "KD")))
 })
 
-test_that("loadMetadata returns correct metadata for each library", {
+test_that(".loadMetadata returns correct metadata for each library", {
     # Test OE metadata
-    oeResult <- loadMetadata("OE")
+    oeResult <- .loadMetadata("OE")
     expect_s3_class(oeResult, "tbl_df")
     expect_identical(oeResult, oeMetadata)
 
     # Test KD metadata
-    kdResult <- loadMetadata("KD")
+    kdResult <- .loadMetadata("KD")
     expect_s3_class(kdResult, "tbl_df")
     expect_identical(kdResult, kdMetadata)
 
     # Test CP metadata
-    cpResult <- loadMetadata("CP")
+    cpResult <- .loadMetadata("CP")
     expect_s3_class(cpResult, "tbl_df")
     expect_identical(cpResult, cpMetadata)
 })
 
 test_that("loadMetadata throws error for invalid library", {
     expect_error(
-        loadMetadata("INVALID"),
-        "Invalid library"
+        .loadMetadata("INVALID"),
+        "Invalid library: 'INVALID'"
     )
     expect_error(
-        loadMetadata("cp"),
-        "Invalid library"
+        .loadMetadata("cp"),
+        "Invalid library: 'cp'"
     )
+
+    # Test that error message includes valid options
+    errorMsg <- testthat::capture_error(.loadMetadata("INVALID"))$message
+    expect_true(grepl("'OE' \\(Overexpression\\)", errorMsg))
+    expect_true(grepl("'KD' \\(Knockdown\\)", errorMsg))
+    expect_true(grepl("'CP' \\(Chemical Perturbagen\\)", errorMsg))
 })
 
 test_that(".returnLibrary returns correct library IDs", {
@@ -129,7 +150,7 @@ test_that(".returnLibrary returns correct library IDs", {
 test_that(".returnLibrary throws error for invalid library", {
     expect_error(
         .returnLibrary("INVALID"),
-        "Both input and output libraries must be one of 'OE', 'KD', 'CP'"
+        "Invalid library specification\\(s\\): INVALID"
     )
 })
 
@@ -139,4 +160,325 @@ test_that(".returnUserAgent returns valid user agent string", {
     expect_length(userAgent, 1L)
     expect_true(grepl("drugfindR", userAgent))
     expect_gt(nchar(userAgent), 0L)
+})
+
+# ==============================================================================
+# TESTS FOR SIGNATURE VALIDATION FUNCTIONS
+# ==============================================================================
+
+# Tests for .stopIfInvalidColNames function
+test_that(".stopIfInvalidColNames works correctly with valid signature", {
+    validSig <- exampleSignature()
+
+    # Should not throw error for valid signature
+    expect_silent(.stopIfInvalidColNames(validSig))
+
+    # Test with different data frame types
+    validTibble <- tibble::as_tibble(validSig)
+    expect_silent(.stopIfInvalidColNames(validTibble))
+
+    validDataFrame <- S4Vectors::DataFrame(validSig)
+    expect_silent(.stopIfInvalidColNames(validDataFrame))
+})
+
+test_that(".stopIfInvalidColNames detects missing columns", {
+    # Missing required columns
+    incompleteSig <- data.frame(
+        signatureID = "SIG_001",
+        Name_GeneSymbol = "GENE1",
+        Value_LogDiffExp = 1.5
+        # Missing ID_geneid and Significance_pvalue
+    )
+
+    expect_error(
+        .stopIfInvalidColNames(incompleteSig),
+        "Input signature does not conform to expected structure"
+    )
+
+    expect_error(
+        .stopIfInvalidColNames(incompleteSig),
+        "Missing columns: ID_geneid, Significance_pvalue"
+    )
+})
+
+test_that(".stopIfInvalidColNames detects extra columns", {
+    # Extra unexpected columns
+    sigWithExtra <- data.frame(
+        signatureID = "SIG_001",
+        ID_geneid = "1234",
+        Name_GeneSymbol = "GENE1",
+        Value_LogDiffExp = 1.5,
+        Significance_pvalue = 0.05,
+        ExtraColumn1 = "extra",
+        ExtraColumn2 = "also_extra",
+        stringsAsFactors = FALSE
+    )
+
+    expect_error(
+        .stopIfInvalidColNames(sigWithExtra),
+        "Input signature does not conform to expected structure"
+    )
+
+    expect_error(
+        .stopIfInvalidColNames(sigWithExtra),
+        "Unexpected columns: ExtraColumn1, ExtraColumn2"
+    )
+})
+
+test_that(".stopIfInvalidColNames detects wrong column order", {
+    # Correct columns but wrong order
+    wrongOrderSig <- data.frame(
+        Name_GeneSymbol = "GENE1",
+        signatureID = "SIG_001",
+        ID_geneid = "1234",
+        Significance_pvalue = 0.05,
+        Value_LogDiffExp = 1.5,
+        stringsAsFactors = FALSE
+    )
+
+    expect_error(
+        .stopIfInvalidColNames(wrongOrderSig),
+        "Input signature does not conform to expected structure"
+    )
+
+    expect_error(
+        .stopIfInvalidColNames(wrongOrderSig),
+        "Columns are not in the expected order"
+    )
+})
+
+test_that(".stopIfInvalidColNames provides comprehensive error message", {
+    # Signature with both missing and extra columns
+    complexErrorSig <- data.frame(
+        signatureID = "SIG_001",
+        WrongColumn = "wrong",
+        Name_GeneSymbol = "GENE1",
+        AnotherWrongColumn = "also_wrong"
+        # Missing ID_geneid, Value_LogDiffExp, Significance_pvalue
+    )
+
+    errorMsg <- testthat::capture_error(.stopIfInvalidColNames(complexErrorSig))$message
+
+    expect_true(grepl("Missing columns", errorMsg))
+    expect_true(grepl("Unexpected columns", errorMsg))
+    expect_true(grepl("Expected columns \\(in order\\)", errorMsg))
+    expect_true(grepl("Actual columns", errorMsg))
+    expect_true(grepl("prepareSignature", errorMsg))
+})
+
+test_that(".stopIfInvalidColNames error message includes all expected information", {
+    emptySig <- data.frame()
+
+    errorMsg <- testthat::capture_error(.stopIfInvalidColNames(emptySig))$message
+
+    # Should show all missing columns
+    expect_true(grepl("signatureID", errorMsg))
+    expect_true(grepl("ID_geneid", errorMsg))
+    expect_true(grepl("Name_GeneSymbol", errorMsg))
+    expect_true(grepl("Value_LogDiffExp", errorMsg))
+    expect_true(grepl("Significance_pvalue", errorMsg))
+})
+
+# Tests for .stopIfContainsMissingValues function
+test_that(".stopIfContainsMissingValues works correctly with valid signature", {
+    validSig <- exampleSignature()
+
+    # Should not throw error for signature without missing values
+    expect_silent(.stopIfContainsMissingValues(validSig))
+
+    # Test with different data frame types
+    validTibble <- tibble::as_tibble(validSig)
+    expect_silent(.stopIfContainsMissingValues(validTibble))
+
+    validDataFrame <- S4Vectors::DataFrame(validSig)
+    expect_silent(.stopIfContainsMissingValues(validDataFrame))
+})
+
+test_that(".stopIfContainsMissingValues detects missing values", {
+    # Signature with NA values
+    sigWithNa <- data.frame(
+        signatureID = c("SIG_001", "SIG_001"),
+        ID_geneid = c("1234", NA),
+        Name_GeneSymbol = c("GENE1", "GENE2"),
+        Value_LogDiffExp = c(1.5, -2.1),
+        Significance_pvalue = c(0.05, NA),
+        stringsAsFactors = FALSE
+    )
+
+    expect_error(
+        .stopIfContainsMissingValues(sigWithNa),
+        "Input signature contains missing \\(NA\\) values"
+    )
+})
+
+test_that(".stopIfContainsMissingValues provides detailed error information", {
+    # Create signature with missing values in specific columns
+    sigWithMultipleNa <- data.frame(
+        signatureID = c("SIG_001", "SIG_001", "SIG_001"),
+        ID_geneid = c("1234", NA, "9012"),
+        Name_GeneSymbol = c("GENE1", "GENE2", "GENE3"),
+        Value_LogDiffExp = c(1.5, NA, NA),
+        Significance_pvalue = c(0.05, 0.01, 0.03),
+        stringsAsFactors = FALSE
+    )
+
+    errorMsg <- testthat::capture_error(.stopIfContainsMissingValues(sigWithMultipleNa))$message
+
+    # Should list columns with missing values and counts
+    expect_true(grepl("ID_geneid: 1 missing value", errorMsg))
+    expect_true(grepl("Value_LogDiffExp: 2 missing value", errorMsg))
+    expect_true(grepl("prepareSignature", errorMsg))
+    expect_true(grepl("remove or impute", errorMsg))
+})
+
+test_that(".stopIfContainsMissingValues handles all-NA columns", {
+    # Signature with entirely NA column
+    sigAllNaColumn <- data.frame(
+        signatureID = c("SIG_001", "SIG_001"),
+        ID_geneid = c(NA, NA),
+        Name_GeneSymbol = c("GENE1", "GENE2"),
+        Value_LogDiffExp = c(1.5, -2.1),
+        Significance_pvalue = c(0.05, 0.01),
+        stringsAsFactors = FALSE
+    )
+
+    errorMsg <- testthat::capture_error(.stopIfContainsMissingValues(sigAllNaColumn))$message
+    expect_true(grepl("ID_geneid: 2 missing value", errorMsg))
+})
+
+test_that(".stopIfContainsMissingValues handles mixed data types with NA", {
+    # Test with different data types
+    mixedNaSig <- data.frame(
+        signatureID = c("SIG_001", NA),
+        ID_geneid = c("1234", "5678"),
+        Name_GeneSymbol = c(NA, "GENE2"),
+        Value_LogDiffExp = c(1.5, NA),
+        Significance_pvalue = c(NA, 0.01),
+        stringsAsFactors = FALSE
+    )
+
+    errorMsg <- testthat::capture_error(.stopIfContainsMissingValues(mixedNaSig))$message
+    expect_true(grepl("signatureID: 1 missing value", errorMsg))
+    expect_true(grepl("Name_GeneSymbol: 1 missing value", errorMsg))
+    expect_true(grepl("Value_LogDiffExp: 1 missing value", errorMsg))
+    expect_true(grepl("Significance_pvalue: 1 missing value", errorMsg))
+})
+
+# Tests for stopIfInvalidSignature function (main validation function)
+test_that("stopIfInvalidSignature works correctly with valid signature", {
+    validSig <- exampleSignature()
+
+    # Should not throw error for completely valid signature
+    expect_silent(stopIfInvalidSignature(validSig))
+
+    # Test with different data frame types
+    validTibble <- tibble::as_tibble(validSig)
+    expect_silent(stopIfInvalidSignature(validTibble))
+
+    validDataFrame <- S4Vectors::DataFrame(validSig)
+    expect_silent(stopIfInvalidSignature(validDataFrame))
+})
+
+test_that("stopIfInvalidSignature detects column structure problems", {
+    # Invalid column structure
+    invalidColsSig <- data.frame(
+        Gene = "GENE1",
+        Expression = 1.5,
+        PValue = 0.05
+    )
+
+    expect_error(
+        stopIfInvalidSignature(invalidColsSig),
+        "Input signature does not conform to expected structure"
+    )
+})
+
+test_that("stopIfInvalidSignature detects missing values", {
+    # Valid structure but with missing values
+    sigWithNa <- data.frame(
+        signatureID = "SIG_001",
+        ID_geneid = NA,
+        Name_GeneSymbol = "GENE1",
+        Value_LogDiffExp = 1.5,
+        Significance_pvalue = 0.05,
+        stringsAsFactors = FALSE
+    )
+
+    expect_error(
+        stopIfInvalidSignature(sigWithNa),
+        "Input signature contains missing \\(NA\\) values"
+    )
+})
+
+test_that("stopIfInvalidSignature validates both structure and content", {
+    # Both wrong structure AND missing values
+    completelyInvalidSig <- data.frame(
+        WrongColumn = NA,
+        AnotherWrong = "test"
+    )
+
+    # Should fail on structure first (since that's checked first)
+    expect_error(
+        stopIfInvalidSignature(completelyInvalidSig),
+        "Input signature does not conform to expected structure"
+    )
+})
+
+test_that("stopIfInvalidSignature handles edge cases", {
+    # Empty data frame
+    emptySig <- data.frame()
+    expect_error(
+        stopIfInvalidSignature(emptySig),
+        "Input signature does not conform to expected structure"
+    )
+
+    # Single row valid signature
+    singleRowSig <- data.frame(
+        signatureID = "SIG_001",
+        ID_geneid = "1234",
+        Name_GeneSymbol = "GENE1",
+        Value_LogDiffExp = 1.5,
+        Significance_pvalue = 0.05,
+        stringsAsFactors = FALSE
+    )
+    expect_silent(stopIfInvalidSignature(singleRowSig))
+})
+
+# Integration tests for signature validation workflow
+test_that("signature validation functions work together correctly", {
+    # Test the complete validation workflow
+    validSig <- exampleSignature()
+
+    # Each component should work individually
+    expect_silent(.stopIfInvalidColNames(validSig))
+    expect_silent(.stopIfContainsMissingValues(validSig))
+
+    # And the combined function should work
+    expect_silent(stopIfInvalidSignature(validSig))
+})
+
+test_that("improved error messages are more helpful than before", {
+    # Test that new error messages provide actionable information
+
+    # Missing columns error should be specific
+    incompleteSig <- data.frame(signatureID = "SIG_001")
+    errorMsg <- testthat::capture_error(.stopIfInvalidColNames(incompleteSig))$message
+
+    expect_true(grepl("Missing columns:", errorMsg))
+    expect_true(grepl("Expected columns \\(in order\\):", errorMsg))
+    expect_true(grepl("prepareSignature", errorMsg))
+
+    # Missing values error should be specific
+    naSig <- data.frame(
+        signatureID = "SIG_001",
+        ID_geneid = "1234",
+        Name_GeneSymbol = "GENE1",
+        Value_LogDiffExp = NA,
+        Significance_pvalue = 0.05,
+        stringsAsFactors = FALSE
+    )
+    naErrorMsg <- testthat::capture_error(.stopIfContainsMissingValues(naSig))$message
+
+    expect_true(grepl("Value_LogDiffExp: 1 missing value", naErrorMsg))
+    expect_true(grepl("remove or impute", naErrorMsg))
 })

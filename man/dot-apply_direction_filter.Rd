@@ -17,10 +17,6 @@ Must be one of:
 \item "down": Keep only down-regulated genes (logFC <= downThreshold)
 \item "any": Keep both up- and down-regulated genes (logFC >= upThreshold OR logFC <= downThreshold)
 }}
-
-\item{thresholds}{A named list containing:
-\item{downThreshold}{Threshold for down-regulated genes}
-\item{upThreshold}{Threshold for up-regulated genes}}
 }
 \value{
 A tibble containing the filtered signature data with the same structure

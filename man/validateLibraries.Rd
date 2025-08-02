@@ -2,18 +2,35 @@
 % Please edit documentation in R/utilities.R
 \name{validateLibraries}
 \alias{validateLibraries}
-\title{Check if the libraries input are valid}
+\title{Check if multiple libraries are valid}
 \usage{
 validateLibraries(libs)
 }
 \arguments{
-\item{libs}{a character vector of libraries}
+\item{libs}{A character vector of library names to validate.}
 }
 \value{
-a boolean
+A logical value: TRUE if all libraries are valid, FALSE if any are invalid.
 }
 \description{
-This function confirms that the library parameter
-is one of the allowed ones.
+This function validates whether all provided library names are supported
+iLINCS library types.
+}
+\details{
+This function uses \code{.validateLibrary()} to check each library individually
+and returns TRUE only if all libraries are valid. It's used internally to
+validate library parameters before API calls.
+}
+\examples{
+\dontrun{
+validateLibraries(c("CP", "KD")) # Returns TRUE
+validateLibraries("OE") # Returns TRUE
+validateLibraries(c("CP", "INVALID")) # Returns FALSE
+validateLibraries("INVALID") # Returns FALSE
+}
+}
+\seealso{
+\code{\link{.validateLibrary}} for single library validation,
+\code{\link{stopIfInvalidLibraries}} for validation with error handling
 }
 \keyword{internal}
