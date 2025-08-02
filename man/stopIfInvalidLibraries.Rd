@@ -7,12 +7,40 @@
 stopIfInvalidLibraries(libs)
 }
 \arguments{
-\item{libs}{a character vector of libraries}
+\item{libs}{A character vector of library names to validate.
+Each library must be one of "OE", "KD", or "CP".}
 }
 \value{
-a stop if the libraries are invalid
+Invisible NULL. The function throws an error if validation fails.
 }
 \description{
-Stop if the libraries are invalid
+This internal function validates library specifications and stops execution
+with an informative error message if any invalid libraries are found.
+}
+\details{
+This function validates that all provided library names are supported:
+\itemize{
+\item \code{"OE"}: Overexpression library (LIB_11)
+\item \code{"KD"}: Knockdown library (LIB_6)
+\item \code{"CP"}: Chemical Perturbagen library (LIB_5)
+}
+
+If any invalid libraries are found, the function provides a detailed error
+message listing the invalid libraries and the expected options.
+}
+\examples{
+\dontrun{
+# Valid libraries
+stopIfInvalidLibraries(c("CP", "KD")) # No error
+stopIfInvalidLibraries("OE") # No error
+
+# Invalid libraries (will throw errors)
+stopIfInvalidLibraries("INVALID") # Error
+stopIfInvalidLibraries(c("CP", "XYZ")) # Error
+}
+}
+\seealso{
+\code{\link{validateLibraries}} for the underlying validation logic,
+\code{\link{.validateLibrary}} for single library validation
 }
 \keyword{internal}

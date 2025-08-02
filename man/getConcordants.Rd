@@ -2,35 +2,142 @@
 % Please edit documentation in R/getConcordants.R
 \name{getConcordants}
 \alias{getConcordants}
-\title{Get Concordant Signatures from iLINCS
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}}
+\title{Get concordant signatures from iLINCS database}
 \usage{
 getConcordants(signature, ilincsLibrary = "CP")
 }
 \arguments{
-\item{signature}{A data frame with the names of genes, their expression value
-and optionally their p-value}
+\item{signature}{A data.frame, tibble, or S4Vectors::DataFrame containing
+the signature data. Must conform to iLINCS signature structure with columns:
+\itemize{
+\item \code{signatureID}: Signature identifier
+\item \code{ID_geneid}: Gene IDs
+\item \code{Name_GeneSymbol}: Gene symbols
+\item \code{Value_LogDiffExp}: Log fold-change values
+\item \code{Significance_pvalue}: Statistical significance p-values
+}
+Use \code{prepareSignature()} to ensure proper formatting.}
 
-\item{ilincsLibrary}{The Library you want to search.
-Must be one of "OE", "KD" or "CP"
-for Overexpression, Knockdown or Chemical Perturbagens}
+\item{ilincsLibrary}{Character string specifying the iLINCS library to search.
+Must be one of:
+\itemize{
+\item \code{"CP"}: Chemical Perturbagen library (default)
+\item \code{"KD"}: Knockdown library
+\item \code{"OE"}: Overexpression library
+}}
 }
 \value{
-A tibble with the list of concordant and discordant signatures
+A data structure containing concordant signatures. The return type
+matches the input signature type:
+\itemize{
+\item tibble for data.frame or tibble inputs
+\item S4Vectors::DataFrame for DataFrame inputs
+}
+
+Contains the following columns:
+\itemize{
+\item \code{signatureid}: Unique signature identifier
+\item \code{compound} or \code{treatment}: Drug/treatment name
+\item \code{concentration}: Drug concentration (CP library only)
+\item \code{time}: Treatment duration
+\item \code{cellline}: Cell line used
+\item \code{similarity}: Similarity score (rounded to 8 decimal places)
+\item \code{pValue}: Statistical significance (rounded to 20 decimal places)
+\item \code{sig_direction}: Signature direction ("Up", "Down", or "Any")
+}
 }
 \description{
-This function takes a full or filtered signature
-and gets concordant signatures
-from any of the 3 LINCS databases in iLINCS. This can get Overexpression,
-Knockdown or Chemical Perturbagen signatures.
+This function queries the iLINCS (Integrative Library of Integrated
+Network-based Cellular Signatures) database to find signatures that are
+concordant (similar) to a given input signature.
 }
+\details{
+The function performs the following steps:
+\enumerate{
+\item Validates input parameters
+\item Creates a temporary file with signature data
+\item Detects signature direction from expression values
+\item Sends a multipart POST request to the iLINCS API
+\item Processes the JSON response into a standardized tibble
+\item Cleans up temporary files
+}
+
+The signature direction is determined as follows:
+\itemize{
+\item \code{"Up"}: All expression values are greater than or equal to zero
+\item \code{"Down"}: All expression values are less than or equal to zero
+\item \code{"Any"}: Mixed positive and negative values
+}
+}
+\section{API Details}{
+
+This function interfaces with the iLINCS web service API. The signature
+is uploaded as a tab-separated file and analyzed against the specified
+library. Results are returned as JSON and parsed into a tibble.
+}
+
+\section{Error Handling}{
+
+The function will stop execution with informative error messages for:
+\itemize{
+\item Invalid signature data types (must be data.frame, tibble, or DataFrame)
+\item Invalid signature structure (missing required columns, wrong order, etc.)
+\item Missing values in signature data
+\item Unsupported iLINCS library names
+\item HTTP errors from the iLINCS API
+\item Invalid or empty API responses
+}
+}
+
 \examples{
-# Get the L1000 signature for LINCSKD_28
-kdSignature <- getSignature("LINCSKD_28")
+\dontrun{
+# Load example signature data - ensure it has proper structure
+data("dCovid_diffexp", package = "drugfindR")
 
-# Get concordant gene knockdown signatures
+# Prepare signature to ensure proper structure
+signature <- prepareSignature(dCovid_diffexp[1:50, ])
 
-concordant_signatures <- getConcordants(kdSignature, ilincsLibrary = "KD")
+# Find concordant chemical perturbagens
+cpConcordants <- getConcordants(signature, ilincsLibrary = "CP")
+head(cpConcordants)
 
-head(concordant_signatures)
+# Find concordant knockdown signatures
+kdConcordants <- getConcordants(signature, ilincsLibrary = "KD")
+head(kdConcordants)
+
+# Find concordant overexpression signatures
+oeConcordants <- getConcordants(signature, ilincsLibrary = "OE")
+head(oeConcordants)
+
+# Works with different data frame types
+signatureDf <- as.data.frame(signature)
+cpConcordantsDf <- getConcordants(signatureDf, "CP")
+
+# Works with S4Vectors::DataFrame
+signatureDataFrame <- S4Vectors::DataFrame(signature)
+cpConcordantsDataFrame <- getConcordants(signatureDataFrame, "CP")
+# Returns S4Vectors::DataFrame to match input type
+
+# Manual signature creation (ensure proper structure)
+manualSig <- data.frame(
+    signatureID = rep("MANUAL_SIG", 3),
+    ID_geneid = c("1234", "5678", "9012"),
+    Name_GeneSymbol = c("GENE1", "GENE2", "GENE3"),
+    Value_LogDiffExp = c(1.5, -2.1, 0.8),
+    Significance_pvalue = c(0.05, 0.01, 0.03)
+)
+concordants <- getConcordants(manualSig, "CP")
+}
+
+}
+\references{
+iLINCS Portal: \url{http://www.ilincs.org/}
+
+Pilarczyk et al. (2020). Connecting omics signatures and revealing
+biological mechanisms with iLINCS. Nature Communications, 11(1), 4058.
+}
+\seealso{
+\code{\link{prepareSignature}} for signature preparation,
+\code{\link{filterSignature}} for signature filtering,
+\code{\link{investigateSignature}} for signature investigation
 }

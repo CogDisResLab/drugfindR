@@ -2,17 +2,34 @@
 % Please edit documentation in R/utilities.R
 \name{.validateLibrary}
 \alias{.validateLibrary}
-\title{Check if the library is valid}
+\title{Check if a single library is valid}
 \usage{
 .validateLibrary(lib)
 }
 \arguments{
-\item{lib}{a string of libraries}
+\item{lib}{A character string containing a single library name to validate.}
 }
 \value{
-a boolean
+A logical value: TRUE if the library is valid, FALSE otherwise.
 }
 \description{
-Check if the library is valid
+This internal function validates whether a single library name is one of
+the supported iLINCS library types.
+}
+\details{
+Valid library names are:
+\itemize{
+\item \code{"CP"}: Chemical Perturbagen library
+\item \code{"KD"}: Knockdown library
+\item \code{"OE"}: Overexpression library
+}
+}
+\examples{
+\dontrun{
+.validateLibrary("CP") # Returns TRUE
+.validateLibrary("KD") # Returns TRUE
+.validateLibrary("OE") # Returns TRUE
+.validateLibrary("INVALID") # Returns FALSE
+}
 }
 \keyword{internal}

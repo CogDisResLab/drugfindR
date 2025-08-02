@@ -13,10 +13,10 @@ and the second element is the up-regulated threshold (typically positive).}
 }
 \value{
 A named list with two elements:
-\begin{itemize}
-\item{downThreshold}{The down-regulated threshold (threshold\link{1})}
-\item{upThreshold}{The up-regulated threshold (threshold\link{2})}
-\end{itemize}
+\itemize{
+\item{downThreshold}{The down-regulated threshold (\code{threshold[1]})}
+\item{upThreshold}{The up-regulated threshold (\code{threshold[2]})}
+}
 }
 \description{
 This internal function handles asymmetric filtering thresholds when two

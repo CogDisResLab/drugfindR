@@ -2,6 +2,7 @@
 
 # Load packages
 library(tibble)
+library(httr2)
 
 ## Create Empty Signature
 
@@ -13,6 +14,116 @@ emptySignature <- function() {
         Value_LogDiffExp = rep(NA, 978L),
         Significance_pvalue = rep(NA, 978L)
     )
+}
+
+## Mocking responses for httr2
+mockResponse <- function(response, status) {
+    function(req) {
+        # Extract serializable request information
+        requestInfo <- list(
+            method = req$method %||% "GET",
+            url = req$url %||% "unknown",
+            headers = req$headers %||% list(),
+            options = req$options %||% list()
+        )
+
+        httr2::response_json(
+            url = "https://www.ilincs.org/api",
+            body = list(request = requestInfo, response = response),
+            status_code = status
+        )
+    }
+}
+
+## Example Response Data
+
+exampleResponse <- function() {
+    rdsPath <- file.path(test_path(), "fixtures", "exampleResponse.RDS")
+    if (file.exists(rdsPath)) {
+        readr::read_rds(rdsPath)
+    } else {
+        resp <- exampleSignature() |>
+            .prepareSignatureFile() |>
+            .generateIlincsRequest(
+                "CP"
+            ) |>
+            .executeIlincsRequest()
+        respJson <- resp_body_json(resp)
+
+        respJson[["status"]][["concordanceTable"]] <- head(
+            respJson[["status"]][["concordanceTable"]]
+        )
+
+        updatedResponse <- response_json(
+            url = resp_url(resp),
+            method = req_get_method(resp),
+            status_code = resp_status(resp),
+            body = respJson,
+            headers = resp_headers(resp)
+        )
+        saveRDS(updatedResponse, file = rdsPath)
+        updatedResponse
+    }
+}
+
+## Empty concordance Table Response
+emptyResponse <- function() {
+    rdsPath <- file.path(test_path(), "fixtures", "emptyResponse.RDS")
+    if (file.exists(rdsPath)) {
+        readr::read_rds(rdsPath)
+    } else {
+        zeroSignature <- exampleSignature() |>
+            mutate(
+                Value_LogDiffExp = 0L,
+                Significance_pvalue = 0L
+            )
+
+        resp <- zeroSignature |>
+            .prepareSignatureFile() |>
+            .generateIlincsRequest(
+                "CP"
+            ) |>
+            .executeIlincsRequest()
+        saveRDS(resp, file = rdsPath)
+        resp
+    }
+}
+
+## Error Response (400)
+errorResponse400 <- function() {
+    rdsPath <- file.path(test_path(), "fixtures", "errorResponse400.RDS")
+    if (file.exists(rdsPath)) {
+        readr::read_rds(rdsPath)
+    } else {
+        resp <- .generateIlincsRequest(here::here("DESCRIPTION"), "CP") |>
+            .executeIlincsRequest()
+        saveRDS(resp, file = rdsPath)
+        resp
+    }
+}
+
+## Error Response (500)
+errorResponse500 <- function() {
+    rdsPath <- file.path(test_path(), "fixtures", "errorResponse500.RDS")
+    if (file.exists(rdsPath)) {
+        readr::read_rds(rdsPath)
+    } else {
+        resp <- emptySignature() |>
+            .prepareSignatureFile() |>
+            .generateIlincsRequest("CP") |>
+            .executeIlincsRequest()
+        saveRDS(resp, file = rdsPath)
+        resp
+    }
+}
+
+## Example request for testing
+exampleRequest <- function() {
+    exampleSignature() |>
+        .prepareSignatureFile() |>
+        .generateIlincsRequest(
+            "CP"
+        )
 }
 
 ## Signature Column names
@@ -34,17 +145,17 @@ exampleSignature <- function() {
 }
 
 exampleSignatureUpFilter <- function() {
-    exampleSignature() %>%
+    exampleSignature() |>
         filter(Value_LogDiffExp >= 1.5)
 }
 
 exampleSignatureDownFilter <- function() {
-    exampleSignature() %>%
+    exampleSignature() |>
         filter(Value_LogDiffExp <= -1.5)
 }
 
 exampleSignatureAnyFilter <- function() {
-    exampleSignature() %>%
+    exampleSignature() |>
         filter(abs(Value_LogDiffExp) >= 1.5)
 }
 
