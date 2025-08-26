@@ -1,6 +1,6 @@
 Package: drugfindR
 Title: Investigate iLINCS for candidate repurposable drugs
-Version: 0.99.1235
+Version: 0.99.1240
 Authors@R: c(
     person(given = c("Ali", "Sajid"),
            family = "Imami",
@@ -60,6 +60,7 @@ Suggests:
     codemetar,
     devtools,
     here,
+    httptest2,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
