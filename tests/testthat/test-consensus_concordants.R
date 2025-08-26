@@ -7,7 +7,7 @@ test_that(
     is TRUE and only one dataframe is passed",
     {
         expect_error(
-            consensusConcordants(concordantsCp(), paired = TRUE)
+            consensusConcordants(getTestFixture("concordants", "CP", seed = .testSeed), paired = TRUE)
         )
     }
 )
@@ -18,7 +18,7 @@ test_that(
     {
         expect_error(
             consensusConcordants(
-                concordantsCp(), concordantsCp(),
+                getTestFixture("concordants", "CP", seed = .testSeed), getTestFixture("concordants", "CP", seed = .testSeed),
                 paired = FALSE
             )
         )
@@ -30,7 +30,7 @@ test_that(
 test_that("consensusConcordants properly handles similarity threshold", {
     consensusConcordantsResult <-
         consensusConcordants(
-            concordantsCp(),
+            getTestFixture("concordants", "CP", seed = .testSeed),
             cutoff = 0.321
         )
     expect_identical(
@@ -48,7 +48,7 @@ test_that("consensusConcordants properly handles similarity threshold", {
 
 test_that("consensusConcordants properly handles single cell line filtering", {
     consensusConcordantsResult <-
-        consensusConcordants(concordantsCp(), cellLine = "A375")
+        consensusConcordants(getTestFixture("concordants", "CP", seed = .testSeed), cellLine = "A375")
     expect_identical(nrow(consensusConcordantsResult), 858L)
     expect_true(
         all(
@@ -63,7 +63,7 @@ test_that("consensusConcordants properly handles single cell line filtering", {
 test_that("consensusConcordants properly handles single cell line filtering", {
     consensusConcordantsResult <-
         consensusConcordants(
-            concordantsCp(),
+            getTestFixture("concordants", "CP", seed = .testSeed),
             cellLine = c("A375", "PC3")
         )
     expect_identical(

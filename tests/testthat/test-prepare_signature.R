@@ -4,7 +4,7 @@
 
 test_that("prepareSignature throws an error if geneColumn is not present", {
     expect_error(
-        prepareSignature(exampleSignature(),
+        prepareSignature(getTestFixture("signature", seed = .testSeed),
             geneColumn = "Gene",
             logfcColumn = "Value_LogDiffExp",
             pvalColumn = "Significance_pvalue"
@@ -15,7 +15,7 @@ test_that("prepareSignature throws an error if geneColumn is not present", {
 
 test_that("prepareSignature throws an error if logfcColumn is not present", {
     expect_error(
-        prepareSignature(exampleSignature(),
+        prepareSignature(getTestFixture("signature", seed = .testSeed),
             geneColumn = "Name_GeneSymbol",
             logfcColumn = "logFC2",
             pvalColumn = "Significance_pvalue"
@@ -26,7 +26,7 @@ test_that("prepareSignature throws an error if logfcColumn is not present", {
 
 test_that("prepareSignature throws an error if pvalColumn is not present", {
     expect_error(
-        prepareSignature(exampleSignature(),
+        prepareSignature(getTestFixture("signature", seed = .testSeed),
             geneColumn = "Name_GeneSymbol",
             logfcColumn = "Value_LogDiffExp",
             pvalColumn = "PValue2"
@@ -38,7 +38,7 @@ test_that("prepareSignature throws an error if pvalColumn is not present", {
 ## Test Valid Inputs With PValue
 
 test_that("prepareSignature returns a dataframe with the correct columns", {
-    signature <- prepareSignature(exampleSignature(),
+    signature <- prepareSignature(getTestFixture("signature", seed = .testSeed),
         geneColumn = "Name_GeneSymbol",
         logfcColumn = "Value_LogDiffExp",
         pvalColumn = "Significance_pvalue"
@@ -58,7 +58,7 @@ test_that("prepareSignature returns a dataframe with the correct columns", {
 test_that(
     "prepareSignature returns a dataframe with the correct number of rows",
     {
-        signature <- prepareSignature(exampleSignature(),
+        signature <- prepareSignature(getTestFixture("signature", seed = .testSeed),
             geneColumn = "Name_GeneSymbol",
             logfcColumn = "Value_LogDiffExp",
             pvalColumn = "Significance_pvalue"
@@ -70,7 +70,7 @@ test_that(
 test_that(
     "prepareSignature returns a dataframe with the correct gene symbols",
     {
-        signature <- prepareSignature(exampleSignature(),
+        signature <- prepareSignature(getTestFixture("signature", seed = .testSeed),
             geneColumn = "Name_GeneSymbol",
             logfcColumn = "Value_LogDiffExp",
             pvalColumn = "Significance_pvalue"
@@ -83,7 +83,7 @@ test_that(
 ## Test Valid Inputs Without PValue
 
 test_that("prepareSignature returns a dataframe with the correct columns", {
-    signature <- prepareSignature(exampleSignature(),
+    signature <- prepareSignature(getTestFixture("signature", seed = .testSeed),
         geneColumn = "Name_GeneSymbol",
         logfcColumn = "Value_LogDiffExp", pvalColumn = NA
     )
@@ -96,7 +96,7 @@ test_that("prepareSignature returns a dataframe with the correct columns", {
 test_that(
     "prepareSignature returns a dataframe with the correct number of rows",
     {
-        signature <- prepareSignature(exampleSignature(),
+        signature <- prepareSignature(getTestFixture("signature", seed = .testSeed),
             geneColumn = "Name_GeneSymbol",
             logfcColumn = "Value_LogDiffExp",
             pvalColumn = NA
@@ -108,7 +108,7 @@ test_that(
 test_that(
     "prepareSignature returns a dataframe with the correct gene symbols",
     {
-        signature <- prepareSignature(exampleSignature(),
+        signature <- prepareSignature(getTestFixture("signature", seed = .testSeed),
             geneColumn = "Name_GeneSymbol",
             logfcColumn = "Value_LogDiffExp",
             pvalColumn = NA

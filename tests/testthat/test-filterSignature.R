@@ -8,173 +8,207 @@ library(S4Vectors)
 # ==============================================================================
 
 test_that(
-    ".validate_filter_signature_input works correctly with valid inputs",
+    ".validateFilterSignatureInput works correctly with valid inputs",
     {
-        testSig <- exampleSignature()
+        testSignature <- getTestFixture("signature", seed = .testSeed)
 
         # Valid inputs should not error
         expect_silent(
-            .validate_filter_signature_input(testSig, "any", 1.0, NULL)
+            .validateFilterSignatureInput(testSignature, "any", 1.0, NULL)
         )
         expect_silent(
-            .validate_filter_signature_input(testSig, "up", NULL, 0.1)
+            .validateFilterSignatureInput(testSignature, "up", NULL, 0.1)
         )
         expect_silent(
-            .validate_filter_signature_input(
-                testSig, "down", c(1.0, 2.0),
+            .validateFilterSignatureInput(
+                testSignature, "down", c(1.0, 2.0),
                 NULL
             )
         )
 
         # Test with different data frame types
-        testDf <- as.data.frame(testSig)
-        testDataFrame <- S4Vectors::DataFrame(testSig)
+        testDataFrame <- as.data.frame(testSignature)
+        testS4DataFrame <- S4Vectors::DataFrame(testSignature)
 
         expect_silent(
-            .validate_filter_signature_input(testDf, "any", 1.0, NULL)
+            .validateFilterSignatureInput(testDataFrame, "any", 1.0, NULL)
         )
         expect_silent(
-            .validate_filter_signature_input(testDataFrame, "any", 1.0, NULL)
+            .validateFilterSignatureInput(testS4DataFrame, "any", 1.0, NULL)
         )
     }
 )
 
-test_that(".validate_filter_signature_input errors on invalid direction", {
-    testSig <- exampleSignature()
+test_that(".validateFilterSignatureInput errors on invalid direction", {
+    testSignature <- getTestFixture("signature", seed = .testSeed)
 
     expect_error(
-        .validate_filter_signature_input(testSig, "invalid", 1.0, NULL),
+        .validateFilterSignatureInput(testSignature, "invalid", 1.0, NULL),
         "Direction must be one of 'up', 'down' or 'any'",
         fixed = TRUE
     )
 
     expect_error(
-        .validate_filter_signature_input(testSig, "UP", 1.0, NULL),
+        .validateFilterSignatureInput(testSignature, "UP", 1.0, NULL),
         "Direction must be one of 'up', 'down' or 'any'",
         fixed = TRUE
     )
 
     expect_error(
-        .validate_filter_signature_input(testSig, "", 1.0, NULL),
+        .validateFilterSignatureInput(testSignature, "", 1.0, NULL),
         "Direction must be one of 'up', 'down' or 'any'",
         fixed = TRUE
     )
 })
 
-test_that(".validate_filter_signature_input errors on invalid threshold/prop combinations", {
-    testSig <- exampleSignature()
+test_that(".validateFilterSignatureInput errors on invalid threshold combinations", {
+    testSignature <- getTestFixture("signature", seed = .testSeed)
+
+    # Both abs_threshold and pval_threshold specified should error
+    expect_error(
+        .validateFilterSignatureInput(testSignature, "any", 1.0, 0.1),
+        "Only one of prop or threshold can be specified",
+        fixed = TRUE
+    )
+
+    # Neither threshold specified should error
+    expect_error(
+        .validateFilterSignatureInput(testSignature, "any", NULL, NULL),
+        "One of prop or threshold must be specified",
+        fixed = TRUE
+    )
+})
+
+test_that(".validateFilterSignatureInput errors on invalid abs_threshold", {
+    testSignature <- getTestFixture("signature", seed = .testSeed)
+
+    # Multiple thresholds should error (more than 2)
+    expect_error(
+        .validateFilterSignatureInput(testSignature, "any", c(1.0, 2.0, 3.0), NULL),
+        "Threshold must be specified as one or two values",
+        fixed = TRUE
+    )
+
+    # Empty threshold should error
+    expect_error(
+        .validateFilterSignatureInput(testSignature, "any", numeric(0L), NULL)
+    )
+})
+
+test_that(".validateFilterSignatureInput errors on invalid threshold/prop combinations", {
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     # Both threshold and prop specified should error
     expect_error(
-        .validate_filter_signature_input(testSig, "any", 1.0, 0.1),
+        .validateFilterSignatureInput(testSig, "any", 1.0, 0.1),
         "Only one of prop or threshold can be specified",
         fixed = TRUE
     )
 
     # Neither threshold nor prop specified should error
     expect_error(
-        .validate_filter_signature_input(testSig, "any", NULL, NULL),
+        .validateFilterSignatureInput(testSig, "any", NULL, NULL),
         "One of prop or threshold must be specified",
         fixed = TRUE
     )
 })
 
-test_that(".validate_filter_signature_input errors on invalid threshold length", {
-    testSig <- exampleSignature()
+test_that(".validateFilterSignatureInput errors on invalid threshold length", {
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     # More than two threshold values should error
     expect_error(
-        .validate_filter_signature_input(testSig, "any", c(1.0, 2.0, 3.0), NULL),
+        .validateFilterSignatureInput(testSig, "any", c(1.0, 2.0, 3.0), NULL),
         "Threshold must be specified as one or two values",
         fixed = TRUE
     )
 
     # Empty threshold vector should error
     expect_error(
-        .validate_filter_signature_input(testSig, "any", numeric(0L), NULL),
+        .validateFilterSignatureInput(testSig, "any", numeric(0L), NULL),
         "Threshold must be specified as one or two values",
         fixed = TRUE
     )
 })
 
-test_that(".validate_filter_signature_input errors on non-dataframe input", {
+test_that(".validateFilterSignatureInput errors on non-dataframe input", {
     # Non-dataframe input should error
     expect_error(
-        .validate_filter_signature_input("not_a_dataframe", "any", 1.0, NULL)
+        .validateFilterSignatureInput("not_a_dataframe", "any", 1.0, NULL)
     )
 
     expect_error(
-        .validate_filter_signature_input(list(a = 1L, b = 2L), "any", 1.0, NULL)
+        .validateFilterSignatureInput(list(a = 1L, b = 2L), "any", 1.0, NULL)
     )
 
     expect_error(
-        .validate_filter_signature_input(matrix(1L:10L, nrow = 5L), "any", 1.0, NULL)
+        .validateFilterSignatureInput(matrix(1L:10L, nrow = 5L), "any", 1.0, NULL)
     )
 })
 
 
-test_that(".validate_filter_signature_input errors on invalid threshold order", {
-    testSig <- exampleSignature()
+test_that(".validateFilterSignatureInput errors on invalid threshold order", {
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     # Thresholds in wrong order should error
     expect_error(
-        .validate_filter_signature_input(testSig, "any", c(2.0, 1.0), NULL),
+        .validateFilterSignatureInput(testSig, "any", c(2.0, 1.0), NULL),
         "When two thresholds are specified, they must be in order \\(lower, higher\\)",
         fixed = FALSE
     )
 
     expect_error(
-        .validate_filter_signature_input(testSig, "any", c(0.5, -0.5), NULL),
+        .validateFilterSignatureInput(testSig, "any", c(0.5, -0.5), NULL),
         "When two thresholds are specified, they must be in order \\(lower, higher\\)",
         fixed = FALSE
     )
 })
 
-test_that(".validate_filter_signature_input errors on invalid proportion values", {
-    testSig <- exampleSignature()
+test_that(".validateFilterSignatureInput errors on invalid proportion values", {
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     # Proportion greater than 1 should error
     expect_error(
-        .validate_filter_signature_input(testSig, "any", NULL, 1.5),
+        .validateFilterSignatureInput(testSig, "any", NULL, 1.5),
         "Proportion must be between less than 0.5",
         fixed = TRUE
     )
 
     # Proportion equal to 0 should error
     expect_error(
-        .validate_filter_signature_input(testSig, "any", NULL, 0L),
+        .validateFilterSignatureInput(testSig, "any", NULL, 0L),
         "Proportion must be between greater than 0",
         fixed = TRUE
     )
 
     # Proportion less than 0 should error
     expect_error(
-        .validate_filter_signature_input(testSig, "any", NULL, -0.1),
+        .validateFilterSignatureInput(testSig, "any", NULL, -0.1),
         "Proportion must be between greater than 0",
         fixed = TRUE
     )
 
     # Empty proportion vector should error
     expect_error(
-        .validate_filter_signature_input(testSig, "any", NULL, numeric(0L)),
+        .validateFilterSignatureInput(testSig, "any", NULL, numeric(0L)),
         "Proportion must be specified as a single value",
         fixed = TRUE
     )
 })
 
-test_that(".validate_filter_signature_input accepts valid proportion edge cases", {
-    testSig <- exampleSignature()
+test_that(".validateFilterSignatureInput accepts valid proportion edge cases", {
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     # Proportion = 0.5 should be valid
-    expect_silent(.validate_filter_signature_input(testSig, "any", NULL, 0.5))
+    expect_silent(.validateFilterSignatureInput(testSig, "any", NULL, 0.5))
 })
 
 # ==============================================================================
 # TESTS FOR THRESHOLD CALCULATION FUNCTIONS
 # ==============================================================================
 
-test_that(".calculate_single_threshold works correctly", {
-    result <- .calculate_single_threshold(1.5)
+test_that("calculateSingleThreshold works correctly", {
+    result <- calculateSingleThreshold(1.5)
 
     expect_type(result, "list")
     expect_named(result, c("downThreshold", "upThreshold"))
@@ -182,23 +216,23 @@ test_that(".calculate_single_threshold works correctly", {
     expect_identical(result[["upThreshold"]], 1.5)
 
     # Test with different values
-    result2 <- .calculate_single_threshold(0.8)
+    result2 <- calculateSingleThreshold(0.8)
     expect_identical(result2[["downThreshold"]], -0.8)
     expect_identical(result2[["upThreshold"]], 0.8)
 
     # Test with zero
-    result3 <- .calculate_single_threshold(0.0)
+    result3 <- calculateSingleThreshold(0.0)
     expect_identical(result3[["downThreshold"]], 0.0)
     expect_identical(result3[["upThreshold"]], 0.0)
 
     # Test with large value
-    result4 <- .calculate_single_threshold(100.0)
+    result4 <- calculateSingleThreshold(100.0)
     expect_identical(result4[["downThreshold"]], -100.0)
     expect_identical(result4[["upThreshold"]], 100.0)
 })
 
-test_that(".calculate_double_threshold works correctly", {
-    result <- .calculate_double_threshold(c(-2.0, 1.5))
+test_that(".calculateDoubleThreshold works correctly", {
+    result <- .calculateDoubleThreshold(c(-2.0, 1.5))
 
     expect_type(result, "list")
     expect_named(result, c("downThreshold", "upThreshold"))
@@ -206,60 +240,60 @@ test_that(".calculate_double_threshold works correctly", {
     expect_identical(result[["upThreshold"]], 1.5)
 
     # Test with different values
-    result2 <- .calculate_double_threshold(c(-0.5, 2.5))
+    result2 <- .calculateDoubleThreshold(c(-0.5, 2.5))
     expect_identical(result2[["downThreshold"]], -0.5)
     expect_identical(result2[["upThreshold"]], 2.5)
 
     # Test with identical values
-    result3 <- .calculate_double_threshold(c(-1.0, 1.0))
+    result3 <- .calculateDoubleThreshold(c(-1.0, 1.0))
     expect_identical(result3[["downThreshold"]], -1.0)
     expect_identical(result3[["upThreshold"]], 1.0)
 
     # Test that wrong order of thresholds errors
     expect_error(
-        .calculate_double_threshold(c(1.0, -1.0)),
+        .calculateDoubleThreshold(c(1.0, -1.0)),
         "When two thresholds are specified, they must be in order (lower, higher)",
         fixed = TRUE
     )
 })
 
-test_that(".calculate_absolute_thresholds dispatches correctly", {
+test_that(".calculateAbsoluteThresholds dispatches correctly", {
     # Test single threshold dispatch
-    result1 <- .calculate_absolute_thresholds(1.0)
+    result1 <- .calculateAbsoluteThresholds(1.0)
     expect_identical(result1[["downThreshold"]], -1.0)
     expect_identical(result1[["upThreshold"]], 1.0)
 
     # Test double threshold dispatch
-    result2 <- .calculate_absolute_thresholds(c(-1.5, 2.0))
+    result2 <- .calculateAbsoluteThresholds(c(-1.5, 2.0))
     expect_identical(result2[["downThreshold"]], -1.5)
     expect_identical(result2[["upThreshold"]], 2.0)
 })
 
-test_that(".calculate_absolute_thresholds errors on invalid input", {
+test_that(".calculateAbsoluteThresholds errors on invalid input", {
     # Test invalid threshold (more than 2 values) should error
     expect_error(
-        .calculate_absolute_thresholds(c(1.0, 2.0, 3.0)),
+        .calculateAbsoluteThresholds(c(1.0, 2.0, 3.0)),
         "Threshold must be specified as one or two values",
         fixed = TRUE
     )
 
     # Test invalid threshold (empty vector) should error
     expect_error(
-        .calculate_absolute_thresholds(numeric(0L)),
+        .calculateAbsoluteThresholds(numeric(0L)),
         "Threshold must be specified as one or two values",
         fixed = TRUE
     )
 
     # Test invalid threshold (4 values) should error
     expect_error(
-        .calculate_absolute_thresholds(1L:4L),
+        .calculateAbsoluteThresholds(1L:4L),
         "Threshold must be specified as one or two values",
         fixed = TRUE
     )
 })
 
-test_that(".calculate_proportional_thresholds works correctly", {
-    testSig <- exampleSignature()
+test_that(".calculateProportionalThreshold works correctly", {
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     calculateProp <- function(values, prop) {
         round(
@@ -269,7 +303,7 @@ test_that(".calculate_proportional_thresholds works correctly", {
     }
 
     # Test with 10% proportion
-    result <- .calculate_proportional_thresholds(testSig, 0.1)
+    result <- .calculateProportionalThreshold(testSig, 0.1)
 
     expect_type(result, "list")
     expect_named(result, c("downThreshold", "upThreshold"))
@@ -282,7 +316,7 @@ test_that(".calculate_proportional_thresholds works correctly", {
     expect_identical(result[["upThreshold"]], expectedUp)
 
     # Test with different proportion
-    result2 <- .calculate_proportional_thresholds(testSig, 0.2)
+    result2 <- .calculateProportionalThreshold(testSig, 0.2)
     expectedDown2 <- calculateProp(testSig[["Value_LogDiffExp"]], 0.2)
     expectedUp2 <- calculateProp(testSig[["Value_LogDiffExp"]], 0.8)
 
@@ -290,7 +324,7 @@ test_that(".calculate_proportional_thresholds works correctly", {
     expect_identical(result2[["upThreshold"]], expectedUp2)
 
     # Test with extreme proportion
-    result3 <- .calculate_proportional_thresholds(testSig, 0.05)
+    result3 <- .calculateProportionalThreshold(testSig, 0.05)
     expectedDown3 <- calculateProp(testSig[["Value_LogDiffExp"]], 0.05)
     expectedUp3 <- calculateProp(testSig[["Value_LogDiffExp"]], 0.95)
 
@@ -298,7 +332,7 @@ test_that(".calculate_proportional_thresholds works correctly", {
     expect_identical(result3[["upThreshold"]], expectedUp3)
 
     # Test with 50% proportion
-    result4 <- .calculate_proportional_thresholds(testSig, 0.5)
+    result4 <- .calculateProportionalThreshold(testSig, 0.5)
     expectedMedian <- calculateProp(testSig[["Value_LogDiffExp"]], 0.5)
 
     expect_identical(result4[["downThreshold"]], expectedMedian)
@@ -309,39 +343,65 @@ test_that(".calculate_proportional_thresholds works correctly", {
 # TESTS FOR DIRECTION FILTERING FUNCTION
 # ==============================================================================
 
-test_that(".apply_direction_filter works correctly for 'up' direction", {
-    testSig <- exampleSignature()
+test_that(".applyDirectionFilter works correctly for 'up' direction", {
+    testSig <- getTestFixture("signature", seed = .testSeed)
     thresholds <- list(downThreshold = -1.5, upThreshold = 1.5)
 
-    result <- .apply_direction_filter(testSig, "up", thresholds)
+    result <- .applyDirectionFilter(testSig, "up", thresholds)
 
     expect_true(all(result[["Value_LogDiffExp"]] >= 1.5))
     expect_identical(nrow(result), 110L) # Values: 2.0, 3.0, 4.0
 
     # Check specific values
-    expect_setequal(result[["Value_LogDiffExp"]], exampleSignatureUpFilter()[["Value_LogDiffExp"]])
-    expect_setequal(result[["Name_GeneSymbol"]], exampleSignatureUpFilter()[["Name_GeneSymbol"]])
+    expect_setequal(
+        result[["Value_LogDiffExp"]],
+        filterSignatureByDirection(
+            getTestFixture("signature", seed = .testSeed), "up"
+        )[["Value_LogDiffExp"]]
+    )
+    expect_setequal(
+        result[["Name_GeneSymbol"]],
+        filterSignatureByDirection(
+            getTestFixture("signature", seed = .testSeed),
+            "up"
+        )[["Name_GeneSymbol"]]
+    )
 })
 
-test_that(".apply_direction_filter works correctly for 'down' direction", {
-    testSig <- exampleSignature()
+test_that(".applyDirectionFilter works correctly for 'down' direction", {
+    testSig <- getTestFixture("signature", seed = .testSeed)
     thresholds <- list(downThreshold = -1.5, upThreshold = 1.5)
 
-    result <- .apply_direction_filter(testSig, "down", thresholds)
+    result <- .applyDirectionFilter(testSig, "down", thresholds)
 
     expect_true(all(result[["Value_LogDiffExp"]] <= -1.5))
     expect_identical(nrow(result), 117L) # Values: -3.0, -2.0
 
     # Check specific values
-    expect_setequal(result[["Value_LogDiffExp"]], exampleSignatureDownFilter()[["Value_LogDiffExp"]])
-    expect_setequal(result[["Name_GeneSymbol"]], exampleSignatureDownFilter()[["Name_GeneSymbol"]])
+    expect_setequal(
+        result[["Value_LogDiffExp"]],
+        filterSignatureByDirection(
+            getTestFixture("signature", seed = .testSeed),
+            "down"
+        )[["Value_LogDiffExp"]]
+    )
+    expect_setequal(
+        result[["Name_GeneSymbol"]],
+        filterSignatureByDirection(
+            getTestFixture(
+                "signature",
+                seed = .testSeed
+            ),
+            "down"
+        )[["Name_GeneSymbol"]]
+    )
 })
 
-test_that(".apply_direction_filter works correctly for 'any' direction", {
-    testSig <- exampleSignature()
+test_that(".applyDirectionFilter works correctly for 'any' direction", {
+    testSig <- getTestFixture("signature", seed = .testSeed)
     thresholds <- list(downThreshold = -1.5, upThreshold = 1.5)
 
-    result <- .apply_direction_filter(testSig, "any", thresholds)
+    result <- .applyDirectionFilter(testSig, "any", thresholds)
 
     expect_true(all(
         result[["Value_LogDiffExp"]] >= 1.5 |
@@ -352,38 +412,38 @@ test_that(".apply_direction_filter works correctly for 'any' direction", {
     # Check specific values
     expect_setequal(
         result[["Value_LogDiffExp"]],
-        exampleSignatureAnyFilter()[["Value_LogDiffExp"]]
+        filterSignatureByDirection(getTestFixture("signature", seed = .testSeed), "any")[["Value_LogDiffExp"]]
     )
     expect_setequal(
         result[["Name_GeneSymbol"]],
-        exampleSignatureAnyFilter()[["Name_GeneSymbol"]]
+        filterSignatureByDirection(getTestFixture("signature", seed = .testSeed), "any")[["Name_GeneSymbol"]]
     )
 })
 
-test_that(".apply_direction_filter works with edge case thresholds", {
-    testSig <- exampleSignature()
+test_that(".applyDirectionFilter works with edge case thresholds", {
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     # Test with very high thresholds (should return empty)
     highThresholds <- list(downThreshold = -10.0, upThreshold = 10.0)
-    resultEmpty <- .apply_direction_filter(testSig, "any", highThresholds)
+    resultEmpty <- .applyDirectionFilter(testSig, "any", highThresholds)
     expect_identical(nrow(resultEmpty), 0L)
 
     # Test with zero thresholds
     zeroThresholds <- list(downThreshold = 0.0, upThreshold = 0.0)
-    resultZeroAny <- .apply_direction_filter(testSig, "any", zeroThresholds)
-    resultZeroUp <- .apply_direction_filter(testSig, "up", zeroThresholds)
-    resultZeroDown <- .apply_direction_filter(testSig, "down", zeroThresholds)
+    resultZeroAny <- .applyDirectionFilter(testSig, "any", zeroThresholds)
+    resultZeroUp <- .applyDirectionFilter(testSig, "up", zeroThresholds)
+    resultZeroDown <- .applyDirectionFilter(testSig, "down", zeroThresholds)
 
     expect_identical(nrow(resultZeroAny), 978L) # All values
     expect_identical(nrow(resultZeroUp), 495L) # Values >= 0: 0.0, 1.0, 2.0, 3.0, 4.0
     expect_identical(nrow(resultZeroDown), 483L) # Values <= 0: -3.0, -2.0, -1.0, -0.5, 0.0
 })
 
-test_that(".apply_direction_filter maintains data structure", {
-    testSig <- exampleSignature()
+test_that(".applyDirectionFilter maintains data structure", {
+    testSig <- getTestFixture("signature", seed = .testSeed)
     thresholds <- list(downThreshold = -1.5, upThreshold = 1.5)
 
-    result <- .apply_direction_filter(testSig, "any", thresholds)
+    result <- .applyDirectionFilter(testSig, "any", thresholds)
 
     # Should maintain all columns
     expect_identical(colnames(result), colnames(testSig))
@@ -400,7 +460,7 @@ test_that(".apply_direction_filter maintains data structure", {
 # ==============================================================================
 
 test_that("filterSignature errors on invalid input combinations", {
-    testSig <- exampleSignature()
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     # Not specifying threshold and prop causes error
     expect_error(
@@ -432,7 +492,7 @@ test_that("filterSignature errors on invalid input combinations", {
 })
 
 test_that("filterSignature handles empty signatures", {
-    emptySig <- emptySignature()
+    emptySig <- createEmptySignature()
 
     result <- filterSignature(emptySig, threshold = 0.0)
     expect_identical(nrow(result), 0L)
@@ -443,7 +503,7 @@ test_that("filterSignature handles empty signatures", {
 # ==============================================================================
 
 test_that("filterSignature works with single threshold value", {
-    testSig <- exampleSignature()
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     # Test with zero threshold
     resultZero <- filterSignature(testSig, threshold = 0.0)
@@ -461,7 +521,7 @@ test_that("filterSignature works with single threshold value", {
 })
 
 test_that("filterSignature works with single threshold and direction", {
-    testSig <- exampleSignature()
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     # Test up-regulated genes only
     resultUp <- filterSignature(testSig, threshold = 1.5, direction = "up")
@@ -480,7 +540,7 @@ test_that("filterSignature works with single threshold and direction", {
 })
 
 test_that("filterSignature works with double threshold values", {
-    testSig <- exampleSignature()
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     # Test asymmetric thresholds
     result <- filterSignature(testSig, threshold = c(-0.75, 1.5))
@@ -497,7 +557,7 @@ test_that("filterSignature works with double threshold values", {
 })
 
 test_that("filterSignature works with double threshold and direction", {
-    testSig <- exampleSignature()
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     # Test up-regulated genes with asymmetric thresholds
     resultUp <- filterSignature(testSig, threshold = c(-2.5, 1.5), direction = "up")
@@ -515,7 +575,7 @@ test_that("filterSignature works with double threshold and direction", {
 # ==============================================================================
 
 test_that("filterSignature works with proportion filtering", {
-    testSig <- exampleSignature()
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     # Test with 100% proportion (should include all)
     resultAll <- filterSignature(testSig, prop = 0.5)
@@ -534,7 +594,7 @@ test_that("filterSignature works with proportion filtering", {
 })
 
 test_that("filterSignature works with proportion and direction", {
-    testSig <- exampleSignature()
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     calculateProp <- function(values, prop) {
         round(
@@ -564,7 +624,7 @@ test_that("filterSignature works with proportion and direction", {
 
 test_that("filterSignature maintains compatibility with different data frame types", {
     # Create test data in different formats
-    testTypeTibble <- exampleSignature()
+    testTypeTibble <- getTestFixture("signature", seed = .testSeed)
     testTypeDf <- as.data.frame(testTypeTibble)
     testTypeDataFrame <- S4Vectors::DataFrame(testTypeTibble)
 
@@ -589,7 +649,7 @@ test_that("filterSignature maintains compatibility with different data frame typ
 })
 
 test_that("filterSignature preserves data frame structure", {
-    testSig <- exampleSignature()
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     result <- filterSignature(testSig, threshold = 1.0)
 
@@ -612,7 +672,7 @@ test_that("filterSignature preserves data frame structure", {
 # ==============================================================================
 
 test_that("filterSignature handles edge cases correctly", {
-    testSig <- exampleSignature()
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     # Test with very high threshold (should return empty result)
     resultEmpty <- filterSignature(testSig, threshold = 10.0)
@@ -639,7 +699,7 @@ test_that("filterSignature handles edge cases correctly", {
 # ==============================================================================
 
 test_that("filterSignature refactored version maintains backward compatibility", {
-    testSig <- exampleSignature()
+    testSig <- getTestFixture("signature", seed = .testSeed)
 
     # Test all combinations of parameters
     testCases <- list(

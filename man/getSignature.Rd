@@ -5,27 +5,34 @@
 \title{Get the L1000 Signature from iLINCS
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}}
 \usage{
-getSignature(sigId, l1000 = TRUE)
+getSignature(sigId)
 }
 \arguments{
 \item{sigId}{character. The ilincs signature_id}
-
-\item{l1000}{boolean. If you have a known l1000 signature}
 }
 \value{
-a tibble with the L1000 Signature
+a tibble with the signature data containing the following columns:
+\itemize{
+\item \code{signatureID}: The signature identifier
+\item \code{ID_geneid}: Gene IDs (Entrez)
+\item \code{Name_GeneSymbol}: Gene symbols
+\item \code{Value_LogDiffExp}: Log fold-change values
+\item \code{Significance_pvalue}: Statistical significance p-values
+\item \code{is_L1000}: Logical indicating if this is an L1000 signature
+}
 }
 \description{
 This function acts as the entrypoint to the iLINCS database.
 This takes in an ID and returns the signature after making a
-call to the iLINCS
-database. The default mode for \code{drugfindR} is to use L1000
-signatures. However,
-if you are trying to retrieve a different transcriptomic signature,
-that is also supported
-by setting the \code{l1000} parameter to \code{FALSE}.
+call to the iLINCS database. The function automatically detects
+whether the signature is an L1000 signature based on the signature ID
+and metadata tables, and retrieves all available genes for comprehensive
+signature analysis.
 }
 \examples{
 # Get the L1000 signature for LINCSKD_28
 kdSignature <- getSignature("LINCSKD_28")
+
+# Get an overexpression signature (L1000 status is automatically detected)
+oeSignature <- getSignature("LINCSOE_123")
 }

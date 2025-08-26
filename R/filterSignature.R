@@ -31,20 +31,20 @@
 #' \dontrun{
 #' # Valid calls (no errors)
 #' sig <- data.frame(Value_LogDiffExp = c(-2, -1, 0, 1, 2))
-#' .validate_filter_signature_input(sig, "any", 1.0, NULL)
-#' .validate_filter_signature_input(sig, "up", NULL, 0.1)
-#' .validate_filter_signature_input(sig, "down", c(-1.5, 1.0), NULL)
+#' .validateFilterSignatureInput(sig, "any", 1.0, NULL)
+#' .validateFilterSignatureInput(sig, "up", NULL, 0.1)
+#' .validateFilterSignatureInput(sig, "down", c(-1.5, 1.0), NULL)
 #'
 #' # Invalid calls (will throw errors)
-#' .validate_filter_signature_input(sig, "invalid", 1.0, NULL) # Invalid direction
-#' .validate_filter_signature_input(sig, "any", 1.0, 0.1) # Both threshold and prop
-#' .validate_filter_signature_input(sig, "any", NULL, NULL) # Neither threshold nor prop
-#' .validate_filter_signature_input(sig, "any", c(1, 2, 3), NULL) # Too many thresholds
-#' .validate_filter_signature_input(sig, "any", c(2, 1), NULL) # Wrong threshold order
-#' .validate_filter_signature_input(sig, "any", NULL, 1.5) # Proportion > 1
-#' .validate_filter_signature_input(sig, "any", NULL, -0.1) # Proportion < 0
+#' .validateFilterSignatureInput(sig, "invalid", 1.0, NULL) # Invalid direction
+#' .validateFilterSignatureInput(sig, "any", 1.0, 0.1) # Both threshold and prop
+#' .validateFilterSignatureInput(sig, "any", NULL, NULL) # Neither threshold nor prop
+#' .validateFilterSignatureInput(sig, "any", c(1, 2, 3), NULL) # Too many thresholds
+#' .validateFilterSignatureInput(sig, "any", c(2, 1), NULL) # Wrong threshold order
+#' .validateFilterSignatureInput(sig, "any", NULL, 1.5) # Proportion > 1
+#' .validateFilterSignatureInput(sig, "any", NULL, -0.1) # Proportion < 0
 #' }
-.validate_filter_signature_input <- function(signature, direction, threshold, prop) {
+.validateFilterSignatureInput <- function(signature, direction, threshold, prop) { # nolint: cyclocomp_linter.
     # 1. Validate signature data structure
     if (!any(c("data.frame", "DFrame") %in% class(signature))) {
         stop("Signature must be a data.frame, tibble, or DataFrame", call. = FALSE)
@@ -117,14 +117,14 @@
 #' @examples
 #' \dontrun{
 #' # Create symmetric thresholds from threshold = 1.5
-#' thresholds <- .calculate_single_threshold(1.5)
+#' thresholds <- calculateSingleThreshold(1.5)
 #' # Returns: list(downThreshold = -1.5, upThreshold = 1.5)
 #'
 #' # Create symmetric thresholds from threshold = 0.8
-#' thresholds <- .calculate_single_threshold(0.8)
+#' thresholds <- calculateSingleThreshold(0.8)
 #' # Returns: list(downThreshold = -0.8, upThreshold = 0.8)
 #' }
-.calculate_single_threshold <- function(threshold) {
+calculateSingleThreshold <- function(threshold) {
     list(
         downThreshold = -threshold,
         upThreshold = threshold
@@ -157,18 +157,18 @@
 #' @examples
 #' \dontrun{
 #' # Create asymmetric thresholds
-#' thresholds <- .calculate_double_threshold(c(-2.0, 1.5))
+#' thresholds <- .calculateDoubleThreshold(c(-2.0, 1.5))
 #' # Returns: list(downThreshold = -2.0, upThreshold = 1.5)
 #'
 #' # Stricter threshold for down-regulation
-#' thresholds <- .calculate_double_threshold(c(-1.0, 0.5))
+#' thresholds <- .calculateDoubleThreshold(c(-1.0, 0.5))
 #' # Returns: list(downThreshold = -1.0, upThreshold = 0.5)
 #'
 #' # Equal but explicit thresholds
-#' thresholds <- .calculate_double_threshold(c(-1.5, 1.5))
+#' thresholds <- .calculateDoubleThreshold(c(-1.5, 1.5))
 #' # Returns: list(downThreshold = -1.5, upThreshold = 1.5)
 #' }
-.calculate_double_threshold <- function(threshold) {
+.calculateDoubleThreshold <- function(threshold) {
     if (threshold[[1L]] > threshold[[2L]]) {
         stop(
             "When two thresholds are specified, they must be in order (lower, higher)",
@@ -190,8 +190,8 @@
 #' @param threshold A numeric value or vector specifying the absolute threshold(s).
 #'   Can be:
 #'   \itemize{
-#'     \item A single value: Dispatched to \code{.calculate_single_threshold()}
-#'     \item A vector of two values: Dispatched to \code{.calculate_double_threshold()}
+#'     \item A single value: Dispatched to \code{calculateSingleThreshold()}
+#'     \item A vector of two values: Dispatched to \code{.calculateDoubleThreshold()}
 #'   }
 #'
 #' @return A named list with two elements:
@@ -214,21 +214,21 @@
 #' @examples
 #' \dontrun{
 #' # Single threshold - creates symmetric thresholds
-#' thresholds <- .calculate_absolute_thresholds(1.0)
+#' thresholds <- .calculateAbsoluteThresholds(1.0)
 #' # Returns: list(downThreshold = -1.0, upThreshold = 1.0)
 #'
 #' # Double threshold - uses provided values
-#' thresholds <- .calculate_absolute_thresholds(c(-1.5, 2.0))
+#' thresholds <- .calculateAbsoluteThresholds(c(-1.5, 2.0))
 #' # Returns: list(downThreshold = -1.5, upThreshold = 2.0)
 #'
 #' # Invalid - too many values (will throw error)
-#' # thresholds <- .calculate_absolute_thresholds(c(1.0, 2.0, 3.0))
+#' # thresholds <- .calculateAbsoluteThresholds(c(1.0, 2.0, 3.0))
 #' }
-.calculate_absolute_thresholds <- function(threshold) {
+.calculateAbsoluteThresholds <- function(threshold) {
     if (length(threshold) == 1L) {
-        .calculate_single_threshold(threshold)
+        calculateSingleThreshold(threshold)
     } else if (length(threshold) == 2L) {
-        .calculate_double_threshold(threshold)
+        .calculateDoubleThreshold(threshold)
     } else {
         stop("Threshold must be specified as one or two values", call. = FALSE)
     }
@@ -276,18 +276,18 @@
 #' )
 #'
 #' # Calculate thresholds for top/bottom 20%
-#' thresholds <- .calculate_proportional_thresholds(signature, 0.2)
+#' thresholds <- .calculateProportionalThreshold(signature, 0.2)
 #' # Returns thresholds based on 20th and 80th percentiles
 #'
 #' # Calculate thresholds for top/bottom 10%
-#' thresholds <- .calculate_proportional_thresholds(signature, 0.1)
+#' thresholds <- .calculateProportionalThreshold(signature, 0.1)
 #' # Returns thresholds based on 10th and 90th percentiles
 #'
 #' # Calculate thresholds for top/bottom 5% (most extreme)
-#' thresholds <- .calculate_proportional_thresholds(signature, 0.05)
+#' thresholds <- .calculateProportionalThreshold(signature, 0.05)
 #' # Returns thresholds based on 5th and 95th percentiles
 #' }
-.calculate_proportional_thresholds <- function(signature, prop) {
+.calculateProportionalThreshold <- function(signature, prop) {
     limits <- round(
         quantile(
             signature[["Value_LogDiffExp"]], c(prop, 1L - prop)
@@ -357,18 +357,18 @@
 #' thresholds <- list(downThreshold = -1.5, upThreshold = 1.5)
 #'
 #' # Filter for up-regulated genes only
-#' up_filtered <- .apply_direction_filter(signature, "up", thresholds)
+#' up_filtered <- .applyDirectionFilter(signature, "up", thresholds)
 #' # Returns genes with logFC >= 1.5 (GENE8, GENE9, GENE10)
 #'
 #' # Filter for down-regulated genes only
-#' down_filtered <- .apply_direction_filter(signature, "down", thresholds)
+#' down_filtered <- .applyDirectionFilter(signature, "down", thresholds)
 #' # Returns genes with logFC <= -1.5 (GENE1, GENE2)
 #'
 #' # Filter for both up- and down-regulated genes
-#' both_filtered <- .apply_direction_filter(signature, "any", thresholds)
+#' both_filtered <- .applyDirectionFilter(signature, "any", thresholds)
 #' # Returns genes with |logFC| >= 1.5 (GENE1, GENE2, GENE8, GENE9, GENE10)
 #' }
-.apply_direction_filter <- function(signature, direction, thresholds) {
+.applyDirectionFilter <- function(signature, direction, thresholds) {
     downThreshold <- thresholds[["downThreshold"]]
     upThreshold <- thresholds[["upThreshold"]]
 
@@ -518,15 +518,15 @@ filterSignature <- function(
     signature, direction = "any",
     threshold = NULL, prop = NULL) {
     # Validate input parameters
-    .validate_filter_signature_input(signature, direction, threshold, prop)
+    .validateFilterSignatureInput(signature, direction, threshold, prop)
 
     # Calculate thresholds based on input type
     if (!is.null(threshold)) {
-        thresholds <- .calculate_absolute_thresholds(threshold)
+        thresholds <- .calculateAbsoluteThresholds(threshold)
     } else {
-        thresholds <- .calculate_proportional_thresholds(signature, prop)
+        thresholds <- .calculateProportionalThreshold(signature, prop)
     }
 
     # Apply filtering based on direction
-    .apply_direction_filter(signature, direction, thresholds)
+    .applyDirectionFilter(signature, direction, thresholds)
 }

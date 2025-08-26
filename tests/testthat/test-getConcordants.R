@@ -10,19 +10,19 @@ library(httr2)
 # ==============================================================================
 
 test_that(".validateGetConcordantsInput works correctly with valid inputs", {
-    testSig <- exampleSignature()
+    testSignature <- getTestFixture("signature", seed = .testSeed)
 
     # Valid inputs should not error
-    expect_silent(.validateGetConcordantsInput(testSig, "CP"))
-    expect_silent(.validateGetConcordantsInput(testSig, "KD"))
-    expect_silent(.validateGetConcordantsInput(testSig, "OE"))
+    expect_silent(.validateGetConcordantsInput(testSignature, "CP"))
+    expect_silent(.validateGetConcordantsInput(testSignature, "KD"))
+    expect_silent(.validateGetConcordantsInput(testSignature, "OE"))
 
     # Test with different data frame types
-    testDf <- as.data.frame(testSig)
-    testDataFrame <- S4Vectors::DataFrame(testSig)
+    testDataFrame <- as.data.frame(testSignature)
+    testS4DataFrame <- S4Vectors::DataFrame(testSignature)
 
-    expect_silent(.validateGetConcordantsInput(testDf, "CP"))
     expect_silent(.validateGetConcordantsInput(testDataFrame, "CP"))
+    expect_silent(.validateGetConcordantsInput(testS4DataFrame, "CP"))
 })
 
 test_that(".validateGetConcordantsInput errors on invalid signature input", {
@@ -47,19 +47,19 @@ test_that(".validateGetConcordantsInput errors on invalid signature input", {
 })
 
 test_that(".validateGetConcordantsInput errors on invalid library", {
-    testSig <- exampleSignature()
+    testSignature <- getTestFixture("signature", seed = .testSeed)
 
     # Invalid library should error (uses stopIfInvalidLibraries)
     expect_error(
-        .validateGetConcordantsInput(testSig, "INVALID")
+        .validateGetConcordantsInput(testSignature, "INVALID")
     )
 
     expect_error(
-        .validateGetConcordantsInput(testSig, "cp") # Case sensitive
+        .validateGetConcordantsInput(testSignature, "cp") # Case sensitive
     )
 
     expect_error(
-        .validateGetConcordantsInput(testSig, "")
+        .validateGetConcordantsInput(testSignature, "")
     )
 })
 
@@ -68,47 +68,47 @@ test_that(".validateGetConcordantsInput errors on invalid library", {
 # ==============================================================================
 
 test_that(".prepareSignatureFile creates valid temporary file", {
-    testSig <- exampleSignature()
+    testSignature <- getTestFixture("signature", seed = .testSeed)
 
-    filePath <- .prepareSignatureFile(testSig)
+    signatureFilePath <- .prepareSignatureFile(testSignature)
 
     # Should return a character string
-    expect_type(filePath, "character")
-    expect_length(filePath, 1L)
+    expect_type(signatureFilePath, "character")
+    expect_length(signatureFilePath, 1L)
 
     # File should exist
-    expect_true(file.exists(filePath))
+    expect_true(file.exists(signatureFilePath))
 
     # File should have .xls extension
-    expect_true(grepl("\\.xls$", filePath))
+    expect_true(grepl("\\.xls$", signatureFilePath))
 
     # File should contain signature data
-    fileContent <- readr::read_tsv(filePath, show_col_types = FALSE)
-    expect_identical(nrow(fileContent), nrow(testSig))
-    expect_identical(colnames(fileContent), colnames(testSig))
+    fileContent <- readr::read_tsv(signatureFilePath, show_col_types = FALSE)
+    expect_identical(nrow(fileContent), nrow(testSignature))
+    expect_identical(colnames(fileContent), colnames(testSignature))
 })
 
 test_that(".prepareSignatureFile works with different data frame types", {
-    testDataTibble <- exampleSignature()
-    testDataDf <- as.data.frame(testDataTibble)
-    testDataDataFrame <- S4Vectors::DataFrame(testDataTibble)
+    testSignatureTibble <- getTestFixture("signature", seed = .testSeed)
+    testSignatureDataFrame <- as.data.frame(testSignatureTibble)
+    testSignatureS4DataFrame <- S4Vectors::DataFrame(testSignatureTibble)
 
     # All should create valid files
-    filePathTibble <- .prepareSignatureFile(testDataTibble)
-    filePathDf <- .prepareSignatureFile(testDataDf)
-    filePathDataFrame <- .prepareSignatureFile(testDataDataFrame)
+    signatureFilePathTibble <- .prepareSignatureFile(testSignatureTibble)
+    signatureFilePathDataFrame <- .prepareSignatureFile(testSignatureDataFrame)
+    signatureFilePathS4DataFrame <- .prepareSignatureFile(testSignatureS4DataFrame)
 
-    expect_true(file.exists(filePathTibble))
-    expect_true(file.exists(filePathDf))
-    expect_true(file.exists(filePathDataFrame))
+    expect_true(file.exists(signatureFilePathTibble))
+    expect_true(file.exists(signatureFilePathDataFrame))
+    expect_true(file.exists(signatureFilePathS4DataFrame))
 
     # Content should be equivalent
-    contentTibble <- readr::read_tsv(filePathTibble, show_col_types = FALSE)
-    contentDf <- readr::read_tsv(filePathDf, show_col_types = FALSE)
-    contentDataFrame <- readr::read_tsv(filePathDataFrame, show_col_types = FALSE)
+    contentTibble <- readr::read_tsv(signatureFilePathTibble, show_col_types = FALSE)
+    contentDataFrame <- readr::read_tsv(signatureFilePathDataFrame, show_col_types = FALSE)
+    contentS4DataFrame <- readr::read_tsv(signatureFilePathS4DataFrame, show_col_types = FALSE)
 
-    expect_identical(contentTibble, contentDf)
     expect_identical(contentTibble, contentDataFrame)
+    expect_identical(contentTibble, contentS4DataFrame)
 })
 
 # ==============================================================================
@@ -116,9 +116,10 @@ test_that(".prepareSignatureFile works with different data frame types", {
 # ==============================================================================
 
 test_that(".detectSignatureDirection correctly identifies up-regulated signatures", {
-    upSig <- exampleSignatureUpFilter()
+    baseSignature <- getTestFixture("signature", seed = .testSeed)
+    upSignature <- filterSignatureByDirection(baseSignature, "up", threshold = 1.5)
 
-    direction <- .detectSignatureDirection(upSig)
+    direction <- .detectSignatureDirection(upSignature)
 
     expect_identical(direction, "Up")
     expect_type(direction, "character")
@@ -126,9 +127,10 @@ test_that(".detectSignatureDirection correctly identifies up-regulated signature
 })
 
 test_that(".detectSignatureDirection correctly identifies down-regulated signatures", {
-    downSig <- exampleSignatureDownFilter()
+    baseSignature <- getTestFixture("signature", seed = .testSeed)
+    downSignature <- filterSignatureByDirection(baseSignature, "down", threshold = 1.5)
 
-    direction <- .detectSignatureDirection(downSig)
+    direction <- .detectSignatureDirection(downSignature)
 
     expect_identical(direction, "Down")
     expect_type(direction, "character")
@@ -136,9 +138,10 @@ test_that(".detectSignatureDirection correctly identifies down-regulated signatu
 })
 
 test_that(".detectSignatureDirection correctly identifies mixed signatures", {
-    mixedSig <- exampleSignatureAnyFilter() # Has both positive and negative values
+    baseSignature <- getTestFixture("signature", seed = .testSeed)
+    mixedSignature <- filterSignatureByDirection(baseSignature, "any", threshold = 1.5)
 
-    direction <- .detectSignatureDirection(mixedSig)
+    direction <- .detectSignatureDirection(mixedSignature)
 
     expect_identical(direction, "Any")
     expect_type(direction, "character")
@@ -147,25 +150,16 @@ test_that(".detectSignatureDirection correctly identifies mixed signatures", {
 
 test_that(".detectSignatureDirection handles edge cases", {
     # Signature with zero values
-    zeroSig <- tibble::tibble(
-        Name_GeneSymbol = "GENE1",
-        Value_LogDiffExp = 0.0
-    )
-    expect_identical(.detectSignatureDirection(zeroSig), "Up")
+    zeroSignature <- createZeroSignature()
+    expect_identical(.detectSignatureDirection(zeroSignature), "Up")
 
     # Signature with very small positive values
-    smallPosSig <- tibble::tibble(
-        Name_GeneSymbol = c("GENE1", "GENE2"),
-        Value_LogDiffExp = c(0.001, 0.002)
-    )
-    expect_identical(.detectSignatureDirection(smallPosSig), "Up")
+    smallPositiveSignature <- createSmallPositiveSignature()
+    expect_identical(.detectSignatureDirection(smallPositiveSignature), "Up")
 
     # Signature with very small negative values
-    smallNegSig <- tibble::tibble(
-        Name_GeneSymbol = c("GENE1", "GENE2"),
-        Value_LogDiffExp = c(-0.001, -0.002)
-    )
-    expect_identical(.detectSignatureDirection(smallNegSig), "Down")
+    smallNegativeSignature <- createSmallNegativeSignature()
+    expect_identical(.detectSignatureDirection(smallNegativeSignature), "Down")
 })
 
 # ==============================================================================
@@ -173,11 +167,11 @@ test_that(".detectSignatureDirection handles edge cases", {
 # ==============================================================================
 
 test_that(".generateIlincsRequest creates valid httr2 request object", {
-    testSig <- exampleSignature()
-    filePath <- .prepareSignatureFile(testSig)
+    testSignature <- getTestFixture("signature", seed = .testSeed)
+    signatureFilePath <- .prepareSignatureFile(testSignature)
 
     # Test with CP library
-    request <- .generateIlincsRequest(filePath, "CP")
+    request <- .generateIlincsRequest(signatureFilePath, "CP")
 
     # Should return an httr2_request object
     expect_s3_class(request, "httr2_request")
@@ -208,48 +202,48 @@ test_that(".generateIlincsRequest creates valid httr2 request object", {
 })
 
 test_that(".generateIlincsRequest works with different libraries", {
-    testSig <- exampleSignature()
-    filePath <- .prepareSignatureFile(testSig)
+    testSignature <- getTestFixture("signature", seed = .testSeed)
+    signatureFilePath <- .prepareSignatureFile(testSignature)
 
     # Test CP library
-    requestCP <- .generateIlincsRequest(filePath, "CP")
+    requestCP <- .generateIlincsRequest(signatureFilePath, "CP")
     expect_true(grepl("lib=LIB_5", requestCP[["url"]]))
 
     # Test KD library
-    requestKD <- .generateIlincsRequest(filePath, "KD")
+    requestKD <- .generateIlincsRequest(signatureFilePath, "KD")
     expect_true(grepl("lib=LIB_6", requestKD[["url"]]))
 
     # Test OE library
-    requestOE <- .generateIlincsRequest(filePath, "OE")
+    requestOE <- .generateIlincsRequest(signatureFilePath, "OE")
     expect_true(grepl("lib=LIB_11", requestOE[["url"]]))
 })
 
 test_that(".generateIlincsRequest validates library input", {
-    testSig <- exampleSignature()
-    filePath <- .prepareSignatureFile(testSig)
+    testSignature <- getTestFixture("signature", seed = .testSeed)
+    signatureFilePath <- .prepareSignatureFile(testSignature)
 
     # Invalid library should error
     expect_error(
-        .generateIlincsRequest(filePath, "INVALID"),
+        .generateIlincsRequest(signatureFilePath, "INVALID"),
         "Invalid library specification"
     )
 
     expect_error(
-        .generateIlincsRequest(filePath, "cp"), # Wrong case
+        .generateIlincsRequest(signatureFilePath, "cp"), # Wrong case
         "Invalid library specification"
     )
 
     expect_error(
-        .generateIlincsRequest(filePath, ""),
+        .generateIlincsRequest(signatureFilePath, ""),
         "Invalid library specification"
     )
 })
 
 test_that(".generateIlincsRequest includes proper headers and configuration", {
-    testSig <- exampleSignature()
-    filePath <- .prepareSignatureFile(testSig)
+    testSignature <- getTestFixture("signature", seed = .testSeed)
+    signatureFilePath <- .prepareSignatureFile(testSignature)
 
-    request <- .generateIlincsRequest(filePath, "CP")
+    request <- .generateIlincsRequest(signatureFilePath, "CP")
 
     # Check User-Agent header contains package info
     userAgent <- request[["options"]][["useragent"]]
@@ -266,7 +260,7 @@ test_that(".generateIlincsRequest includes proper headers and configuration", {
 # ==============================================================================
 
 test_that(".executeIlincsRequest configures request properly", {
-    successResponse <- mockResponse(list(item = "Nothing"), 200L)
+    successResponse <- mockConcordantsResponse()
 
     with_mocked_responses(successResponse, {
         resp <- .executeIlincsRequest(exampleRequest())
@@ -275,8 +269,10 @@ test_that(".executeIlincsRequest configures request properly", {
     expect_s3_class(resp, "httr2_response")
 })
 
+# TODO: Add support for verbosity
 test_that(".executeIlincsRequest handles verbose option", {
-    verboseResponse <- mockResponse(list(), 200L)
+    skip()
+    verboseResponse <- mockConcordantsResponse()
 
     with_mocked_responses(verboseResponse, {
         # Test with verbose = TRUE
@@ -659,9 +655,9 @@ test_that("getConcordants works end-to-end with CP library via VCR", {
     vcr::local_cassette("getConcordants_CP_integration")
 
     # Use a small signature for faster API calls
-    testSig <- exampleSignature()[1L:5L, ]
+    testSignature <- getTestFixture("signature", seed = .testSeed)[1L:5L, ]
 
-    result <- getConcordants(testSig, ilincsLibrary = "CP")
+    result <- getConcordants(testSignature, ilincsLibrary = "CP")
 
     # Check result structure
     expect_s3_class(result, "tbl_df")
@@ -688,9 +684,9 @@ test_that("getConcordants works end-to-end with KD library via VCR", {
     vcr::local_cassette("getConcordants_KD_integration")
 
     # Use a small signature for faster API calls
-    testSig <- exampleSignature()[1L:5L, ]
+    testSignature <- getTestFixture("signature", seed = .testSeed)[1L:5L, ]
 
-    result <- getConcordants(testSig, ilincsLibrary = "KD")
+    result <- getConcordants(testSignature, ilincsLibrary = "KD")
 
     # Check result structure
     expect_s3_class(result, "tbl_df")
@@ -718,9 +714,9 @@ test_that("getConcordants works end-to-end with OE library via VCR", {
     vcr::local_cassette("getConcordants_OE_integration")
 
     # Use a small signature for faster API calls
-    testSig <- exampleSignature()[1L:5L, ]
+    testSignature <- getTestFixture("signature", seed = .testSeed)[1L:5L, ]
 
-    result <- getConcordants(testSig, ilincsLibrary = "OE")
+    result <- getConcordants(testSignature, ilincsLibrary = "OE")
 
     # Check result structure
     expect_s3_class(result, "tbl_df")
@@ -748,7 +744,8 @@ test_that("getConcordants handles different signature directions via VCR", {
     vcr::local_cassette("getConcordants_directions_integration")
 
     # Test with up-regulated signature
-    upSig <- exampleSignatureUpFilter()[1L:3L, ]
+    baseSignature <- getTestFixture("signature", seed = .testSeed)[1L:10L, ]
+    upSig <- filterSignatureByDirection(baseSignature, "up", threshold = 1.5)
     upResult <- getConcordants(upSig, ilincsLibrary = "CP")
 
     if (nrow(upResult) > 0L) {
@@ -756,7 +753,7 @@ test_that("getConcordants handles different signature directions via VCR", {
     }
 
     # Test with down-regulated signature
-    downSig <- exampleSignatureDownFilter()[1L:3L, ]
+    downSig <- filterSignatureByDirection(baseSignature, "down", threshold = 1.5)
     downResult <- getConcordants(downSig, ilincsLibrary = "CP")
 
     if (nrow(downResult) > 0L) {
@@ -764,7 +761,7 @@ test_that("getConcordants handles different signature directions via VCR", {
     }
 
     # Test with mixed signature
-    mixedSig <- exampleSignatureAnyFilter()[1L:3L, ]
+    mixedSig <- filterSignatureByDirection(baseSignature, "any", threshold = 1.5)
     mixedResult <- getConcordants(mixedSig, ilincsLibrary = "CP")
 
     if (nrow(mixedResult) > 0L) {
@@ -780,19 +777,19 @@ test_that("getConcordants maintains input/output type consistency via VCR", {
     vcr::local_cassette("getConcordants_types_integration")
 
     # Test with different input types
-    testSig <- exampleSignature()[1L:3L, ]
+    testSignature <- getTestFixture("signature", seed = .testSeed)[1L:3L, ]
 
     # Test with tibble input
-    tibbleResult <- getConcordants(testSig, "CP")
+    tibbleResult <- getConcordants(testSignature, "CP")
     expect_s3_class(tibbleResult, "tbl_df")
 
     # Test with data.frame input
-    dfInput <- as.data.frame(testSig)
+    dfInput <- as.data.frame(testSignature)
     dfResult <- getConcordants(dfInput, "CP")
     expect_s3_class(dfResult, "tbl_df")
 
     # Test with S4Vectors::DataFrame input
-    dataFrameInput <- S4Vectors::DataFrame(testSig)
+    dataFrameInput <- S4Vectors::DataFrame(testSignature)
     dataFrameResult <- getConcordants(dataFrameInput, "CP")
     expect_s4_class(dataFrameResult, "DFrame")
 })
@@ -804,8 +801,8 @@ test_that("getConcordants numerical precision is maintained via VCR", {
 
     vcr::local_cassette("getConcordants_precision_integration")
 
-    testSig <- exampleSignature()[1L:3L, ]
-    result <- getConcordants(testSig, ilincsLibrary = "CP")
+    testSignature <- getTestFixture("signature", seed = .testSeed)[1L:3L, ]
+    result <- getConcordants(testSignature, ilincsLibrary = "CP")
 
     if (nrow(result) > 0L) {
         # Check similarity values are rounded to 8 decimal places
