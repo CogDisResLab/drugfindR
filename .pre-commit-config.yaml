@@ -2,12 +2,12 @@
 # R specific hooks: https://github.com/lorenzwalthert/precommit
 exclude: '.*\.(csv|tsv|xls)$'
 repos:
--   repo: https://github.com/lorenzwalthert/precommit
+  - repo: https://github.com/lorenzwalthert/precommit
     rev: v0.4.3.9009
     hooks:
-    -   id: use-tidy-description
-    -   id: codemeta-description-updated
-    -   id: spell-check
+      - id: use-tidy-description
+      - id: codemeta-description-updated
+      - id: spell-check
         exclude: >
           (?x)^(
           .*\.[rR]|
@@ -38,6 +38,7 @@ repos:
           \.github/workflows/.*|
           data/.*|
           .*\.(gz|xz|bz2)|
+          .*\.json|
           )$
     -   id: readme-rmd-rendered
     -   id: parsable-R
@@ -47,70 +48,70 @@ repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
-    -   id: check-added-large-files
-        args: ['--maxkb=500']
-    -   id: file-contents-sorter
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+      - id: file-contents-sorter
         files: '^\.Rbuildignore$'
-    -   id: end-of-file-fixer
+      - id: end-of-file-fixer
         exclude: '\.Rd'
-    -   id: check-json
-    -   id: check-merge-conflict
-    -   id: mixed-line-ending
+      - id: check-json
+      - id: check-merge-conflict
+      - id: mixed-line-ending
         args:
-        -   --fix=no
-    -   id: trailing-whitespace
-    - id: no-commit-to-branch
-      args:
-        - --branch
-        - devel
-        - --branch
-        - RELEASE.*
--   repo: https://github.com/compilerla/conventional-pre-commit
+          - --fix=no
+      - id: trailing-whitespace
+      - id: no-commit-to-branch
+        args:
+          - --branch
+          - devel
+          - --branch
+          - RELEASE.*
+  - repo: https://github.com/compilerla/conventional-pre-commit
     rev: v4.2.0
     hooks:
-    -   args:
-        -   build
-        -   chore
-        -   ci
-        -   docs
-        -   feat
-        -   fix
-        -   perf
-        -   refactor
-        -   revert
-        -   style
-        -   test
-        -   bump
+      - args:
+          - build
+          - chore
+          - ci
+          - docs
+          - feat
+          - fix
+          - perf
+          - refactor
+          - revert
+          - style
+          - test
+          - bump
         id: conventional-pre-commit
         stages:
-        -   commit-msg
--   repo: https://github.com/Lucas-C/pre-commit-hooks
+          - commit-msg
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.5.5
     hooks:
-    -   id: forbid-crlf
-    -   id: remove-crlf
-    -   id: forbid-tabs
+      - id: forbid-crlf
+      - id: remove-crlf
+      - id: forbid-tabs
         exclude: '.*\.[xls|tsv]$'
-    -   id: remove-tabs
+      - id: remove-tabs
         exclude: '.*\.[xls|tsv]$'
--   repo: local
+  - repo: local
     hooks:
-    -   id: style_files
+      - id: style_files
         name: Apply bioconductor style
         entry: >
-            Rscript --vanilla -e "styler::style_pkg(transformers = styler::tidyverse_style(indent_by = 4))"
+          Rscript --vanilla -e "styler::style_pkg(transformers = styler::tidyverse_style(indent_by = 4))"
         language: system
-    -   id: lint_files
+      - id: lint_files
         name: Apply lintr
         entry: >
-            Rscript --vanilla -e "lintr::lint_package()"
+          Rscript --vanilla -e "lintr::lint_package()"
         language: system
-    -   id: forbid-to-commit
+      - id: forbid-to-commit
         name: Don't commit common R artifacts
         entry: Cannot commit .Rhistory, .RData, .Rds or .rds.
         language: fail
         files: '\.(Rhistory|RData|Rds|rds)$'
-    -   id: bump-version
+      - id: bump-version
         name: Bump version
         entry: >
           ./utilities/bump-version.sh
@@ -118,16 +119,16 @@ repos:
         always_run: true
         pass_filenames: false
         stages:
-            - pre-commit
-    -   id: codemeta-json-updated
+          - pre-commit
+      - id: codemeta-json-updated
         name: Update codemeta.json
         entry: >
           Rscript --vanilla -e "codemetar::write_codemeta()"
         language: system
         files: DESCRIPTION
         stages:
-            - pre-commit
-    -   id: create-version-tag
+          - pre-commit
+      - id: create-version-tag
         name: Create Version Tag
         entry: >
           ./utilities/create-tag.sh
@@ -135,4 +136,4 @@ repos:
         pass_filenames: false
         always_run: true
         stages:
-            - post-commit
+          - post-commit
