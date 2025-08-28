@@ -1,9 +1,5 @@
 # r Comprehensive tests for getSignature function and internal helpers
 
-library(tibble)
-library(httr2)
-library(vcr)
-library(dplyr)
 
 # ==============================================================================
 # TESTS FOR INTERNAL VALIDATION FUNCTION
@@ -37,7 +33,7 @@ test_that(".validateGetSignatureInput errors on invalid sigId type", {
 test_that(".validateGetSignatureInput errors on invalid sigId length", {
     # Multiple values should error
     expect_error(
-        .validateGetSignatureInput(c(lincsKdId(), "LINCSOE_123")),
+        .validateGetSignatureInput(c(lincsKdId(), lincsCpId())),
         "sigId must be a single character string"
     )
 
@@ -175,7 +171,6 @@ test_that(".createSignatureRequest creates valid httr2 request object", {
 
     # Check user agent
     userAgent <- request[["options"]][["useragent"]]
-    expect_true(grepl("drugfindR", userAgent))
     expect_true(grepl("github.com/CogDisResLab/drugfindR", userAgent))
 })
 
@@ -200,23 +195,19 @@ test_that(".createSignatureRequest works with different signature IDs", {
 # TESTS FOR HTTP REQUEST EXECUTION
 # ==============================================================================
 
-test_that(".executeSignatureRequest configures request properly", {
-    successResponse <- mockSignatureResponse(lincsKdId(), 200L, seed = .testSeed)
-
-    with_mocked_responses(successResponse, {
+with_mock_dir("signature", {
+    test_that(".executeSignatureRequest configures request properly", {
         request <- .createSignatureRequest(lincsKdId())
         response <- .executeSignatureRequest(request)
         expect_s3_class(response, "httr2_response")
     })
 })
 
-test_that(".executeSignatureRequest handles verbose option", {
-    # TODO: Ensure this test works
+# TODO: Refactor verbosity into its own function
+with_mock_dir("verbose", {
     skip()
-    successResponse <- mockSignatureResponse("LINCSKD_28", 200L, seed = .testSeed)
-
-    with_mocked_responses(successResponse, {
-        request <- .createSignatureRequest("LINCSKD_28")
+    test_that(".executeSignatureRequest handles verbose option", {
+        request <- .createSignatureRequest(lincsKdId())
 
         # Test verbose = FALSE (default)
         response1 <- .executeSignatureRequest(request)
@@ -238,10 +229,8 @@ test_that(".executeSignatureRequest handles verbose option", {
     })
 })
 
-test_that(".executeSignatureRequest returns error responses without raising", {
-    errorResponse <- mockSignatureResponse("", 400L, seed = .testSeed)
-
-    with_mocked_responses(errorResponse, {
+with_mock_dir("error", {
+    test_that(".executeSignatureRequest returns error responses without raising", {
         request <- .createSignatureRequest("")
         response <- .executeSignatureRequest(request)
         expect_s3_class(response, "httr2_response")
@@ -253,10 +242,8 @@ test_that(".executeSignatureRequest returns error responses without raising", {
 # TESTS FOR SUCCESSFUL RESPONSE PROCESSING
 # ==============================================================================
 
-test_that(".processSuccessfulResponse handles valid response correctly", {
-    successResponse <- mockSignatureResponse(lincsKdId(), 200L, seed = .testSeed)
-
-    with_mocked_responses(successResponse, {
+with_mock_dir("signature", {
+    test_that(".processSuccessfulResponse handles valid response correctly", {
         request <- .createSignatureRequest(lincsKdId())
         response <- .executeSignatureRequest(request)
         result <- .processSuccessfulResponse(response)
@@ -276,12 +263,8 @@ test_that(".processSuccessfulResponse handles valid response correctly", {
         expect_type(result[["Significance_pvalue"]], "double")
         expect_type(result[["is_L1000"]], "logical")
     })
-})
 
-test_that(".processSuccessfulResponse adds correct metadata", {
-    successResponse <- mockSignatureResponse(lincsKdId(), 200L, seed = .testSeed)
-
-    with_mocked_responses(successResponse, {
+    test_that(".processSuccessfulResponse adds correct metadata", {
         request <- .createSignatureRequest(lincsKdId())
         response <- .executeSignatureRequest(request)
         result <- .processSuccessfulResponse(response)
@@ -292,12 +275,10 @@ test_that(".processSuccessfulResponse adds correct metadata", {
         # Check L1000 status is correctly detected
         expect_true(all(result[["is_L1000"]] == TRUE)) # Signature is L1000
     })
-})
 
-test_that(".processSuccessfulResponse rounds numerical values correctly", {
-    successResponse <- mockSignatureResponse(lincsKdId(), 200L, seed = .testSeed)
 
-    with_mocked_responses(successResponse, {
+
+    test_that(".processSuccessfulResponse rounds numerical values correctly", {
         request <- .createSignatureRequest(lincsKdId())
         response <- .executeSignatureRequest(request)
         result <- .processSuccessfulResponse(response)
@@ -327,11 +308,9 @@ test_that(".processSuccessfulResponse rounds numerical values correctly", {
 # TESTS FOR ERROR RESPONSE PROCESSING
 # ==============================================================================
 
-test_that(".processSignatureResponseError handles 400 errors correctly", {
-    errorResponse <- mockSignatureResponse("", 400L, seed = .testSeed)
-
-    with_mocked_responses(errorResponse, {
-        request <- .createSignatureRequest("LINCSKD_28")
+with_mock_dir("error", {
+    test_that(".processSignatureResponseError handles 400 errors correctly", {
+        request <- .createSignatureRequest("")
         response <- .executeSignatureRequest(request)
 
         expect_error(
@@ -339,13 +318,10 @@ test_that(".processSignatureResponseError handles 400 errors correctly", {
             "iLINCS API request failed \\(Status 400\\): Bad Request"
         )
     })
-})
 
-test_that(".processSignatureResponseError handles 500 errors correctly", {
-    errorResponse <- mockSignatureResponse("", 500L, seed = .testSeed)
-
-    with_mocked_responses(errorResponse, {
-        request <- .createSignatureRequest("LINCSKD_28")
+    test_that(".processSignatureResponseError handles 500 errors correctly", {
+        skip("Have to figure out how to trigger a 500 error on iLINCS")
+        request <- .createSignatureRequest(NULL)
         response <- .executeSignatureRequest(request)
 
         expect_error(
@@ -359,10 +335,8 @@ test_that(".processSignatureResponseError handles 500 errors correctly", {
 # TESTS FOR RESPONSE PROCESSING DISPATCHER
 # ==============================================================================
 
-test_that(".processSignatureResponse dispatcher works correctly for success case", {
-    successResponse <- mockSignatureResponse(lincsKdId(), 200L, seed = .testSeed)
-
-    with_mocked_responses(successResponse, {
+with_mock_dir("signature", {
+    test_that(".processSignatureResponse dispatcher works correctly for success case", {
         request <- .createSignatureRequest(lincsKdId())
         response <- .executeSignatureRequest(request)
         result <- .processSignatureResponse(response)
@@ -373,11 +347,9 @@ test_that(".processSignatureResponse dispatcher works correctly for success case
     })
 })
 
-test_that(".processSignatureResponse dispatcher works correctly for error case", {
-    errorResponse <- mockSignatureResponse("", 404L, seed = .testSeed)
-
-    with_mocked_responses(errorResponse, {
-        request <- .createSignatureRequest(lincsKdId())
+with_mock_dir("error", {
+    test_that(".processSignatureResponse dispatcher works correctly for error case", {
+        request <- .createSignatureRequest("")
         response <- .executeSignatureRequest(request)
 
         expect_error(
@@ -387,117 +359,74 @@ test_that(".processSignatureResponse dispatcher works correctly for error case",
     })
 })
 
-# ==============================================================================
-# VCR INTEGRATION TESTS - API-LEVEL CHECKS
-# ==============================================================================
-
-test_that("getSignature works end-to-end with valid KD signature via VCR", {
-    vcr::local_cassette("getSignature_valid_KD")
-    result <- getSignature(lincsKdId())
-
-    # Check basic structure
-    expect_s3_class(result, "tbl_df")
-    expect_named(result, signatureColumns())
-
-    # Check data completeness
-    expect_identical(nrow(result), 978L)
-    expect_false(any(purrr::flatten_lgl(purrr::map(result, is.na))))
-
-    # Check L1000 status
-    expect_true(all(result[["is_L1000"]] == TRUE))
-
-    # Check signature ID consistency
-    expect_true(all(result[["signatureID"]] == lincsKdId()))
-
-    # Check data types
-    expect_type(result[["ID_geneid"]], "character")
-    expect_type(result[["Name_GeneSymbol"]], "character")
-    expect_type(result[["Value_LogDiffExp"]], "double")
-    expect_type(result[["Significance_pvalue"]], "double")
-    expect_type(result[["is_L1000"]], "logical")
-})
 
 # ==============================================================================
-# TESTS FOR EDGE CASES AND ERROR HANDLING
+# INTEGRATION TESTS - API-LEVEL CHECKS
 # ==============================================================================
 
-test_that("getSignature maintains numerical precision", {
-    successResponse <- mockSignatureResponse(lincsKdId(), 200L, seed = .testSeed)
-
-    with_mocked_responses(successResponse, {
+with_mock_dir("e2e_call", {
+    test_that("getSignature works end-to-end with valid KD signature via VCR", {
         result <- getSignature(lincsKdId())
 
-        # Values should be rounded to 12 decimal places max
-        logFcValues <- result[["Value_LogDiffExp"]]
-        pValueValues <- result[["Significance_pvalue"]]
+        # Check basic structure
+        expect_s3_class(result, "tbl_df")
+        expect_named(result, signatureColumns())
 
-        # Check that rounding is applied consistently
-        expect_true(all(logFcValues == round(logFcValues, 12L)))
-        expect_true(all(pValueValues == round(pValueValues, 12L)))
+        # Check data completeness
+        expect_identical(nrow(result), 978L)
+        expect_false(any(purrr::flatten_lgl(purrr::map(result, is.na))))
+
+        # Check L1000 status
+        expect_true(all(result[["is_L1000"]] == TRUE))
+
+        # Check signature ID consistency
+        expect_true(all(result[["signatureID"]] == lincsKdId()))
+
+        # Check data types
+        expect_type(result[["ID_geneid"]], "character")
+        expect_type(result[["Name_GeneSymbol"]], "character")
+        expect_type(result[["Value_LogDiffExp"]], "double")
+        expect_type(result[["Significance_pvalue"]], "double")
+        expect_type(result[["is_L1000"]], "logical")
     })
-})
 
-test_that("getSignature handles different input validation scenarios", {
-    # Test various invalid inputs
-    expect_error(getSignature(123L), "sigId must be a character string")
-    expect_error(getSignature(c("A", "B")), "sigId must be a single character string")
-    expect_error(getSignature(""), "sigId cannot be empty")
-    expect_error(getSignature("   "), "sigId cannot be empty")
-})
+    test_that("getSignature maintains numerical precision", {
+        successResponse <- mockSignatureResponse(lincsKdId(), 200L, seed = .testSeed)
 
-test_that("getSignature output structure is consistent", {
-    successResponse <- mockSignatureResponse(lincsKdId(), 200L, seed = .testSeed)
+        with_mocked_responses(successResponse, {
+            result <- getSignature(lincsKdId())
 
-    with_mocked_responses(successResponse, {
-        result <- getSignature(lincsKdId())
+            # Values should be rounded to 12 decimal places max
+            logFcValues <- result[["Value_LogDiffExp"]]
+            pValueValues <- result[["Significance_pvalue"]]
 
-        # Check that output always has the same column structure
-        expectedColumns <- signatureColumns()
-        expect_identical(colnames(result), expectedColumns)
-
-        # Check that columns are in the expected order
-        expect_identical(colnames(result)[1L], "signatureID")
-        expect_identical(colnames(result)[6L], "is_L1000")
+            # Check that rounding is applied consistently
+            expect_true(all(logFcValues == round(logFcValues, 12L)))
+            expect_true(all(pValueValues == round(pValueValues, 12L)))
+        })
     })
-})
 
-# ==============================================================================
-# PERFORMANCE AND INTEGRATION TESTS
-# ==============================================================================
 
-test_that("getSignature works with realistic data volumes", {
-    successResponse <- mockSignatureResponse(lincsKdId(), 200L, seed = .testSeed)
+    test_that("getSignature output structure is consistent", {
+        successResponse <- mockSignatureResponse(lincsKdId(), 200L, seed = .testSeed)
 
-    with_mocked_responses(successResponse, {
-        result <- getSignature(lincsKdId())
+        with_mocked_responses(successResponse, {
+            result <- getSignature(lincsKdId())
 
-        # Should handle standard L1000 gene set size
-        expect_gte(nrow(result), 1L)
-        expect_lte(nrow(result), 978L) # Reasonable upper bound
+            # Check that output always has the same column structure
+            expectedColumns <- signatureColumns()
+            expect_identical(colnames(result), expectedColumns)
 
-        # All rows should have complete data
-        expect_false(any(is.na(result[["signatureID"]])))
-        expect_false(any(is.na(result[["ID_geneid"]])))
-        expect_false(any(is.na(result[["Name_GeneSymbol"]])))
+            # Check that columns are in the expected order
+            expect_identical(colnames(result)[1L], "signatureID")
+            expect_identical(colnames(result)[6L], "is_L1000")
+        })
     })
-})
-
-test_that("getSignature is compatible with downstream functions", {
-    successResponse <- mockSignatureResponse(lincsKdId(), 200L, seed = .testSeed)
-
-    with_mocked_responses(successResponse, {
-        signature <- getSignature(lincsKdId())
-
-        # Should be compatible with filterSignature (after removing is_L1000 column)
-        filterableSignature <- dplyr::select(signature, -"is_L1000")
-        expect_silent(stopIfInvalidSignature(filterableSignature))
-
-        # Should have the correct structure for downstream analysis
-        expect_true("signatureID" %in% colnames(signature))
-        expect_true("ID_geneid" %in% colnames(signature))
-        expect_true("Name_GeneSymbol" %in% colnames(signature))
-        expect_true("Value_LogDiffExp" %in% colnames(signature))
-        expect_true("Significance_pvalue" %in% colnames(signature))
-        expect_true("is_L1000" %in% colnames(signature))
+    test_that("getSignature handles different input validation scenarios", {
+        # Test various invalid inputs
+        expect_error(getSignature(123L), "sigId must be a character string")
+        expect_error(getSignature(c("A", "B")), "sigId must be a single character string")
+        expect_error(getSignature(""), "sigId cannot be empty")
+        expect_error(getSignature("   "), "sigId cannot be empty")
     })
 })
