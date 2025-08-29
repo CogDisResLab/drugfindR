@@ -1,0 +1,123 @@
+{
+    "status": {
+        "sessionID": "Fri_Aug_29_12_27_13_2025_3208248",
+        "gpgene": null,
+        "gpprobe": null,
+        "Remark": "Done",
+        "NoOfGenes": 978,
+        "NoOfProbes": null,
+        "concordanceTable": [
+            {
+                "similarity": 0.5927,
+                "pValue": 8.0604e-94,
+                "nGenes": 978,
+                "treatment": "UBAP2L",
+                "perturbagenID": "ccsbBroad304_07506",
+                "time": "96 h",
+                "signatureid": "LINCSOE_896",
+                "cellline": "A375",
+                "_row": "LINCSOE_896"
+            },
+            {
+                "similarity": 0.5531,
+                "pValue": 1.8173e-79,
+                "nGenes": 978,
+                "treatment": "CIAPIN1",
+                "perturbagenID": "ccsbBroad304_03773",
+                "time": "96 h",
+                "signatureid": "LINCSOE_1078",
+                "cellline": "A375",
+                "_row": "LINCSOE_1078"
+            },
+            {
+                "similarity": 0.5508,
+                "pValue": 1.1515e-78,
+                "nGenes": 978,
+                "treatment": "P2RY2",
+                "perturbagenID": "ccsbBroad304_06681",
+                "time": "96 h",
+                "signatureid": "LINCSOE_623",
+                "cellline": "A375",
+                "_row": "LINCSOE_623"
+            },
+            {
+                "similarity": 0.5449,
+                "pValue": 1.0406e-76,
+                "nGenes": 978,
+                "treatment": "IL2RB",
+                "perturbagenID": "ccsbBroad304_06438",
+                "time": "96 h",
+                "signatureid": "LINCSOE_552",
+                "cellline": "A375",
+                "_row": "LINCSOE_552"
+            },
+            {
+                "similarity": 0.5418,
+                "pValue": 1.0252e-75,
+                "nGenes": 978,
+                "treatment": "UGCG",
+                "perturbagenID": "ccsbBroad304_07117",
+                "time": "96 h",
+                "signatureid": "LINCSOE_1557",
+                "cellline": "A375",
+                "_row": "LINCSOE_1557"
+            },
+            {
+                "similarity": 0.5355,
+                "pValue": 1.1553e-73,
+                "nGenes": 978,
+                "treatment": "SLC37A4",
+                "perturbagenID": "ccsbBroad304_00602",
+                "time": "96 h",
+                "signatureid": "LINCSOE_965",
+                "cellline": "A375",
+                "_row": "LINCSOE_965"
+            },
+            {
+                "similarity": 0.5298,
+                "pValue": 7.2951e-72,
+                "nGenes": 978,
+                "treatment": "MCOLN1",
+                "perturbagenID": "ccsbBroad304_03806",
+                "time": "96 h",
+                "signatureid": "LINCSOE_974",
+                "cellline": "A375",
+                "_row": "LINCSOE_974"
+            },
+            {
+                "similarity": 0.5167,
+                "pValue": 7.357e-68,
+                "nGenes": 978,
+                "treatment": "MRGPRF",
+                "perturbagenID": "ccsbBroad304_04715",
+                "time": "96 h",
+                "signatureid": "LINCSOE_1285",
+                "cellline": "A375",
+                "_row": "LINCSOE_1285"
+            },
+            {
+                "similarity": 0.5156,
+                "pValue": 1.602e-67,
+                "nGenes": 978,
+                "treatment": "RGS4",
+                "perturbagenID": "ccsbBroad304_01396",
+                "time": "96 h",
+                "signatureid": "LINCSOE_148",
+                "cellline": "A375",
+                "_row": "LINCSOE_148"
+            },
+            {
+                "similarity": 0.5136,
+                "pValue": 6.4319e-67,
+                "nGenes": 978,
+                "treatment": "TNF",
+                "perturbagenID": "ccsbBroad304_01684",
+                "time": "96 h",
+                "signatureid": "LINCSOE_392",
+                "cellline": "A375",
+                "_row": "LINCSOE_392"
+            }
+        ],
+        "corTablePath": "/mnt/raid/tmp/CorTable_Fri_Aug_29_12_27_13_2025_3208248.xls"
+    }
+}

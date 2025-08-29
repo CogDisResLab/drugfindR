@@ -1,0 +1,143 @@
+{
+    "status": {
+        "sessionID": "Fri_Aug_29_12_27_37_2025_2857576",
+        "gpgene": null,
+        "gpprobe": null,
+        "Remark": "Done",
+        "NoOfGenes": 117,
+        "NoOfProbes": null,
+        "concordanceTable": [
+            {
+                "similarity": 0.5225,
+                "pValue": 1.5241e-09,
+                "nGenes": 117,
+                "compound": "Mycophenolate Mofetil",
+                "lincsPertID": "LSM-43041",
+                "GeneTargets": "IMPDH1|IMPDH2",
+                "concentration": "10uM",
+                "time": "6h",
+                "signatureid": "LINCSCP_14604",
+                "cellline": "HA1E",
+                "_row": "LINCSCP_14604"
+            },
+            {
+                "similarity": 0.5199,
+                "pValue": 1.8951e-09,
+                "nGenes": 117,
+                "compound": "AT-9283",
+                "lincsPertID": "LSM-37023",
+                "GeneTargets": "ABL1|AURKA|AURKB|FLT3|JAK2|JAK3",
+                "concentration": "3.33uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_20960",
+                "cellline": "HCC515",
+                "_row": "LINCSCP_20960"
+            },
+            {
+                "similarity": -0.515,
+                "pValue": 2.8414e-09,
+                "nGenes": 117,
+                "compound": "Avrainvillamide-analog-1",
+                "lincsPertID": "LSM-37146",
+                "GeneTargets": "NA",
+                "concentration": "1.11uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_10101",
+                "cellline": "A549",
+                "_row": "LINCSCP_10101"
+            },
+            {
+                "similarity": 0.5147,
+                "pValue": 2.9139e-09,
+                "nGenes": 117,
+                "compound": "3-(4-Pyridyl)indole",
+                "lincsPertID": "LSM-4569",
+                "GeneTargets": "ROCK1",
+                "concentration": "10uM",
+                "time": "6h",
+                "signatureid": "LINCSCP_10357",
+                "cellline": "A673",
+                "_row": "LINCSCP_10357"
+            },
+            {
+                "similarity": 0.4887,
+                "pValue": 2.2756e-08,
+                "nGenes": 117,
+                "compound": "NSI-189",
+                "lincsPertID": "LSM-45446",
+                "GeneTargets": "NA",
+                "concentration": "3.33uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_161055",
+                "cellline": "PC3",
+                "_row": "LINCSCP_161055"
+            },
+            {
+                "similarity": 0.4849,
+                "pValue": 3.0285e-08,
+                "nGenes": 117,
+                "compound": "SCHEMBL14379041",
+                "lincsPertID": "LSM-43082",
+                "GeneTargets": "PPARG",
+                "concentration": "10uM",
+                "time": "6h",
+                "signatureid": "LINCSCP_30820",
+                "cellline": "MCF7",
+                "_row": "LINCSCP_30820"
+            },
+            {
+                "similarity": 0.4847,
+                "pValue": 3.0605e-08,
+                "nGenes": 117,
+                "compound": "Carbamazepine",
+                "lincsPertID": "LSM-3610",
+                "GeneTargets": "SCN10A|SCN11A|SCN1A|SCN2A|SCN3A|SCN4A|SCN5A|SCN7A|SCN8A|SCN9A",
+                "concentration": "10uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_109317",
+                "cellline": "HELA",
+                "_row": "LINCSCP_109317"
+            },
+            {
+                "similarity": 0.4831,
+                "pValue": 3.4419e-08,
+                "nGenes": 117,
+                "compound": "SA-1457415",
+                "lincsPertID": "LSM-40938",
+                "GeneTargets": "NA",
+                "concentration": "3uM",
+                "time": "6h",
+                "signatureid": "LINCSCP_37360",
+                "cellline": "MCF7",
+                "_row": "LINCSCP_37360"
+            },
+            {
+                "similarity": 0.4819,
+                "pValue": 3.765e-08,
+                "nGenes": 117,
+                "compound": "ABT737",
+                "lincsPertID": "LSM-1180",
+                "GeneTargets": "BCL2|BCL2L1|BCL2L2",
+                "concentration": "1.11uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_164631",
+                "cellline": "SKL.C",
+                "_row": "LINCSCP_164631"
+            },
+            {
+                "similarity": 0.478,
+                "pValue": 5.0488e-08,
+                "nGenes": 117,
+                "compound": "VT-464",
+                "lincsPertID": "LSM-45264",
+                "GeneTargets": "NA",
+                "concentration": "0.37uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_160913",
+                "cellline": "PC3",
+                "_row": "LINCSCP_160913"
+            }
+        ],
+        "corTablePath": "/mnt/raid/tmp/CorTable_Fri_Aug_29_12_27_37_2025_2857576.xls"
+    }
+}

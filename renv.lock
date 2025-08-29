@@ -6069,58 +6069,6 @@
       "NeedsCompilation": "yes",
       "Repository": "CRAN"
     },
-    "vcr": {
-      "Package": "vcr",
-      "Version": "2.0.0",
-      "Source": "Repository",
-      "Title": "Record 'HTTP' Calls to Disk",
-      "Authors@R": "c( person(\"Scott\", \"Chamberlain\", , \"myrmecocystus@gmail.com\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0003-1444-9135\")), person(\"Aaron\", \"Wolen\", role = \"aut\", comment = c(ORCID = \"0000-0003-2542-2202\")), person(\"Maëlle\", \"Salmon\", role = \"aut\", comment = c(ORCID = \"0000-0002-2815-0399\")), person(\"Daniel\", \"Possenriede\", role = \"aut\", comment = c(ORCID = \"0000-0002-6738-9845\")), person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = \"aut\"), person(\"rOpenSci\", role = \"fnd\", comment = c(ROR = \"019jywm96\")) )",
-      "Description": "Record test suite 'HTTP' requests and replays them during future runs. A port of the Ruby gem of the same name (<https://github.com/vcr/vcr/>). Works by recording real 'HTTP' requests/responses on disk in 'cassettes', and then replaying matching responses on subsequent requests.",
-      "License": "MIT + file LICENSE",
-      "URL": "https://github.com/ropensci/vcr/, https://books.ropensci.org/http-testing/, https://docs.ropensci.org/vcr/",
-      "BugReports": "https://github.com/ropensci/vcr/issues",
-      "Depends": [
-        "R (>= 4.1)"
-      ],
-      "Imports": [
-        "cli",
-        "curl (>= 6.3.0)",
-        "jsonlite",
-        "lifecycle",
-        "R6",
-        "rlang (>= 1.1.0)",
-        "rprojroot",
-        "waldo",
-        "yaml"
-      ],
-      "Suggests": [
-        "crul (>= 1.6.0)",
-        "desc",
-        "httr",
-        "httr2 (>= 1.1.2)",
-        "knitr",
-        "qs2",
-        "rmarkdown",
-        "roxygen2 (>= 7.2.1)",
-        "testthat (>= 3.0.0)",
-        "webfakes",
-        "withr"
-      ],
-      "VignetteBuilder": "knitr",
-      "Config/testthat/edition": "3",
-      "Config/testthat/parallel": "true",
-      "Config/testthat/start-first": "ause_cassette_re_record",
-      "Encoding": "UTF-8",
-      "Language": "en-US",
-      "RoxygenNote": "7.3.2",
-      "X-schema.org-applicationCategory": "Web",
-      "X-schema.org-isPartOf": "https://ropensci.org",
-      "X-schema.org-keywords": "http, https, API, web-services, curl, mock, mocking, http-mocking, testing, testing-tools, tdd",
-      "NeedsCompilation": "no",
-      "Author": "Scott Chamberlain [aut, cre] (ORCID: <https://orcid.org/0000-0003-1444-9135>), Aaron Wolen [aut] (ORCID: <https://orcid.org/0000-0003-2542-2202>), Maëlle Salmon [aut] (ORCID: <https://orcid.org/0000-0002-2815-0399>), Daniel Possenriede [aut] (ORCID: <https://orcid.org/0000-0002-6738-9845>), Hadley Wickham [aut], rOpenSci [fnd] (ROR: <https://ror.org/019jywm96>)",
-      "Maintainer": "Scott Chamberlain <myrmecocystus@gmail.com>",
-      "Repository": "RSPM"
-    },
     "vctrs": {
       "Package": "vctrs",
       "Version": "0.6.5",

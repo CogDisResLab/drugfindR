@@ -195,7 +195,7 @@ test_that(".createSignatureRequest works with different signature IDs", {
 # TESTS FOR HTTP REQUEST EXECUTION
 # ==============================================================================
 
-with_mock_dir("signature", {
+with_mock_dir("getSignature", {
     test_that(".executeSignatureRequest configures request properly", {
         request <- .createSignatureRequest(lincsKdId())
         response <- .executeSignatureRequest(request)
@@ -205,7 +205,7 @@ with_mock_dir("signature", {
 
 # TODO: Refactor verbosity into its own function
 with_mock_dir("verbose", {
-    skip()
+    skip("Have to figure out how to trigger a 500 error")
     test_that(".executeSignatureRequest handles verbose option", {
         request <- .createSignatureRequest(lincsKdId())
 
@@ -229,7 +229,7 @@ with_mock_dir("verbose", {
     })
 })
 
-with_mock_dir("error", {
+with_mock_dir("signatureError", {
     test_that(".executeSignatureRequest returns error responses without raising", {
         request <- .createSignatureRequest("")
         response <- .executeSignatureRequest(request)
@@ -242,7 +242,7 @@ with_mock_dir("error", {
 # TESTS FOR SUCCESSFUL RESPONSE PROCESSING
 # ==============================================================================
 
-with_mock_dir("signature", {
+with_mock_dir("getSignature", {
     test_that(".processSuccessfulResponse handles valid response correctly", {
         request <- .createSignatureRequest(lincsKdId())
         response <- .executeSignatureRequest(request)
@@ -308,7 +308,7 @@ with_mock_dir("signature", {
 # TESTS FOR ERROR RESPONSE PROCESSING
 # ==============================================================================
 
-with_mock_dir("error", {
+with_mock_dir("signatureError", {
     test_that(".processSignatureResponseError handles 400 errors correctly", {
         request <- .createSignatureRequest("")
         response <- .executeSignatureRequest(request)
@@ -335,7 +335,7 @@ with_mock_dir("error", {
 # TESTS FOR RESPONSE PROCESSING DISPATCHER
 # ==============================================================================
 
-with_mock_dir("signature", {
+with_mock_dir("getSignature", {
     test_that(".processSignatureResponse dispatcher works correctly for success case", {
         request <- .createSignatureRequest(lincsKdId())
         response <- .executeSignatureRequest(request)
@@ -347,7 +347,7 @@ with_mock_dir("signature", {
     })
 })
 
-with_mock_dir("error", {
+with_mock_dir("signatureError", {
     test_that(".processSignatureResponse dispatcher works correctly for error case", {
         request <- .createSignatureRequest("")
         response <- .executeSignatureRequest(request)
@@ -364,7 +364,7 @@ with_mock_dir("error", {
 # INTEGRATION TESTS - API-LEVEL CHECKS
 # ==============================================================================
 
-with_mock_dir("e2e_call", {
+with_mock_dir("getSignature", {
     test_that("getSignature works end-to-end with valid KD signature via VCR", {
         result <- getSignature(lincsKdId())
 
