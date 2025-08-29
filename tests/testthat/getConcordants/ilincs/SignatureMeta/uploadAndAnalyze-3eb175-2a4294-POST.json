@@ -1,0 +1,123 @@
+{
+    "status": {
+        "sessionID": "Fri_Aug_29_12_27_02_2025_9936658",
+        "gpgene": null,
+        "gpprobe": null,
+        "Remark": "Done",
+        "NoOfGenes": 978,
+        "NoOfProbes": null,
+        "concordanceTable": [
+            {
+                "similarity": 1,
+                "pValue": 0,
+                "nGenes": 978,
+                "treatment": "ABL2",
+                "perturbagenID": "CGS001-27",
+                "time": "96 h",
+                "signatureid": "LINCSKD_28",
+                "cellline": "A375",
+                "_row": "LINCSKD_28"
+            },
+            {
+                "similarity": 0.6217,
+                "pValue": 1.1798e-105,
+                "nGenes": 978,
+                "treatment": "PIK3R4",
+                "perturbagenID": "CGS001-30849",
+                "time": "96 h",
+                "signatureid": "LINCSKD_2343",
+                "cellline": "A375",
+                "_row": "LINCSKD_2343"
+            },
+            {
+                "similarity": 0.6162,
+                "pValue": 2.5106e-103,
+                "nGenes": 978,
+                "treatment": "ABL2",
+                "perturbagenID": "CGS001-27",
+                "time": "96 h",
+                "signatureid": "LINCSKD_3698",
+                "cellline": "A549",
+                "_row": "LINCSKD_3698"
+            },
+            {
+                "similarity": 0.5906,
+                "pValue": 5.3694e-93,
+                "nGenes": 978,
+                "treatment": "PRKDC",
+                "perturbagenID": "CGS001-5591",
+                "time": "96 h",
+                "signatureid": "LINCSKD_2505",
+                "cellline": "A375",
+                "_row": "LINCSKD_2505"
+            },
+            {
+                "similarity": 0.5841,
+                "pValue": 1.5977e-90,
+                "nGenes": 978,
+                "treatment": "BLM",
+                "perturbagenID": "CGS001-641",
+                "time": "96 h",
+                "signatureid": "LINCSKD_341",
+                "cellline": "A375",
+                "_row": "LINCSKD_341"
+            },
+            {
+                "similarity": 0.5787,
+                "pValue": 1.6562e-88,
+                "nGenes": 978,
+                "treatment": "STK39",
+                "perturbagenID": "CGS001-27347",
+                "time": "96 h",
+                "signatureid": "LINCSKD_3080",
+                "cellline": "A375",
+                "_row": "LINCSKD_3080"
+            },
+            {
+                "similarity": 0.5778,
+                "pValue": 3.5308e-88,
+                "nGenes": 978,
+                "treatment": "HRAS",
+                "perturbagenID": "CGS001-3265",
+                "time": "96 h",
+                "signatureid": "LINCSKD_1435",
+                "cellline": "A375",
+                "_row": "LINCSKD_1435"
+            },
+            {
+                "similarity": 0.5773,
+                "pValue": 5.1854e-88,
+                "nGenes": 978,
+                "treatment": "KRAS",
+                "perturbagenID": "CGS001-3845",
+                "time": "96 h",
+                "signatureid": "LINCSKD_1691",
+                "cellline": "A375",
+                "_row": "LINCSKD_1691"
+            },
+            {
+                "similarity": 0.5732,
+                "pValue": 1.685e-86,
+                "nGenes": 978,
+                "treatment": "ATP5D",
+                "perturbagenID": "CGS001-513",
+                "time": "96 h",
+                "signatureid": "LINCSKD_261",
+                "cellline": "A375",
+                "_row": "LINCSKD_261"
+            },
+            {
+                "similarity": 0.5707,
+                "pValue": 1.3477e-85,
+                "nGenes": 978,
+                "treatment": "RUVBL1",
+                "perturbagenID": "CGS001-8607",
+                "time": "96 h",
+                "signatureid": "LINCSKD_2778",
+                "cellline": "A375",
+                "_row": "LINCSKD_2778"
+            }
+        ],
+        "corTablePath": "/mnt/raid/tmp/CorTable_Fri_Aug_29_12_27_02_2025_9936658.xls"
+    }
+}

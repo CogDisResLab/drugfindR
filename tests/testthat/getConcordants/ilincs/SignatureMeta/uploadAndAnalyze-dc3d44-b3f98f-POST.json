@@ -1,0 +1,143 @@
+{
+    "status": {
+        "sessionID": "Fri_Aug_29_12_27_20_2025_571631",
+        "gpgene": null,
+        "gpprobe": null,
+        "Remark": "Done",
+        "NoOfGenes": 110,
+        "NoOfProbes": null,
+        "concordanceTable": [
+            {
+                "similarity": 0.7437,
+                "pValue": 1.3182e-20,
+                "nGenes": 110,
+                "compound": "Lorazepam",
+                "lincsPertID": "LSM-4970",
+                "GeneTargets": "GABRA1|GABRA2|GABRA3|GABRA4|GABRA5|GABRA6|GABRB1|GABRB2|GABRB3|GABRD|GABRE|GABRG1|GABRG2|GABRG3|GABRP|GABRQ",
+                "concentration": "0.37uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_104384",
+                "cellline": "HELA",
+                "_row": "LINCSCP_104384"
+            },
+            {
+                "similarity": 0.7147,
+                "pValue": 1.8197e-18,
+                "nGenes": 110,
+                "compound": "Suprofen",
+                "lincsPertID": "LSM-4406",
+                "GeneTargets": "PTGS1|PTGS2",
+                "concentration": "3.33uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_135405",
+                "cellline": "MCF7",
+                "_row": "LINCSCP_135405"
+            },
+            {
+                "similarity": 0.7084,
+                "pValue": 4.8904e-18,
+                "nGenes": 110,
+                "compound": "GW842166X",
+                "lincsPertID": "LSM-45586",
+                "GeneTargets": "CNR2",
+                "concentration": "0.37uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_104024",
+                "cellline": "HELA",
+                "_row": "LINCSCP_104024"
+            },
+            {
+                "similarity": 0.7079,
+                "pValue": 5.3067e-18,
+                "nGenes": 110,
+                "compound": "AZD1152",
+                "lincsPertID": "LSM-45885",
+                "GeneTargets": "AURKB",
+                "concentration": "1.11uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_103693",
+                "cellline": "HELA",
+                "_row": "LINCSCP_103693"
+            },
+            {
+                "similarity": 0.7023,
+                "pValue": 1.2489e-17,
+                "nGenes": 110,
+                "compound": "Bicalutamide",
+                "lincsPertID": "LSM-1437",
+                "GeneTargets": "AR",
+                "concentration": "0.37uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_104090",
+                "cellline": "HELA",
+                "_row": "LINCSCP_104090"
+            },
+            {
+                "similarity": 0.7014,
+                "pValue": 1.4257e-17,
+                "nGenes": 110,
+                "compound": "BRD-K01621458",
+                "lincsPertID": "LSM-45313",
+                "GeneTargets": "NA",
+                "concentration": "3uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_49294",
+                "cellline": "PC3",
+                "_row": "LINCSCP_49294"
+            },
+            {
+                "similarity": 0.6963,
+                "pValue": 3.0598e-17,
+                "nGenes": 110,
+                "compound": "Semagacestat (LY450139)",
+                "lincsPertID": "LSM-45411",
+                "GeneTargets": "NA",
+                "concentration": "3.33uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_108990",
+                "cellline": "HELA",
+                "_row": "LINCSCP_108990"
+            },
+            {
+                "similarity": 0.695,
+                "pValue": 3.6763e-17,
+                "nGenes": 110,
+                "compound": "ALX-5407",
+                "lincsPertID": "LSM-3197",
+                "GeneTargets": "SLC6A9",
+                "concentration": "0.04uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_94893",
+                "cellline": "HA1E",
+                "_row": "LINCSCP_94893"
+            },
+            {
+                "similarity": 0.6901,
+                "pValue": 7.5188e-17,
+                "nGenes": 110,
+                "compound": "RG7090",
+                "lincsPertID": "LSM-45680",
+                "GeneTargets": "GRM5",
+                "concentration": "10uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_106965",
+                "cellline": "HELA",
+                "_row": "LINCSCP_106965"
+            },
+            {
+                "similarity": 0.6885,
+                "pValue": 9.4047e-17,
+                "nGenes": 110,
+                "compound": "Corvasal",
+                "lincsPertID": "LSM-25617",
+                "GeneTargets": "NA",
+                "concentration": "0.04uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_107216",
+                "cellline": "HELA",
+                "_row": "LINCSCP_107216"
+            }
+        ],
+        "corTablePath": "/mnt/raid/tmp/CorTable_Fri_Aug_29_12_27_20_2025_571631.xls"
+    }
+}

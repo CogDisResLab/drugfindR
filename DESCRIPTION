@@ -1,6 +1,6 @@
 Package: drugfindR
 Title: Investigate iLINCS for candidate repurposable drugs
-Version: 0.99.1242
+Version: 0.99.1243
 Authors@R: c(
     person(given = c("Ali", "Sajid"),
            family = "Imami",
@@ -61,13 +61,12 @@ Suggests:
     devtools,
     here,
     httptest2,
+    jsonlite,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
     tidyverse,
-    usethis,
-    vcr (>= 0.6.0),
-    webmockr
+    usethis
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 VignetteBuilder: knitr

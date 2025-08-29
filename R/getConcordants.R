@@ -457,7 +457,7 @@
             "time", "cellline", "similarity", "pValue"
         ))) |>
         dplyr::mutate(
-            similarity = round(.data[["similarity"]], 8L),
+            similarity = round(.data[["similarity"]], 12L),
             pValue = round(.data[["pValue"]], 20L),
             sig_direction = sigDirection,
             sig_type = sigType
