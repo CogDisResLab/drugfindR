@@ -4,7 +4,12 @@
 \alias{.processToL1000Signature}
 \title{Process differential expression data into L1000 signature format}
 \usage{
-.processToL1000Signature(filteredData, geneColumn, logfcColumn, pvalColumn)
+.processToL1000Signature(
+  filteredData,
+  geneColumn,
+  logfcColumn,
+  pvalColumn = NA
+)
 }
 \arguments{
 \item{filteredData}{A dataframe containing filtered differential expression data.}

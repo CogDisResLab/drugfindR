@@ -4,7 +4,7 @@
 \alias{.filterToL1000Genes}
 \title{Filter differential expression data to L1000 genes}
 \usage{
-.filterToL1000Genes(dge, geneColumn, logfcColumn, pvalColumn)
+.filterToL1000Genes(dge, geneColumn, logfcColumn, pvalColumn = NA)
 }
 \arguments{
 \item{dge}{A dataframe containing differential gene expression data.}
