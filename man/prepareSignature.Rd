@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepareSignature.R
 \name{prepareSignature}
 \alias{prepareSignature}
-\title{Prepare an L1000 Signature froma given differential gene expression output
+\title{Prepare an L1000 Signature from a given differential gene expression output
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}}
 \usage{
 prepareSignature(
