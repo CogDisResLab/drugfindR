@@ -337,11 +337,11 @@ calculateSingleThreshold <- function(threshold) {
 #'
 #' @keywords internal
 #'
-#' @importFrom dplyr filter
+#' @import DFplyr
+#' @importFrom dplyr filter desc
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #' @importFrom stats quantile
-#' @import DFplyr
 #'
 #'
 #' @examples
@@ -368,7 +368,7 @@ calculateSingleThreshold <- function(threshold) {
 #' both_filtered <- .applyDirectionFilter(signature, "any", thresholds)
 #' # Returns genes with |logFC| >= 1.5 (GENE1, GENE2, GENE8, GENE9, GENE10)
 #' }
-.applyDirectionFilter <- function(signature, direction, thresholds) {
+.applyDirectionFilter <- function(signature, direction = "any", thresholds) {
     downThreshold <- thresholds[["downThreshold"]]
     upThreshold <- thresholds[["upThreshold"]]
 
@@ -379,8 +379,8 @@ calculateSingleThreshold <- function(threshold) {
     } else {
         dplyr::filter(
             signature,
-            .data$Value_LogDiffExp >= !!upThreshold |
-                .data$Value_LogDiffExp <= !!downThreshold
+            .data[["Value_LogDiffExp"]] >= !!upThreshold |
+                .data[["Value_LogDiffExp"]] <= !!downThreshold
         )
     }
 }
