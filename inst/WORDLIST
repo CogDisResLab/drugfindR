@@ -1437,6 +1437,7 @@ Celecoxib
 CELF
 cellline
 CellLine
+cellLine
 CELP
 CELSR
 CEMIP
@@ -9169,6 +9170,7 @@ TARDBPP
 TargetCellLine
 TargetConcentration
 TargetGene
+targetRename
 TargetSignature
 TargetTime
 Targinine

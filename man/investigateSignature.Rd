@@ -73,18 +73,18 @@ iLINCS to find the relevant concordant (or discordant) signatures
 
 # Load and prepare the signature
 inputSignature <- read.table(system.file("extdata",
-    "dCovid_diffexp.tsv",
-    package = "drugfindR"
+  "dCovid_diffexp.tsv",
+  package = "drugfindR"
 ), header = TRUE)
 
 
 # Investigate the signature
 
 investigatedSignature <- investigateSignature(inputSignature,
-    outputLib = "CP",
-    filterThreshold = 0.5,
-    geneColumn = "hgnc_symbol",
-    logfcColumn = "logFC",
-    pvalColumn = "PValue"
+  outputLib = "CP",
+  filterThreshold = 0.5,
+  geneColumn = "hgnc_symbol",
+  logfcColumn = "logFC",
+  pvalColumn = "PValue"
 )
 }

@@ -8,8 +8,6 @@
 }
 \arguments{
 \item{response}{An httr2 response object from the iLINCS API.}
-
-\item{sigId}{A character string containing the signature ID for metadata.}
 }
 \value{
 A tibble containing signature data with standardized columns.

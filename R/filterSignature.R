@@ -316,7 +316,7 @@ calculateSingleThreshold <- function(threshold) {
 #'     \item "any": Keep both up- and down-regulated genes (logFC >= upThreshold OR logFC <= downThreshold)
 #'   }
 #' @param thresholds A named list containing:
-# `  \itemize{
+#'   \itemize{
 #'   \item{downThreshold}{Threshold for down-regulated genes}
 #'   \item{upThreshold}{Threshold for up-regulated genes}
 #' }

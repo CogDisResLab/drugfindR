@@ -287,53 +287,6 @@
     httr2::req_perform(request)
 }
 
-#' Process iLINCS API response into concordant signatures
-#'
-#' This internal function processes the response from the iLINCS API and
-#' extracts concordant signature data into a standardized format.
-#'
-#' @param response An httr2 response object from the iLINCS API.
-#' @param sigDirection Character string indicating the signature direction
-#'   ("Up", "Down", or "Any").
-#'
-#' @return A tibble containing concordant signature data with standardized
-#'   column names and rounded numerical values.
-#'
-#' @details
-#' The function:
-#' \enumerate{
-#'   \item Checks response status and handles errors
-#'   \item Extracts concordance table from JSON response
-#'   \item Selects relevant columns and standardizes names
-#'   \item Rounds similarity scores (8 decimal places) and p-values (20 decimal places)
-#'   \item Adds signature direction information
-#' }
-#'
-#' Expected columns in the response:
-#' \itemize{
-#'   \item signatureid: Unique signature identifier
-#'   \item compound/treatment: Drug or treatment name
-#'   \item concentration: Drug concentration (for CP library)
-#'   \item time: Treatment time
-#'   \item cellline: Cell line used
-#'   \item similarity: Similarity score
-#'   \item pValue: Statistical significance
-#' }
-#'
-#' @importFrom httr2 resp_status resp_body_json resp_body_string
-#' @importFrom purrr map flatten_dfr
-#' @importFrom dplyr select any_of mutate
-#' @importFrom rlang .data
-#'
-#' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' # Process a successful API response
-#' # (response would come from executing .generateIlincsRequest())
-#' concordants <- .processIlincsResponse(response, "Any")
-#' # Returns tibble with standardized concordant signature data
-#' }
 #' Handle iLINCS API response errors
 #'
 #' This internal function processes error responses from the iLINCS API
