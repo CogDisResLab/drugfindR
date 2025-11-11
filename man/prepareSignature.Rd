@@ -35,13 +35,13 @@ and transforms that into an L1000 signature for later processing.
 # Prepare an L1000 signature from a differential gene expression output
 
 inputSignature <- read.table(system.file("extdata",
-    "dCovid_diffexp.tsv",
-    package = "drugfindR"
+  "dCovid_diffexp.tsv",
+  package = "drugfindR"
 ), header = TRUE)
 
 signature <- prepareSignature(inputSignature,
-    geneColumn = "hgnc_symbol",
-    logfcColumn = "logFC", pvalColumn = "PValue"
+  geneColumn = "hgnc_symbol",
+  logfcColumn = "logFC", pvalColumn = "PValue"
 )
 
 head(signature)

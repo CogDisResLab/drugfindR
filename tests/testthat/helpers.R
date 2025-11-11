@@ -75,11 +75,75 @@ concordantsColumns <- function(library = "CP") {
 }
 
 consensusConcordantsColumns <- function(library = "CP") {
-    c(
-        "TargetSignature", "Target", "TargetCellLine",
-        "TargetTime", "TargetConcentration", "Similarity",
-        "SignatureDirection", "pValue"
+    if (library == "OE" || library == "KD") {
+        c(
+            "TargetSignature", "Target", "TargetCellLine",
+            "TargetTime", "Similarity", "SignatureDirection", "pValue"
+        )
+    } else {
+        c(
+            "TargetSignature", "Target", "TargetCellLine",
+            "TargetTime", "TargetConcentration", "Similarity",
+            "SignatureDirection", "pValue"
+        )
+    }
+}
+
+# Helper function for creating test concordants with custom parameters
+createTestConcordants <- function(library = "CP", nEntries = 10L, cellLines = c("A375", "PC3", "MCF7"), seed = NULL) {
+    if (!is.null(seed)) setTestSeed(seed)
+
+    sigType <- switch(library,
+        CP = "Chemical Perturbagen",
+        KD = "Gene Knockdown",
+        OE = "Gene Overexpression",
+        "Unknown"
     )
+
+    # Create base concordants data with more flexibility than createDummyConcordants
+    baseData <- tibble::tibble(
+        signatureid = paste0("LINCS", toupper(library), "_", seq_len(nEntries)),
+        compound = if (library == "CP") paste0("COMPOUND_", seq_len(nEntries)) else paste0("GENE_", seq_len(nEntries)),
+        treatment = if (library == "CP") paste0("COMPOUND_", seq_len(nEntries)) else paste0("GENE_", seq_len(nEntries)),
+        cellline = sample(cellLines, nEntries, replace = TRUE),
+        time = sample(c("6h", "24h", "48h"), nEntries, replace = TRUE),
+        concentration = if (library != "OE") sample(c("1uM", "10uM", "50uM"), nEntries, replace = TRUE) else NA_character_,
+        similarity = stats::runif(nEntries, min = -0.8, max = 0.8),
+        sig_direction = sample(c("Up", "Down", "Any"), nEntries, replace = TRUE),
+        pValue = 10^stats::runif(nEntries, min = -50, max = -1),
+        sig_type = rep(sigType, nEntries),
+        nGenes = rep(978L, nEntries),
+        lincsPertID = paste0("LSM-", seq_len(nEntries)),
+        GeneTargets = "NA",
+        `_row` = paste0("LINCS", toupper(library), "_", seq_len(nEntries))
+    )
+
+    if (library == "CP") {
+        baseData <- baseData %>% dplyr::select(-treatment)
+    } else if (library %in% c("KD", "OE")) {
+        baseData <- baseData %>% dplyr::select(-concentration, -compound)
+    }
+
+
+    baseData
+}
+
+# Helper function for creating paired concordants
+createPairedConcordants <- function(library = "CP", seed = NULL) {
+    if (!is.null(seed)) setTestSeed(seed)
+
+    upConcordants <- createTestConcordants(library, nEntries = 5L, seed = seed) %>%
+        dplyr::mutate(
+            sig_direction = "Up"
+        )
+
+    downConcordants <- createTestConcordants(library, nEntries = 5L, seed = seed + 1L) %>%
+        dplyr::mutate(
+            sig_direction = "Down",
+            signatureid = paste0("LINCS", toupper(library), "_", seq_len(5L) + 5L),
+        )
+
+    list(upConcordants, downConcordants)
 }
 
 # ==============================================================================

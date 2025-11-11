@@ -53,7 +53,7 @@ investigateTarget <- function(
     outputCellLines = NULL) {
     stopIfInvalidLibraries(c(inputLib, outputLib))
 
-    inputMetadata <- loadMetadata(inputLib)
+    inputMetadata <- .loadMetadata(inputLib)
 
     if (!is.null(inputCellLines)) {
         filteredSignatureIds <- inputMetadata %>%

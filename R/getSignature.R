@@ -353,7 +353,6 @@
 #' response status from the iLINCS API.
 #'
 #' @param response An httr2 response object from the iLINCS API.
-#' @param sigId A character string containing the signature ID for metadata.
 #'
 #' @return A tibble containing signature data with standardized columns.
 #'

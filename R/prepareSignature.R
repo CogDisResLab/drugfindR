@@ -128,7 +128,7 @@
 #' @importFrom rlang .data
 .mapToL1000WithPvalues <- function(filteredData, geneColumn, logfcColumn, pvalColumn) {
     l1000 %>%
-        dplyr::inner_join(filteredData, by = c(SYMBOL = geneColumn)) %>%
+        dplyr::inner_join(filteredData, by = c(SYMBOL = geneColumn), relationship = "many-to-many") %>%
         dplyr::rename(
             ID_geneid = !!"ENTREZID",
             Name_GeneSymbol = !!"L1000",
@@ -163,7 +163,7 @@
 #' @importFrom rlang .data
 .mapToL1000WithoutPvalues <- function(filteredData, geneColumn, logfcColumn) {
     l1000 %>%
-        dplyr::inner_join(filteredData, by = c(SYMBOL = geneColumn)) %>%
+        dplyr::inner_join(filteredData, by = c(SYMBOL = geneColumn), relationship = "many-to-many") %>%
         dplyr::rename(
             ID_geneid = !!"ENTREZID",
             Name_GeneSymbol = !!"L1000",
