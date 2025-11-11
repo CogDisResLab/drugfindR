@@ -168,7 +168,7 @@ test_that(".returnUserAgent returns valid user agent string", {
 
 # Tests for .stopIfInvalidColNames function
 test_that(".stopIfInvalidColNames works correctly with valid signature", {
-    validSig <- getTestFixture("signature", seed = .testSeed)
+    validSig <- getTestFixture("prepared_signature", seed = .testSeed)
 
     # Should not throw error for valid signature
     expect_silent(.stopIfInvalidColNames(validSig))
@@ -281,7 +281,7 @@ test_that(".stopIfInvalidColNames error message includes all expected informatio
 
 # Tests for .stopIfContainsMissingValues function
 test_that(".stopIfContainsMissingValues works correctly with valid signature", {
-    validSig <- getTestFixture("signature", seed = .testSeed)
+    validSig <- getTestFixture("prepared_signature", seed = .testSeed)
 
     # Should not throw error for signature without missing values
     expect_silent(.stopIfContainsMissingValues(validSig))
@@ -366,7 +366,7 @@ test_that(".stopIfContainsMissingValues handles mixed data types with NA", {
 
 # Tests for stopIfInvalidSignature function (main validation function)
 test_that("stopIfInvalidSignature works correctly with valid signature", {
-    validSig <- getTestFixture("signature", seed = .testSeed)
+    validSig <- getTestFixture("prepared_signature", seed = .testSeed)
 
     # Should not throw error for completely valid signature
     expect_silent(stopIfInvalidSignature(validSig))
@@ -447,7 +447,7 @@ test_that("stopIfInvalidSignature handles edge cases", {
 # Integration tests for signature validation workflow
 test_that("signature validation functions work together correctly", {
     # Test the complete validation workflow
-    validSig <- getTestFixture("signature", seed = .testSeed)
+    validSig <- getTestFixture("prepared_signature", seed = .testSeed)
 
     # Each component should work individually
     expect_silent(.stopIfInvalidColNames(validSig))
