@@ -80,14 +80,14 @@ filteredProportion <- filterSignature(kdSignature, prop = 0.1)
 
 # Example 4: Filter only up-regulated genes by threshold
 upRegulated <- filterSignature(kdSignature,
-  direction = "up",
-  threshold = 0.5
+    direction = "up",
+    threshold = 0.5
 )
 
 # Example 5: Filter only down-regulated genes by threshold
 downRegulated <- filterSignature(kdSignature,
-  direction = "down",
-  threshold = 0.5
+    direction = "down",
+    threshold = 0.5
 )
 
 # Example 6: Filter top 5\% most extreme genes in either direction
@@ -96,8 +96,8 @@ topExtreme <- filterSignature(kdSignature, prop = 0.05)
 # Example 7: Filter only up-regulated genes using proportion
 # Gets top 20\% most up-regulated genes
 topUpregulated <- filterSignature(kdSignature,
-  direction = "up",
-  prop = 0.2
+    direction = "up",
+    prop = 0.2
 )
 
 # Example 8: Working with different data frame types
@@ -123,8 +123,8 @@ cat("Liberal:", nrow(liberal), "genes\n")
 # Example 10: Direction-specific proportion filtering
 # Get top 15\% down-regulated genes only
 topDownregulated <- filterSignature(kdSignature,
-  direction = "down",
-  prop = 0.15
+    direction = "down",
+    prop = 0.15
 )
 }
 \seealso{

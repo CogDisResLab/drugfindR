@@ -68,48 +68,6 @@
     }
 }
 
-#' Filter differential expression data to L1000 genes
-#'
-#' This internal function filters the input differential expression data to include
-#' only genes present in the L1000 gene set.
-#'
-#' @param dge A dataframe containing differential gene expression data.
-#' @param geneColumn Character string specifying the column name containing gene symbols.
-#' @param logfcColumn Character string specifying the column name containing log fold-change values.
-#' @param pvalColumn Character string specifying the column name containing p-values, or NA.
-#'
-#' @return A filtered dataframe containing only L1000 genes with the specified columns.
-#'
-#' @details
-#' This function:
-#' \enumerate{
-#'   \item Filters the input data to genes present in the L1000 gene set
-#'   \item Selects only the required columns (gene, logFC, and optionally p-value)
-#'   \item Returns the filtered dataset for further processing
-#' }
-#'
-#' @keywords internal
-#'
-#' @importFrom dplyr filter select any_of
-#' @importFrom rlang .data
-#'
-#' @examples
-#' \dontrun{
-#' data <- data.frame(Symbol = c("TP53", "MYC", "INVALID"), logFC = c(1.5, -2.1, 0.5))
-#' filtered <- .filterToL1000Genes(data, "Symbol", "logFC", NA)
-#' }
-.filterToL1000Genes <- function(dge, geneColumn, logfcColumn, pvalColumn = NA) {
-    if (!is.na(pvalColumn)) {
-        dge %>%
-            dplyr::filter(.data[[geneColumn]] %in% l1000[["SYMBOL"]]) %>%
-            dplyr::select(dplyr::any_of(c(geneColumn, logfcColumn, pvalColumn)))
-    } else {
-        dge %>%
-            dplyr::filter(.data[[geneColumn]] %in% l1000[["SYMBOL"]]) %>%
-            dplyr::select(dplyr::any_of(c(geneColumn, logfcColumn)))
-    }
-}
-
 #' Map filtered data to L1000 format with p-values
 #'
 #' This internal function maps the filtered differential expression data to the
@@ -127,22 +85,28 @@
 #' @importFrom dplyr inner_join rename mutate select any_of
 #' @importFrom rlang .data
 .mapToL1000WithPvalues <- function(filteredData, geneColumn, logfcColumn, pvalColumn) {
-    l1000 %>%
-        dplyr::inner_join(filteredData, by = c(SYMBOL = geneColumn), relationship = "many-to-many") %>%
+    l1000 |>
+        dplyr::inner_join(filteredData,
+            by = c(SYMBOL = geneColumn), relationship = "many-to-many"
+        ) |>
+        # NOTE: For the renaming, we are using an in-place
+        # variable by unquoting a literal string.
+        # This avoids the "No global item" note
+        # in `R CMD CHECK`.
         dplyr::rename(
             ID_geneid = !!"ENTREZID",
             Name_GeneSymbol = !!"L1000",
             Value_LogDiffExp = !!logfcColumn,
             Significance_pvalue = !!pvalColumn
-        ) %>%
-        dplyr::mutate(signatureID = "InputSig") %>%
+        ) |>
+        dplyr::mutate(signatureID = "InputSig") |>
         dplyr::select(dplyr::any_of(c(
             "signatureID",
             "ID_geneid",
             "Name_GeneSymbol",
             "Value_LogDiffExp",
             "Significance_pvalue"
-        ))) %>%
+        ))) |>
         unique()
 }
 
@@ -162,21 +126,27 @@
 #' @importFrom dplyr inner_join rename mutate select any_of
 #' @importFrom rlang .data
 .mapToL1000WithoutPvalues <- function(filteredData, geneColumn, logfcColumn) {
-    l1000 %>%
-        dplyr::inner_join(filteredData, by = c(SYMBOL = geneColumn), relationship = "many-to-many") %>%
+    l1000 |>
+        dplyr::inner_join(filteredData,
+            by = c(SYMBOL = geneColumn), relationship = "many-to-many"
+        ) |>
+        # NOTE: For the renaming, we are using an in-place
+        # variable by unquoting a literal string.
+        # This avoids the "No global item" note
+        # in `R CMD CHECK`.
         dplyr::rename(
             ID_geneid = !!"ENTREZID",
             Name_GeneSymbol = !!"L1000",
             Value_LogDiffExp = !!logfcColumn
-        ) %>%
-        dplyr::mutate(signatureID = "InputSig") %>%
+        ) |>
+        dplyr::mutate(signatureID = "InputSig") |>
         dplyr::select(dplyr::any_of(c(
             "signatureID",
             "ID_geneid",
             "Name_GeneSymbol",
             "Value_LogDiffExp",
             "Significance_pvalue"
-        ))) %>%
+        ))) |>
         unique()
 }
 
@@ -228,7 +198,6 @@
 #'
 #' @importFrom dplyr filter select any_of inner_join rename mutate
 #' @importFrom rlang .data
-#' @importFrom magrittr %>%
 #'
 #' @examples
 #' # Prepare an L1000 signature from a differential gene expression output
@@ -253,6 +222,5 @@ prepareSignature <- function(
     .validatePrepareSignatureInput(dge, geneColumn, logfcColumn, pvalColumn)
 
     # Filter data to L1000 genes and process into signature format
-    .filterToL1000Genes(dge, geneColumn, logfcColumn, pvalColumn) %>%
-        .processToL1000Signature(geneColumn, logfcColumn, pvalColumn)
+    .processToL1000Signature(dge, geneColumn, logfcColumn, pvalColumn)
 }

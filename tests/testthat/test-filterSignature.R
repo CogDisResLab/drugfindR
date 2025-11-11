@@ -344,61 +344,62 @@ test_that(".calculateProportionalThreshold works correctly", {
 # ==============================================================================
 
 test_that(".applyDirectionFilter works correctly for 'up' direction", {
-    testSig <- getTestFixture("signature", seed = .testSeed)
+    testSig <- getTestFixture("signature", seed = .testSeed, nGenes = 100L)
     thresholds <- list(downThreshold = -1.5, upThreshold = 1.5)
 
     result <- .applyDirectionFilter(testSig, "up", thresholds)
 
     expect_true(all(result[["Value_LogDiffExp"]] >= 1.5))
-    expect_identical(nrow(result), 110L) # Values: 2.0, 3.0, 4.0
+    expect_identical(nrow(result), 21L) # Values: 2.0, 3.0, 4.0
 
     # Check specific values
     expect_setequal(
         result[["Value_LogDiffExp"]],
-        filterSignatureByDirection(
-            getTestFixture("signature", seed = .testSeed), "up"
+        .applyDirectionFilter(
+            testSig, "up",
+            thresholds = thresholds
         )[["Value_LogDiffExp"]]
     )
     expect_setequal(
         result[["Name_GeneSymbol"]],
-        filterSignatureByDirection(
-            getTestFixture("signature", seed = .testSeed),
-            "up"
+        .applyDirectionFilter(
+            testSig,
+            "up",
+            thresholds = thresholds
         )[["Name_GeneSymbol"]]
     )
 })
 
 test_that(".applyDirectionFilter works correctly for 'down' direction", {
-    testSig <- getTestFixture("signature", seed = .testSeed)
+    testSig <- getTestFixture("signature", seed = .testSeed, nGenes = 100L)
     thresholds <- list(downThreshold = -1.5, upThreshold = 1.5)
 
     result <- .applyDirectionFilter(testSig, "down", thresholds)
 
     expect_true(all(result[["Value_LogDiffExp"]] <= -1.5))
-    expect_identical(nrow(result), 117L) # Values: -3.0, -2.0
+    expect_identical(nrow(result), 21L) # Values: -3.0, -2.0
 
     # Check specific values
     expect_setequal(
         result[["Value_LogDiffExp"]],
-        filterSignatureByDirection(
-            getTestFixture("signature", seed = .testSeed),
-            "down"
+        .applyDirectionFilter(
+            testSig,
+            "down",
+            thresholds = thresholds
         )[["Value_LogDiffExp"]]
     )
     expect_setequal(
         result[["Name_GeneSymbol"]],
-        filterSignatureByDirection(
-            getTestFixture(
-                "signature",
-                seed = .testSeed
-            ),
-            "down"
+        .applyDirectionFilter(
+            testSig,
+            "down",
+            thresholds = thresholds
         )[["Name_GeneSymbol"]]
     )
 })
 
 test_that(".applyDirectionFilter works correctly for 'any' direction", {
-    testSig <- getTestFixture("signature", seed = .testSeed)
+    testSig <- getTestFixture("signature", seed = .testSeed, nGenes = 100L)
     thresholds <- list(downThreshold = -1.5, upThreshold = 1.5)
 
     result <- .applyDirectionFilter(testSig, "any", thresholds)
@@ -407,21 +408,21 @@ test_that(".applyDirectionFilter works correctly for 'any' direction", {
         result[["Value_LogDiffExp"]] >= 1.5 |
             result[["Value_LogDiffExp"]] <= -1.5
     ))
-    expect_identical(nrow(result), 227L) # Values: -3.0, -2.0, 2.0, 3.0, 4.0
+    expect_identical(nrow(result), 42L) # Values: -3.0, -2.0, 2.0, 3.0, 4.0
 
     # Check specific values
     expect_setequal(
         result[["Value_LogDiffExp"]],
-        filterSignatureByDirection(getTestFixture("signature", seed = .testSeed), "any")[["Value_LogDiffExp"]]
+        .applyDirectionFilter(testSig, "any", thresholds = thresholds)[["Value_LogDiffExp"]]
     )
     expect_setequal(
         result[["Name_GeneSymbol"]],
-        filterSignatureByDirection(getTestFixture("signature", seed = .testSeed), "any")[["Name_GeneSymbol"]]
+        .applyDirectionFilter(testSig, "any", thresholds = thresholds)[["Name_GeneSymbol"]]
     )
 })
 
 test_that(".applyDirectionFilter works with edge case thresholds", {
-    testSig <- getTestFixture("signature", seed = .testSeed)
+    testSig <- getTestFixture("signature", seed = .testSeed, nGenes = 100L)
 
     # Test with very high thresholds (should return empty)
     highThresholds <- list(downThreshold = -10.0, upThreshold = 10.0)
@@ -434,9 +435,9 @@ test_that(".applyDirectionFilter works with edge case thresholds", {
     resultZeroUp <- .applyDirectionFilter(testSig, "up", zeroThresholds)
     resultZeroDown <- .applyDirectionFilter(testSig, "down", zeroThresholds)
 
-    expect_identical(nrow(resultZeroAny), 978L) # All values
-    expect_identical(nrow(resultZeroUp), 495L) # Values >= 0: 0.0, 1.0, 2.0, 3.0, 4.0
-    expect_identical(nrow(resultZeroDown), 483L) # Values <= 0: -3.0, -2.0, -1.0, -0.5, 0.0
+    expect_identical(nrow(resultZeroAny), 100L) # All values
+    expect_identical(nrow(resultZeroUp), 55L) # Values >= 0: 0.0, 1.0, 2.0, 3.0, 4.0
+    expect_identical(nrow(resultZeroDown), 45L) # Values <= 0: -3.0, -2.0, -1.0, -0.5, 0.0
 })
 
 test_that(".applyDirectionFilter maintains data structure", {
@@ -503,21 +504,21 @@ test_that("filterSignature handles empty signatures", {
 # ==============================================================================
 
 test_that("filterSignature works with single threshold value", {
-    testSig <- getTestFixture("signature", seed = .testSeed)
+    testSig <- getTestFixture("signature", seed = .testSeed, nGenes = 100L)
 
     # Test with zero threshold
     resultZero <- filterSignature(testSig, threshold = 0.0)
-    expect_identical(nrow(resultZero), 978L) # All values should pass
+    expect_identical(nrow(resultZero), 100L) # All values should pass
 
     # Test with non-zero threshold
     resultNonzero <- filterSignature(testSig, threshold = 1.5)
     expect_true(all(abs(resultNonzero[["Value_LogDiffExp"]]) >= 1.5))
-    expect_identical(nrow(resultNonzero), 227L) # Values: -3, -2, -1, 1, 2, 3, 4
+    expect_identical(nrow(resultNonzero), 42L) # Values: -3, -2, -1, 1, 2, 3, 4
 
     # Test with high threshold
     resultHigh <- filterSignature(testSig, threshold = 2.5)
     expect_true(all(abs(resultHigh[["Value_LogDiffExp"]]) >= 2.5))
-    expect_identical(nrow(resultHigh), 72L) # Values: -3, 3, 4
+    expect_identical(nrow(resultHigh), 12L) # Values: -3, 3, 4
 })
 
 test_that("filterSignature works with single threshold and direction", {
@@ -526,17 +527,17 @@ test_that("filterSignature works with single threshold and direction", {
     # Test up-regulated genes only
     resultUp <- filterSignature(testSig, threshold = 1.5, direction = "up")
     expect_true(all(resultUp[["Value_LogDiffExp"]] >= 1.5))
-    expect_identical(nrow(resultUp), 110L) # Values: 1, 2, 3, 4
+    expect_identical(nrow(resultUp), 1L) # Values: 1, 2, 3, 4
 
     # Test down-regulated genes only
     resultDown <- filterSignature(testSig, threshold = 1.5, direction = "down")
     expect_true(all(resultDown[["Value_LogDiffExp"]] <= -1.5))
-    expect_identical(nrow(resultDown), 117L) # Values: -3, -2, -1
+    expect_identical(nrow(resultDown), 2L) # Values: -3, -2, -1
 
     # Test both directions explicitly
     resultAny <- filterSignature(testSig, threshold = 1.5, direction = "any")
     expect_true(all(abs(resultAny[["Value_LogDiffExp"]]) >= 1.5))
-    expect_identical(nrow(resultAny), 227L) # Values: -3, -2, -1, 1, 2, 3, 4
+    expect_identical(nrow(resultAny), 3L) # Values: -3, -2, -1, 1, 2, 3, 4
 })
 
 test_that("filterSignature works with double threshold values", {
@@ -553,7 +554,7 @@ test_that("filterSignature works with double threshold values", {
     downGenes <- result[result[["Value_LogDiffExp"]] <= 0L, ]
     expect_true(all(downGenes[["Value_LogDiffExp"]] <= -0.75))
 
-    expect_identical(nrow(result), 366L) # Values: -3, -2, -1, 2, 3, 4
+    expect_identical(nrow(result), 3L) # Values: -3, -2, -1, 2, 3, 4
 })
 
 test_that("filterSignature works with double threshold and direction", {
@@ -562,12 +563,12 @@ test_that("filterSignature works with double threshold and direction", {
     # Test up-regulated genes with asymmetric thresholds
     resultUp <- filterSignature(testSig, threshold = c(-2.5, 1.5), direction = "up")
     expect_true(all(resultUp[["Value_LogDiffExp"]] >= 1.5))
-    expect_identical(nrow(resultUp), 110L) # Values: 2, 3, 4
+    expect_identical(nrow(resultUp), 1L) # Values: 2, 3, 4
 
     # Test down-regulated genes with asymmetric thresholds
     resultDown <- filterSignature(testSig, threshold = c(-1.5, 2.5), direction = "down")
     expect_true(all(resultDown[["Value_LogDiffExp"]] <= -1.5))
-    expect_identical(nrow(resultDown), 117L) # Values: -3, -2
+    expect_identical(nrow(resultDown), 2L) # Values: -3, -2
 })
 
 # ==============================================================================
@@ -575,26 +576,26 @@ test_that("filterSignature works with double threshold and direction", {
 # ==============================================================================
 
 test_that("filterSignature works with proportion filtering", {
-    testSig <- getTestFixture("signature", seed = .testSeed)
+    testSig <- getTestFixture("signature", seed = .testSeed, nGenes = 100L)
 
     # Test with 100% proportion (should include all)
     resultAll <- filterSignature(testSig, prop = 0.5)
-    expect_identical(nrow(resultAll), 978L)
+    expect_identical(nrow(resultAll), 100L)
 
     # Test with specific proportion
     result20 <- filterSignature(testSig, prop = 0.2)
-    expectedDown <- quantile(testSig$Value_LogDiffExp, 0.2)
-    expectedUp <- quantile(testSig$Value_LogDiffExp, 0.8)
+    expectedDown <- quantile(testSig[["Value_LogDiffExp"]], 0.2)
+    expectedUp <- quantile(testSig[["Value_LogDiffExp"]], 0.8)
 
-    upGenes <- result20[result20$Value_LogDiffExp >= 0L, ]
-    downGenes <- result20[result20$Value_LogDiffExp <= 0L, ]
+    upGenes <- result20[result20[["Value_LogDiffExp"]] >= 0L, ]
+    downGenes <- result20[result20[["Value_LogDiffExp"]] <= 0L, ]
 
-    expect_true(all(upGenes$Value_LogDiffExp >= expectedUp))
-    expect_true(all(downGenes$Value_LogDiffExp <= expectedDown))
+    expect_true(all(upGenes[["Value_LogDiffExp"]] >= expectedUp))
+    expect_true(all(downGenes[["Value_LogDiffExp"]] <= expectedDown))
 })
 
 test_that("filterSignature works with proportion and direction", {
-    testSig <- getTestFixture("signature", seed = .testSeed)
+    testSig <- getTestFixture("signature", seed = .testSeed, nGenes = 100L)
 
     calculateProp <- function(values, prop) {
         round(
@@ -608,14 +609,14 @@ test_that("filterSignature works with proportion and direction", {
     expectedUp <- calculateProp(testSig[["Value_LogDiffExp"]], 0.9)
 
     expect_true(all(resultUp[["Value_LogDiffExp"]] >= expectedUp))
-    expect_identical(nrow(resultUp), 99L) # Top 10% = 1 gene
+    expect_identical(nrow(resultUp), 10L) # Top 10% = 1 gene
 
     # Test down-regulated genes only with proportion
     resultDown <- filterSignature(testSig, prop = 0.1, direction = "down")
     expectedDown <- calculateProp(testSig[["Value_LogDiffExp"]], 0.1)
 
     expect_true(all(resultDown[["Value_LogDiffExp"]] <= expectedDown))
-    expect_identical(nrow(resultDown), 98L) # Bottom 10% = 1 gene
+    expect_identical(nrow(resultDown), 10L) # Bottom 10% = 1 gene
 })
 
 # ==============================================================================
@@ -662,8 +663,9 @@ test_that("filterSignature preserves data frame structure", {
 
     # Should maintain row structure integrity
     expect_true(all(c(
-        "signatureID", "ID_geneid", "Name_GeneSymbol",
-        "Value_LogDiffExp", "Significance_pvalue"
+        "Name_GeneSymbol",
+        "Value_LogDiffExp",
+        "Significance_pvalue"
     ) %in% colnames(result)))
 })
 

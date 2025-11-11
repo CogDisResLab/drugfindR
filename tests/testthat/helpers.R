@@ -12,9 +12,13 @@ setTestSeed <- function(seed = .testSeed) { # nocov start
 } # nocov end
 
 ## Minimal DGE generator used by prepareSignature tests -----------------------
-createDummyDge <- function(nGenes = 6L, seed = NULL) {
+createDummyDge <- function(nGenes = NULL, seed = NULL) {
     if (!is.null(seed)) setTestSeed(seed)
-    nGenes <- max(5L, min(10L, as.integer(nGenes)))
+    nGenes <- if (!is.null(nGenes)) {
+        nGenes
+    } else {
+        sample(5L:10L, size = 1L)
+    }
 
     # Prefer sampling from package dataset `l1000` to satisfy membership checks
     pool <- tryCatch(
@@ -31,7 +35,7 @@ createDummyDge <- function(nGenes = 6L, seed = NULL) {
 
     tibble::tibble(
         Name_GeneSymbol = genes,
-        Value_LogDiffExp = stats::rnorm(nGenes, mean = 0, sd = 1.5),
+        Value_LogDiffExp = stats::rnorm(nGenes, mean = 0L, sd = 1.5),
         Significance_pvalue = stats::runif(nGenes, min = 1e-4, max = 5e-2)
     )
 }
@@ -40,14 +44,37 @@ createDummyDge <- function(nGenes = 6L, seed = NULL) {
 getTestFixture <- function(type = c("signature"), seed = NULL, ...) {
     type <- match.arg(type)
     switch(type,
-        signature = createDummyDge(seed = seed),
-        stop("Unsupported fixture type: ", type)
+        signature = createDummyDge(seed = seed, ...),
+        stop("Unsupported fixture type: ", type, call. = FALSE)
     )
 }
 
 ################################################################################
 # (Optional) Small edge-case helpers retained (lightweight) --------------------
-createZeroSignature <- function() tibble::tibble(Name_GeneSymbol = "GENE_ZERO", Value_LogDiffExp = 0)
-createSmallPositiveSignature <- function() tibble::tibble(Name_GeneSymbol = c("GENE_A", "GENE_B"), Value_LogDiffExp = c(0.01, 0.02))
-createSmallNegativeSignature <- function() tibble::tibble(Name_GeneSymbol = c("GENE_A", "GENE_B"), Value_LogDiffExp = c(-0.01, -0.02))
+createZeroSignature <- function() {
+    tibble::tibble(
+        Name_GeneSymbol = "GENE_ZERO",
+        Value_LogDiffExp = 0L
+    )
+}
+createSmallPositiveSignature <- function() {
+    tibble::tibble(
+        Name_GeneSymbol = c("GENE_A", "GENE_B"),
+        Value_LogDiffExp = c(0.01, 0.02)
+    )
+}
+createSmallNegativeSignature <- function() {
+    tibble::tibble(
+        Name_GeneSymbol = c("GENE_A", "GENE_B"),
+        Value_LogDiffExp = c(-0.01, -0.02)
+    )
+}
+
+createEmptySignature <- function() {
+    tibble::tibble(
+        Name_GeneSymbol = character(),
+        Value_LogDiffExp = double(),
+        Significance_pvalue = double()
+    )
+}
 ################################################################################
