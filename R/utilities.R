@@ -9,8 +9,9 @@
 targetRename <- function(inputNames) {
     c(
         "TargetSignature", "Target", "TargetCellLine",
-        "TargetTime", "TargetConcentration", "Similarity",
-        "SignatureDirection", "pValue"
+        "TargetTime", "TargetConcentration", "InputSigDirection",
+        "SignatureType", "Similarity",
+        "pValue"
     )
 }
 

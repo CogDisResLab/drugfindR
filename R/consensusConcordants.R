@@ -50,7 +50,7 @@ NULL
         stop("cutoff must be a single numeric value", call. = FALSE)
     }
 
-    if (cutoff < 0 || cutoff > 1) {
+    if (cutoff < 0L || cutoff > 1L) {
         stop("cutoff must be between 0 and 1", call. = FALSE)
     }
 
@@ -68,7 +68,7 @@ NULL
         }
 
         # Check for essential columns
-        requiredCols <- c("similarity")
+        requiredCols <- c("treatment", "similarity")
         missingCols <- setdiff(requiredCols, names(df))
         if (length(missingCols) > 0L) {
             stop("Missing required columns in dataframe ", i, ": ",
@@ -146,8 +146,7 @@ NULL
         return(concordants)
     }
 
-    concordants |>
-        dplyr::filter(.data[["cellline"]] %in% cellLine)
+    dplyr::filter(concordants, .data[["cellline"]] %in% cellLine)
 }
 
 #' Apply similarity cutoff filter to concordants data
@@ -180,8 +179,7 @@ NULL
 #' # Returns entries with |similarity| >= 0.3
 #' }
 .applySimilarityCutoff <- function(concordants, cutoff) {
-    concordants |>
-        dplyr::filter(abs(.data[["similarity"]]) >= cutoff)
+    dplyr::filter(concordants, abs(.data[["similarity"]]) >= cutoff)
 }
 
 #' Group concordants by target and select maximum similarity entries
@@ -218,12 +216,13 @@ NULL
 #' # Returns entries with max |similarity| for each compound
 #' }
 .groupByTargetAndSelectMax <- function(concordants) {
-    if (nrow(concordants) == 0) {
+    if (nrow(concordants) == 0L) {
         return(concordants)
     }
+
     concordants |>
         dplyr::group_by(
-            dplyr::across(dplyr::any_of(c("treatment", "compound")))
+            dplyr::across(dplyr::any_of(c("treatment")))
         ) |>
         dplyr::filter(
             abs(.data[["similarity"]]) == max(abs(.data[["similarity"]]))
@@ -269,8 +268,9 @@ NULL
     concordants |>
         dplyr::select(
             dplyr::any_of(c(
-                "signatureid", "treatment", "compound", "cellline", "time",
-                "concentration", "similarity", "sig_direction", "pValue"
+                "signatureid", "treatment", "cellline", "time",
+                "concentration", "sig_direction", "sig_type",
+                "similarity", "pValue"
             ))
         ) |>
         dplyr::arrange(dplyr::desc(abs(.data[["similarity"]])))
@@ -308,8 +308,7 @@ NULL
 #' renamed <- .applyTargetRenaming(testData)
 #' }
 .applyTargetRenaming <- function(concordants) {
-    concordants |>
-        dplyr::rename_with(targetRename)
+    dplyr::rename_with(concordants, targetRename)
 }
 
 #' Process concordants data through the complete consensus pipeline
