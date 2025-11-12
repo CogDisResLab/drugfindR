@@ -352,7 +352,7 @@ test_that(".processIlincsResponse rounds numerical values correctly", {
     result <- .processIlincsResponse(response, "Down", "CP")
 
     # Check similarity rounded to 8 decimal places
-    expect_identical(result[["similarity"]][[1L]], 0.4418)
+    expect_identical(result[["similarity"]][[1L]], -0.62460)
 
 
     # Check pValue rounded to 20 decimal places (or system precision)

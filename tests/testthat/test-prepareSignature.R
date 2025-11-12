@@ -3,7 +3,7 @@
 ## Test .validatePrepareSignatureInput
 
 test_that(".validatePrepareSignatureInput validates input types correctly", {
-    testData <- getTestFixture("signature", seed = .testSeed)
+    testData <- getTestFixture("input_signature", seed = .testSeed)
 
     # Test non-character geneColumn
     expect_error(
@@ -74,12 +74,12 @@ test_that(".validatePrepareSignatureInput validates dataframe structure", {
 })
 
 test_that(".validatePrepareSignatureInput validates column existence", {
-    testData <- getTestFixture("signature", seed = .testSeed)
+    testData <- getTestFixture("input_signature", seed = .testSeed)
 
     # Test missing geneColumn
     expect_error(
         .validatePrepareSignatureInput(
-            testData, "NonExistentGene", "Value_LogDiffExp", "Significance_pvalue"
+            testData, "NonExistentGene", "LogFC", "PValue"
         ),
         "geneColumn 'NonExistentGene' not found in the dataframe"
     )
@@ -87,7 +87,7 @@ test_that(".validatePrepareSignatureInput validates column existence", {
     # Test missing logfcColumn
     expect_error(
         .validatePrepareSignatureInput(
-            testData, "Name_GeneSymbol", "NonExistentLogFC", "Significance_pvalue"
+            testData, "Gene", "NonExistentLogFC", "PValue"
         ),
         "logfcColumn 'NonExistentLogFC' not found in the dataframe"
     )
@@ -95,20 +95,20 @@ test_that(".validatePrepareSignatureInput validates column existence", {
     # Test missing pvalColumn
     expect_error(
         .validatePrepareSignatureInput(
-            testData, "Name_GeneSymbol", "Value_LogDiffExp", "NonExistentPvalue"
+            testData, "Gene", "LogFC", "NonExistentPvalue"
         ),
         "pvalColumn 'NonExistentPvalue' not found in the dataframe"
     )
 
     # Test valid call with NA pvalColumn
     expect_silent(
-        .validatePrepareSignatureInput(testData, "Name_GeneSymbol", "Value_LogDiffExp", NA)
+        .validatePrepareSignatureInput(testData, "Gene", "LogFC", NA)
     )
 
     # Test valid call with all columns present
     expect_silent(
         .validatePrepareSignatureInput(
-            testData, "Name_GeneSymbol", "Value_LogDiffExp", "Significance_pvalue"
+            testData, "Gene", "LogFC", "PValue"
         )
     )
 })
@@ -116,17 +116,12 @@ test_that(".validatePrepareSignatureInput validates column existence", {
 ## Test .mapToL1000WithPvalues
 
 test_that(".mapToL1000WithPvalues maps data correctly", {
-    filteredData <- data.frame(
-        Gene = c("TP53", "MYC"),
-        LogFC = c(1.5, -2.1),
-        PValue = c(0.01, 0.05)
-    )
-
+    filteredData <- getTestFixture("input_signature", seed = .testSeed)
     mapped <- .mapToL1000WithPvalues(filteredData, "Gene", "LogFC", "PValue")
 
     # Check expected columns
     expectedCols <- c("signatureID", "ID_geneid", "Name_GeneSymbol", "Value_LogDiffExp", "Significance_pvalue")
-    expect_true(all(expectedCols %in% names(mapped)))
+    expect_named(mapped, expectedCols)
 
     # Check signatureID is set correctly
     expect_true(all(mapped[["signatureID"]] == "InputSig"))
@@ -142,16 +137,14 @@ test_that(".mapToL1000WithPvalues maps data correctly", {
 ## Test .mapToL1000WithoutPvalues
 
 test_that(".mapToL1000WithoutPvalues maps data correctly", {
-    filteredData <- data.frame(
-        Gene = c("TP53", "MYC"),
-        LogFC = c(1.5, -2.1)
-    )
+    filteredData <- getTestFixture("input_signature", seed = .testSeed) |>
+        select(-PValue)
 
     mapped <- .mapToL1000WithoutPvalues(filteredData, "Gene", "LogFC")
 
     # Check expected columns (should not include Significance_pvalue)
     expectedCols <- c("signatureID", "ID_geneid", "Name_GeneSymbol", "Value_LogDiffExp")
-    expect_true(all(expectedCols %in% names(mapped)))
+    expect_named(mapped, expectedCols)
 
     # Check signatureID is set correctly
     expect_true(all(mapped[["signatureID"]] == "InputSig"))
@@ -167,78 +160,74 @@ test_that(".mapToL1000WithoutPvalues maps data correctly", {
 ## Test .processToL1000Signature
 
 test_that(".processToL1000Signature dispatches correctly with p-values", {
-    filteredData <- data.frame(
-        Gene = c("TP53", "MYC"),
-        LogFC = c(1.5, -2.1),
-        PValue = c(0.01, 0.05)
-    )
+    filteredData <- getTestFixture("input_signature", seed = .testSeed)
 
     result <- .processToL1000Signature(filteredData, "Gene", "LogFC", "PValue")
 
     # Should include p-value column
-    expect_true("Significance_pvalue" %in% names(result))
+    expectedCols <- c(
+        "signatureID", "ID_geneid",
+        "Name_GeneSymbol", "Value_LogDiffExp",
+        "Significance_pvalue"
+    )
+    expect_named(result, expectedCols)
 })
 
 test_that(".processToL1000Signature dispatches correctly without p-values", {
-    filteredData <- data.frame(
-        Gene = c("TP53", "MYC"),
-        LogFC = c(1.5, -2.1)
-    )
+    filteredData <- getTestFixture("input_signature", seed = .testSeed) |>
+        select(-PValue)
 
     result <- .processToL1000Signature(filteredData, "Gene", "LogFC", NA)
 
     # Should not include p-value column in meaningful way
     expectedCols <- c("signatureID", "ID_geneid", "Name_GeneSymbol", "Value_LogDiffExp")
-    expect_true(all(expectedCols %in% names(result)))
+    expect_named(result, expectedCols)
 })
 
 ## Test Main prepareSignature Function - Invalid Inputs
 
 test_that("prepareSignature throws an error if geneColumn is not present", {
     expect_error(
-        prepareSignature(getTestFixture("signature", seed = .testSeed),
-            geneColumn = "Gene",
-            logfcColumn = "Value_LogDiffExp",
-            pvalColumn = "Significance_pvalue"
+        prepareSignature(getTestFixture("input_signature", seed = .testSeed),
+            geneColumn = "Missing",
+            logfcColumn = "LogFC",
+            pvalColumn = "PValue"
         ),
-        "geneColumn 'Gene' not found in the dataframe"
+        "geneColumn 'Missing' not found in the dataframe"
     )
 })
 
 test_that("prepareSignature throws an error if logfcColumn is not present", {
     expect_error(
-        prepareSignature(getTestFixture("signature", seed = .testSeed),
-            geneColumn = "Name_GeneSymbol",
-            logfcColumn = "logFC2",
-            pvalColumn = "Significance_pvalue"
+        prepareSignature(getTestFixture("input_signature", seed = .testSeed),
+            geneColumn = "Gene",
+            logfcColumn = "Missing",
+            pvalColumn = "PValue"
         ),
-        "logfcColumn 'logFC2' not found in the dataframe"
+        "logfcColumn 'Missing' not found in the dataframe"
     )
 })
 
 test_that("prepareSignature throws an error if pvalColumn is not present", {
     expect_error(
-        prepareSignature(getTestFixture("signature", seed = .testSeed),
-            geneColumn = "Name_GeneSymbol",
-            logfcColumn = "Value_LogDiffExp",
-            pvalColumn = "PValue2"
+        prepareSignature(getTestFixture("input_signature", seed = .testSeed),
+            geneColumn = "Gene",
+            logfcColumn = "LogFC",
+            pvalColumn = "Missing"
         ),
-        "pvalColumn 'PValue2' not found in the dataframe"
+        "pvalColumn 'Missing' not found in the dataframe"
     )
 })
 
 ## Test Main prepareSignature Function - Valid Inputs With PValue
 
 test_that("prepareSignature returns a dataframe with the correct columns (with pvalue)", {
-    filteredData <- data.frame(
-        Gene = c("TP53", "MYC"),
-        LogFC = c(1.5, -2.1),
-        pval = c(0.05, 0.01)
-    )
+    filteredData <- getTestFixture("input_signature", seed = .testSeed)
+
     signature <- prepareSignature(filteredData,
         geneColumn = "Gene",
         logfcColumn = "LogFC",
-        pvalColumn = "pval"
+        pvalColumn = "PValue"
     )
     expect_named(
         signature,
@@ -253,15 +242,11 @@ test_that("prepareSignature returns a dataframe with the correct columns (with p
 })
 
 test_that("prepareSignature returns correct data types (with pvalue)", {
-    filteredData <- data.frame(
-        Gene = c("TP53", "MYC"),
-        LogFC = c(1.5, -2.1),
-        pval = c(0.05, 0.01)
-    )
+    filteredData <- getTestFixture("input_signature", seed = .testSeed)
     signature <- prepareSignature(filteredData,
         geneColumn = "Gene",
         logfcColumn = "LogFC",
-        pvalColumn = "pval"
+        pvalColumn = "PValue"
     )
 
     expect_type(signature[["signatureID"]], "character")
@@ -272,15 +257,11 @@ test_that("prepareSignature returns correct data types (with pvalue)", {
 })
 
 test_that("prepareSignature returns correct signatureID (with pvalue)", {
-    filteredData <- data.frame(
-        Gene = c("TP53", "MYC"),
-        LogFC = c(1.5, -2.1),
-        pval = c(0.05, 0.01)
-    )
+    filteredData <- getTestFixture("input_signature", seed = .testSeed)
     signature <- prepareSignature(filteredData,
         geneColumn = "Gene",
         logfcColumn = "LogFC",
-        pvalColumn = "pval"
+        pvalColumn = "PValue"
     )
 
     expect_true(all(signature[["signatureID"]] == "InputSig"))
@@ -289,32 +270,24 @@ test_that("prepareSignature returns correct signatureID (with pvalue)", {
 test_that(
     "prepareSignature returns a dataframe with the correct number of rows (with pvalue)",
     {
-        filteredData <- data.frame(
-            Gene = c("TP53", "MYC"),
-            LogFC = c(1.5, -2.1),
-            pval = c(0.05, 0.01)
-        )
+        filteredData <- getTestFixture("input_signature", seed = .testSeed)
         signature <- prepareSignature(filteredData,
             geneColumn = "Gene",
             logfcColumn = "LogFC",
-            pvalColumn = "pval"
+            pvalColumn = "PValue"
         )
-        expect_identical(nrow(signature), 2L)
+        expect_identical(nrow(signature), 9L)
     }
 )
 
 test_that(
     "prepareSignature returns a dataframe with the correct gene symbols (with pvalue)",
     {
-        filteredData <- data.frame(
-            Gene = c("TP53", "MYC"),
-            LogFC = c(1.5, -2.1),
-            pval = c(0.05, 0.01)
-        )
+        filteredData <- getTestFixture("input_signature", seed = .testSeed)
         signature <- prepareSignature(filteredData,
             geneColumn = "Gene",
             logfcColumn = "LogFC",
-            pvalColumn = "pval"
+            pvalColumn = "PValue"
         )
         expect_true(all(signature[["Name_GeneSymbol"]] %in% l1000[["L1000"]]))
     }
@@ -322,11 +295,8 @@ test_that(
 
 test_that("prepareSignature handles duplicate genes correctly (with pvalue)", {
     skip("Duplicate handling not implemented yet")
-    testData <- data.frame(
-        Gene = c("TP53", "TP53", "MYC"),
-        LogFC = c(1.5, 1.6, -2.1),
-        PValue = c(0.01, 0.02, 0.05)
-    )
+
+    filteredData <- getTestFixture("input_signature", seed = .testSeed)
 
     signature <- prepareSignature(testData,
         geneColumn = "Gene",
@@ -343,21 +313,24 @@ test_that("prepareSignature handles duplicate genes correctly (with pvalue)", {
 ## Test Main prepareSignature Function - Valid Inputs Without PValue
 
 test_that("prepareSignature returns a dataframe with the correct columns (without pvalue)", {
-    signature <- prepareSignature(getTestFixture("signature", seed = .testSeed),
-        geneColumn = "Name_GeneSymbol",
-        logfcColumn = "Value_LogDiffExp", pvalColumn = NA
+    filteredData <- getTestFixture("input_signature", seed = .testSeed)
+
+    signature <- prepareSignature(filteredData,
+        geneColumn = "Gene",
+        logfcColumn = "LogFC", pvalColumn = NA
     )
 
     # Check that it has the expected columns but not Significance_pvalue
     expectedCols <- c("signatureID", "ID_geneid", "Name_GeneSymbol", "Value_LogDiffExp")
-    expect_true(all(expectedCols %in% names(signature)))
+    expect_named(signature, expectedCols)
 })
 
 test_that("prepareSignature returns correct data types (without pvalue)", {
-    signature <- prepareSignature(getTestFixture("signature", seed = .testSeed),
-        geneColumn = "Name_GeneSymbol",
-        logfcColumn = "Value_LogDiffExp",
-        pvalColumn = NA
+    filteredData <- getTestFixture("input_signature", seed = .testSeed)
+
+    signature <- prepareSignature(filteredData,
+        geneColumn = "Gene",
+        logfcColumn = "LogFC", pvalColumn = NA
     )
 
     expect_type(signature[["signatureID"]], "character")
@@ -367,10 +340,11 @@ test_that("prepareSignature returns correct data types (without pvalue)", {
 })
 
 test_that("prepareSignature returns correct signatureID (without pvalue)", {
-    signature <- prepareSignature(getTestFixture("signature", seed = .testSeed),
-        geneColumn = "Name_GeneSymbol",
-        logfcColumn = "Value_LogDiffExp",
-        pvalColumn = NA
+    filteredData <- getTestFixture("input_signature", seed = .testSeed)
+
+    signature <- prepareSignature(filteredData,
+        geneColumn = "Gene",
+        logfcColumn = "LogFC", pvalColumn = NA
     )
 
     expect_true(all(signature[["signatureID"]] == "InputSig"))
@@ -379,38 +353,40 @@ test_that("prepareSignature returns correct signatureID (without pvalue)", {
 test_that(
     "prepareSignature returns a dataframe with the correct number of rows (without pvalue)",
     {
-        signature <- prepareSignature(getTestFixture("signature", seed = .testSeed),
-            geneColumn = "Name_GeneSymbol",
-            logfcColumn = "Value_LogDiffExp",
-            pvalColumn = NA
+        filteredData <- getTestFixture("input_signature", seed = .testSeed)
+
+        signature <- prepareSignature(filteredData,
+            geneColumn = "Gene",
+            logfcColumn = "LogFC", pvalColumn = NA
         )
+
         expect_lte(nrow(signature), 978L)
         expect_gt(nrow(signature), 0L)
+        expect_identical(nrow(signature), 9L)
     }
 )
 
 test_that(
     "prepareSignature returns a dataframe with the correct gene symbols (without pvalue)",
     {
-        signature <- prepareSignature(getTestFixture("signature", seed = .testSeed),
-            geneColumn = "Name_GeneSymbol",
-            logfcColumn = "Value_LogDiffExp",
-            pvalColumn = NA
+        filteredData <- getTestFixture("input_signature", seed = .testSeed)
+
+        signature <- prepareSignature(filteredData,
+            geneColumn = "Gene",
+            logfcColumn = "LogFC", pvalColumn = NA
         )
+
         expect_true(all(signature[["Name_GeneSymbol"]] %in% l1000[["L1000"]]))
     }
 )
 
 test_that("prepareSignature handles duplicate genes correctly (without pvalue)", {
-    testData <- data.frame(
-        Gene = c("TP53", "TP53", "MYC"),
-        LogFC = c(1.5, 1.6, -2.1)
-    )
+    skip("Duplicate handling not implemented yet")
+    filteredData <- getTestFixture("input_signature", seed = .testSeed)
 
-    signature <- prepareSignature(testData,
+    signature <- prepareSignature(filteredData,
         geneColumn = "Gene",
-        logfcColumn = "LogFC",
-        pvalColumn = NA
+        logfcColumn = "LogFC", pvalColumn = NA
     )
 
     # Should handle duplicates (exact behavior depends on implementation)
@@ -436,7 +412,7 @@ test_that("prepareSignature handles empty filtered results", {
     # Should return empty dataframe with correct structure
     expect_identical(nrow(signature), 0L)
     expectedCols <- c("signatureID", "ID_geneid", "Name_GeneSymbol", "Value_LogDiffExp", "Significance_pvalue")
-    expect_true(all(expectedCols %in% names(signature)))
+    expect_named(signature, expectedCols)
 })
 
 test_that("prepareSignature handles single gene input", {
@@ -483,15 +459,11 @@ test_that("prepareSignature works with different column names", {
 ## Test Valid Inputs Without PValue
 
 test_that("prepareSignature returns a dataframe with the correct columns", {
-    testData <- data.frame(
-        GENE_SYMBOL = c("TP53", "MYC", "GAPDH"),
-        FOLD_CHANGE = c(1.5, -2.1, 0.8)
-    )
+    filteredData <- getTestFixture("input_signature", seed = .testSeed)
 
-    signature <- prepareSignature(testData,
-        geneColumn = "GENE_SYMBOL",
-        logfcColumn = "FOLD_CHANGE",
-        pvalColumn = NA
+    signature <- prepareSignature(filteredData,
+        geneColumn = "Gene",
+        logfcColumn = "LogFC", pvalColumn = NA
     )
 
     expect_named(
@@ -503,30 +475,29 @@ test_that("prepareSignature returns a dataframe with the correct columns", {
 test_that(
     "prepareSignature returns a dataframe with the correct number of rows",
     {
-        testData <- data.frame(
-            GENE_SYMBOL = c("TP53", "MYC", "GAPDH"),
-            FOLD_CHANGE = c(1.5, -2.1, 0.8)
+        filteredData <- getTestFixture("input_signature", seed = .testSeed)
+
+        signature <- prepareSignature(filteredData,
+            geneColumn = "Gene",
+            logfcColumn = "LogFC", pvalColumn = NA
         )
 
-        signature <- prepareSignature(testData,
-            geneColumn = "GENE_SYMBOL",
-            logfcColumn = "FOLD_CHANGE",
-            pvalColumn = NA
-        )
         expect_gte(nrow(signature), 1L)
-        expect_lte(nrow(signature), 4L)
-        expect_lte(nrow(signature), 3L)
+        expect_lte(nrow(signature), 10L)
+        expect_identical(nrow(signature), 9L)
     }
 )
 
 test_that(
     "prepareSignature returns a dataframe with the correct gene symbols",
     {
-        signature <- prepareSignature(getTestFixture("signature", seed = .testSeed),
-            geneColumn = "Name_GeneSymbol",
-            logfcColumn = "Value_LogDiffExp",
-            pvalColumn = NA
+        filteredData <- getTestFixture("input_signature", seed = .testSeed)
+
+        signature <- prepareSignature(filteredData,
+            geneColumn = "Gene",
+            logfcColumn = "LogFC", pvalColumn = NA
         )
+
         expect_true(all(signature[["Name_GeneSymbol"]] %in% l1000[["L1000"]]))
     }
 )

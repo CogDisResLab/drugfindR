@@ -22,9 +22,9 @@ createInputDge <- function(nGenes = NULL, seed = NULL) {
     genes <- sample(pool, nGenes, replace = FALSE)
 
     tibble::tibble(
-        Name_GeneSymbol = genes,
-        Value_LogDiffExp = stats::rnorm(nGenes, mean = 0L, sd = 1.5),
-        Significance_pvalue = stats::runif(nGenes, min = 1e-4, max = 5e-2)
+        Gene = genes,
+        LogFC = stats::rnorm(nGenes, mean = 0L, sd = 1.5),
+        PValue = stats::runif(nGenes, min = 1e-4, max = 5e-2)
     )
 }
 
@@ -251,7 +251,7 @@ createEmptySignature <- function() {
         Significance_pvalue = double()
     )
 }
-################################################################################
-################################################################################
-################################################################################
-################################################################################
+
+lincsKdId <- function() "LINCSKD_13548"
+lincsOeId <- function() "LINCSOE_10751"
+lincsCpId <- function() "LINCSCP_174580"
