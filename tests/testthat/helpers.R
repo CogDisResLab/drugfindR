@@ -73,7 +73,7 @@ createPreparedDge <- function(nGenes = NULL, seed = NULL) {
     )
 }
 
-createValidIlincsResponse <- function(nRows = NULL, library = "CP", seed = NULL) {
+createConcordantsTable <- function(nRows = NULL, library = "CP", seed = NULL) {
     if (!is.null(seed)) setTestSeed(seed)
     nRows <- if (!is.null(nRows)) {
         nRows
@@ -81,13 +81,16 @@ createValidIlincsResponse <- function(nRows = NULL, library = "CP", seed = NULL)
         sample(5L:10L, size = 1L)
     }
 
-    compound <- stringr::str_glue("DRUG_{id}",
+    halfNum <- floor(nRows / 2L)
+
+    drugIds <- stringr::str_glue("DRUG_{id}",
         id = stringr::str_pad(1L:nRows, 5L, pad = "0")
     )
-    treatment <- stringr::str_glue("GENE_{id}", id = stringr::str_pad(1L:nRows, 3L, pad = "0"))
-    lincsPertId <- stringr::str_glue("PERTID_{id}",
-        id = stringr::str_pad(1L:nRows, 5L, pad = "0")
-    )
+    treatmentIds <- stringr::str_glue("GENE_{id}", id = stringr::str_pad(1L:nRows, 3L, pad = "0"))
+
+    compound <- sample(drugIds, size = nRows, replace = TRUE)
+    treatment <- sample(treatmentIds, size = nRows, replace = TRUE)
+    lincsPertId <- stringr::str_replace(compound, "DRUG", "PERT")
     geneTargets <- rep(NA_character_, nRows)
     nGenes <- rep(978L, nRows)
     similarity <- stats::runif(nRows, min = -1L, max = 1L)
@@ -108,17 +111,20 @@ createValidIlincsResponse <- function(nRows = NULL, library = "CP", seed = NULL)
             nGenes = nGenes, compound = compound, lincsPertID = lincsPertId,
             GeneTargets = geneTargets, concentration = concentration,
             time = time, `_row` = rowCol, signatureid = signatureId, cellline = cellLine
-        ) |>
-            purrr::pmap(function(...) list(...))
+        )
     } else {
         concordanceData <- tibble(
             similarity = similarity, pValue = pValue,
             nGenes = nGenes, treatment = treatment, lincsPertID = lincsPertId,
             GeneTargets = geneTargets,
             time = time, `_row` = rowCol, signatureid = signatureId, cellline = cellLine
-        ) |>
-            purrr::pmap(function(...) list(...))
+        )
     }
+}
+
+createValidIlincsResponse <- function(nRows = NULL, library = "CP", seed = NULL) {
+    concordanceData <- createConcordantsTable(nRows = nRows, library = library, seed = seed) |>
+        purrr::pmap(function(...) list(...))
 
     responseData <- list(status = list(
         sessionID = list(Sys.Date() |> as.character()),
@@ -201,7 +207,8 @@ getTestFixture <- function(
     type = c(
         "prepared_signature", "input_signature",
         "valid_ilincs_response", "empty_ilincs_response",
-        "error_ilincs_response_400", "error_ilincs_response_500"
+        "error_ilincs_response_400", "error_ilincs_response_500",
+        "concordants_table"
     ), seed = NULL, ...) {
     type <- match.arg(type)
     switch(type,
@@ -211,6 +218,7 @@ getTestFixture <- function(
         empty_ilincs_response = createEmptyIlincsResponse(),
         error_ilincs_response_400 = createIlincsErrorResponse400(),
         error_ilincs_response_500 = createIlincsErrorResponse500(),
+        concordants_table = createConcordantsTable(seed = seed, ...),
         stop("Unsupported fixture type: ", type, call. = FALSE)
     )
 }
@@ -243,4 +251,7 @@ createEmptySignature <- function() {
         Significance_pvalue = double()
     )
 }
+################################################################################
+################################################################################
+################################################################################
 ################################################################################

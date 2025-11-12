@@ -711,7 +711,7 @@ with_mock_dir("getConcordants", {
         skip_on_ci()
 
         # Test with up-regulated signature
-        baseSignature <- getTestFixture("prepared_signature", seed = .testSeed, nGenes = 100)
+        baseSignature <- getTestFixture("prepared_signature", seed = .testSeed, nGenes = 100L)
         thresholds <- .calculateAbsoluteThresholds(1.5)
         upSig <- .applyDirectionFilter(baseSignature, "up", thresholds = thresholds)
         upResult <- getConcordants(upSig, ilincsLibrary = "CP")
