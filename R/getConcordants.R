@@ -396,7 +396,7 @@
     if (ilincsLibrary == "CP") {
         # For CP library: rename compound to treatment if it exists
         if ("compound" %in% colnames(concordants)) {
-            concordants <- dplyr::rename(concordants, treatment = compound)
+            concordants <- dplyr::rename(concordants, treatment = !!"compound")
         }
     } else {
         # For KD/OE libraries: add concentration column with all NA values
@@ -475,8 +475,9 @@
     responseData <- httr2::resp_body_json(response)
     concordanceTables <- purrr::pluck(responseData, "status", "concordanceTable")
 
-    # Check if concordanceTable is empty (single "NA" value)
-    if (length(concordanceTables) == 1L && concordanceTables[[1L]] == "NA") {
+    # Check if concordanceTable is empty
+    # The API returns an empty list in case of error
+    if (length(concordanceTables) == 0L) {
         .processIlincsResponseEmpty(sigDirection, ilincsLibrary)
     } else {
         .processIlincsResponseSuccess(concordanceTables, sigDirection, ilincsLibrary)

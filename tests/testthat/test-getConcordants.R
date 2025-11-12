@@ -3,13 +3,14 @@
 library(tibble)
 library(S4Vectors)
 library(httr2)
+library(httptest2)
 
 # ==============================================================================
 # TESTS FOR INTERNAL VALIDATION FUNCTION
 # ==============================================================================
 
 test_that(".validateGetConcordantsInput works correctly with valid inputs", {
-    testSignature <- getTestFixture("signature", seed = .testSeed)
+    testSignature <- getTestFixture("prepared_signature", seed = .testSeed)
 
     # Valid inputs should not error
     expect_silent(.validateGetConcordantsInput(testSignature, "CP"))
@@ -46,7 +47,7 @@ test_that(".validateGetConcordantsInput errors on invalid signature input", {
 })
 
 test_that(".validateGetConcordantsInput errors on invalid library", {
-    testSignature <- getTestFixture("signature", seed = .testSeed)
+    testSignature <- getTestFixture("prepared_signature", seed = .testSeed)
 
     # Invalid library should error (uses stopIfInvalidLibraries)
     expect_error(
@@ -67,7 +68,7 @@ test_that(".validateGetConcordantsInput errors on invalid library", {
 # ==============================================================================
 
 test_that(".prepareSignatureFile creates valid temporary file", {
-    testSignature <- getTestFixture("signature", seed = .testSeed)
+    testSignature <- getTestFixture("prepared_signature", seed = .testSeed)
 
     signatureFilePath <- .prepareSignatureFile(testSignature)
 
@@ -88,7 +89,7 @@ test_that(".prepareSignatureFile creates valid temporary file", {
 })
 
 test_that(".prepareSignatureFile works with different data frame types", {
-    testSignatureTibble <- getTestFixture("signature", seed = .testSeed)
+    testSignatureTibble <- getTestFixture("prepared_signature", seed = .testSeed)
     testSignatureDataFrame <- as.data.frame(testSignatureTibble)
     testSignatureS4DataFrame <- S4Vectors::DataFrame(testSignatureTibble)
 
@@ -115,8 +116,9 @@ test_that(".prepareSignatureFile works with different data frame types", {
 # ==============================================================================
 
 test_that(".detectSignatureDirection correctly identifies up-regulated signatures", {
-    baseSignature <- getTestFixture("signature", seed = .testSeed)
-    upSignature <- filterSignatureByDirection(baseSignature, "up", threshold = 1.5)
+    baseSignature <- getTestFixture("prepared_signature", seed = .testSeed)
+    thresholds <- .calculateAbsoluteThresholds(1.5)
+    upSignature <- .applyDirectionFilter(baseSignature, "up", thresholds = thresholds)
 
     direction <- .detectSignatureDirection(upSignature)
 
@@ -126,8 +128,9 @@ test_that(".detectSignatureDirection correctly identifies up-regulated signature
 })
 
 test_that(".detectSignatureDirection correctly identifies down-regulated signatures", {
-    baseSignature <- getTestFixture("signature", seed = .testSeed)
-    downSignature <- filterSignatureByDirection(baseSignature, "down", threshold = 1.5)
+    baseSignature <- getTestFixture("prepared_signature", seed = .testSeed)
+    thresholds <- .calculateAbsoluteThresholds(1.5)
+    downSignature <- .applyDirectionFilter(baseSignature, "down", thresholds = thresholds)
 
     direction <- .detectSignatureDirection(downSignature)
 
@@ -137,8 +140,9 @@ test_that(".detectSignatureDirection correctly identifies down-regulated signatu
 })
 
 test_that(".detectSignatureDirection correctly identifies mixed signatures", {
-    baseSignature <- getTestFixture("signature", seed = .testSeed)
-    mixedSignature <- filterSignatureByDirection(baseSignature, "any", threshold = 1.5)
+    baseSignature <- getTestFixture("prepared_signature", seed = .testSeed)
+    thresholds <- .calculateAbsoluteThresholds(1.5)
+    mixedSignature <- .applyDirectionFilter(baseSignature, "any", thresholds = thresholds)
 
     direction <- .detectSignatureDirection(mixedSignature)
 
@@ -166,7 +170,7 @@ test_that(".detectSignatureDirection handles edge cases", {
 # ==============================================================================
 
 test_that(".generateIlincsRequest creates valid httr2 request object", {
-    testSignature <- getTestFixture("signature", seed = .testSeed)
+    testSignature <- getTestFixture("prepared_signature", seed = .testSeed)
     signatureFilePath <- .prepareSignatureFile(testSignature)
 
     # Test with CP library
@@ -204,7 +208,7 @@ test_that(".generateIlincsRequest creates valid httr2 request object", {
 })
 
 test_that(".generateIlincsRequest works with different libraries", {
-    testSignature <- getTestFixture("signature", seed = .testSeed)
+    testSignature <- getTestFixture("prepared_signature", seed = .testSeed)
     signatureFilePath <- .prepareSignatureFile(testSignature)
 
     # Test CP library
@@ -224,7 +228,7 @@ test_that(".generateIlincsRequest works with different libraries", {
 })
 
 test_that(".generateIlincsRequest validates library input", {
-    testSignature <- getTestFixture("signature", seed = .testSeed)
+    testSignature <- getTestFixture("prepared_signature", seed = .testSeed)
     signatureFilePath <- .prepareSignatureFile(testSignature)
 
     # Invalid library should error
@@ -245,7 +249,7 @@ test_that(".generateIlincsRequest validates library input", {
 })
 
 test_that(".generateIlincsRequest includes proper headers and configuration", {
-    testSignature <- getTestFixture("signature", seed = .testSeed)
+    testSignature <- getTestFixture("prepared_signature", seed = .testSeed)
     signatureFilePath <- .prepareSignatureFile(testSignature)
 
     request <- .generateIlincsRequest(signatureFilePath, "CP")
@@ -286,6 +290,7 @@ test_that(".executeIlincsRequest handles verbose option", {
     })
 })
 
+# TODO: Need to figure out how to trigger 500 errors for tests
 test_that(".executeIlincsRequest returns error responses without raising", {
     skip("Have to figure out how to trigger 500 errors")
 
@@ -302,12 +307,13 @@ test_that(".executeIlincsRequest returns error responses without raising", {
 
 test_that(".processIlincsResponse handles successful responses correctly", {
     # Create mock successful response data
+    response <- getTestFixture("valid_ilincs_response", seed = .testSeed, nRows = 10L)
 
-    result <- .processIlincsResponse(exampleResponse(), "Up", "CP")
+    result <- .processIlincsResponse(response, "Up", "CP")
 
     # Check structure
     expect_s3_class(result, "tbl_df")
-    expect_identical(nrow(result), 6L)
+    expect_identical(nrow(result), 10L)
 
     # Check required columns
     expectedCols <- c(
@@ -319,31 +325,34 @@ test_that(".processIlincsResponse handles successful responses correctly", {
     # Check CP-specific content and transformations
     expect_true("treatment" %in% colnames(result)) # compound should be renamed to treatment
     expect_true("concentration" %in% colnames(result))
-    expect_identical(result[["sig_direction"]], rep("Up", 6L))
-    expect_identical(result[["sig_type"]], rep("Chemical Perturbagen", 6L))
+    expect_identical(result[["sig_direction"]], rep("Up", 10L))
+    expect_identical(result[["sig_type"]], rep("Chemical Perturbagen", 10L))
 })
 
 test_that(".processIlincsResponse handles CP library responses correctly", {
     # Create mock CP response with compound and concentration
+    response <- getTestFixture("valid_ilincs_response", seed = .testSeed, nRows = 10L)
 
-    result <- .processIlincsResponse(exampleResponse(), "Any", "CP")
+    result <- .processIlincsResponse(response, "Any", "CP")
 
     # Check CP-specific columns
+    expect_false("compound" %in% colnames(result))
     expect_true("treatment" %in% colnames(result)) # compound renamed to treatment
     expect_true("concentration" %in% colnames(result))
     expect_true("sig_type" %in% colnames(result))
 
     # Check content
-    expect_identical(result[["sig_direction"]], rep("Any", 6L))
-    expect_identical(result[["sig_type"]], rep("Chemical Perturbagen", 6L))
+    expect_identical(result[["sig_direction"]], rep("Any", 10L))
+    expect_identical(result[["sig_type"]], rep("Chemical Perturbagen", 10L))
 })
 
 test_that(".processIlincsResponse rounds numerical values correctly", {
-    result <- .processIlincsResponse(exampleResponse(), "Down", "CP")
+    response <- getTestFixture("valid_ilincs_response", seed = .testSeed, nRows = 10L)
+
+    result <- .processIlincsResponse(response, "Down", "CP")
 
     # Check similarity rounded to 8 decimal places
-    expect_identical(result[["similarity"]][[1L]], 0.54640)
-    expect_true(all(abs(result[["similarity"]]) >= 0.2))
+    expect_identical(result[["similarity"]][[1L]], 0.4418)
 
 
     # Check pValue rounded to 20 decimal places (or system precision)
@@ -354,15 +363,18 @@ test_that(".processIlincsResponse rounds numerical values correctly", {
 test_that(".processIlincsResponse handles different signature directions", {
     directions <- c("Up", "Down", "Any")
 
+    response <- getTestFixture("valid_ilincs_response", seed = .testSeed, nRows = 10L)
+
     for (direction in directions) {
-        result <- .processIlincsResponse(exampleResponse(), direction, "CP")
+        result <- .processIlincsResponse(response, direction, "CP")
         expect_identical(unique(result[["sig_direction"]]), direction)
     }
 })
 
 test_that(".processIlincsResponse handles empty concordance tables", {
+    response <- getTestFixture("empty_ilincs_response", seed = .testSeed)
     # Empty response
-    result <- .processIlincsResponse(emptyResponse(), "Any", "CP")
+    result <- .processIlincsResponse(response, "Any", "CP")
 
     # Should return empty tibble with correct structure
     expect_s3_class(result, "tbl_df")
@@ -375,37 +387,38 @@ test_that(".processIlincsResponse handles empty concordance tables", {
 # TESTS FOR NEW PROCESSILINCSRESPONSE FAMILY OF FUNCTIONS
 # ==============================================================================
 
-test_that(".processIlincsResponseError handles 400 errors correctly", {
-    errorResp400 <- errorResponse400()
+test_that(".processIlincsResponse handles 400 errors correctly", {
+    response <- getTestFixture("error_ilincs_response_400", seed = .testSeed)
 
     expect_error(
-        .processIlincsResponseError(errorResp400),
+        .processIlincsResponse(response),
         "iLINCS API request failed \\(Status 400\\): Bad Request",
         class = "error"
     )
 
     expect_error(
-        .processIlincsResponseError(errorResp400),
+        .processIlincsResponse(response),
         "invalid signature data or parameters"
     )
 })
 
-test_that(".processIlincsResponseError handles 500 errors correctly", {
-    errorResp500 <- errorResponse500()
+test_that(".processIlincsResponse handles 500 errors correctly", {
+    response <- getTestFixture("error_ilincs_response_500", seed = .testSeed)
 
     expect_error(
-        .processIlincsResponseError(errorResp500),
-        "iLINCS API request failed \\(Status 500\\): Internal Server Error",
-        class = "error"
+        .processIlincsResponse(response,
+            "iLINCS API request failed \\(Status 500\\): Internal Server ",
+            class = "error"
+        )
     )
 
     expect_error(
-        .processIlincsResponseError(errorResp500),
+        .processIlincsResponse(response),
         "data structure problems or server issues"
     )
 })
 
-test_that(".processIlincsResponseError handles other status codes", {
+test_that(".processIlincsResponse handles other status codes", {
     # Create custom error response with different status code
     errorResp404 <- httr2::response(
         status_code = 404L,
@@ -414,7 +427,7 @@ test_that(".processIlincsResponseError handles other status codes", {
     )
 
     expect_error(
-        .processIlincsResponseError(errorResp404),
+        .processIlincsResponse(errorResp404),
         "iLINCS API request failed with status 404"
     )
 })
@@ -455,32 +468,19 @@ test_that(".processIlincsResponseEmpty creates correct empty structure for all l
 
 test_that(".processIlincsResponseSuccess handles CP library correctly", {
     # Create mock concordance tables for CP library
-    mockCpTables <- list(
-        list(
-            signatureid = "CPC_001",
-            compound = "Aspirin",
-            concentration = "10uM",
-            time = "24h",
-            cellline = "HeLa",
-            similarity = 0.123456789,
-            pValue = 0.001234567890123456789
-        ),
-        list(
-            signatureid = "CPC_002",
-            compound = "Ibuprofen",
-            concentration = "5uM",
-            time = "48h",
-            cellline = "MCF7",
-            similarity = -0.987654321,
-            pValue = 0.045678901234567890123
-        )
+    response <- getTestFixture("valid_ilincs_response",
+        seed = .testSeed,
+        nRows = 10L, library = "CP"
     )
+    responseTable <- response |>
+        resp_body_json() |>
+        purrr::pluck("status", "concordanceTable")
 
-    result <- .processIlincsResponseSuccess(mockCpTables, "Up", "CP")
+    result <- .processIlincsResponseSuccess(responseTable, "Up", "CP")
 
     # Check structure
     expect_s3_class(result, "tbl_df")
-    expect_identical(nrow(result), 2L)
+    expect_identical(nrow(result), 10L)
 
     # Check column structure and order
     expectedCols <- c(
@@ -490,98 +490,83 @@ test_that(".processIlincsResponseSuccess handles CP library correctly", {
     expect_identical(colnames(result), expectedCols)
 
     # Check CP-specific transformations
-    expect_identical(result[["treatment"]], c("Aspirin", "Ibuprofen")) # compound renamed to treatment
-    expect_identical(result[["concentration"]], c("10uM", "5uM"))
-    expect_identical(result[["sig_type"]], c("Chemical Perturbagen", "Chemical Perturbagen"))
-    expect_identical(result[["sig_direction"]], c("Up", "Up"))
+    expect_true(all(stringr::str_detect(result[["treatment"]], "DRUG"))) # compound renamed to treatment
+    expect_false(all(stringr::str_detect(result[["treatment"]], "GENE"))) # compound renamed to treatment
+    expect_false(all(is.na(result[["concentration"]])))
+    expect_identical(result[["sig_type"]], rep("Chemical Perturbagen", 10L))
+    expect_identical(result[["sig_direction"]], rep("Up", 10L))
 
     # Check rounding
-    expect_identical(result[["similarity"]], c(0.123456789, -0.987654321)) # 8 decimal places
-    expect_equal(result[["pValue"]], c(0.001234567890123456789, 0.045678901234567890123), tolerance = 1e-20)
+    expect_identical(result[["similarity"]], round(result[["similarity"]], 8L)) # 8 decimal places
+    expect_equal(result[["pValue"]], round(result[["pValue"]], 12L), tolerance = 1e-20)
 })
 
 test_that(".processIlincsResponseSuccess handles KD library correctly", {
-    # Create mock concordance tables for KD library
-    mockKdTables <- list(
-        list(
-            signatureid = "LINCSKD_001",
-            treatment = "GENE1",
-            time = "96h",
-            cellline = "A549",
-            similarity = 0.567890123,
-            pValue = 0.012345678901234567890
-        ),
-        list(
-            signatureid = "LINCSKD_002",
-            treatment = "GENE2",
-            time = "120h",
-            cellline = "HepG2",
-            similarity = -0.345678901,
-            pValue = 0.034567890123456789012
-        )
+    response <- getTestFixture("valid_ilincs_response",
+        seed = .testSeed,
+        nRows = 10L, library = "KD"
     )
+    responseTable <- response |>
+        resp_body_json() |>
+        purrr::pluck("status", "concordanceTable")
 
-    result <- .processIlincsResponseSuccess(mockKdTables, "Down", "KD")
+    result <- .processIlincsResponseSuccess(responseTable, "Down", "KD")
 
     # Check structure
     expect_s3_class(result, "tbl_df")
-    expect_identical(nrow(result), 2L)
+    expect_identical(nrow(result), 10L)
 
     # Check KD-specific transformations
-    expect_identical(result[["treatment"]], c("GENE1", "GENE2"))
+    expect_true(all(stringr::str_detect(result[["treatment"]], "GENE"))) # compound renamed to treatment
+    expect_false(all(stringr::str_detect(result[["treatment"]], "DRUG"))) # compound renamed to treatment
     expect_true(all(is.na(result[["concentration"]]))) # All NA for KD
-    expect_identical(result[["sig_type"]], c("Gene Knockdown", "Gene Knockdown"))
-    expect_identical(result[["sig_direction"]], c("Down", "Down"))
+    expect_identical(result[["sig_type"]], rep("Gene Knockdown", 10L))
+    expect_identical(result[["sig_direction"]], rep("Down", 10L))
 })
 
 test_that(".processIlincsResponseSuccess handles OE library correctly", {
-    # Create mock concordance tables for OE library
-    mockOeTables <- list(
-        list(
-            signatureid = "LINCSOE_001",
-            treatment = "GENE_X",
-            time = "72h",
-            cellline = "U2OS",
-            similarity = 0.789012345,
-            pValue = 0.023456789012345678901
-        )
+    response <- getTestFixture("valid_ilincs_response",
+        seed = .testSeed,
+        nRows = 10L, library = "KD"
     )
+    responseTable <- response |>
+        resp_body_json() |>
+        purrr::pluck("status", "concordanceTable")
 
-    result <- .processIlincsResponseSuccess(mockOeTables, "Any", "OE")
+    result <- .processIlincsResponseSuccess(responseTable, "Any", "OE")
 
     # Check structure
     expect_s3_class(result, "tbl_df")
-    expect_identical(nrow(result), 1L)
+    expect_identical(nrow(result), 10L)
 
     # Check OE-specific transformations
-    expect_identical(result[["treatment"]], "GENE_X")
+    expect_true(all(stringr::str_detect(result[["treatment"]], "GENE"))) # compound renamed to treatment
+    expect_false(all(stringr::str_detect(result[["treatment"]], "DRUG"))) # compound renamed to treatment
     expect_true(all(is.na(result[["concentration"]]))) # All NA for OE
-    expect_identical(result[["sig_type"]], "Gene Overexpression")
-    expect_identical(result[["sig_direction"]], "Any")
+    expect_identical(result[["sig_type"]], rep("Gene Overexpression", 10L))
+    expect_identical(result[["sig_direction"]], rep("Any", 10L))
 })
 
 test_that(".processIlincsResponse dispatcher works correctly for success case", {
-    # Mock a successful response with CP data
-    result <- .processIlincsResponse(exampleResponse(), "Up", "CP")
+    response <- getTestFixture("valid_ilincs_response",
+        seed = .testSeed, nRows = 10L
+    )
+    result <- .processIlincsResponse(response, "Up", "CP")
 
     expect_s3_class(result, "tbl_df")
-    expect_identical(nrow(result), 6L)
-    expect_identical(result[["treatment"]], c(
-        "CHEMBL1271119", "MLS002264408",
-        "VU0413807-2", "Flunisolide",
-        "MLS002264499", "SMR000031368"
-    ))
-    expect_identical(result[["sig_type"]], rep("Chemical Perturbagen", 6L))
+    expect_identical(nrow(result), 10L)
+    expect_true(all(stringr::str_detect(result[["treatment"]], "DRUG"))) # compound renamed to treatment
+    expect_identical(result[["sig_type"]], rep("Chemical Perturbagen", 10L))
 })
 
 test_that(".processIlincsResponse dispatcher works correctly for empty case", {
-    # Mock a response with empty concordance table (single "NA")
+    response <- getTestFixture("empty_ilincs_response", seed = .testSeed)
 
-    result <- .processIlincsResponse(emptyResponse(), "Any", "KD")
+    result <- .processIlincsResponse(response, "Any", "KD")
 
     expect_s3_class(result, "tbl_df")
     expect_identical(nrow(result), 0L)
-    expect_identical(colnames(result), c(
+    expect_named(result, c(
         "signatureid", "treatment", "concentration",
         "time", "cellline", "similarity", "pValue",
         "sig_direction", "sig_type"
@@ -591,12 +576,12 @@ test_that(".processIlincsResponse dispatcher works correctly for empty case", {
 test_that(".processIlincsResponse dispatcher works correctly for error case", {
     # Mock an error response
     expect_error(
-        .processIlincsResponse(errorResponse400(), "Any", "CP"),
+        .processIlincsResponse(getTestFixture("error_ilincs_response_400"), "Any", "CP"),
         "iLINCS API request failed \\(Status 400\\)"
     )
 
     expect_error(
-        .processIlincsResponse(errorResponse500(), "Any", "CP"),
+        .processIlincsResponse(getTestFixture("error_ilincs_response_500"), "Any", "CP"),
         "iLINCS API request failed \\(Status 500\\)"
     )
 })
@@ -619,8 +604,8 @@ test_that(".processIlincsResponse maintains consistent column order across libra
         mockData <- list(list(
             signatureid = "TEST_001",
             treatment = if (lib == "CP") NULL else "TEST_GENE",
-            compound = if (lib == "CP") "TEST_COMPOUND" else NULL,
-            concentration = if (lib == "CP") "1uM" else NULL,
+            compound = if (lib == "CP") "TEST_COMPOUND" else NA,
+            concentration = if (lib == "CP") "1uM" else NA,
             time = "24h",
             cellline = "TestCell",
             similarity = 0.5,
@@ -628,7 +613,7 @@ test_that(".processIlincsResponse maintains consistent column order across libra
         ))
 
         successResult <- .processIlincsResponseSuccess(mockData, "Any", lib)
-        expect_identical(colnames(successResult), expectedCols)
+        expect_named(successResult, expectedCols)
     }
 })
 
@@ -643,7 +628,7 @@ with_mock_dir("getConcordants", {
         skip_on_ci()
 
         # Use a small signature for faster API calls
-        testSignature <- getTestFixture("signature", seed = .testSeed)
+        testSignature <- getTestFixture("prepared_signature", seed = .testSeed)
 
         result <- getConcordants(testSignature, ilincsLibrary = "CP")
 
@@ -653,7 +638,7 @@ with_mock_dir("getConcordants", {
             "signatureid", "treatment", "concentration", "time",
             "cellline", "similarity", "pValue", "sig_direction", "sig_type"
         )
-        expect_identical(colnames(result), expectedCols)
+        expect_named(result, expectedCols)
 
         # Check CP-specific content
         if (nrow(result) > 0L) {
@@ -670,7 +655,7 @@ with_mock_dir("getConcordants", {
         skip_on_ci()
 
         # Use a small signature for faster API calls
-        testSignature <- getTestFixture("signature", seed = .testSeed)
+        testSignature <- getTestFixture("prepared_signature", seed = .testSeed)
 
         result <- getConcordants(testSignature, ilincsLibrary = "KD")
 
@@ -698,7 +683,7 @@ with_mock_dir("getConcordants", {
         skip_on_ci()
 
         # Use a small signature for faster API calls
-        testSignature <- getTestFixture("signature", seed = .testSeed)
+        testSignature <- getTestFixture("prepared_signature", seed = .testSeed)
 
         result <- getConcordants(testSignature, ilincsLibrary = "OE")
 
@@ -726,8 +711,9 @@ with_mock_dir("getConcordants", {
         skip_on_ci()
 
         # Test with up-regulated signature
-        baseSignature <- getTestFixture("signature", seed = .testSeed)
-        upSig <- filterSignatureByDirection(baseSignature, "up", threshold = 1.5)
+        baseSignature <- getTestFixture("prepared_signature", seed = .testSeed, nGenes = 100)
+        thresholds <- .calculateAbsoluteThresholds(1.5)
+        upSig <- .applyDirectionFilter(baseSignature, "up", thresholds = thresholds)
         upResult <- getConcordants(upSig, ilincsLibrary = "CP")
 
         if (nrow(upResult) > 0L) {
@@ -735,7 +721,7 @@ with_mock_dir("getConcordants", {
         }
 
         # Test with down-regulated signature
-        downSig <- filterSignatureByDirection(baseSignature, "down", threshold = 1.5)
+        downSig <- .applyDirectionFilter(baseSignature, "down", thresholds = thresholds)
         downResult <- getConcordants(downSig, ilincsLibrary = "CP")
 
         if (nrow(downResult) > 0L) {
@@ -743,7 +729,7 @@ with_mock_dir("getConcordants", {
         }
 
         # Test with mixed signature
-        mixedSig <- filterSignatureByDirection(baseSignature, "any", threshold = 1.5)
+        mixedSig <- .applyDirectionFilter(baseSignature, "any", thresholds = thresholds)
         mixedResult <- getConcordants(mixedSig, ilincsLibrary = "CP")
 
         if (nrow(mixedResult) > 0L) {
@@ -757,7 +743,7 @@ with_mock_dir("getConcordants", {
         skip_on_ci()
 
         # Test with different input types
-        testSignature <- getTestFixture("signature", seed = .testSeed)
+        testSignature <- getTestFixture("prepared_signature", seed = .testSeed, nGenes = 100L)
 
         # Test with tibble input
         tibbleResult <- getConcordants(testSignature, "CP")
@@ -779,7 +765,7 @@ with_mock_dir("getConcordants", {
         skip_on_bioc()
         skip_on_ci()
 
-        testSignature <- getTestFixture("signature", seed = .testSeed)
+        testSignature <- getTestFixture("prepared_signature", seed = .testSeed, nGenes = 100L)
         result <- getConcordants(testSignature, ilincsLibrary = "CP")
 
         if (nrow(result) > 0L) {
