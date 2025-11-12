@@ -1,5 +1,7 @@
 # r Comprehensive tests for getSignature function and internal helpers
 
+library(httr2)
+library(httptest2)
 
 # ==============================================================================
 # TESTS FOR INTERNAL VALIDATION FUNCTION
@@ -275,7 +277,6 @@ with_mock_dir("getSignature", {
         # Check L1000 status is correctly detected
         expect_true(all(result[["is_L1000"]] == TRUE)) # Signature is L1000
     })
-
 
 
     test_that(".processSuccessfulResponse rounds numerical values correctly", {

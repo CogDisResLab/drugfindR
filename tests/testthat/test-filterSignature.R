@@ -293,7 +293,7 @@ test_that(".calculateAbsoluteThresholds errors on invalid input", {
 })
 
 test_that(".calculateProportionalThreshold works correctly", {
-    testSig <- getTestFixture("signature", seed = .testSeed)
+    testSig <- getTestFixture("prepared_signature", seed = .testSeed)
 
     calculateProp <- function(values, prop) {
         round(

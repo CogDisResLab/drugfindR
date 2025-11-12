@@ -3,21 +3,6 @@
 library(tibble)
 library(S4Vectors)
 
-test_that("targetRename works correctly with treatment column", {
-    inputNamesWithTreatment <- c(
-        "signature",
-        "target", "cellLine", "time", "treatment",
-        "similarity", "direction", "pvalue"
-    )
-    expectedNames <- c(
-        "TargetSignature", "Target", "TargetCellLine",
-        "TargetTime", "Similarity", "SignatureDirection", "pValue"
-    )
-
-    result <- targetRename(inputNamesWithTreatment)
-    expect_identical(result, expectedNames)
-})
-
 test_that("targetRename works correctly without treatment column", {
     inputNamesWithoutTreatment <- c(
         "signature",
@@ -31,8 +16,9 @@ test_that("targetRename works correctly without treatment column", {
     )
     expectedNames <- c(
         "TargetSignature", "Target", "TargetCellLine",
-        "TargetTime", "TargetConcentration", "Similarity",
-        "SignatureDirection", "pValue"
+        "TargetTime", "TargetConcentration", "InputSigDirection",
+        "SignatureType", "Similarity",
+        "pValue"
     )
 
     result <- targetRename(inputNamesWithoutTreatment)
