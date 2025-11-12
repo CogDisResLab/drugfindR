@@ -1,0 +1,143 @@
+{
+    "status": {
+        "sessionID": "Tue_Nov_11_22_49_01_2025_7146756",
+        "gpgene": null,
+        "gpprobe": null,
+        "Remark": "Done",
+        "NoOfGenes": 10,
+        "NoOfProbes": null,
+        "concordanceTable": [
+            {
+                "similarity": 0.9831,
+                "pValue": 3.4944e-07,
+                "nGenes": 10,
+                "compound": "13-Hydroxy-8,14,19-trimethoxy-4,10,12,16-tetramethyl-3,20,22-trioxo-2-azabicyclo[16.3.1]docosa-1(21),4,6,10,18-pentaen-9-yl carbamate",
+                "lincsPertID": "LSM-42815",
+                "GeneTargets": "HSP90AA1",
+                "concentration": "10uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_66878",
+                "cellline": "HCC515",
+                "_row": "LINCSCP_66878"
+            },
+            {
+                "similarity": 0.9713,
+                "pValue": 2.8827e-06,
+                "nGenes": 10,
+                "compound": "Arachidonyl Trifluoromethylketone",
+                "lincsPertID": "LSM-43275",
+                "GeneTargets": "PLA2G4A",
+                "concentration": "80uM",
+                "time": "6h",
+                "signatureid": "LINCSCP_43730",
+                "cellline": "OV7",
+                "_row": "LINCSCP_43730"
+            },
+            {
+                "similarity": -0.968,
+                "pValue": 4.4134e-06,
+                "nGenes": 10,
+                "compound": "CHEMBL552425",
+                "lincsPertID": "LSM-1003",
+                "GeneTargets": "DDR1",
+                "concentration": "10uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_128010",
+                "cellline": "HUES3",
+                "_row": "LINCSCP_128010"
+            },
+            {
+                "similarity": 0.9671,
+                "pValue": 4.9402e-06,
+                "nGenes": 10,
+                "compound": "Pracinostat",
+                "lincsPertID": "LSM-43290",
+                "GeneTargets": "NA",
+                "concentration": "0.12uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_108639",
+                "cellline": "HELA",
+                "_row": "LINCSCP_108639"
+            },
+            {
+                "similarity": -0.9668,
+                "pValue": 5.0783e-06,
+                "nGenes": 10,
+                "compound": "936890-98-1",
+                "lincsPertID": "LSM-42786",
+                "GeneTargets": "MTOR",
+                "concentration": "0.12uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_88002",
+                "cellline": "HA1E",
+                "_row": "LINCSCP_88002"
+            },
+            {
+                "similarity": 0.9638,
+                "pValue": 7.2015e-06,
+                "nGenes": 10,
+                "compound": "Pyroxamide",
+                "lincsPertID": "LSM-4534",
+                "GeneTargets": "NA",
+                "concentration": "10uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_46424",
+                "cellline": "PC3",
+                "_row": "LINCSCP_46424"
+            },
+            {
+                "similarity": -0.9633,
+                "pValue": 7.6056e-06,
+                "nGenes": 10,
+                "compound": "ZINC03977910",
+                "lincsPertID": "LSM-5391",
+                "GeneTargets": "NR3C1",
+                "concentration": "10uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_47501",
+                "cellline": "PC3",
+                "_row": "LINCSCP_47501"
+            },
+            {
+                "similarity": -0.9621,
+                "pValue": 8.5887e-06,
+                "nGenes": 10,
+                "compound": "LY-294002",
+                "lincsPertID": "LSM-2597",
+                "GeneTargets": "MTOR|PIK3CA|PIK3CB|PIK3CD|PIK3CG|PLK1|PRKDC",
+                "concentration": "0.5uM",
+                "time": "6h",
+                "signatureid": "LINCSCP_10206",
+                "cellline": "A549",
+                "_row": "LINCSCP_10206"
+            },
+            {
+                "similarity": -0.96,
+                "pValue": 0,
+                "nGenes": 10,
+                "compound": "Apafant",
+                "lincsPertID": "LSM-2613",
+                "GeneTargets": "PTAFR",
+                "concentration": "10uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_120971",
+                "cellline": "HT29",
+                "_row": "LINCSCP_120971"
+            },
+            {
+                "similarity": 0.9549,
+                "pValue": 0,
+                "nGenes": 10,
+                "compound": "N-(3-Fluoro-4-((7-methoxyquinolin-4-yl)oxy)phenyl)-1-(2-hydroxy-2-methylpropyl)-5-methyl-3-oxo-2-phenyl-2,3-dihydro-1H-pyrazole-4-carboxamide",
+                "lincsPertID": "LSM-1113",
+                "GeneTargets": "NA",
+                "concentration": "10uM",
+                "time": "24h",
+                "signatureid": "LINCSCP_205036",
+                "cellline": "BT20",
+                "_row": "LINCSCP_205036"
+            }
+        ],
+        "corTablePath": "/mnt/raid/tmp/CorTable_Tue_Nov_11_22_49_01_2025_7146756.xls"
+    }
+}

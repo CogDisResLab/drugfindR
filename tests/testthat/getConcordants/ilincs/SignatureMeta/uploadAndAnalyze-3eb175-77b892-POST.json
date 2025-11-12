@@ -1,0 +1,123 @@
+{
+    "status": {
+        "sessionID": "Tue_Nov_11_22_49_13_2025_8581567",
+        "gpgene": null,
+        "gpprobe": null,
+        "Remark": "Done",
+        "NoOfGenes": 10,
+        "NoOfProbes": null,
+        "concordanceTable": [
+            {
+                "similarity": 0.9588,
+                "pValue": 0,
+                "nGenes": 10,
+                "treatment": "DLX3",
+                "perturbagenID": "CGS001-1747",
+                "time": "96 h",
+                "signatureid": "LINCSKD_12241",
+                "cellline": "HCC515",
+                "_row": "LINCSKD_12241"
+            },
+            {
+                "similarity": 0.9584,
+                "pValue": 0,
+                "nGenes": 10,
+                "treatment": "PSIP1",
+                "perturbagenID": "CGS001-11168",
+                "time": "96 h",
+                "signatureid": "LINCSKD_13399",
+                "cellline": "HCC515",
+                "_row": "LINCSKD_13399"
+            },
+            {
+                "similarity": 0.958,
+                "pValue": 0,
+                "nGenes": 10,
+                "treatment": "NOSIP",
+                "perturbagenID": "CGS001-51070",
+                "time": "96 h",
+                "signatureid": "LINCSKD_25172",
+                "cellline": "NPC",
+                "_row": "LINCSKD_25172"
+            },
+            {
+                "similarity": 0.9568,
+                "pValue": 0,
+                "nGenes": 10,
+                "treatment": "DPYD",
+                "perturbagenID": "CGS001-1806",
+                "time": "96 h",
+                "signatureid": "LINCSKD_818",
+                "cellline": "A375",
+                "_row": "LINCSKD_818"
+            },
+            {
+                "similarity": 0.9554,
+                "pValue": 0,
+                "nGenes": 10,
+                "treatment": "AREL1",
+                "perturbagenID": "CGS001-9870",
+                "time": "144 h",
+                "signatureid": "LINCSKD_26094",
+                "cellline": "PC3",
+                "_row": "LINCSKD_26094"
+            },
+            {
+                "similarity": -0.9531,
+                "pValue": 0,
+                "nGenes": 10,
+                "treatment": "RCAN1",
+                "perturbagenID": "CGS001-1827",
+                "time": "96 h",
+                "signatureid": "LINCSKD_23951",
+                "cellline": "MCF7",
+                "_row": "LINCSKD_23951"
+            },
+            {
+                "similarity": 0.9415,
+                "pValue": 0,
+                "nGenes": 10,
+                "treatment": "TMED10",
+                "perturbagenID": "CGS001-10972",
+                "time": "96 h",
+                "signatureid": "LINCSKD_7975",
+                "cellline": "ASC",
+                "_row": "LINCSKD_7975"
+            },
+            {
+                "similarity": 0.9364,
+                "pValue": 0.0001,
+                "nGenes": 10,
+                "treatment": "SWAP70",
+                "perturbagenID": "CGS001-23075",
+                "time": "96 h",
+                "signatureid": "LINCSKD_13789",
+                "cellline": "HCC515",
+                "_row": "LINCSKD_13789"
+            },
+            {
+                "similarity": 0.934,
+                "pValue": 0.0001,
+                "nGenes": 10,
+                "treatment": "BCL2L2",
+                "perturbagenID": "CGS001-599",
+                "time": "144 h",
+                "signatureid": "LINCSKD_35703",
+                "cellline": "PC3",
+                "_row": "LINCSKD_35703"
+            },
+            {
+                "similarity": 0.9339,
+                "pValue": 0.0001,
+                "nGenes": 10,
+                "treatment": "PSEN1",
+                "perturbagenID": "CGS001-5663",
+                "time": "96 h",
+                "signatureid": "LINCSKD_13397",
+                "cellline": "HCC515",
+                "_row": "LINCSKD_13397"
+            }
+        ],
+        "corTablePath": "/mnt/raid/tmp/CorTable_Tue_Nov_11_22_49_13_2025_8581567.xls"
+    }
+}
