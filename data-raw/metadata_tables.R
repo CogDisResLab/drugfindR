@@ -43,7 +43,13 @@ l1000 <- l1000List %>%
         keytype = "SYMBOL"
     ) %>%
     inner_join(l1000List, by = c(SYMBOL = "HGNC")) %>%
-    dplyr::select(ENTREZID, L1000, SYMBOL, ALIAS)
+    dplyr::select(ENTREZID, L1000, SYMBOL, ALIAS) %>%
+    mutate(ENTREZID = case_when(
+        L1000 == "KIAA0100" ~ "9703",
+        L1000 == "WDR61" ~ "80349",
+        L1000 == "SKIV2L" ~ "6499",
+        .default = ENTREZID
+    ))
 
 usethis::use_data(oeMetadata, kdMetadata, cpMetadata, l1000,
     internal = TRUE, overwrite = TRUE, compress = "bzip2", version = 2L
