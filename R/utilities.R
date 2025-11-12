@@ -7,18 +7,11 @@
 #'
 #' @return A character vector of new names
 targetRename <- function(inputNames) {
-    if ("treatment" %in% inputNames) {
-        c(
-            "TargetSignature", "Target", "TargetCellLine",
-            "TargetTime", "Similarity", "SignatureDirection", "pValue"
-        )
-    } else {
-        c(
-            "TargetSignature", "Target", "TargetCellLine",
-            "TargetTime", "TargetConcentration", "Similarity",
-            "SignatureDirection", "pValue"
-        )
-    }
+    c(
+        "TargetSignature", "Target", "TargetCellLine",
+        "TargetTime", "TargetConcentration", "Similarity",
+        "SignatureDirection", "pValue"
+    )
 }
 
 #' Parameterize the base URL for the iLINCS API
