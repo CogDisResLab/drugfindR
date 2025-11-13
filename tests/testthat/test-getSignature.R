@@ -111,41 +111,6 @@ test_that(".isValidSignatureId correctly identifies invalid signatures", {
 })
 
 # ==============================================================================
-# TESTS FOR L1000 DETECTION FUNCTION
-# ==============================================================================
-
-test_that(".detectL1000Status correctly identifies L1000 signatures", {
-    # Test with known L1000 signatures
-    expect_true(.detectL1000Status(lincsKdId()))
-
-    # Test pattern matching for L1000 signatures
-    testL1000Patterns <- c(lincsKdId(), lincsCpId(), lincsOeId())
-    for (pattern in testL1000Patterns) {
-        if (.isValidSignatureId(pattern)) {
-            expect_true(.detectL1000Status(pattern))
-        }
-    }
-})
-
-test_that(".detectL1000Status correctly identifies non-L1000 signatures", {
-    # Test with signatures that don't match L1000 pattern
-    expect_false(.detectL1000Status("GEO_UP_1"))
-    expect_false(.detectL1000Status("CUSTOM_SIG_123"))
-    expect_false(.detectL1000Status("NOT_L1000_FORMAT"))
-
-    # Test with invalid signatures (should return FALSE)
-    expect_false(.detectL1000Status("NONEXISTENT_SIG"))
-    expect_false(.detectL1000Status("LINCSKD_NOTANUMBER"))
-})
-
-test_that(".detectL1000Status validates signature existence", {
-    # Should return FALSE for patterns that look like L1000 but don't exist
-    expect_false(.detectL1000Status("LINCSKD_999999"))
-    expect_false(.detectL1000Status("LINCSOE_999999"))
-    expect_false(.detectL1000Status("LINCSCP_999999"))
-})
-
-# ==============================================================================
 # TESTS FOR HTTP REQUEST CREATION
 # ==============================================================================
 
@@ -263,7 +228,6 @@ with_mock_dir("getSignature", {
         expect_type(result[["Name_GeneSymbol"]], "character")
         expect_type(result[["Value_LogDiffExp"]], "double")
         expect_type(result[["Significance_pvalue"]], "double")
-        expect_type(result[["is_L1000"]], "logical")
     })
 
     test_that(".processSuccessfulResponse adds correct metadata", {
@@ -273,9 +237,6 @@ with_mock_dir("getSignature", {
 
         # Check signatureID is correctly added
         expect_true(all(result[["signatureID"]] == lincsKdId()))
-
-        # Check L1000 status is correctly detected
-        expect_true(all(result[["is_L1000"]] == TRUE)) # Signature is L1000
     })
 
 
@@ -377,9 +338,6 @@ with_mock_dir("getSignature", {
         expect_identical(nrow(result), 978L)
         expect_false(any(purrr::flatten_lgl(purrr::map(result, is.na))))
 
-        # Check L1000 status
-        expect_true(all(result[["is_L1000"]] == TRUE))
-
         # Check signature ID consistency
         expect_true(all(result[["signatureID"]] == lincsKdId()))
 
@@ -388,7 +346,6 @@ with_mock_dir("getSignature", {
         expect_type(result[["Name_GeneSymbol"]], "character")
         expect_type(result[["Value_LogDiffExp"]], "double")
         expect_type(result[["Significance_pvalue"]], "double")
-        expect_type(result[["is_L1000"]], "logical")
     })
 
     test_that("getSignature maintains numerical precision", {
@@ -420,7 +377,6 @@ with_mock_dir("getSignature", {
 
             # Check that columns are in the expected order
             expect_identical(colnames(result)[1L], "signatureID")
-            expect_identical(colnames(result)[6L], "is_L1000")
         })
     })
     test_that("getSignature handles different input validation scenarios", {

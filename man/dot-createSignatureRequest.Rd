@@ -33,7 +33,7 @@ the request execution function.
 \dontrun{
 # Create request for any signature
 req <- .createSignatureRequest("LINCSKD_28")
-req <- .createSignatureRequest("LINCSOE_123")
+req <- .createSignatureRequest("LINCSOE_1000")
 }
 }
 \keyword{internal}

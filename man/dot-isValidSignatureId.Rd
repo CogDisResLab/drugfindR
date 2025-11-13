@@ -35,7 +35,7 @@ for the provided signature ID(s).
 .isValidSignatureId("NONEXISTENT") # Returns FALSE
 
 # Works with vectors too
-.isValidSignatureId(c("LINCSKD_28", "LINCSOE_123")) # Returns c(TRUE, TRUE)
+.isValidSignatureId(c("LINCSKD_28", "LINCSOE_1000")) # Returns c(TRUE, TRUE)
 }
 }
 \keyword{internal}

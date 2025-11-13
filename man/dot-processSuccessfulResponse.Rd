@@ -17,7 +17,6 @@ A tibble containing the signature data with standardized columns:
 \item Name_GeneSymbol: Gene symbols
 \item Value_LogDiffExp: Log fold-change values (rounded to 12 decimal places)
 \item Significance_pvalue: P-values (rounded to 12 decimal places)
-\item is_L1000: Logical indicating if this is an L1000 signature
 }
 }
 \description{

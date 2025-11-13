@@ -21,7 +21,7 @@
 #' \dontrun{
 #' # Valid calls (no errors)
 #' .validateGetSignatureInput("LINCSKD_28")
-#' .validateGetSignatureInput("LINCSOE_123")
+#' .validateGetSignatureInput("LINCSOE_1000")
 #'
 #' # Invalid calls (will throw errors)
 #' .validateGetSignatureInput(123) # Non-character sigId
@@ -84,7 +84,7 @@
 #' .isValidSignatureId("NONEXISTENT") # Returns FALSE
 #'
 #' # Works with vectors too
-#' .isValidSignatureId(c("LINCSKD_28", "LINCSOE_123")) # Returns c(TRUE, TRUE)
+#' .isValidSignatureId(c("LINCSKD_28", "LINCSOE_1000")) # Returns c(TRUE, TRUE)
 #' }
 .isValidSignatureId <- function(sigId) {
     # Check all metadata tables for the signature ID
@@ -94,51 +94,6 @@
 
     # Return TRUE if found in any metadata table
     cpExists | kdExists | oeExists
-}
-
-#' Detect if a signature ID corresponds to an L1000 signature
-#'
-#' This internal function analyzes a signature ID to determine if it represents
-#' an L1000 signature based on the naming pattern and metadata tables.
-#'
-#' @param sigId A character string or vector containing the iLINCS signature ID(s).
-#'
-#' @return A logical value or vector: TRUE if the signature is an L1000 signature, FALSE otherwise.
-#'   Returns a vector of the same length as the input when given a vector.
-#'
-#' @details
-#' L1000 signatures typically follow the naming pattern:
-#' \itemize{
-#'   \item \code{LINCSKD_###}: Knockdown L1000 signatures
-#'   \item \code{LINCSOE_###}: Overexpression L1000 signatures
-#'   \item \code{LINCSCP_###}: Chemical Perturbagen L1000 signatures
-#' }
-#'
-#' This function checks both the naming pattern and validates the signature
-#' exists in the appropriate metadata table. It works with both single values
-#' and vectors for batch processing.
-#'
-#' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' # L1000 signatures
-#' .detectL1000Status("LINCSKD_28") # Returns TRUE
-#' .detectL1000Status("LINCSOE_123") # Returns TRUE
-#' .detectL1000Status("LINCSCP_456") # Returns TRUE
-#'
-#' # Non-L1000 signatures
-#' .detectL1000Status("CUSTOM_SIG_001") # Returns FALSE
-#'
-#' # Works with vectors
-#' .detectL1000Status(c("LINCSKD_28", "CUSTOM_SIG")) # Returns c(TRUE, FALSE)
-#' }
-.detectL1000Status <- function(sigId) {
-    # Check if signature ID matches L1000 naming pattern
-    l1000Pattern <- grepl("^LINCS(KD|OE|CP)_\\d+$", sigId)
-
-    # Only return TRUE if it matches pattern AND exists in metadata
-    l1000Pattern & .isValidSignatureId(sigId)
 }
 
 #' Create HTTP request for iLINCS signature retrieval
@@ -171,7 +126,7 @@
 #' \dontrun{
 #' # Create request for any signature
 #' req <- .createSignatureRequest("LINCSKD_28")
-#' req <- .createSignatureRequest("LINCSOE_123")
+#' req <- .createSignatureRequest("LINCSOE_1000")
 #' }
 .createSignatureRequest <- function(sigId) {
     httr2::request(.ilincsBaseUrl()) |>
@@ -249,7 +204,6 @@
 #'     \item Name_GeneSymbol: Gene symbols
 #'     \item Value_LogDiffExp: Log fold-change values (rounded to 12 decimal places)
 #'     \item Significance_pvalue: P-values (rounded to 12 decimal places)
-#'     \item is_L1000: Logical indicating if this is an L1000 signature
 #'   }
 #'
 #' @details
@@ -287,12 +241,11 @@
         dplyr::mutate(
             ID_geneid = as.character(.data[["ID_geneid"]]),
             Value_LogDiffExp = round(.data[["Value_LogDiffExp"]], 12L),
-            Significance_pvalue = round(.data[["Significance_pvalue"]], 12L),
-            is_L1000 = .detectL1000Status(signatureID)
+            Significance_pvalue = round(.data[["Significance_pvalue"]], 12L)
         ) |>
         dplyr::select(
             "signatureID", "ID_geneid", "Name_GeneSymbol",
-            "Value_LogDiffExp", "Significance_pvalue", "is_L1000"
+            "Value_LogDiffExp", "Significance_pvalue"
         )
 }
 
@@ -370,7 +323,6 @@
 #'   \item \code{Name_GeneSymbol}: Gene symbols
 #'   \item \code{Value_LogDiffExp}: Log fold-change values (rounded to 12 decimal places)
 #'   \item \code{Significance_pvalue}: P-values (rounded to 12 decimal places)
-#'   \item \code{is_L1000}: Logical indicating if this is an L1000 signature
 #' }
 #'
 #' @importFrom httr2 resp_status
@@ -406,7 +358,6 @@
 #'     \item \code{Name_GeneSymbol}: Gene symbols
 #'     \item \code{Value_LogDiffExp}: Log fold-change values
 #'     \item \code{Significance_pvalue}: Statistical significance p-values
-#'     \item \code{is_L1000}: Logical indicating if this is an L1000 signature
 #'   }
 #' @export
 #'
@@ -425,7 +376,7 @@
 #' kdSignature <- getSignature("LINCSKD_28")
 #'
 #' # Get an overexpression signature (L1000 status is automatically detected)
-#' oeSignature <- getSignature("LINCSOE_123")
+#' oeSignature <- getSignature("LINCSOE_1000")
 getSignature <- function(sigId) {
     # Validate input parameters
     .validateGetSignatureInput(sigId)

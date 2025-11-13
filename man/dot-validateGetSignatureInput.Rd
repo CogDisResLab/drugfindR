@@ -28,7 +28,7 @@ This function performs the following validations:
 \dontrun{
 # Valid calls (no errors)
 .validateGetSignatureInput("LINCSKD_28")
-.validateGetSignatureInput("LINCSOE_123")
+.validateGetSignatureInput("LINCSOE_1000")
 
 # Invalid calls (will throw errors)
 .validateGetSignatureInput(123) # Non-character sigId

@@ -30,7 +30,6 @@ The resulting tibble contains these columns:
 \item \code{Name_GeneSymbol}: Gene symbols
 \item \code{Value_LogDiffExp}: Log fold-change values (rounded to 12 decimal places)
 \item \code{Significance_pvalue}: P-values (rounded to 12 decimal places)
-\item \code{is_L1000}: Logical indicating if this is an L1000 signature
 }
 }
 \keyword{internal}

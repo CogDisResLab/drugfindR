@@ -18,7 +18,6 @@ a tibble with the signature data containing the following columns:
 \item \code{Name_GeneSymbol}: Gene symbols
 \item \code{Value_LogDiffExp}: Log fold-change values
 \item \code{Significance_pvalue}: Statistical significance p-values
-\item \code{is_L1000}: Logical indicating if this is an L1000 signature
 }
 }
 \description{
@@ -34,5 +33,5 @@ signature analysis.
 kdSignature <- getSignature("LINCSKD_28")
 
 # Get an overexpression signature (L1000 status is automatically detected)
-oeSignature <- getSignature("LINCSOE_123")
+oeSignature <- getSignature("LINCSOE_1000")
 }
