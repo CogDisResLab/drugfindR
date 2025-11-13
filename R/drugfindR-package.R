@@ -14,22 +14,22 @@
 #' uses the connectivity analysis to find the most similar drugs to the user's
 #' input signature.
 #' @section References:
-#' 1. Imami, Ali S., Sinead M. O’donovan, Justin F. Creeden,
-#' Xiaojun Wu, Hunter Eby, Cheryl B. McCullumsmith, Kerstin Uvnäs-Moberg,
+#' 1. Imami, Ali S., Sinead M. O'donovan, Justin F. Creeden,
+#' Xiaojun Wu, Hunter Eby, Cheryl B. McCullumsmith, Kerstin Uvnas-Moberg,
 #' Robert E. McCullumsmith, and Elissar Andari.
-#' “Oxytocin’s Anti-Inflammatory and Proimmune Functions in Covid-19:
-#' A Transcriptomic Signature-Based Approach.”
+#' "Oxytocin's Anti-Inflammatory and Proimmune Functions in Covid-19:
+#' A Transcriptomic Signature-Based Approach."
 #' Physiological Genomics, 2020.
 #' https://doi.org/10.1152/physiolgenomics.00095.2020.
-#' 2. O’Donovan, Sinead M., Ali Imami, Hunter Eby,
+#' 2. O'Donovan, Sinead M., Ali Imami, Hunter Eby,
 #' Nicholas D. Henkel, Justin Fortune Creeden, Sophie Asah, Xiaolu Zhang, et al.
-#' “Identification of Candidate Repurposable Drugs to Combat COVID-19
-#' Using a Signature-Based Approach.”
+#' "Identification of Candidate Repurposable Drugs to Combat COVID-19
+#' Using a Signature-Based Approach."
 #' Scientific Reports 11, no. 1 (December 24, 2021): 4495.
 #' https://doi.org/10.1038/s41598-021-84044-9.
 #' 3. Creeden, Justin Fortune, Ali Sajid Imami, Hunter M. Eby, Cassidy Gillman,
 #' Kathryn N. Becker, Jim Reigle, Elissar Andari, et al.
-#' “Fluoxetine as an Anti-Inflammatory Therapy in SARS-CoV-2 Infection.”
+#' "Fluoxetine as an Anti-Inflammatory Therapy in SARS-CoV-2 Infection."
 #' Biomedicine & Pharmacotherapy 138 (June 1, 2021): 111437.
 #' https://doi.org/10.1016/j.biopha.2021.111437.
 #' @section Author:

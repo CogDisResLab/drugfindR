@@ -101,8 +101,8 @@
 #'
 #' @return A named list with two elements:
 #'  \itemize{
-#'   \item{downThreshold}{The negative threshold (-threshold)}
-#'   \item{upThreshold}{The positive threshold (threshold)}
+#'   \item `downThreshold`: The negative threshold (-threshold)
+#'   \item `upThreshold`: The positive threshold (threshold)
 #' }
 #'
 #' @details
@@ -143,8 +143,8 @@
 #'
 #' @return A named list with two elements:
 #'  \itemize{
-#'   \item{downThreshold}{The down-regulated threshold (`threshold[1]`)}
-#'   \item{upThreshold}{The up-regulated threshold (`threshold[2]`)}
+#'   \item `downThreshold`: The down-regulated threshold (`threshold[1]`)
+#'   \item `upThreshold`: The up-regulated threshold (`threshold[2]`)
 #' }
 #'
 #' @details
@@ -188,23 +188,21 @@
 #' calculation function based on the number of threshold values provided.
 #'
 #' @param threshold A numeric value or vector specifying the absolute threshold(s).
+#'
 #'   Can be:
-#'   \itemize{
-#'     \item A single value: Dispatched to \code{.calculateSingleThreshold()}
-#'     \item A vector of two values: Dispatched to \code{.calculateDoubleThreshold()}
-#'   }
+#'
+#'     - A single value: Dispatched to [.calculateSingleThreshold()]
+#'     - A vector of two values: Dispatched to [.calculateDoubleThreshold()]
 #'
 #' @return A named list with two elements:
-#'   \item{downThreshold}{The threshold for down-regulated genes}
-#'   \item{upThreshold}{The threshold for up-regulated genes}
+#'   - `downThreshold`: The threshold for down-regulated genes
+#'   - `upThreshold`: The threshold for up-regulated genes
 #'
 #' @details
 #' This function serves as a dispatcher that:
-#' \itemize{
-#'   \item Checks the length of the threshold parameter
-#'   \item Calls the appropriate threshold calculation function
-#'   \item Throws an error if an invalid number of thresholds is provided
-#' }
+#'   - Checks the length of the threshold parameter
+#'   - Calls the appropriate threshold calculation function
+#'   - Throws an error if an invalid number of thresholds is provided
 #'
 #' The function ensures that only single values or pairs of values are accepted,
 #' maintaining the integrity of the filtering logic.
@@ -317,8 +315,8 @@
 #'   }
 #' @param thresholds A named list containing:
 #'   \itemize{
-#'   \item{downThreshold}{Threshold for down-regulated genes}
-#'   \item{upThreshold}{Threshold for up-regulated genes}
+#'   \item `downThreshold`: Threshold for down-regulated genes
+#'   \item `upThreshold`: Threshold for up-regulated genes
 #' }
 #' @return A tibble containing the filtered signature data with the same structure
 #'   as the input but including only rows that meet the filtering criteria.

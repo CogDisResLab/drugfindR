@@ -397,9 +397,9 @@ stopIfInvalidSignature <- function(signature) {
 #' @details
 #' The mapping between user library names and iLINCS internal IDs is:
 #' \itemize{
-#'   \item \code{"OE"} (Overexpression) → \code{"LIB_11"}
-#'   \item \code{"KD"} (Knockdown) → \code{"LIB_6"}
-#'   \item \code{"CP"} (Chemical Perturbagen) → \code{"LIB_5"}
+#'   \item \code{"OE"} (Overexpression) -> \code{"LIB_11"}
+#'   \item \code{"KD"} (Knockdown) -> \code{"LIB_6"}
+#'   \item \code{"CP"} (Chemical Perturbagen) -> \code{"LIB_5"}
 #' }
 #'
 #' The function validates the input library name before mapping and will

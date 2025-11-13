@@ -8,16 +8,19 @@
 }
 \arguments{
 \item{threshold}{A numeric value or vector specifying the absolute threshold(s).
+
 Can be:
-\itemize{
-\item A single value: Dispatched to \code{.calculateSingleThreshold()}
-\item A vector of two values: Dispatched to \code{.calculateDoubleThreshold()}
-}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{- A single value: Dispatched to [.calculateSingleThreshold()]
+- A vector of two values: Dispatched to [.calculateDoubleThreshold()]
+}\if{html}{\out{</div>}}}
 }
 \value{
 A named list with two elements:
-\item{downThreshold}{The threshold for down-regulated genes}
-\item{upThreshold}{The threshold for up-regulated genes}
+\itemize{
+\item \code{downThreshold}: The threshold for down-regulated genes
+\item \code{upThreshold}: The threshold for up-regulated genes
+}
 }
 \description{
 This internal function coordinates the calculation of filtering thresholds

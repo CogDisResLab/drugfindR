@@ -20,8 +20,8 @@ Must be one of:
 
 \item{thresholds}{A named list containing:
 \itemize{
-\item{downThreshold}{Threshold for down-regulated genes}
-\item{upThreshold}{Threshold for up-regulated genes}
+\item \code{downThreshold}: Threshold for down-regulated genes
+\item \code{upThreshold}: Threshold for up-regulated genes
 }}
 }
 \value{

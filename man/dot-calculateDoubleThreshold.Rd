@@ -14,8 +14,8 @@ and the second element is the up-regulated threshold (typically positive).}
 \value{
 A named list with two elements:
 \itemize{
-\item{downThreshold}{The down-regulated threshold (\code{threshold[1]})}
-\item{upThreshold}{The up-regulated threshold (\code{threshold[2]})}
+\item \code{downThreshold}: The down-regulated threshold (\code{threshold[1]})
+\item \code{upThreshold}: The up-regulated threshold (\code{threshold[2]})
 }
 }
 \description{

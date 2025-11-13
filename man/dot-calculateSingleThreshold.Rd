@@ -13,8 +13,8 @@ threshold for filtering.}
 \value{
 A named list with two elements:
 \itemize{
-\item{downThreshold}{The negative threshold (-threshold)}
-\item{upThreshold}{The positive threshold (threshold)}
+\item \code{downThreshold}: The negative threshold (-threshold)
+\item \code{upThreshold}: The positive threshold (threshold)
 }
 }
 \description{
