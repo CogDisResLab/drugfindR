@@ -117,14 +117,14 @@
 #' @examples
 #' \dontrun{
 #' # Create symmetric thresholds from threshold = 1.5
-#' thresholds <- calculateSingleThreshold(1.5)
+#' thresholds <- .calculateSingleThreshold(1.5)
 #' # Returns: list(downThreshold = -1.5, upThreshold = 1.5)
 #'
 #' # Create symmetric thresholds from threshold = 0.8
-#' thresholds <- calculateSingleThreshold(0.8)
+#' thresholds <- .calculateSingleThreshold(0.8)
 #' # Returns: list(downThreshold = -0.8, upThreshold = 0.8)
 #' }
-calculateSingleThreshold <- function(threshold) {
+.calculateSingleThreshold <- function(threshold) {
     list(
         downThreshold = -threshold,
         upThreshold = threshold
@@ -190,7 +190,7 @@ calculateSingleThreshold <- function(threshold) {
 #' @param threshold A numeric value or vector specifying the absolute threshold(s).
 #'   Can be:
 #'   \itemize{
-#'     \item A single value: Dispatched to \code{calculateSingleThreshold()}
+#'     \item A single value: Dispatched to \code{.calculateSingleThreshold()}
 #'     \item A vector of two values: Dispatched to \code{.calculateDoubleThreshold()}
 #'   }
 #'
@@ -226,7 +226,7 @@ calculateSingleThreshold <- function(threshold) {
 #' }
 .calculateAbsoluteThresholds <- function(threshold) {
     if (length(threshold) == 1L) {
-        calculateSingleThreshold(threshold)
+        .calculateSingleThreshold(threshold)
     } else if (length(threshold) == 2L) {
         .calculateDoubleThreshold(threshold)
     } else {
@@ -338,7 +338,7 @@ calculateSingleThreshold <- function(threshold) {
 #' @keywords internal
 #'
 #' @import DFplyr
-#' @importFrom dplyr filter desc
+#' @importFrom dplyr filter
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #' @importFrom stats quantile

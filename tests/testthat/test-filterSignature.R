@@ -208,7 +208,7 @@ test_that(".validateFilterSignatureInput accepts valid proportion edge cases", {
 # ==============================================================================
 
 test_that("calculateSingleThreshold works correctly", {
-    result <- calculateSingleThreshold(1.5)
+    result <- .calculateSingleThreshold(1.5)
 
     expect_type(result, "list")
     expect_named(result, c("downThreshold", "upThreshold"))
@@ -216,17 +216,17 @@ test_that("calculateSingleThreshold works correctly", {
     expect_identical(result[["upThreshold"]], 1.5)
 
     # Test with different values
-    result2 <- calculateSingleThreshold(0.8)
+    result2 <- .calculateSingleThreshold(0.8)
     expect_identical(result2[["downThreshold"]], -0.8)
     expect_identical(result2[["upThreshold"]], 0.8)
 
     # Test with zero
-    result3 <- calculateSingleThreshold(0.0)
+    result3 <- .calculateSingleThreshold(0.0)
     expect_identical(result3[["downThreshold"]], 0.0)
     expect_identical(result3[["upThreshold"]], 0.0)
 
     # Test with large value
-    result4 <- calculateSingleThreshold(100.0)
+    result4 <- .calculateSingleThreshold(100.0)
     expect_identical(result4[["downThreshold"]], -100.0)
     expect_identical(result4[["upThreshold"]], 100.0)
 })

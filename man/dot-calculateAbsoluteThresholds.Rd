@@ -10,7 +10,7 @@
 \item{threshold}{A numeric value or vector specifying the absolute threshold(s).
 Can be:
 \itemize{
-\item A single value: Dispatched to \code{calculateSingleThreshold()}
+\item A single value: Dispatched to \code{.calculateSingleThreshold()}
 \item A vector of two values: Dispatched to \code{.calculateDoubleThreshold()}
 }}
 }
