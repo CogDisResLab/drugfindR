@@ -552,7 +552,7 @@ test_that(".computeConsensusFromSignature passes filterThreshold correctly", {
     expect_silent({
         # These parameters should be accepted
         threshold_values <- c(0.3, 0.5, 0.85, 1.0, 1.5)
-        expect_true(all(threshold_values > 0))
+        expect_true(all(threshold_values > 0L))
     })
 })
 
@@ -565,7 +565,7 @@ test_that(".computeConsensusFromSignature passes filterProp correctly", {
     # Validation happens in filterSignature
     expect_silent({
         prop_values <- c(0.1, 0.2, 0.3, 0.5)
-        expect_true(all(prop_values > 0 & prop_values < 1))
+        expect_true(all(prop_values > 0L & prop_values < 1L))
     })
 })
 
@@ -577,7 +577,7 @@ test_that(".computeConsensusFromSignature passes similarityThreshold correctly",
     testSig <- getTestFixture("prepared_signature", seed = .testSeed)
 
     # Test with different similarity thresholds
-    result_low <- .computeConsensusFromSignature(
+    resultLow <- .computeConsensusFromSignature(
         testSig,
         outputLib = "CP",
         filterThreshold = 0.5,
@@ -594,7 +594,7 @@ test_that(".computeConsensusFromSignature passes similarityThreshold correctly",
     )
 
     # Higher threshold should give fewer or equal results
-    expect_lte(nrow(result_high), nrow(result_low))
+    expect_lte(nrow(result_high), nrow(resultLow))
 })
 
 test_that(".computeConsensusFromSignature passes outputCellLines correctly", {
@@ -605,7 +605,7 @@ test_that(".computeConsensusFromSignature passes outputCellLines correctly", {
     testSig <- getTestFixture("prepared_signature", seed = .testSeed)
 
     # Test with cell line filtering
-    result_all <- .computeConsensusFromSignature(
+    resultAll <- .computeConsensusFromSignature(
         testSig,
         outputLib = "CP",
         filterThreshold = 0.5,
@@ -615,7 +615,7 @@ test_that(".computeConsensusFromSignature passes outputCellLines correctly", {
     )
 
     # With specific cell lines
-    result_filtered <- .computeConsensusFromSignature(
+    resultFiltered <- .computeConsensusFromSignature(
         testSig,
         outputLib = "CP",
         filterThreshold = 0.5,
@@ -625,11 +625,11 @@ test_that(".computeConsensusFromSignature passes outputCellLines correctly", {
     )
 
     # Both should be tibbles
-    expect_s3_class(result_all, "tbl_df")
-    expect_s3_class(result_filtered, "tbl_df")
+    expect_s3_class(resultAll, "tbl_df")
+    expect_s3_class(resultFiltered, "tbl_df")
 
     # Filtered should have fewer or equal rows
-    expect_lte(nrow(result_filtered), nrow(result_all))
+    expect_lte(nrow(resultFiltered), nrow(resultAll))
 })
 
 test_that(".computeConsensusFromSignature works with different libraries", {

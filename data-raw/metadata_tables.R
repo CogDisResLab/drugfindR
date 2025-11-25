@@ -20,30 +20,30 @@ renameColumns <- function(inputNames) {
     colNames
 }
 
-oeMetadata <- read_tsv("raw/LINCS-OE-Metadata.xls.gz") %>%
-    dplyr::select(-CGSID, -is_exemplar) %>%
+oeMetadata <- read_tsv(file.path("raw", "LINCS-OE-Metadata.xls.gz")) |>
+    dplyr::select(-CGSID, -is_exemplar) |>
     rename_with(renameColumns)
 
-kdMetadata <- read_tsv("raw/LINCS-KD-Metadata.xls.gz") %>%
-    dplyr::select(-CGSID, -is_exemplar) %>%
+kdMetadata <- read_tsv(file.path("raw", "LINCS-KD-Metadata.xls.gz")) |>
+    dplyr::select(-CGSID, -is_exemplar) |>
     rename_with(renameColumns)
 
-cpMetadata <- read_tsv("raw/LINCS-Perturbagen-Metadata.xls.gz") %>%
-    dplyr::select(-GeneTargets, -is_exemplar) %>%
+cpMetadata <- read_tsv(file.path("raw", "LINCS-Perturbagen-Metadata.xls.gz")) |>
+    dplyr::select(-GeneTargets, -is_exemplar) |>
     rename_with(renameColumns)
 
-l1000List <- read_tsv("raw/l1000_genes.tsv.gz")
+l1000List <- read_tsv(file.path("raw", "l1000_genes.tsv.gz"))
 
-l1000 <- l1000List %>%
-    pull(HGNC) %>%
-    unique() %>%
+l1000 <- l1000List |>
+    pull(HGNC) |>
+    unique() |>
     AnnotationDbi::select(org.Hs.eg.db,
         keys = .,
         columns = c("ENTREZID", "ALIAS", "SYMBOL"),
         keytype = "SYMBOL"
-    ) %>%
-    inner_join(l1000List, by = c(SYMBOL = "HGNC")) %>%
-    dplyr::select(ENTREZID, L1000, SYMBOL, ALIAS) %>%
+    ) |>
+    inner_join(l1000List, by = c(SYMBOL = "HGNC")) |>
+    dplyr::select(ENTREZID, L1000, SYMBOL, ALIAS) |>
     mutate(ENTREZID = case_when(
         L1000 == "KIAA0100" ~ "9703",
         L1000 == "WDR61" ~ "80349",

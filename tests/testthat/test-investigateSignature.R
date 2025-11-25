@@ -199,8 +199,8 @@ test_that("investigateSignature passes filterProp correctly", {
         sig <- prepareSignature(testDge)
         # Prop validation happens in filterSignature
         expect_type(0.1, "double")
-        expect_gt(0.1, 0)
-        expect_lt(0.1, 1)
+        expect_gt(0.1, 0L)
+        expect_lt(0.1, 1L)
     })
 })
 
@@ -209,8 +209,8 @@ test_that("investigateSignature passes similarityThreshold correctly", {
 
     # Test that similarity threshold is properly structured
     expect_type(0.2, "double")
-    expect_gte(0.2, 0)
-    expect_lte(0.2, 1)
+    expect_gte(0.2, 0L)
+    expect_lte(0.2, 1L)
 })
 
 test_that("investigateSignature passes paired parameter correctly", {
@@ -248,7 +248,7 @@ test_that("investigateSignature adds source metadata correctly", {
     dge_data <- read.delim(dge_file)
 
     result <- investigateSignature(
-        dge_data[1:20, ],
+        dge_data[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -284,7 +284,7 @@ test_that("investigateSignature uses default metadata values", {
     dge_data <- read.delim(dge_file)
 
     result <- investigateSignature(
-        dge_data[1:20, ],
+        dge_data[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -310,7 +310,7 @@ test_that("investigateSignature adds SourceSignature column", {
     dge_data <- read.delim(dge_file)
 
     result <- investigateSignature(
-        dge_data[1:20, ],
+        dge_data[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -338,7 +338,7 @@ test_that("investigateSignature returns tibble with expected columns", {
     dge_data <- read.delim(dge_file)
 
     result <- investigateSignature(
-        dge_data[1:20, ],
+        dge_data[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -369,7 +369,7 @@ test_that("investigateSignature column order is consistent", {
     dge_data <- read.delim(dge_file)
 
     result <- investigateSignature(
-        dge_data[1:20, ],
+        dge_data[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -401,7 +401,7 @@ test_that("investigateSignature works with CP library", {
     dge_data <- read.delim(dge_file)
 
     result <- investigateSignature(
-        dge_data[1:20, ],
+        dge_data[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -424,7 +424,7 @@ test_that("investigateSignature works with KD library", {
     dge_data <- read.delim(dge_file)
 
     result <- investigateSignature(
-        dge_data[1:20, ],
+        dge_data[1L:20L, ],
         outputLib = "KD",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -447,7 +447,7 @@ test_that("investigateSignature works with OE library", {
     dge_data <- read.delim(dge_file)
 
     result <- investigateSignature(
-        dge_data[1:20, ],
+        dge_data[1L:20L, ],
         outputLib = "OE",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -474,7 +474,7 @@ test_that("investigateSignature paired workflow produces valid results", {
     dge_data <- read.delim(dge_file)
 
     result <- investigateSignature(
-        dge_data[1:20, ],
+        dge_data[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         paired = TRUE,
@@ -498,7 +498,7 @@ test_that("investigateSignature unpaired workflow produces valid results", {
     dge_data <- read.delim(dge_file)
 
     result <- investigateSignature(
-        dge_data[1:20, ],
+        dge_data[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         paired = FALSE,
@@ -580,7 +580,7 @@ test_that("investigateSignature correctly calls .computeConsensusFromSignature",
     dge_data <- read.delim(dge_file)
 
     sig <- prepareSignature(
-        dge_data[1:20, ],
+        dge_data[1L:20L, ],
         geneColumn = "hgnc_symbol",
         logfcColumn = "logFC",
         pvalColumn = "PValue"

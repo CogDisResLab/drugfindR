@@ -35,7 +35,9 @@ NULL
 #' .validateConsensusConcordantsInput(list(), FALSE, 0.3, NULL) # No data
 #' .validateConsensusConcordantsInput(list(testData), TRUE, 0.3, NULL) # Paired needs 2 dataframes
 #' }
-.validateConsensusConcordantsInput <- function(dots, paired, cutoff, cellLine) { # nolint: object_length_linter.
+# nolint start: object_length_linter, cyclocomp_linter.
+.validateConsensusConcordantsInput <- function(dots, paired, cutoff, cellLine) {
+    # nolint end.
     # Validate input count based on analysis type
     if (paired && length(dots) != 2L) {
         stop("Paired analysis requires two data frames", call. = FALSE)

@@ -264,7 +264,7 @@ test_that(".generateIlincsRequest includes proper headers and configuration", {
 # TESTS FOR API REQUEST EXECUTION
 # ==============================================================================
 
-# TODO: Add support for verbosity
+# NOTE: Add support for verbosity when API supports it
 test_that(".executeIlincsRequest handles verbose option", {
     skip("Verbose response config option is not testable right now")
     verboseResponse <- mockConcordantsResponse()
@@ -290,7 +290,7 @@ test_that(".executeIlincsRequest handles verbose option", {
     })
 })
 
-# TODO: Need to figure out how to trigger 500 errors for tests
+# NOTE: Need to figure out how to trigger 500 errors for tests
 test_that(".executeIlincsRequest returns error responses without raising", {
     skip("Have to figure out how to trigger 500 errors")
 

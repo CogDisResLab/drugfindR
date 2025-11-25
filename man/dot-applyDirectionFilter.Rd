@@ -38,7 +38,8 @@ The filtering logic depends on the direction parameter:
 \itemize{
 \item \strong{"up"}: Retains genes where \code{Value_LogDiffExp >= upThreshold}
 \item \strong{"down"}: Retains genes where \code{Value_LogDiffExp <= downThreshold}
-\item \strong{"any"}: Retains genes where \code{Value_LogDiffExp >= upThreshold OR Value_LogDiffExp <= downThreshold}
+\item \strong{"any"}: Retains genes where
+\code{Value_LogDiffExp >= upThreshold OR Value_LogDiffExp <= downThreshold}
 }
 
 The function uses \code{dplyr::filter} with \code{rlang::.data} for
