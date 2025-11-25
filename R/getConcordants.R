@@ -37,10 +37,10 @@
     }
 
     # 2. Validate the signature structure
-    stopIfInvalidSignature(signature)
+    stopIfInvalidSignature(signature) # nolint: object_usage_linter.
 
     # 3. Validate iLINCS library
-    stopIfInvalidLibraries(ilincsLibrary)
+    stopIfInvalidLibraries(ilincsLibrary) # nolint: object_usage_linter.
 
     invisible(class(signature))
 }
@@ -148,13 +148,13 @@
     # Map library names to iLINCS internal IDs
 
     # Construct the request
-    httr2::request(.ilincsBaseUrl()) |>
+    httr2::request(.ilincsBaseUrl()) |> # nolint: object_usage_linter.
         httr2::req_url_path_append("SignatureMeta") |>
         httr2::req_url_path_append("uploadAndAnalyze") |>
-        httr2::req_url_query(lib = .returnLibrary(ilincsLibrary)) |>
+        httr2::req_url_query(lib = .returnLibrary(ilincsLibrary)) |> # nolint: object_usage_linter.
         httr2::req_body_multipart(file = curl::form_file(signatureFile)) |>
         httr2::req_method("POST") |>
-        httr2::req_user_agent(.returnUserAgent())
+        httr2::req_user_agent(.returnUserAgent()) # nolint: object_usage_linter.
 }
 
 #' Execute iLINCS API request with error handling
@@ -258,13 +258,6 @@
 #'
 #' @keywords internal
 .processIlincsResponseEmpty <- function(sigDirection, ilincsLibrary) {
-    # Define sig_type based on library
-    sigType <- switch(ilincsLibrary,
-        CP = "Chemical Perturbagen",
-        KD = "Gene Knockdown",
-        OE = "Gene Overexpression"
-    )
-
     # Return empty tibble with correct column structure
     tibble::tibble(
         signatureid = character(0L),
@@ -325,7 +318,7 @@
             "time", "cellline", "similarity", "pValue"
         ))) |>
         dplyr::mutate(
-            similarity = round(.data[["similarity"]], 12L),
+            similarity = round(.data[["similarity"]], 12L), # nolint: object_usage_linter.
             pValue = round(.data[["pValue"]], 20L),
             sig_direction = sigDirection,
             sig_type = sigType
@@ -452,7 +445,7 @@
 #' @examples NULL
 .returnResults <- function(result, inputClass) {
     if ("DFrame" %in% inputClass) {
-        DataFrame(result)
+        DataFrame(result) # nolint: object_usage_linter.
     } else {
         result
     }

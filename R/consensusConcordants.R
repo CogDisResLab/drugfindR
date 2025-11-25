@@ -148,7 +148,7 @@ NULL
         return(concordants)
     }
 
-    dplyr::filter(concordants, .data[["cellline"]] %in% cellLine)
+    dplyr::filter(concordants, .data[["cellline"]] %in% cellLine) # nolint: object_usage_linter.
 }
 
 #' Apply similarity cutoff filter to concordants data
@@ -181,7 +181,7 @@ NULL
 #' # Returns entries with |similarity| >= 0.3
 #' }
 .applySimilarityCutoff <- function(concordants, cutoff) {
-    dplyr::filter(concordants, abs(.data[["similarity"]]) >= cutoff)
+    dplyr::filter(concordants, abs(.data[["similarity"]]) >= cutoff) # nolint: object_usage_linter.
 }
 
 #' Group concordants by target and select maximum similarity entries
@@ -227,7 +227,7 @@ NULL
             dplyr::across(!!"treatment")
         ) |>
         dplyr::filter(
-            abs(.data[["similarity"]]) == max(abs(.data[["similarity"]]))
+            abs(.data[["similarity"]]) == max(abs(.data[["similarity"]])) # nolint: object_usage_linter.
         ) |>
         dplyr::ungroup()
 }
@@ -275,7 +275,7 @@ NULL
                 "similarity", "pValue"
             ))
         ) |>
-        dplyr::arrange(dplyr::desc(abs(.data[["similarity"]])))
+        dplyr::arrange(dplyr::desc(abs(.data[["similarity"]]))) # nolint: object_usage_linter.
 }
 
 #' Apply target column renaming to consensus results
@@ -310,7 +310,7 @@ NULL
 #' renamed <- .applyTargetRenaming(testData)
 #' }
 .applyTargetRenaming <- function(concordants) {
-    dplyr::rename_with(concordants, targetRename)
+    dplyr::rename_with(concordants, targetRename) # nolint: object_usage_linter.
 }
 
 #' Process concordants data through the complete consensus pipeline

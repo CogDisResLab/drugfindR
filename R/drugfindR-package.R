@@ -62,3 +62,21 @@
 #' @importFrom lifecycle deprecated
 ## usethis namespace: end
 NULL
+
+# Declare global variables to avoid R CMD check NOTEs
+utils::globalVariables(c(
+    ".data", # rlang/dplyr pronoun for tidy evaluation
+    "cpMetadata", # Package data: L1000 Chemical Perturbagen metadata
+    "kdMetadata", # Package data: L1000 Gene Knockdown metadata
+    "oeMetadata", # Package data: L1000 Gene Overexpression metadata
+    "l1000", # Package data: L1000 gene mapping data
+    "stopIfInvalidSignature", # Exported function called internally
+    "stopIfInvalidLibraries", # Exported function called internally
+    "filterSignature", # Exported function called internally
+    "getConcordants", # Exported function called internally
+    "consensusConcordants", # Exported function called internally
+    "prepareSignature", # Exported function called internally
+    "getSignature", # Exported function called internally
+    "DataFrame", # S4Vectors::DataFrame imported and used
+    "targetRename" # Internal function used in rename_with()
+))

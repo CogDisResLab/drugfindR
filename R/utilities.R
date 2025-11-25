@@ -310,9 +310,9 @@ stopIfInvalidSignature <- function(signature) {
 #' @examples NULL
 .loadMetadata <- function(lib) {
     switch(lib,
-        OE = oeMetadata,
-        KD = kdMetadata,
-        CP = cpMetadata,
+        OE = oeMetadata, # nolint: object_usage_linter.
+        KD = kdMetadata, # nolint: object_usage_linter.
+        CP = cpMetadata, # nolint: object_usage_linter.
         stop(
             "Invalid library: '", lib, "'. ",
             "Library must be one of 'OE' (Overexpression), 'KD' (Knockdown), or 'CP' (Chemical Perturbagen).",
@@ -445,28 +445,28 @@ stopIfInvalidSignature <- function(signature) {
     stopIfInvalidLibraries(outputLib)
 
     if (paired) {
-        upSig <- filterSignature(signature,
+        upSig <- filterSignature(signature, # nolint: object_usage_linter.
             direction = "up",
             threshold = filterThreshold, prop = filterProp
         )
-        downSig <- filterSignature(signature,
+        downSig <- filterSignature(signature, # nolint: object_usage_linter.
             direction = "down",
             threshold = filterThreshold, prop = filterProp
         )
-        upConc <- getConcordants(upSig, ilincsLibrary = outputLib)
-        downConc <- getConcordants(downSig, ilincsLibrary = outputLib)
-        consensusConcordants(upConc, downConc,
+        upConc <- getConcordants(upSig, ilincsLibrary = outputLib) # nolint: object_usage_linter.
+        downConc <- getConcordants(downSig, ilincsLibrary = outputLib) # nolint: object_usage_linter.
+        consensusConcordants(upConc, downConc, # nolint: object_usage_linter.
             paired = TRUE,
             cellLine = outputCellLines,
             cutoff = similarityThreshold
         )
     } else {
-        anySig <- filterSignature(signature,
+        anySig <- filterSignature(signature, # nolint: object_usage_linter.
             direction = "any",
             threshold = filterThreshold, prop = filterProp
         )
-        conc <- getConcordants(anySig, ilincsLibrary = outputLib)
-        consensusConcordants(conc,
+        conc <- getConcordants(anySig, ilincsLibrary = outputLib) # nolint: object_usage_linter.
+        consensusConcordants(conc, # nolint: object_usage_linter.
             paired = FALSE,
             cellLine = outputCellLines,
             cutoff = similarityThreshold

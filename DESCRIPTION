@@ -1,6 +1,6 @@
 Package: drugfindR
 Title: Investigate iLINCS for candidate repurposable drugs
-Version: 0.99.1301
+Version: 0.99.1302
 Authors@R: c(
     person(given = c("Ali", "Sajid"),
            family = "Imami",
@@ -36,9 +36,8 @@ BugReports: https://github.com/CogDisResLab/drugfindR/issues
 LazyData: false
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
-biocViews: FunctionalPrediction, DifferentialExpression, GeneSetEnrichment
+biocViews: FunctionalPrediction, DifferentialExpression, GeneSetEnrichment, SingleCell, Network
 Imports:
-    magrittr,
     tibble,
     rlang,
     dplyr,

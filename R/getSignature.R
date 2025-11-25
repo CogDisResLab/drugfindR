@@ -68,9 +68,9 @@
 #' @examples NULL
 .isValidSignatureId <- function(sigId) {
     # Check all metadata tables for the signature ID
-    cpExists <- sigId %in% cpMetadata[["SourceSignature"]]
-    kdExists <- sigId %in% kdMetadata[["SourceSignature"]]
-    oeExists <- sigId %in% oeMetadata[["SourceSignature"]]
+    cpExists <- sigId %in% cpMetadata[["SourceSignature"]] # nolint: object_usage_linter.
+    kdExists <- sigId %in% kdMetadata[["SourceSignature"]] # nolint: object_usage_linter.
+    oeExists <- sigId %in% oeMetadata[["SourceSignature"]] # nolint: object_usage_linter.
 
     # Return TRUE if found in any metadata table
     cpExists | kdExists | oeExists
@@ -104,12 +104,12 @@
 #'
 #' @examples NULL
 .createSignatureRequest <- function(sigId) {
-    httr2::request(.ilincsBaseUrl()) |>
+    httr2::request(.ilincsBaseUrl()) |> # nolint: object_usage_linter.
         httr2::req_url_path_append("ilincsR") |>
         httr2::req_url_path_append("downloadSignature") |>
         httr2::req_url_query(sigID = sigId, noOfTopGenes = Inf) |>
         httr2::req_method("GET") |>
-        httr2::req_user_agent(.returnUserAgent())
+        httr2::req_user_agent(.returnUserAgent()) # nolint: object_usage_linter.
 }
 
 #' Execute iLINCS API request with error handling
@@ -202,7 +202,7 @@
         purrr::flatten_dfr() |>
         dplyr::select(-"PROBE") |>
         dplyr::mutate(
-            ID_geneid = as.character(.data[["ID_geneid"]]),
+            ID_geneid = as.character(.data[["ID_geneid"]]), # nolint: object_usage_linter.
             Value_LogDiffExp = round(.data[["Value_LogDiffExp"]], 12L),
             Significance_pvalue = round(.data[["Significance_pvalue"]], 12L)
         ) |>

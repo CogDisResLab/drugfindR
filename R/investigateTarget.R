@@ -136,13 +136,13 @@ investigateTarget <- function(
   paired = TRUE, inputCellLines = NULL,
   outputCellLines = NULL
 ) {
-    stopIfInvalidLibraries(c(inputLib, outputLib))
+    stopIfInvalidLibraries(c(inputLib, outputLib)) # nolint: object_usage_linter.
 
     # Load metadata and obtain candidate source signatures for the target
-    inputMetadata <- .loadMetadata(inputLib)
+    inputMetadata <- .loadMetadata(inputLib) # nolint: object_usage_linter.
     filteredSignatureIds <- inputMetadata |>
         dplyr::filter(
-            stringr::str_to_lower(.data[["Source"]]) ==
+            stringr::str_to_lower(.data[["Source"]]) == # nolint: object_usage_linter.
                 stringr::str_to_lower(target)
         ) |>
         (\(x) if (!is.null(inputCellLines)) dplyr::filter(x, .data[["SourceCellLine"]] %in% inputCellLines) else x)() |>
@@ -154,8 +154,8 @@ investigateTarget <- function(
 
     # Helper to process a single signature ID using existing modular functions
     process_one <- function(sigId) {
-        sig <- getSignature(sigId)
-        .computeConsensusFromSignature(
+        sig <- getSignature(sigId) # nolint: object_usage_linter.
+        .computeConsensusFromSignature( # nolint: object_usage_linter.
             sig,
             outputLib = outputLib,
             filterThreshold = filterThreshold,

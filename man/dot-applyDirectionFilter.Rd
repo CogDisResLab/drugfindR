@@ -4,11 +4,17 @@
 \alias{.applyDirectionFilter}
 \title{Apply filtering based on direction and thresholds}
 \usage{
-.applyDirectionFilter(signature, direction = "any", thresholds)
+.applyDirectionFilter(signature, thresholds, direction = "any")
 }
 \arguments{
 \item{signature}{A data.frame-like object containing the signature data.
 Must have a column named "Value_LogDiffExp" containing log fold-change values.}
+
+\item{thresholds}{A named list containing:
+\itemize{
+\item \code{downThreshold}: Threshold for down-regulated genes
+\item \code{upThreshold}: Threshold for up-regulated genes
+}}
 
 \item{direction}{Character string specifying the filtering direction.
 Must be one of:
@@ -16,12 +22,6 @@ Must be one of:
 \item "up": Keep only up-regulated genes (logFC >= upThreshold)
 \item "down": Keep only down-regulated genes (logFC <= downThreshold)
 \item "any": Keep both up- and down-regulated genes (logFC >= upThreshold OR logFC <= downThreshold)
-}}
-
-\item{thresholds}{A named list containing:
-\itemize{
-\item \code{downThreshold}: Threshold for down-regulated genes
-\item \code{upThreshold}: Threshold for up-regulated genes
 }}
 }
 \value{

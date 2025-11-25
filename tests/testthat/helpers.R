@@ -12,7 +12,7 @@ createInputDge <- function(nGenes = NULL, seed = NULL) {
     # Prefer sampling from package dataset `l1000` to satisfy membership checks
     pool <- tryCatch(
         {
-            if (exists("l1000", inherits = TRUE) && !is.null(l1000[["L1000"]])) unique(l1000[["L1000"]]) else NULL
+            if (exists("l1000", inherits = TRUE) && !is.null(l1000[["L1000"]])) unique(l1000[["L1000"]]) else NULL # nolint: object_usage_linter.
         },
         error = function(e) NULL
     )
@@ -35,7 +35,7 @@ createPreparedDge <- function(nGenes = NULL, seed = NULL) {
     # Prefer sampling from package dataset `l1000` to satisfy membership checks
     pool <- tryCatch(
         {
-            if (exists("l1000", inherits = TRUE) && !is.null(l1000[["L1000"]])) unique(l1000[["L1000"]]) else NULL
+            if (exists("l1000", inherits = TRUE) && !is.null(l1000[["L1000"]])) unique(l1000[["L1000"]]) else NULL # nolint: object_usage_linter.
         },
         error = function(e) NULL
     )
@@ -48,9 +48,9 @@ createPreparedDge <- function(nGenes = NULL, seed = NULL) {
     idMap <- tryCatch(
         {
             if (exists("l1000", inherits = TRUE) &&
-                !is.null(l1000[["L1000"]]) &&
+                !is.null(l1000[["L1000"]]) && # nolint: object_usage_linter.
                 !is.null(l1000[["ENTREZID"]])) {
-                stats::setNames(as.character(l1000[["ENTREZID"]]), l1000[["L1000"]])
+                stats::setNames(as.character(l1000[["ENTREZID"]]), l1000[["L1000"]]) # nolint: object_usage_linter.
             } else {
                 NULL
             }
@@ -81,8 +81,6 @@ createConcordantsTable <- function(nRows = NULL, library = "CP", seed = NULL) {
         sample(5L:10L, size = 1L)
     }
 
-    halfNum <- floor(nRows / 2L)
-
     drugIds <- stringr::str_glue("DRUG_{id}",
         id = stringr::str_pad(1L:nRows, 5L, pad = "0")
     )
@@ -106,20 +104,21 @@ createConcordantsTable <- function(nRows = NULL, library = "CP", seed = NULL) {
 
 
     if (library == "CP") {
-        concordanceData <- tibble(
+        concordanceData <- tibble( # nolint: object_usage_linter.
             similarity = similarity, pValue = pValue,
             nGenes = nGenes, compound = compound, lincsPertID = lincsPertId,
             GeneTargets = geneTargets, concentration = concentration,
             time = timePoint, `_row` = rowCol, signatureid = signatureId, cellline = cellLine
         )
     } else {
-        concordanceData <- tibble(
+        concordanceData <- tibble( # nolint: object_usage_linter.
             similarity = similarity, pValue = pValue,
             nGenes = nGenes, treatment = treatment, lincsPertID = lincsPertId,
             GeneTargets = geneTargets,
             time = timePoint, `_row` = rowCol, signatureid = signatureId, cellline = cellLine
         )
     }
+    concordanceData
 }
 
 createValidIlincsResponse <- function(nRows = NULL, library = "CP", seed = NULL) {

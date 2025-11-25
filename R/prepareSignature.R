@@ -81,7 +81,7 @@
     filtered_subset <- filteredData |>
         dplyr::select(dplyr::all_of(c(geneColumn, logfcColumn, pvalColumn)))
 
-    l1000 |>
+    l1000 |> # nolint: object_usage_linter.
         dplyr::inner_join(filtered_subset,
             by = c(SYMBOL = geneColumn), relationship = "many-to-many"
         ) |>
@@ -128,7 +128,7 @@
     filtered_subset <- filteredData |>
         dplyr::select(dplyr::all_of(c(geneColumn, logfcColumn)))
 
-    l1000 |>
+    l1000 |> # nolint: object_usage_linter.
         dplyr::inner_join(filtered_subset,
             by = c(SYMBOL = geneColumn), relationship = "many-to-many"
         ) |>

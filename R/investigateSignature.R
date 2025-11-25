@@ -89,13 +89,13 @@ investigateSignature <- function(
   sourceTime = "NA",
   sourceConcentration = "NA"
 ) {
-    stopIfInvalidLibraries(outputLib)
+    stopIfInvalidLibraries(outputLib) # nolint: object_usage_linter.
     if (missing(outputLib)) {
         stop("Please specify an output library", call. = FALSE)
     }
 
     # Prepare signature once; downstream functions handle validation & errors
-    exprSignature <- prepareSignature(
+    exprSignature <- prepareSignature( # nolint: object_usage_linter.
         expr,
         geneColumn = geneColumn,
         logfcColumn = logfcColumn,
@@ -103,7 +103,7 @@ investigateSignature <- function(
     )
     signatureId <- unique(exprSignature[["signatureID"]])
 
-    consensus <- .computeConsensusFromSignature(
+    consensus <- .computeConsensusFromSignature( # nolint: object_usage_linter.
         exprSignature,
         outputLib = outputLib,
         filterThreshold = filterThreshold,
