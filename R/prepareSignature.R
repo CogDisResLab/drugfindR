@@ -20,17 +20,7 @@
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Valid calls (no errors)
-#' data <- data.frame(Symbol = c("TP53", "MYC"), logFC = c(1.5, -2.1), PValue = c(0.01, 0.05))
-#' .validatePrepareSignatureInput(data, "Symbol", "logFC", "PValue")
-#' .validatePrepareSignatureInput(data, "Symbol", "logFC", NA)
-#'
-#' # Invalid calls (will throw errors)
-#' .validatePrepareSignatureInput(data, "NonExistent", "logFC", "PValue")
-#' .validatePrepareSignatureInput(data, "Symbol", "NonExistent", "PValue")
-#' }
+#' @examples NULL
 .validatePrepareSignatureInput <- function(dge, geneColumn, logfcColumn, pvalColumn) {
     # Validate input types
     if (!is.character(geneColumn) || length(geneColumn) != 1L) {
@@ -85,8 +75,14 @@
 #' @importFrom dplyr inner_join rename mutate select any_of
 #' @importFrom rlang .data
 .mapToL1000WithPvalues <- function(filteredData, geneColumn, logfcColumn, pvalColumn) {
+    # Select only the relevant columns from the input to avoid
+    # carrying through any pre-existing L1000-style columns that
+    # would collide with our target names after renaming.
+    filtered_subset <- filteredData |>
+        dplyr::select(dplyr::all_of(c(geneColumn, logfcColumn, pvalColumn)))
+
     l1000 |>
-        dplyr::inner_join(filteredData,
+        dplyr::inner_join(filtered_subset,
             by = c(SYMBOL = geneColumn), relationship = "many-to-many"
         ) |>
         # NOTE: For the renaming, we are using an in-place
@@ -126,8 +122,14 @@
 #' @importFrom dplyr inner_join rename mutate select any_of
 #' @importFrom rlang .data
 .mapToL1000WithoutPvalues <- function(filteredData, geneColumn, logfcColumn) {
+    # Select only the relevant columns from the input to avoid
+    # carrying through any pre-existing L1000-style columns that
+    # would collide with our target names after renaming.
+    filtered_subset <- filteredData |>
+        dplyr::select(dplyr::all_of(c(geneColumn, logfcColumn)))
+
     l1000 |>
-        dplyr::inner_join(filteredData,
+        dplyr::inner_join(filtered_subset,
             by = c(SYMBOL = geneColumn), relationship = "many-to-many"
         ) |>
         # NOTE: For the renaming, we are using an in-place
@@ -200,24 +202,50 @@
 #' @importFrom rlang .data
 #'
 #' @examples
-#' # Prepare an L1000 signature from a differential gene expression output
-#'
-#' inputSignature <- read.table(system.file("extdata",
-#'     "dCovid_diffexp.tsv",
+#' # Load example differential expression data from package
+#' dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
 #'     package = "drugfindR"
-#' ), header = TRUE)
+#' )
+#' dge_data <- read.delim(dge_file)
 #'
-#' signature <- prepareSignature(inputSignature,
+#' # Prepare signature with p-values (standard workflow)
+#' signature <- prepareSignature(
+#'     dge_data,
 #'     geneColumn = "hgnc_symbol",
-#'     logfcColumn = "logFC", pvalColumn = "PValue"
+#'     logfcColumn = "logFC",
+#'     pvalColumn = "PValue"
+#' )
+#' head(signature)
+#'
+#' # Prepare signature without p-values
+#' signature_no_pval <- prepareSignature(
+#'     dge_data,
+#'     geneColumn = "hgnc_symbol",
+#'     logfcColumn = "logFC",
+#'     pvalColumn = NA
+#' )
+#' head(signature_no_pval)
+#'
+#' # Custom column names example
+#' custom_dge <- data.frame(
+#'     Gene = c("TP53", "MYC", "BRCA1", "EGFR"),
+#'     FC = c(2.5, -1.8, 3.2, -2.1),
+#'     Pval = c(0.001, 0.01, 0.0001, 0.005)
 #' )
 #'
-#' head(signature)
+#' custom_signature <- prepareSignature(
+#'     custom_dge,
+#'     geneColumn = "Gene",
+#'     logfcColumn = "FC",
+#'     pvalColumn = "Pval"
+#' )
+#' print(custom_signature)
 prepareSignature <- function(
-    dge,
-    geneColumn = "Symbol",
-    logfcColumn = "logFC",
-    pvalColumn = "PValue") {
+  dge,
+  geneColumn = "Symbol",
+  logfcColumn = "logFC",
+  pvalColumn = "PValue"
+) {
     # Validate input parameters
     .validatePrepareSignatureInput(dge, geneColumn, logfcColumn, pvalColumn)
 

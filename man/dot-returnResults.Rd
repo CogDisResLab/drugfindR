@@ -30,17 +30,6 @@ S4Vectors::DataFrame, the results are converted back to DataFrame.
 Otherwise, results are returned as a tibble.
 }
 \examples{
-\dontrun{
-# Example usage within getConcordants workflow
-resultTibble <- tibble::tibble(signatureid = "SIG_001", similarity = 0.85)
-
-# For DataFrame input
-.returnResults(result_tibble, c("DFrame", "DataFrame"))
-# Returns: S4Vectors::DataFrame
-
-# For data.frame or tibble input
-.returnResults(result_tibble, c("data.frame"))
-# Returns: tibble
-}
+NULL
 }
 \keyword{internal}

@@ -25,17 +25,6 @@ This function performs the following validations:
 }
 }
 \examples{
-\dontrun{
-# Valid calls (no errors)
-.validateGetSignatureInput("LINCSKD_28")
-.validateGetSignatureInput("LINCSOE_1000")
-
-# Invalid calls (will throw errors)
-.validateGetSignatureInput(123) # Non-character sigId
-.validateGetSignatureInput("") # Empty sigId
-.validateGetSignatureInput("  ") # Whitespace-only sigId
-.validateGetSignatureInput(c("SIG1", "SIG2")) # Multiple sigIds
-.validateGetSignatureInput("NONEXISTENT_SIG") # Signature not in metadata
-}
+NULL
 }
 \keyword{internal}

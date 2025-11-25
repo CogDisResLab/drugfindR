@@ -23,10 +23,6 @@ and assists with debugging if issues arise. The version is automatically
 retrieved from the package metadata.
 }
 \examples{
-\dontrun{
-# Get the current User-Agent string
-user_agent <- .returnUserAgent()
-# Returns something like: "drugfindR/1.0.0; https://github.com/CogDisResLab/drugfindR"
-}
+NULL
 }
 \keyword{internal}

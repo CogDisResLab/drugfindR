@@ -22,12 +22,7 @@ and returns TRUE only if all libraries are valid. It's used internally to
 validate library parameters before API calls.
 }
 \examples{
-\dontrun{
-validateLibraries(c("CP", "KD")) # Returns TRUE
-validateLibraries("OE") # Returns TRUE
-validateLibraries(c("CP", "INVALID")) # Returns FALSE
-validateLibraries("INVALID") # Returns FALSE
-}
+NULL
 }
 \seealso{
 \code{\link{.validateLibrary}} for single library validation,

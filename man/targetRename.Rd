@@ -2,17 +2,41 @@
 % Please edit documentation in R/utilities.R
 \name{targetRename}
 \alias{targetRename}
-\title{Rename the Target-Related Columns}
+\title{Rename target-related columns to user-facing output names}
 \usage{
 targetRename(inputNames)
 }
 \arguments{
-\item{inputNames}{A character vector of input_names}
+\item{inputNames}{Character vector of column names to rename. See Details
+for the expected input ordering and mapping.}
 }
 \value{
-A character vector of new names
+Character vector of output (renamed) column names.
 }
 \description{
-This function is used to standardize the names
-of the columns output at the end of the result.
+Standardizes internal concordants/consensus column names to the
+user-facing output schema used by this package.
 }
+\details{
+Expected input columns (by position) are the internal concordants fields:
+\enumerate{
+\item \code{signatureid}, 2) \code{treatment} (or \code{compound} pre-renaming),
+\item \code{cellline}, 4) \code{time}, 5) \code{concentration}, 6) \code{sig_direction},
+\item \code{sig_type}, 8) \code{similarity}, 9) \code{pValue}.
+}
+
+These are mapped to the user-facing names returned by functions like
+\code{\link[=consensusConcordants]{consensusConcordants()}} and downstream investigation helpers:
+\itemize{
+\item \code{TargetSignature}, \code{Target}, \code{TargetCellLine}, \code{TargetTime},
+\code{TargetConcentration}, \code{InputSigDirection}, \code{SignatureType},
+\code{Similarity}, \code{pValue}.
+}
+
+Only the names are returned; the renaming is applied via
+\code{dplyr::rename_with(x, targetRename)}.
+}
+\examples{
+NULL
+}
+\keyword{internal}

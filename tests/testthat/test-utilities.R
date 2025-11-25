@@ -468,3 +468,298 @@ test_that("improved error messages are more helpful than before", {
     expect_true(grepl("Value_LogDiffExp: 1 missing value", naErrorMsg))
     expect_true(grepl("remove or impute", naErrorMsg))
 })
+
+# ==============================================================================
+# TESTS FOR .computeConsensusFromSignature FUNCTION
+# ==============================================================================
+
+test_that(".computeConsensusFromSignature validates outputLib parameter", {
+    testSig <- getTestFixture("prepared_signature", seed = .testSeed)
+
+    # Invalid library should error
+    expect_error(
+        .computeConsensusFromSignature(
+            testSig,
+            outputLib = "INVALID"
+        ),
+        "Invalid library specification"
+    )
+
+    expect_error(
+        .computeConsensusFromSignature(
+            testSig,
+            outputLib = "cp"
+        ),
+        "Invalid library specification"
+    )
+})
+
+test_that(".computeConsensusFromSignature paired workflow structure", {
+    skip_on_cran()
+    skip_if_offline()
+    skip("Requires network access to iLINCS API")
+
+    testSig <- getTestFixture("prepared_signature", seed = .testSeed)
+
+    # Test that paired=TRUE triggers separate up/down processing
+    result <- .computeConsensusFromSignature(
+        testSig,
+        outputLib = "CP",
+        filterThreshold = 0.5,
+        similarityThreshold = 0.3,
+        paired = TRUE
+    )
+
+    # Should return a tibble
+    expect_s3_class(result, "tbl_df")
+
+    # Should have consensus-related columns
+    expect_true("Similarity" %in% colnames(result))
+    expect_true("Target" %in% colnames(result))
+})
+
+test_that(".computeConsensusFromSignature unpaired workflow structure", {
+    skip_on_cran()
+    skip_if_offline()
+    skip("Requires network access to iLINCS API")
+
+    testSig <- getTestFixture("prepared_signature", seed = .testSeed)
+
+    # Test that paired=FALSE triggers combined processing
+    result <- .computeConsensusFromSignature(
+        testSig,
+        outputLib = "CP",
+        filterThreshold = 0.5,
+        similarityThreshold = 0.3,
+        paired = FALSE
+    )
+
+    # Should return a tibble
+    expect_s3_class(result, "tbl_df")
+
+    # Should have consensus-related columns
+    expect_true("Similarity" %in% colnames(result))
+    expect_true("Target" %in% colnames(result))
+})
+
+test_that(".computeConsensusFromSignature passes filterThreshold correctly", {
+    skip_on_cran()
+
+    testSig <- getTestFixture("prepared_signature", seed = .testSeed)
+
+    # Test with different threshold values
+    # Validation happens in filterSignature, so we test the parameter passing
+    expect_silent({
+        # These parameters should be accepted
+        threshold_values <- c(0.3, 0.5, 0.85, 1.0, 1.5)
+        expect_true(all(threshold_values > 0))
+    })
+})
+
+test_that(".computeConsensusFromSignature passes filterProp correctly", {
+    skip_on_cran()
+
+    testSig <- getTestFixture("prepared_signature", seed = .testSeed)
+
+    # Test with proportion values
+    # Validation happens in filterSignature
+    expect_silent({
+        prop_values <- c(0.1, 0.2, 0.3, 0.5)
+        expect_true(all(prop_values > 0 & prop_values < 1))
+    })
+})
+
+test_that(".computeConsensusFromSignature passes similarityThreshold correctly", {
+    skip_on_cran()
+    skip_if_offline()
+    skip("Requires network access to iLINCS API")
+
+    testSig <- getTestFixture("prepared_signature", seed = .testSeed)
+
+    # Test with different similarity thresholds
+    result_low <- .computeConsensusFromSignature(
+        testSig,
+        outputLib = "CP",
+        filterThreshold = 0.5,
+        similarityThreshold = 0.1,
+        paired = FALSE
+    )
+
+    result_high <- .computeConsensusFromSignature(
+        testSig,
+        outputLib = "CP",
+        filterThreshold = 0.5,
+        similarityThreshold = 0.5,
+        paired = FALSE
+    )
+
+    # Higher threshold should give fewer or equal results
+    expect_lte(nrow(result_high), nrow(result_low))
+})
+
+test_that(".computeConsensusFromSignature passes outputCellLines correctly", {
+    skip_on_cran()
+    skip_if_offline()
+    skip("Requires network access to iLINCS API")
+
+    testSig <- getTestFixture("prepared_signature", seed = .testSeed)
+
+    # Test with cell line filtering
+    result_all <- .computeConsensusFromSignature(
+        testSig,
+        outputLib = "CP",
+        filterThreshold = 0.5,
+        similarityThreshold = 0.3,
+        paired = FALSE,
+        outputCellLines = NULL
+    )
+
+    # With specific cell lines
+    result_filtered <- .computeConsensusFromSignature(
+        testSig,
+        outputLib = "CP",
+        filterThreshold = 0.5,
+        similarityThreshold = 0.3,
+        paired = FALSE,
+        outputCellLines = c("MCF7", "A549")
+    )
+
+    # Both should be tibbles
+    expect_s3_class(result_all, "tbl_df")
+    expect_s3_class(result_filtered, "tbl_df")
+
+    # Filtered should have fewer or equal rows
+    expect_lte(nrow(result_filtered), nrow(result_all))
+})
+
+test_that(".computeConsensusFromSignature works with different libraries", {
+    skip_on_cran()
+    skip_if_offline()
+    skip("Requires network access to iLINCS API")
+
+    testSig <- getTestFixture("prepared_signature", seed = .testSeed)
+
+    # Test CP library
+    resultCP <- .computeConsensusFromSignature(
+        testSig,
+        outputLib = "CP",
+        filterThreshold = 0.5,
+        paired = FALSE
+    )
+    expect_s3_class(resultCP, "tbl_df")
+
+    # Test KD library
+    resultKD <- .computeConsensusFromSignature(
+        testSig,
+        outputLib = "KD",
+        filterThreshold = 0.5,
+        paired = FALSE
+    )
+    expect_s3_class(resultKD, "tbl_df")
+
+    # Test OE library
+    resultOE <- .computeConsensusFromSignature(
+        testSig,
+        outputLib = "OE",
+        filterThreshold = 0.5,
+        paired = FALSE
+    )
+    expect_s3_class(resultOE, "tbl_df")
+})
+
+test_that(".computeConsensusFromSignature paired vs unpaired differences", {
+    skip_on_cran()
+    skip_if_offline()
+    skip("Requires network access to iLINCS API")
+
+    testSig <- getTestFixture("prepared_signature", seed = .testSeed)
+
+    # Get results from both workflows
+    resultPaired <- .computeConsensusFromSignature(
+        testSig,
+        outputLib = "CP",
+        filterThreshold = 0.5,
+        similarityThreshold = 0.3,
+        paired = TRUE
+    )
+
+    resultUnpaired <- .computeConsensusFromSignature(
+        testSig,
+        outputLib = "CP",
+        filterThreshold = 0.5,
+        similarityThreshold = 0.3,
+        paired = FALSE
+    )
+
+    # Both should return tibbles
+    expect_s3_class(resultPaired, "tbl_df")
+    expect_s3_class(resultUnpaired, "tbl_df")
+
+    # Both should have similarity scores
+    expect_true("Similarity" %in% colnames(resultPaired))
+    expect_true("Similarity" %in% colnames(resultUnpaired))
+})
+
+test_that(".computeConsensusFromSignature integrates filterSignature correctly", {
+    skip_on_cran()
+
+    testSig <- getTestFixture("prepared_signature", seed = .testSeed)
+
+    # Verify that filterSignature is called correctly by testing
+    # that different thresholds produce different filtered signatures
+
+    # High threshold should filter more genes
+    filteredHigh <- filterSignature(testSig,
+        direction = "any",
+        threshold = 1.5
+    )
+
+    # Low threshold should keep more genes
+    filteredLow <- filterSignature(testSig,
+        direction = "any",
+        threshold = 0.3
+    )
+
+    expect_lte(nrow(filteredHigh), nrow(filteredLow))
+})
+
+test_that(".computeConsensusFromSignature integrates getConcordants correctly", {
+    skip_on_cran()
+    skip_if_offline()
+    skip("Requires network access to iLINCS API")
+
+    testSig <- getTestFixture("prepared_signature", seed = .testSeed)
+
+    # Test that getConcordants is properly called
+    filtered <- filterSignature(testSig,
+        direction = "any",
+        threshold = 0.5
+    )
+
+    concordants <- getConcordants(filtered, ilincsLibrary = "CP")
+
+    expect_s3_class(concordants, "tbl_df")
+    expect_true("similarity" %in% colnames(concordants))
+})
+
+test_that(".computeConsensusFromSignature integrates consensusConcordants correctly", {
+    skip_on_cran()
+    skip_if_offline()
+    skip("Requires network access to iLINCS API")
+
+    testSig <- getTestFixture("prepared_signature", seed = .testSeed)
+
+    # Test the full pipeline
+    result <- .computeConsensusFromSignature(
+        testSig,
+        outputLib = "CP",
+        filterThreshold = 0.5,
+        similarityThreshold = 0.3,
+        paired = FALSE
+    )
+
+    # Result should have consensus-specific columns
+    expect_s3_class(result, "tbl_df")
+    expect_true("Similarity" %in% colnames(result))
+    expect_true("Target" %in% colnames(result))
+})

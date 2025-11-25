@@ -64,68 +64,50 @@ When using \code{prop}:
 }
 }
 \examples{
+# Create a mock signature for demonstration
+mockSignature <- data.frame(
+  signatureID = rep("MOCK001", 20),
+  Name_GeneSymbol = paste0("GENE", 1:20),
+  ID_geneid = 1:20,
+  Value_LogDiffExp = c(
+    -3.5, -2.8, -2.1, -1.5, -1.2, -0.8, -0.5, -0.3,
+    -0.1, 0.1, 0.3, 0.6, 0.9, 1.2, 1.6, 2.0, 2.4, 2.9, 3.3, 3.8
+  )
+)
+
+# Example 1: Filter by symmetric absolute threshold
+# Keeps genes with |logFC| >= 1.5
+filteredSymmetric <- filterSignature(mockSignature, threshold = 1.5)
+nrow(filteredSymmetric) # Should return 8 genes
+
+# Example 2: Filter by asymmetric absolute thresholds
+# Keeps genes with logFC <= -2.0 OR logFC >= 2.5
+filteredAsymmetric <- filterSignature(mockSignature, threshold = c(-2.0, 2.5))
+nrow(filteredAsymmetric) # Should return 5 genes
+
+# Example 3: Filter by proportion (top and bottom 20\%)
+filteredProportion <- filterSignature(mockSignature, prop = 0.2)
+nrow(filteredProportion) # Should return 8 genes (4 up + 4 down)
+
+# Example 4: Filter only up-regulated genes by threshold
+upRegulated <- filterSignature(mockSignature, direction = "up", threshold = 1.0)
+all(upRegulated$Value_LogDiffExp >= 1.0) # Should be TRUE
+
+# Example 5: Filter only down-regulated genes by threshold
+downRegulated <- filterSignature(mockSignature, direction = "down", threshold = 1.0)
+all(downRegulated$Value_LogDiffExp <= -1.0) # Should be TRUE
+
+\donttest{
+# Network-dependent examples using real iLINCS data
 # Get the L1000 signature for LINCSKD_28
 kdSignature <- getSignature("LINCSKD_28")
 
-# Example 1: Filter by symmetric absolute threshold
-# Keeps genes with |logFC| >= 0.5
-filteredSymmetric <- filterSignature(kdSignature, threshold = 0.5)
-
-# Example 2: Filter by asymmetric absolute thresholds
-# Keeps genes with logFC <= -0.75 OR logFC >= 0.5
-filteredAsymmetric <- filterSignature(kdSignature, threshold = c(-0.75, 0.5))
-
-# Example 3: Filter by proportion (top and bottom 10\%)
-filteredProportion <- filterSignature(kdSignature, prop = 0.1)
-
-# Example 4: Filter only up-regulated genes by threshold
-upRegulated <- filterSignature(kdSignature,
-    direction = "up",
-    threshold = 0.5
-)
-
-# Example 5: Filter only down-regulated genes by threshold
-downRegulated <- filterSignature(kdSignature,
-    direction = "down",
-    threshold = 0.5
-)
-
-# Example 6: Filter top 5\% most extreme genes in either direction
+# Filter for top 5\% most extreme genes
 topExtreme <- filterSignature(kdSignature, prop = 0.05)
 
-# Example 7: Filter only up-regulated genes using proportion
-# Gets top 20\% most up-regulated genes
-topUpregulated <- filterSignature(kdSignature,
-    direction = "up",
-    prop = 0.2
-)
-
-# Example 8: Working with different data frame types
-# Convert to base data.frame
-kdSignature_df <- as.data.frame(kdSignature)
-filtered_df <- filterSignature(kdSignature_df, threshold = 1.0)
-
-# Convert to Bioconductor DataFrame
-kdSignature_DF <- S4Vectors::DataFrame(kdSignature)
-filtered_DF <- filterSignature(kdSignature_DF, threshold = 1.0)
-
-# Example 9: Comparative analysis with different thresholds
-# Conservative filtering (high threshold)
-conservative <- filterSignature(kdSignature, threshold = 2.0)
-
-# Liberal filtering (low threshold)
-liberal <- filterSignature(kdSignature, threshold = 0.3)
-
-# Compare number of genes
-cat("Conservative:", nrow(conservative), "genes\n")
-cat("Liberal:", nrow(liberal), "genes\n")
-
-# Example 10: Direction-specific proportion filtering
-# Get top 15\% down-regulated genes only
-topDownregulated <- filterSignature(kdSignature,
-    direction = "down",
-    prop = 0.15
-)
+# Get top 20\% most up-regulated genes
+topUpregulated <- filterSignature(kdSignature, direction = "up", prop = 0.2)
+}
 }
 \seealso{
 \code{\link{getSignature}} for retrieving L1000 signatures from iLINCS,

@@ -36,21 +36,6 @@ The function handles:
 }
 }
 \examples{
-\dontrun{
-# Create request object
-sig <- data.frame(
-    signatureID = "SIG_001",
-    ID_geneid = "1234",
-    Name_GeneSymbol = "GENE1",
-    Value_LogDiffExp = 1.5,
-    Significance_pvalue = 0.05
-)
-filePath <- .prepareSignatureFile(sig)
-request <- .generateIlincsRequest(filePath, "CP")
-
-# Execute request safely (won't raise errors)
-response <- .executeIlincsRequest(request)
-# Response can be processed even if it contains HTTP errors
-}
+NULL
 }
 \keyword{internal}

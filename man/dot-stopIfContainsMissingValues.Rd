@@ -23,26 +23,6 @@ will cause the function to stop with an informative error message indicating
 which columns contain missing values.
 }
 \examples{
-\dontrun{
-# Valid signature (no missing values)
-valid_sig <- data.frame(
-    signatureID = "SIG_001",
-    ID_geneid = "1234",
-    Name_GeneSymbol = "GENE1",
-    Value_LogDiffExp = 1.5,
-    Significance_pvalue = 0.05
-)
-.stopIfContainsMissingValues(valid_sig) # No error
-
-# Invalid signature (contains NA values)
-invalid_sig <- data.frame(
-    signatureID = "SIG_001",
-    ID_geneid = NA,
-    Name_GeneSymbol = "GENE1",
-    Value_LogDiffExp = 1.5,
-    Significance_pvalue = NA
-)
-.stopIfContainsMissingValues(invalid_sig) # Error
-}
+NULL
 }
 \keyword{internal}

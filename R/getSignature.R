@@ -17,19 +17,7 @@
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Valid calls (no errors)
-#' .validateGetSignatureInput("LINCSKD_28")
-#' .validateGetSignatureInput("LINCSOE_1000")
-#'
-#' # Invalid calls (will throw errors)
-#' .validateGetSignatureInput(123) # Non-character sigId
-#' .validateGetSignatureInput("") # Empty sigId
-#' .validateGetSignatureInput("  ") # Whitespace-only sigId
-#' .validateGetSignatureInput(c("SIG1", "SIG2")) # Multiple sigIds
-#' .validateGetSignatureInput("NONEXISTENT_SIG") # Signature not in metadata
-#' }
+#' @examples NULL
 .validateGetSignatureInput <- function(sigId) {
     # 1. Validate sigId parameter
     if (!is.character(sigId)) {
@@ -77,15 +65,7 @@
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Check if signature exists
-#' .isValidSignatureId("LINCSKD_28") # Returns TRUE if exists
-#' .isValidSignatureId("NONEXISTENT") # Returns FALSE
-#'
-#' # Works with vectors too
-#' .isValidSignatureId(c("LINCSKD_28", "LINCSOE_1000")) # Returns c(TRUE, TRUE)
-#' }
+#' @examples NULL
 .isValidSignatureId <- function(sigId) {
     # Check all metadata tables for the signature ID
     cpExists <- sigId %in% cpMetadata[["SourceSignature"]]
@@ -122,12 +102,7 @@
 #'
 #' @importFrom httr2 request req_url_path_append req_url_query req_method req_user_agent
 #'
-#' @examples
-#' \dontrun{
-#' # Create request for any signature
-#' req <- .createSignatureRequest("LINCSKD_28")
-#' req <- .createSignatureRequest("LINCSOE_1000")
-#' }
+#' @examples NULL
 .createSignatureRequest <- function(sigId) {
     httr2::request(.ilincsBaseUrl()) |>
         httr2::req_url_path_append("ilincsR") |>
@@ -168,15 +143,7 @@
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Create request object
-#' request <- .createSignatureRequest("LINCSKD_28")
-#'
-#' # Execute request safely (won't raise errors)
-#' response <- .executeSignatureRequest(request)
-#' # Response can be processed even if it contains HTTP errors
-#' }
+#' @examples NULL
 .executeSignatureRequest <- function(request, verbose = FALSE) {
     # Configure request to not raise errors on HTTP error status codes
     request <- httr2::req_error(request, is_error = function(resp) FALSE)
@@ -228,11 +195,7 @@
 #' @importFrom dplyr select mutate
 #' @importFrom rlang .data
 #'
-#' @examples
-#' \dontrun{
-#' # Process a successful response (response would come from httr2::req_perform)
-#' # signature <- .processSuccessfulResponse(response, "LINCSKD_28")
-#' }
+#' @examples NULL
 .processSuccessfulResponse <- function(response) {
     httr2::resp_body_json(response) |>
         purrr::map("signature") |>
@@ -372,11 +335,27 @@
 #' @importFrom utils packageVersion
 #'
 #' @examples
+#' # Input validation example (no API call)
+#' # Demonstrates proper signature ID format validation
+#' tryCatch(
+#'     getSignature(""), # Empty string should error
+#'     error = function(e) message("Expected error: empty signature ID")
+#' )
+#'
+#' \donttest{
+#' # These examples require network access to the iLINCS API
+#'
 #' # Get the L1000 signature for LINCSKD_28
 #' kdSignature <- getSignature("LINCSKD_28")
+#' head(kdSignature)
 #'
 #' # Get an overexpression signature (L1000 status is automatically detected)
 #' oeSignature <- getSignature("LINCSOE_1000")
+#' head(oeSignature)
+#'
+#' # Check the structure of retrieved signature
+#' str(kdSignature)
+#' }
 getSignature <- function(sigId) {
     # Validate input parameters
     .validateGetSignatureInput(sigId)

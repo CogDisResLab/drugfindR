@@ -36,20 +36,6 @@ The library mapping is:
 }
 }
 \examples{
-\dontrun{
-# Prepare signature file first
-sig <- data.frame(
-    signatureID = "SIG_001",
-    ID_geneid = "1234",
-    Name_GeneSymbol = "GENE1",
-    Value_LogDiffExp = 1.5,
-    Significance_pvalue = 0.05
-)
-filePath <- .prepareSignatureFile(sig)
-
-# Generate API request
-request <- .generateIlincsRequest(filePath, "CP")
-# Returns httr2 request object
-}
+NULL
 }
 \keyword{internal}

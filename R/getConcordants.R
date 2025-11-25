@@ -29,28 +29,7 @@
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Valid calls (no errors) - complete signature structure required
-#' validSig <- data.frame(
-#'     signatureID = "SIG_001",
-#'     ID_geneid = "1234",
-#'     Name_GeneSymbol = "GENE1",
-#'     Value_LogDiffExp = 1.5,
-#'     Significance_pvalue = 0.05
-#' )
-#' .validateGetConcordantsInput(validSig, "CP")
-#' .validateGetConcordantsInput(validSig, "KD")
-#' .validateGetConcordantsInput(validSig, "OE")
-#'
-#' # Invalid calls (will throw errors)
-#' .validateGetConcordantsInput("not_a_dataframe", "CP") # Invalid signature type
-#' .validateGetConcordantsInput(validSig, "INVALID") # Invalid library
-#'
-#' # Invalid structure
-#' invalidSig <- data.frame(Gene = "GENE1", Expression = 1.5)
-#' .validateGetConcordantsInput(invalidSig, "CP") # Missing required columns
-#' }
+#' @examples NULL
 .validateGetConcordantsInput <- function(signature, ilincsLibrary) {
     # 1. Validate signature data type
     if (!any(c("data.frame", "DFrame") %in% class(signature))) {
@@ -84,19 +63,7 @@
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Create properly structured signature
-#' sig <- data.frame(
-#'     signatureID = "SIG_001",
-#'     ID_geneid = "1234",
-#'     Name_GeneSymbol = "GENE1",
-#'     Value_LogDiffExp = -1.5,
-#'     Significance_pvalue = 0.01
-#' )
-#' filePath <- .prepareSignatureFile(sig)
-#' # Returns path to temporary file containing signature data
-#' }
+#' @examples NULL
 .prepareSignatureFile <- function(signature) {
     signatureFile <- tempfile(pattern = "ilincs_sig", fileext = ".xls")
     if ("DFrame" %in% class(signature)) {
@@ -130,28 +97,7 @@
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # All up-regulated genes
-#' upSig <- data.frame(Value_LogDiffExp = c(1.0, 2.0, 1.5))
-#' .detectSignatureDirection(up_sig)
-#' # Returns: "Up"
-#'
-#' # All down-regulated genes
-#' downSig <- data.frame(Value_LogDiffExp = c(-1.0, -2.0, -1.5))
-#' .detectSignatureDirection(down_sig)
-#' # Returns: "Down"
-#'
-#' # Mixed regulation
-#' mixedSig <- data.frame(Value_LogDiffExp = c(-1.0, 0.5, 2.0))
-#' .detectSignatureDirection(mixed_sig)
-#' # Returns: "Any"
-#'
-#' # Edge case: zero values
-#' zeroSig <- data.frame(Value_LogDiffExp = c(0.0, 0.0, 0.0))
-#' .detectSignatureDirection(zero_sig)
-#' # Returns: "Up" (since all values >= 0)
-#' }
+#' @examples NULL
 .detectSignatureDirection <- function(signature) {
     expressionValues <- signature[["Value_LogDiffExp"]]
 
@@ -197,22 +143,7 @@
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Prepare signature file first
-#' sig <- data.frame(
-#'     signatureID = "SIG_001",
-#'     ID_geneid = "1234",
-#'     Name_GeneSymbol = "GENE1",
-#'     Value_LogDiffExp = 1.5,
-#'     Significance_pvalue = 0.05
-#' )
-#' filePath <- .prepareSignatureFile(sig)
-#'
-#' # Generate API request
-#' request <- .generateIlincsRequest(filePath, "CP")
-#' # Returns httr2 request object
-#' }
+#' @examples NULL
 .generateIlincsRequest <- function(signatureFile, ilincsLibrary) {
     # Map library names to iLINCS internal IDs
 
@@ -257,23 +188,7 @@
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Create request object
-#' sig <- data.frame(
-#'     signatureID = "SIG_001",
-#'     ID_geneid = "1234",
-#'     Name_GeneSymbol = "GENE1",
-#'     Value_LogDiffExp = 1.5,
-#'     Significance_pvalue = 0.05
-#' )
-#' filePath <- .prepareSignatureFile(sig)
-#' request <- .generateIlincsRequest(filePath, "CP")
-#'
-#' # Execute request safely (won't raise errors)
-#' response <- .executeIlincsRequest(request)
-#' # Response can be processed even if it contains HTTP errors
-#' }
+#' @examples NULL
 .executeIlincsRequest <- function(request, verbose = FALSE) {
     # Configure request to not raise errors on HTTP error status codes
     request <- httr2::req_error(request, is_error = function(resp) FALSE)
@@ -503,16 +418,7 @@
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Create a temporary file
-#' tempFile <- tempfile(fileext = ".xls")
-#' file.create(tempFile)
-#'
-#' # Clean up the file
-#' .cleanupGetConcordants(tempFile)
-#' # File is now removed
-#' }
+#' @examples NULL
 .cleanupGetConcordants <- function(signatureFile) {
     if (file.exists(signatureFile)) unlink(signatureFile)
 }
@@ -543,19 +449,7 @@
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Example usage within getConcordants workflow
-#' resultTibble <- tibble::tibble(signatureid = "SIG_001", similarity = 0.85)
-#'
-#' # For DataFrame input
-#' .returnResults(result_tibble, c("DFrame", "DataFrame"))
-#' # Returns: S4Vectors::DataFrame
-#'
-#' # For data.frame or tibble input
-#' .returnResults(result_tibble, c("data.frame"))
-#' # Returns: tibble
-#' }
+#' @examples NULL
 .returnResults <- function(result, inputClass) {
     if ("DFrame" %in% inputClass) {
         DataFrame(result)
@@ -662,12 +556,37 @@
 #' biological mechanisms with iLINCS. Nature Communications, 11(1), 4058.
 #'
 #' @examples
-#' \dontrun{
-#' # Load example signature data - ensure it has proper structure
-#' data("dCovid_diffexp", package = "drugfindR")
+#' # Input validation examples (no API calls)
+#' # These demonstrate proper signature structure
+#' mockSig <- data.frame(
+#'     signatureID = rep("TEST", 3),
+#'     ID_geneid = c("123", "456", "789"),
+#'     Name_GeneSymbol = c("TP53", "MYC", "EGFR"),
+#'     Value_LogDiffExp = c(1.5, -2.0, 0.8)
+#' )
+#'
+#' # Validate library parameter (should produce error)
+#' tryCatch(
+#'     getConcordants(mockSig, ilincsLibrary = "INVALID"),
+#'     error = function(e) message("Expected error: invalid library")
+#' )
+#'
+#' \donttest{
+#' # This example requires network access to the iLINCS API
+#'
+#' # Load example differential expression data
+#' dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+#'     package = "drugfindR"
+#' )
+#' dge_data <- read.delim(dge_file)
 #'
 #' # Prepare signature to ensure proper structure
-#' signature <- prepareSignature(dCovid_diffexp[1:50, ])
+#' signature <- prepareSignature(
+#'     dge_data[1:50, ],
+#'     geneColumn = "hgnc_symbol",
+#'     logfcColumn = "logFC",
+#'     pvalColumn = "PValue"
+#' )
 #'
 #' # Find concordant chemical perturbagens
 #' cpConcordants <- getConcordants(signature, ilincsLibrary = "CP")

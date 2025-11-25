@@ -29,13 +29,6 @@ The function checks the "SourceSignature" column in each metadata table
 for the provided signature ID(s).
 }
 \examples{
-\dontrun{
-# Check if signature exists
-.isValidSignatureId("LINCSKD_28") # Returns TRUE if exists
-.isValidSignatureId("NONEXISTENT") # Returns FALSE
-
-# Works with vectors too
-.isValidSignatureId(c("LINCSKD_28", "LINCSOE_1000")) # Returns c(TRUE, TRUE)
-}
+NULL
 }
 \keyword{internal}

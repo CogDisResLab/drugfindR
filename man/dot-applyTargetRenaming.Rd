@@ -27,10 +27,10 @@ This function:
 \examples{
 \dontrun{
 testData <- data.frame(
-    signatureid = "SIG1",
-    compound = "A",
-    cellline = "A375",
-    similarity = 0.8
+  signatureid = "SIG1",
+  compound = "A",
+  cellline = "A375",
+  similarity = 0.8
 )
 renamed <- .applyTargetRenaming(testData)
 }

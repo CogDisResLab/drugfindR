@@ -28,21 +28,7 @@ The signature must have exactly the required columns in the correct order
 and cannot contain any missing (NA) values.
 }
 \examples{
-\dontrun{
-# Valid signature
-valid_sig <- data.frame(
-    signatureID = rep("SIG_001", 3),
-    ID_geneid = c("1234", "5678", "9012"),
-    Name_GeneSymbol = c("GENE1", "GENE2", "GENE3"),
-    Value_LogDiffExp = c(1.5, -2.1, 0.8),
-    Significance_pvalue = c(0.05, 0.01, 0.03)
-)
-stopIfInvalidSignature(valid_sig) # No error
-
-# Invalid signature (wrong columns)
-invalid_sig <- data.frame(Gene = "GENE1", Expression = 1.5)
-stopIfInvalidSignature(invalid_sig) # Error
-}
+NULL
 }
 \seealso{
 \code{\link{prepareSignature}} for preparing signatures that meet these requirements,

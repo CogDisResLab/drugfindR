@@ -1,9 +1,9 @@
 ## Basic seed management -------------------------------------------------------
 .testSeed <- 12345L
-setTestSeed <- function(seed = .testSeed) { # nocov start
+setTestSeed <- function(seed = .testSeed) {
     set.seed(seed)
     invisible(seed)
-} # nocov end
+}
 
 createInputDge <- function(nGenes = NULL, seed = NULL) {
     if (!is.null(seed)) setTestSeed(seed)
@@ -204,12 +204,13 @@ createIlincsErrorResponse500 <- function() {
 
 ## Public test fixture accessor (signature -> DGE-like for these tests) -------
 getTestFixture <- function(
-    type = c(
-        "prepared_signature", "input_signature",
-        "valid_ilincs_response", "empty_ilincs_response",
-        "error_ilincs_response_400", "error_ilincs_response_500",
-        "concordants_table"
-    ), seed = NULL, ...) {
+  type = c(
+      "prepared_signature", "input_signature",
+      "valid_ilincs_response", "empty_ilincs_response",
+      "error_ilincs_response_400", "error_ilincs_response_500",
+      "concordants_table"
+  ), seed = NULL, ...
+) {
     type <- match.arg(type)
     switch(type,
         input_signature = createInputDge(seed = seed, ...),

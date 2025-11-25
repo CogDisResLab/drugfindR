@@ -29,9 +29,25 @@ and metadata tables, and retrieves all available genes for comprehensive
 signature analysis.
 }
 \examples{
+# Input validation example (no API call)
+# Demonstrates proper signature ID format validation
+tryCatch(
+  getSignature(""), # Empty string should error
+  error = function(e) message("Expected error: empty signature ID")
+)
+
+\donttest{
+# These examples require network access to the iLINCS API
+
 # Get the L1000 signature for LINCSKD_28
 kdSignature <- getSignature("LINCSKD_28")
+head(kdSignature)
 
 # Get an overexpression signature (L1000 status is automatically detected)
 oeSignature <- getSignature("LINCSOE_1000")
+head(oeSignature)
+
+# Check the structure of retrieved signature
+str(kdSignature)
+}
 }

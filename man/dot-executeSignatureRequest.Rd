@@ -36,13 +36,6 @@ The function handles:
 }
 }
 \examples{
-\dontrun{
-# Create request object
-request <- .createSignatureRequest("LINCSKD_28")
-
-# Execute request safely (won't raise errors)
-response <- .executeSignatureRequest(request)
-# Response can be processed even if it contains HTTP errors
-}
+NULL
 }
 \keyword{internal}

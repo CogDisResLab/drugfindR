@@ -49,9 +49,9 @@ and avoiding issues with variable scoping.
 \dontrun{
 # Create sample signature data
 signature <- data.frame(
-    signatureID = rep("TEST", 10),
-    Name_GeneSymbol = paste0("GENE", 1:10),
-    Value_LogDiffExp = c(-3, -2, -1, -0.5, 0, 0.5, 1, 2, 3, 4)
+  signatureID = rep("TEST", 10),
+  Name_GeneSymbol = paste0("GENE", 1:10),
+  Value_LogDiffExp = c(-3, -2, -1, -0.5, 0, 0.5, 1, 2, 3, 4)
 )
 
 # Define thresholds

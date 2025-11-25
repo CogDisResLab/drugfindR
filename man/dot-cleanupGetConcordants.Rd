@@ -24,14 +24,6 @@ The function checks if the specified file exists and removes it using
 the getConcordants operation.
 }
 \examples{
-\dontrun{
-# Create a temporary file
-tempFile <- tempfile(fileext = ".xls")
-file.create(tempFile)
-
-# Clean up the file
-.cleanupGetConcordants(tempFile)
-# File is now removed
-}
+NULL
 }
 \keyword{internal}

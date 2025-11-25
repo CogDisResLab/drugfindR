@@ -22,17 +22,6 @@ the signature data as a tab-separated file. The file is automatically
 cleaned up by the system when the R session ends.
 }
 \examples{
-\dontrun{
-# Create properly structured signature
-sig <- data.frame(
-    signatureID = "SIG_001",
-    ID_geneid = "1234",
-    Name_GeneSymbol = "GENE1",
-    Value_LogDiffExp = -1.5,
-    Significance_pvalue = 0.01
-)
-filePath <- .prepareSignatureFile(sig)
-# Returns path to temporary file containing signature data
-}
+NULL
 }
 \keyword{internal}

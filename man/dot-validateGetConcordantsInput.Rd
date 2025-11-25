@@ -34,27 +34,7 @@ The signature must conform to the iLINCS expected structure. Use
 \code{prepareSignature()} to ensure proper formatting.
 }
 \examples{
-\dontrun{
-# Valid calls (no errors) - complete signature structure required
-validSig <- data.frame(
-    signatureID = "SIG_001",
-    ID_geneid = "1234",
-    Name_GeneSymbol = "GENE1",
-    Value_LogDiffExp = 1.5,
-    Significance_pvalue = 0.05
-)
-.validateGetConcordantsInput(validSig, "CP")
-.validateGetConcordantsInput(validSig, "KD")
-.validateGetConcordantsInput(validSig, "OE")
-
-# Invalid calls (will throw errors)
-.validateGetConcordantsInput("not_a_dataframe", "CP") # Invalid signature type
-.validateGetConcordantsInput(validSig, "INVALID") # Invalid library
-
-# Invalid structure
-invalidSig <- data.frame(Gene = "GENE1", Expression = 1.5)
-.validateGetConcordantsInput(invalidSig, "CP") # Missing required columns
-}
+NULL
 }
 \seealso{
 \code{\link{stopIfInvalidSignature}} for signature structure validation,

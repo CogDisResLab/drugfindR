@@ -2,7 +2,7 @@
 % Please edit documentation in R/investigateTarget.R
 \name{investigateTarget}
 \alias{investigateTarget}
-\title{Investigate a Given Gene or Drug
+\title{Investigate concordant signatures for a gene or drug
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}}
 \usage{
 investigateTarget(
@@ -17,44 +17,140 @@ investigateTarget(
 )
 }
 \arguments{
-\item{target}{The name of the gene or drug}
+\item{target}{Character scalar. Gene symbol (for KD/OE libraries), or drug /
+compound name (for CP library) used to locate source signatures.}
 
-\item{inputLib}{One of "OE", "KD" or "CP". Marks the database to use.}
+\item{inputLib}{Character ("OE", "KD", or "CP"). Library from which source
+signatures for \code{target} are drawn.}
 
-\item{outputLib}{One of "OE", "KD" or "CP". Marks the database to query.}
+\item{outputLib}{Character ("OE", "KD", or "CP"). Library queried for
+concordant signatures.}
 
-\item{filterThreshold}{The Filtering threshold.}
+\item{filterThreshold}{Numeric in \(0,1]. Minimum absolute (or directional)
+change used to retain genes in each source signature prior to concordance.
+Default \code{0.85} is conservative; consider lowering (e.g. \code{0.5}) for broader
+coverage.}
 
-\item{similarityThreshold}{The Similarity Threshold}
+\item{similarityThreshold}{Numeric in [0,1]. Minimum similarity score retained
+in the final consensus result set. Default \code{0.321} (~ upper third).}
 
-\item{paired}{Logical. Whether to query iLINCS separately
-for up and down regulated genes}
+\item{paired}{Logical. If \code{TRUE} (default) computes concordance separately for
+up and down regulated gene sets; if \code{FALSE} uses all selected genes together.}
 
-\item{inputCellLines}{A character vector of cell lines to
-restrict our search for input signatures to.}
+\item{inputCellLines}{Optional character vector restricting the search for
+source signatures to specified cell line(s). If \code{NULL} all available are
+considered.}
 
-\item{outputCellLines}{A character vetor of cell lines to
-restrict the output search to.}
+\item{outputCellLines}{Optional character vector restricting target signatures
+(during consensus formation) to specified cell line(s). If \code{NULL} all are
+considered.}
 }
 \value{
-A tibble with the the similarity scores and signature metadata
+A tibble (data frame) with one row per consensus concordant target
+signature. Typical columns include:
+\itemize{
+\item \code{Source} / \code{Target} – gene or compound names.
+\item \code{Similarity} – numeric concordance score in [-1,1].
+\item \code{SourceSignature}, \code{TargetSignature} – iLINCS signature identifiers.
+\item \code{SourceCellLine}, \code{TargetCellLine} – originating cell lines (if applicable).
+\item \code{SourceConcentration}, \code{TargetConcentration} – dosing information for CP.
+\item \code{SourceTime}, \code{TargetTime} – time point metadata.
+}
 }
 \description{
-This function takes the name of a gene or a drug and a
-database to use to pull signatures
-from and then queries iLINCS to get concordant signatures
+Given the name of a target (gene knockdown/overexpression or compound)
+this high–level convenience wrapper:
 }
+\details{
+\enumerate{
+\item Locates iLINCS source signatures for the target in the specified input library.
+\item Optionally filters by source cell line(s).
+\item Retrieves each source signature and filters genes by direction and magnitude.
+\item Queries iLINCS for concordant signatures in the chosen output library.
+\item Computes paired or unpaired consensus concordance across up/down regulated sets.
+\item Returns an augmented tibble of similarity scores and rich source/target metadata.
+}
+
+The paired workflow evaluates concordance separately for up‑ and down‑regulated
+genes and then combines (via \code{\link[=consensusConcordants]{consensusConcordants()}}) the two result sets. When
+\code{paired = FALSE} a single aggregate signature (direction = "any") is used.
+
+Network access: This function performs remote API calls (unless tests are run
+under a mocking context such as \code{httptest2::with_mock_api()}). Examples are
+wrapped in \verb{\donttest{}} to avoid false negatives on CRAN / Bioconductor builders
+without network access.
+
+Errors are raised if:
+\itemize{
+\item No source signatures match \code{target} in the requested \code{inputLib} (empty set).
+\item Invalid library codes are supplied.
+}
+
+Internally this function orchestrates: \code{\link[=getSignature]{getSignature()}}, \code{\link[=filterSignature]{filterSignature()}},
+\code{\link[=getConcordants]{getConcordants()}} and \code{\link[=consensusConcordants]{consensusConcordants()}}. It returns a vertically
+concatenated result across all matching source signatures.
+}
+\section{Thresholds}{
+
+\itemize{
+\item \code{filterThreshold} controls gene selection within each source signature. It is
+passed to \code{\link[=filterSignature]{filterSignature()}} as the absolute (or directional) threshold.
+\item \code{similarityThreshold} is applied when forming the consensus concordants to
+discard low similarity entries.
+}
+}
+
 \examples{
+# Input validation examples (no API calls)
+# Demonstrate library parameter validation
+tryCatch(
+    investigateTarget(target = "TP53", inputLib = "INVALID", outputLib = "CP"),
+    error = function(e) message("Expected error: invalid inputLib")
+)
+
+tryCatch(
+    investigateTarget(target = "TP53", inputLib = "KD", outputLib = "INVALID"),
+    error = function(e) message("Expected error: invalid outputLib")
+)
+
 \donttest{
-
-# Search the whole iLINCS database for top concordant signatures for an
-# ABL2 knockdown signature
-
-investigatedSignature <- investigateTarget("ABL2",
+# This function makes multiple API calls to iLINCS and may take several minutes
+# Basic paired investigation of a knockdown signature against compound library
+set.seed(1)
+res <- investigateTarget(
+    target = "AATK",
     inputLib = "KD",
     outputLib = "CP",
-    filterThreshold = 0.5
+    filterThreshold = 0.5,
+    similarityThreshold = 0.3,
+    paired = TRUE
 )
-}
+head(res)
 
+# Unpaired (aggregate) workflow — often faster, returns a single consensus set
+res_unpaired <- investigateTarget(
+    target = "AATK", inputLib = "KD", outputLib = "CP",
+    filterThreshold = 0.5, similarityThreshold = 0.3, paired = FALSE
+)
+head(res_unpaired)
+
+# Restrict source signatures to specific cell lines (if available)
+# and target signatures to a subset of cell lines during consensus
+res_filtered <- investigateTarget(
+    target = "AATK", inputLib = "KD", outputLib = "CP",
+    outputCellLines = c("MCF7"),
+    filterThreshold = 0.5, similarityThreshold = 0.3
+)
+head(res_filtered)
+
+# Using httptest2 (if installed) to mock network calls:
+# httptest2::with_mock_api({
+#   mock_res <- investigateTarget("AATK", "KD", "CP", filterThreshold = 0.5)
+#   print(head(mock_res))
+# })
+}
+}
+\seealso{
+\code{\link[=getSignature]{getSignature()}}, \code{\link[=filterSignature]{filterSignature()}}, \code{\link[=getConcordants]{getConcordants()}},
+\code{\link[=consensusConcordants]{consensusConcordants()}}, \code{\link[=prepareSignature]{prepareSignature()}} for lower‑level operations.
 }

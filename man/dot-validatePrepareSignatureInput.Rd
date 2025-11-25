@@ -31,15 +31,6 @@ This function performs the following validations:
 }
 }
 \examples{
-\dontrun{
-# Valid calls (no errors)
-data <- data.frame(Symbol = c("TP53", "MYC"), logFC = c(1.5, -2.1), PValue = c(0.01, 0.05))
-.validatePrepareSignatureInput(data, "Symbol", "logFC", "PValue")
-.validatePrepareSignatureInput(data, "Symbol", "logFC", NA)
-
-# Invalid calls (will throw errors)
-.validatePrepareSignatureInput(data, "NonExistent", "logFC", "PValue")
-.validatePrepareSignatureInput(data, "Symbol", "NonExistent", "PValue")
-}
+NULL
 }
 \keyword{internal}

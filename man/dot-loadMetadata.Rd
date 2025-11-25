@@ -31,14 +31,6 @@ These metadata tables are included with the package and contain information
 about available signatures in each iLINCS library.
 }
 \examples{
-\dontrun{
-# Load metadata for different libraries
-cp_meta <- .loadMetadata("CP")
-kd_meta <- .loadMetadata("KD")
-oe_meta <- .loadMetadata("OE")
-
-# Invalid library (will throw error)
-.loadMetadata("INVALID") # Error
-}
+NULL
 }
 \keyword{internal}

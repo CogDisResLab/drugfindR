@@ -90,12 +90,37 @@ The function will stop execution with informative error messages for:
 }
 
 \examples{
-\dontrun{
-# Load example signature data - ensure it has proper structure
-data("dCovid_diffexp", package = "drugfindR")
+# Input validation examples (no API calls)
+# These demonstrate proper signature structure
+mockSig <- data.frame(
+  signatureID = rep("TEST", 3),
+  ID_geneid = c("123", "456", "789"),
+  Name_GeneSymbol = c("TP53", "MYC", "EGFR"),
+  Value_LogDiffExp = c(1.5, -2.0, 0.8)
+)
+
+# Validate library parameter (should produce error)
+tryCatch(
+  getConcordants(mockSig, ilincsLibrary = "INVALID"),
+  error = function(e) message("Expected error: invalid library")
+)
+
+\donttest{
+# This example requires network access to the iLINCS API
+
+# Load example differential expression data
+dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+  package = "drugfindR"
+)
+dge_data <- read.delim(dge_file)
 
 # Prepare signature to ensure proper structure
-signature <- prepareSignature(dCovid_diffexp[1:50, ])
+signature <- prepareSignature(
+  dge_data[1:50, ],
+  geneColumn = "hgnc_symbol",
+  logfcColumn = "logFC",
+  pvalColumn = "PValue"
+)
 
 # Find concordant chemical perturbagens
 cpConcordants <- getConcordants(signature, ilincsLibrary = "CP")
@@ -120,11 +145,11 @@ cpConcordantsDataFrame <- getConcordants(signatureDataFrame, "CP")
 
 # Manual signature creation (ensure proper structure)
 manualSig <- data.frame(
-    signatureID = rep("MANUAL_SIG", 3),
-    ID_geneid = c("1234", "5678", "9012"),
-    Name_GeneSymbol = c("GENE1", "GENE2", "GENE3"),
-    Value_LogDiffExp = c(1.5, -2.1, 0.8),
-    Significance_pvalue = c(0.05, 0.01, 0.03)
+  signatureID = rep("MANUAL_SIG", 3),
+  ID_geneid = c("1234", "5678", "9012"),
+  Name_GeneSymbol = c("GENE1", "GENE2", "GENE3"),
+  Value_LogDiffExp = c(1.5, -2.1, 0.8),
+  Significance_pvalue = c(0.05, 0.01, 0.03)
 )
 concordants <- getConcordants(manualSig, "CP")
 }

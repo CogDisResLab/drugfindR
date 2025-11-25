@@ -29,15 +29,7 @@ The function validates the input library name before mapping and will
 stop execution if an invalid library is provided.
 }
 \examples{
-\dontrun{
-# Valid library mappings
-.returnLibrary("CP") # Returns "LIB_5"
-.returnLibrary("KD") # Returns "LIB_6"
-.returnLibrary("OE") # Returns "LIB_11"
-
-# Invalid library (will throw error)
-.returnLibrary("INVALID") # Error via stopIfInvalidLibraries()
-}
+NULL
 }
 \seealso{
 \code{\link{stopIfInvalidLibraries}} for library validation details

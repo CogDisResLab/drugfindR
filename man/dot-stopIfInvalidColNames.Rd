@@ -28,20 +28,6 @@ in the specified order:
 }
 }
 \examples{
-\dontrun{
-# Valid signature structure
-valid_sig <- data.frame(
-    signatureID = "SIG_001",
-    ID_geneid = "1234",
-    Name_GeneSymbol = "GENE1",
-    Value_LogDiffExp = 1.5,
-    Significance_pvalue = 0.05
-)
-.stopIfInvalidColNames(valid_sig) # No error
-
-# Invalid signature structure (will throw error)
-invalid_sig <- data.frame(Gene = "GENE1", Expression = 1.5)
-.stopIfInvalidColNames(invalid_sig) # Error
-}
+NULL
 }
 \keyword{internal}

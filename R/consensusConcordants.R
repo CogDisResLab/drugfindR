@@ -35,7 +35,7 @@ NULL
 #' .validateConsensusConcordantsInput(list(), FALSE, 0.3, NULL) # No data
 #' .validateConsensusConcordantsInput(list(testData), TRUE, 0.3, NULL) # Paired needs 2 dataframes
 #' }
-.validateConsensusConcordantsInput <- function(dots, paired, cutoff, cellLine) {
+.validateConsensusConcordantsInput <- function(dots, paired, cutoff, cellLine) { # nolint: object_length_linter.
     # Validate input count based on analysis type
     if (paired && length(dots) != 2L) {
         stop("Paired analysis requires two data frames", call. = FALSE)
@@ -222,7 +222,7 @@ NULL
 
     concordants |>
         dplyr::group_by(
-            dplyr::across(dplyr::any_of(c("treatment")))
+            dplyr::across(!!"treatment")
         ) |>
         dplyr::filter(
             abs(.data[["similarity"]]) == max(abs(.data[["similarity"]]))
@@ -375,46 +375,65 @@ NULL
 #' @importFrom rlang .data
 #'
 #' @examples
+#' # Create mock concordants data for demonstration
+#' mockConcordants <- data.frame(
+#'     signatureid = paste0("SIG", 1:10),
+#'     treatment = c(
+#'         "TP53", "TP53", "MYC", "MYC", "EGFR",
+#'         "EGFR", "KRAS", "BRCA1", "BRCA1", "PIK3CA"
+#'     ),
+#'     cellline = c(
+#'         "A375", "PC3", "A375", "MCF7", "A375",
+#'         "PC3", "A375", "A375", "MCF7", "A375"
+#'     ),
+#'     time = rep("24H", 10),
+#'     concentration = rep(NA, 10),
+#'     sig_direction = rep("DOWN", 10),
+#'     sig_type = rep("single", 10),
+#'     similarity = c(
+#'         0.85, 0.72, -0.68, -0.45, 0.55,
+#'         0.38, 0.42, 0.51, 0.33, 0.29
+#'     ),
+#'     pValue = rep(0.001, 10)
+#' )
+#'
+#' # Example 1: Basic consensus with default cutoff
+#' consensus <- consensusConcordants(mockConcordants)
+#' nrow(consensus) # Targets with |similarity| >= 0.321
+#'
+#' # Example 2: Consensus with higher cutoff
+#' consensus_strict <- consensusConcordants(mockConcordants, cutoff = 0.5)
+#' nrow(consensus_strict) # Fewer targets with higher threshold
+#'
+#' # Example 3: Filter by cell line
+#' consensus_A375 <- consensusConcordants(mockConcordants, cellLine = "A375")
+#' unique(consensus_A375$CellLine) # Only A375
+#'
+#' \donttest{
+#' # Network-dependent examples using real iLINCS data
 #' # Get the L1000 signature for LINCSKD_28
 #' kdSignature <- getSignature("LINCSKD_28")
 #'
 #' # Get concordant gene knockdown signatures
 #' concordantSignatures <- getConcordants(kdSignature, ilincsLibrary = "KD")
 #'
-#' # Get the consensus list of signatures with defaults
-#' consensus <- consensusConcordants(concordantSignatures)
+#' # Get the consensus list with different parameters
+#' consensus <- consensusConcordants(concordantSignatures, cutoff = 0.5)
 #'
-#' # Get the consensus list of signatures with a different cutoff
-#' consensus <- consensusConcordants(concordantSignatures,
-#'     cutoff = 0.5
-#' )
-#'
-#' # Get the consensus list of signatures with a specified cell lines
-#' consensus <- consensusConcordants(concordantSignatures,
-#'     cellLine = c("A549", "MCF7")
-#' )
-#'
-#' # Doing a paired analysis
-#' filteredUp <- filterSignature(kdSignature,
-#'     direction = "up", threshold = 0.5
-#' )
-#' filteredDown <- filterSignature(kdSignature,
-#'     direction = "down", threshold = -0.5
-#' )
-#'
+#' # Paired analysis example
+#' filteredUp <- filterSignature(kdSignature, direction = "up", threshold = 0.5)
+#' filteredDown <- filterSignature(kdSignature, direction = "down", threshold = -0.5)
 #' concordants_up <- getConcordants(filteredUp, ilincsLibrary = "KD")
 #' concordants_down <- getConcordants(filteredDown, ilincsLibrary = "KD")
-#'
-#' consensus <- consensusConcordants(concordants_up,
-#'     concordants_down,
-#'     paired = TRUE
-#' )
+#' consensus <- consensusConcordants(concordants_up, concordants_down, paired = TRUE)
+#' }
 #'
 consensusConcordants <- function(
-    ...,
-    paired = FALSE,
-    cutoff = 0.321,
-    cellLine = NULL) {
+  ...,
+  paired = FALSE,
+  cutoff = 0.321,
+  cellLine = NULL
+) {
     # Capture input dataframes
     dots <- list(...)
 

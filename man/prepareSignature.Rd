@@ -32,17 +32,42 @@ log_2 fold-change and p-value
 and transforms that into an L1000 signature for later processing.
 }
 \examples{
-# Prepare an L1000 signature from a differential gene expression output
+# Load example differential expression data from package
+dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+  package = "drugfindR"
+)
+dge_data <- read.delim(dge_file)
 
-inputSignature <- read.table(system.file("extdata",
-    "dCovid_diffexp.tsv",
-    package = "drugfindR"
-), header = TRUE)
+# Prepare signature with p-values (standard workflow)
+signature <- prepareSignature(
+  dge_data,
+  geneColumn = "hgnc_symbol",
+  logfcColumn = "logFC",
+  pvalColumn = "PValue"
+)
+head(signature)
 
-signature <- prepareSignature(inputSignature,
-    geneColumn = "hgnc_symbol",
-    logfcColumn = "logFC", pvalColumn = "PValue"
+# Prepare signature without p-values
+signature_no_pval <- prepareSignature(
+  dge_data,
+  geneColumn = "hgnc_symbol",
+  logfcColumn = "logFC",
+  pvalColumn = NA
+)
+head(signature_no_pval)
+
+# Custom column names example
+custom_dge <- data.frame(
+  Gene = c("TP53", "MYC", "BRCA1", "EGFR"),
+  FC = c(2.5, -1.8, 3.2, -2.1),
+  Pval = c(0.001, 0.01, 0.0001, 0.005)
 )
 
-head(signature)
+custom_signature <- prepareSignature(
+  custom_dge,
+  geneColumn = "Gene",
+  logfcColumn = "FC",
+  pvalColumn = "Pval"
+)
+print(custom_signature)
 }

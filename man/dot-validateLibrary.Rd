@@ -25,11 +25,6 @@ Valid library names are:
 }
 }
 \examples{
-\dontrun{
-.validateLibrary("CP") # Returns TRUE
-.validateLibrary("KD") # Returns TRUE
-.validateLibrary("OE") # Returns TRUE
-.validateLibrary("INVALID") # Returns FALSE
-}
+NULL
 }
 \keyword{internal}

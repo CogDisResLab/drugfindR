@@ -40,127 +40,91 @@ NULL
 #' @importFrom rlang .data
 #'
 #' @examples
+#' # Input validation example (no API calls)
+#' mockExpr <- data.frame(
+#'     Symbol = c("TP53", "MYC"),
+#'     logFC = c(2.5, -1.8),
+#'     PValue = c(0.001, 0.01)
+#' )
 #'
-#' # Investigate a signature
+#' # Validate library parameter (should produce error)
+#' tryCatch(
+#'     investigateSignature(mockExpr, outputLib = "INVALID"),
+#'     error = function(e) message("Expected error: invalid library")
+#' )
 #'
-#' # Load and prepare the signature
-#' inputSignature <- read.table(system.file("extdata",
-#'     "dCovid_diffexp.tsv",
-#'     package = "drugfindR"
-#' ), header = TRUE)
+#' \donttest{
+#' # This function makes multiple API calls to iLINCS and may take several minutes
 #'
+#' # Load differential expression data
+#' inputSignature <- read.table(
+#'     system.file("extdata", "dCovid_diffexp.tsv", package = "drugfindR"),
+#'     header = TRUE
+#' )
 #'
-#' # Investigate the signature
-#'
-#' investigatedSignature <- investigateSignature(inputSignature,
+#' # Investigate the signature against chemical perturbagen library
+#' investigatedSignature <- investigateSignature(
+#'     inputSignature,
 #'     outputLib = "CP",
 #'     filterThreshold = 0.5,
 #'     geneColumn = "hgnc_symbol",
 #'     logfcColumn = "logFC",
 #'     pvalColumn = "PValue"
 #' )
+#' head(investigatedSignature)
+#' }
 investigateSignature <- function(
-    expr,
-    outputLib,
-    filterThreshold = NULL,
-    filterProp = NULL,
-    similarityThreshold = 0.2,
-    paired = TRUE,
-    outputCellLines = NULL,
-    geneColumn = "Symbol",
-    logfcColumn = "logFC",
-    pvalColumn = "PValue",
-    sourceName = "Input",
-    sourceCellLine = "NA",
-    sourceTime = "NA",
-    sourceConcentration = "NA") {
+  expr,
+  outputLib,
+  filterThreshold = NULL,
+  filterProp = NULL,
+  similarityThreshold = 0.2,
+  paired = TRUE,
+  outputCellLines = NULL,
+  geneColumn = "Symbol",
+  logfcColumn = "logFC",
+  pvalColumn = "PValue",
+  sourceName = "Input",
+  sourceCellLine = "NA",
+  sourceTime = "NA",
+  sourceConcentration = "NA"
+) {
     stopIfInvalidLibraries(outputLib)
     if (missing(outputLib)) {
-        stop("Please specify an output library")
+        stop("Please specify an output library", call. = FALSE)
     }
 
-    exprSignature <- expr %>%
-        prepareSignature(
-            geneColumn = geneColumn,
-            logfcColumn = logfcColumn,
-            pvalColumn = pvalColumn
-        )
-
+    # Prepare signature once; downstream functions handle validation & errors
+    exprSignature <- prepareSignature(
+        expr,
+        geneColumn = geneColumn,
+        logfcColumn = logfcColumn,
+        pvalColumn = pvalColumn
+    )
     signatureId <- unique(exprSignature[["signatureID"]])
 
-    if (paired) {
-        filteredUp <- exprSignature %>%
-            filterSignature(
-                direction = "up",
-                threshold = filterThreshold,
-                prop = filterProp
-            )
+    consensus <- .computeConsensusFromSignature(
+        exprSignature,
+        outputLib = outputLib,
+        filterThreshold = filterThreshold,
+        filterProp = filterProp,
+        similarityThreshold = similarityThreshold,
+        paired = paired,
+        outputCellLines = outputCellLines
+    )
 
-        filteredDown <- exprSignature %>%
-            filterSignature(
-                direction = "down",
-                threshold = filterThreshold,
-                prop = filterProp
-            )
-
-        concordantUp <- filteredUp %>%
-            getConcordants(ilincsLibrary = outputLib)
-
-        concordantDown <- filteredDown %>%
-            getConcordants(ilincsLibrary = outputLib)
-
-
-        consensusTargets <-
-            consensusConcordants(
-                concordantUp,
-                concordantDown,
-                paired = paired,
-                cellLine = outputCellLines,
-                cutoff = similarityThreshold
-            )
-    } else {
-        filtered <- exprSignature %>%
-            filterSignature(
-                direction = "any",
-                threshold = filterThreshold,
-                prop = filterProp
-            )
-
-        concordants <- filtered %>%
-            getConcordants(ilincsLibrary = outputLib)
-
-        consensusTargets <-
-            consensusConcordants(
-                concordants,
-                paired = paired,
-                cellLine = outputCellLines,
-                cutoff = similarityThreshold
-            )
-    }
-
-    augmented <- consensusTargets %>%
+    consensus %>%
         dplyr::mutate(
             SourceSignature = signatureId,
             Source = sourceName,
             SourceCellLine = sourceCellLine,
             SourceTime = sourceTime,
+            SourceConcentration = sourceConcentration
         ) %>%
-        dplyr::select(
-            dplyr::any_of(c(
-                "Source",
-                "Target",
-                "Similarity",
-                "SourceSignature",
-                "SourceCellLine",
-                "InputSignatureDirection",
-                "SourceConcentration",
-                "SourceTime",
-                "TargetSignature",
-                "TargetCellLine",
-                "TargetConcentration",
-                "TargetTime"
-            ))
-        )
-
-    augmented
+        dplyr::select(dplyr::any_of(c(
+            "Source", "Target", "Similarity", "SourceSignature",
+            "SourceCellLine", "SourceConcentration", "SourceTime",
+            "TargetSignature", "TargetCellLine", "TargetConcentration", "TargetTime",
+            "InputSigDirection", "SignatureType", "pValue"
+        )))
 }

@@ -1,11 +1,33 @@
-#' Rename the Target-Related Columns
+#' Rename target-related columns to user-facing output names
 #'
-#' This function is used to standardize the names
-#' of the columns output at the end of the result.
+#' Standardizes internal concordants/consensus column names to the
+#' user-facing output schema used by this package.
 #'
-#' @param inputNames A character vector of input_names
+#' @param inputNames Character vector of column names to rename. See Details
+#'   for the expected input ordering and mapping.
 #'
-#' @return A character vector of new names
+#' @return Character vector of output (renamed) column names.
+#'
+#' @details
+#' Expected input columns (by position) are the internal concordants fields:
+#'
+#' 1) `signatureid`, 2) `treatment` (or `compound` pre-renaming),
+#' 3) `cellline`, 4) `time`, 5) `concentration`, 6) `sig_direction`,
+#' 7) `sig_type`, 8) `similarity`, 9) `pValue`.
+#'
+#' These are mapped to the user-facing names returned by functions like
+#' [consensusConcordants()] and downstream investigation helpers:
+#'
+#' - `TargetSignature`, `Target`, `TargetCellLine`, `TargetTime`,
+#'   `TargetConcentration`, `InputSigDirection`, `SignatureType`,
+#'   `Similarity`, `pValue`.
+#'
+#' Only the names are returned; the renaming is applied via
+#' `dplyr::rename_with(x, targetRename)`.
+#'
+#' @keywords internal
+#'
+#' @examples NULL
 targetRename <- function(inputNames) {
     c(
         "TargetSignature", "Target", "TargetCellLine",
@@ -42,13 +64,7 @@ targetRename <- function(inputNames) {
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' .validateLibrary("CP") # Returns TRUE
-#' .validateLibrary("KD") # Returns TRUE
-#' .validateLibrary("OE") # Returns TRUE
-#' .validateLibrary("INVALID") # Returns FALSE
-#' }
+#' @examples NULL
 .validateLibrary <- function(lib) {
     lib %in% c("CP", "KD", "OE")
 }
@@ -75,13 +91,7 @@ targetRename <- function(inputNames) {
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' validateLibraries(c("CP", "KD")) # Returns TRUE
-#' validateLibraries("OE") # Returns TRUE
-#' validateLibraries(c("CP", "INVALID")) # Returns FALSE
-#' validateLibraries("INVALID") # Returns FALSE
-#' }
+#' @examples NULL
 validateLibraries <- function(libs) {
     all(purrr::map_lgl(libs, .validateLibrary))
 }
@@ -115,16 +125,7 @@ validateLibraries <- function(libs) {
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Valid libraries
-#' stopIfInvalidLibraries(c("CP", "KD")) # No error
-#' stopIfInvalidLibraries("OE") # No error
-#'
-#' # Invalid libraries (will throw errors)
-#' stopIfInvalidLibraries("INVALID") # Error
-#' stopIfInvalidLibraries(c("CP", "XYZ")) # Error
-#' }
+#' @examples NULL
 stopIfInvalidLibraries <- function(libs) {
     if (!validateLibraries(libs)) {
         invalidLibs <- libs[!purrr::map_lgl(libs, .validateLibrary)]
@@ -158,22 +159,7 @@ stopIfInvalidLibraries <- function(libs) {
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Valid signature structure
-#' valid_sig <- data.frame(
-#'     signatureID = "SIG_001",
-#'     ID_geneid = "1234",
-#'     Name_GeneSymbol = "GENE1",
-#'     Value_LogDiffExp = 1.5,
-#'     Significance_pvalue = 0.05
-#' )
-#' .stopIfInvalidColNames(valid_sig) # No error
-#'
-#' # Invalid signature structure (will throw error)
-#' invalid_sig <- data.frame(Gene = "GENE1", Expression = 1.5)
-#' .stopIfInvalidColNames(invalid_sig) # Error
-#' }
+#' @examples NULL
 .stopIfInvalidColNames <- function(signature) {
     expectedColNames <- c(
         "signatureID",
@@ -231,28 +217,7 @@ stopIfInvalidLibraries <- function(libs) {
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Valid signature (no missing values)
-#' valid_sig <- data.frame(
-#'     signatureID = "SIG_001",
-#'     ID_geneid = "1234",
-#'     Name_GeneSymbol = "GENE1",
-#'     Value_LogDiffExp = 1.5,
-#'     Significance_pvalue = 0.05
-#' )
-#' .stopIfContainsMissingValues(valid_sig) # No error
-#'
-#' # Invalid signature (contains NA values)
-#' invalid_sig <- data.frame(
-#'     signatureID = "SIG_001",
-#'     ID_geneid = NA,
-#'     Name_GeneSymbol = "GENE1",
-#'     Value_LogDiffExp = 1.5,
-#'     Significance_pvalue = NA
-#' )
-#' .stopIfContainsMissingValues(invalid_sig) # Error
-#' }
+#' @examples NULL
 .stopIfContainsMissingValues <- function(signature) {
     if (any(is.na(signature))) {
         # Find which columns contain missing values
@@ -308,22 +273,7 @@ stopIfInvalidLibraries <- function(libs) {
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Valid signature
-#' valid_sig <- data.frame(
-#'     signatureID = rep("SIG_001", 3),
-#'     ID_geneid = c("1234", "5678", "9012"),
-#'     Name_GeneSymbol = c("GENE1", "GENE2", "GENE3"),
-#'     Value_LogDiffExp = c(1.5, -2.1, 0.8),
-#'     Significance_pvalue = c(0.05, 0.01, 0.03)
-#' )
-#' stopIfInvalidSignature(valid_sig) # No error
-#'
-#' # Invalid signature (wrong columns)
-#' invalid_sig <- data.frame(Gene = "GENE1", Expression = 1.5)
-#' stopIfInvalidSignature(invalid_sig) # Error
-#' }
+#' @examples NULL
 stopIfInvalidSignature <- function(signature) {
     # Ensure that all the required column names are present
     .stopIfInvalidColNames(signature)
@@ -357,16 +307,7 @@ stopIfInvalidSignature <- function(signature) {
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Load metadata for different libraries
-#' cp_meta <- .loadMetadata("CP")
-#' kd_meta <- .loadMetadata("KD")
-#' oe_meta <- .loadMetadata("OE")
-#'
-#' # Invalid library (will throw error)
-#' .loadMetadata("INVALID") # Error
-#' }
+#' @examples NULL
 .loadMetadata <- function(lib) {
     if (lib == "OE") {
         oeMetadata
@@ -410,16 +351,7 @@ stopIfInvalidSignature <- function(signature) {
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Valid library mappings
-#' .returnLibrary("CP") # Returns "LIB_5"
-#' .returnLibrary("KD") # Returns "LIB_6"
-#' .returnLibrary("OE") # Returns "LIB_11"
-#'
-#' # Invalid library (will throw error)
-#' .returnLibrary("INVALID") # Error via stopIfInvalidLibraries()
-#' }
+#' @examples NULL
 .returnLibrary <- function(lib) {
     stopIfInvalidLibraries(lib)
 
@@ -452,16 +384,98 @@ stopIfInvalidSignature <- function(signature) {
 #'
 #' @keywords internal
 #'
-#' @examples
-#' \dontrun{
-#' # Get the current User-Agent string
-#' user_agent <- .returnUserAgent()
-#' # Returns something like: "drugfindR/1.0.0; https://github.com/CogDisResLab/drugfindR"
-#' }
+#' @examples NULL
 .returnUserAgent <- function() {
     paste0(
         "drugfindR/",
         utils::packageVersion("drugfindR"),
         "; https://github.com/CogDisResLab/drugfindR"
     )
+}
+
+#' Compute consensus concordant signatures from a single input signature
+#'
+#' This internal helper wraps the common paired / unpaired workflow used by
+#' `investigateSignature()` and `investigateTarget()` for a single already
+#' prepared or retrieved signature. It applies directional filtering, queries
+#' iLINCS for concordant signatures, and collapses results via
+#' [consensusConcordants()].
+#'
+#' @param signature A data.frame / tibble / DataFrame produced by
+#'   [prepareSignature()] or [getSignature()] with standard signature columns.
+#' @param outputLib Character. One of "OE", "KD", or "CP" indicating the
+#'   iLINCS library to search for concordant signatures.
+#' @param filterThreshold Numeric (optional). Absolute threshold(s) passed to
+#'   [filterSignature()]. Use either `filterThreshold` or `filterProp`.
+#' @param filterProp Numeric in (0, 0.5] (optional). Proportion for quantile
+#'   based filtering in [filterSignature()]. Ignored if `filterThreshold` is
+#'   supplied.
+#' @param similarityThreshold Numeric in 0..1. Minimum absolute similarity
+#'   retained by [consensusConcordants()].
+#' @param paired Logical. If TRUE perform separate up / down filtering and
+#'   concordance queries; otherwise aggregate direction = "any".
+#' @param outputCellLines Optional character vector restricting target cell
+#'   lines during consensus filtering. Passed to [consensusConcordants()].
+#'
+#' @return A tibble of consensus concordant signatures with standardized target
+#'   columns (already renamed via internal consensus pipeline). Columns include
+#'   `TargetSignature`, `Target`, `TargetCellLine`, `Similarity`, `pValue`,
+#'   `InputSigDirection`, `SignatureType`, and optional time / concentration.
+#'
+#' @details
+#' Error handling is delegated to component functions:
+#' * Library validation via [stopIfInvalidLibraries()]
+#' * Signature structure via [stopIfInvalidSignature()] (indirectly used by
+#'   [getConcordants()])
+#' * Filtering parameter validation via [.validateFilterSignatureInput()]
+#' * Concordance / network errors via internal iLINCS response processors.
+#'
+#' If both `filterThreshold` and `filterProp` are supplied an error is raised
+#' upstream in [filterSignature()]. Provide only one.
+#'
+#' @keywords internal
+#'
+#' @importFrom magrittr %>%
+#' @importFrom dplyr mutate
+#'
+#' @examples NULL
+.computeConsensusFromSignature <- function(
+  signature,
+  outputLib,
+  filterThreshold = NULL,
+  filterProp = NULL,
+  similarityThreshold = 0.321,
+  paired = TRUE,
+  outputCellLines = NULL
+) {
+    stopIfInvalidLibraries(outputLib)
+
+    if (paired) {
+        upSig <- filterSignature(signature,
+            direction = "up",
+            threshold = filterThreshold, prop = filterProp
+        )
+        downSig <- filterSignature(signature,
+            direction = "down",
+            threshold = filterThreshold, prop = filterProp
+        )
+        upConc <- getConcordants(upSig, ilincsLibrary = outputLib)
+        downConc <- getConcordants(downSig, ilincsLibrary = outputLib)
+        consensusConcordants(upConc, downConc,
+            paired = TRUE,
+            cellLine = outputCellLines,
+            cutoff = similarityThreshold
+        )
+    } else {
+        anySig <- filterSignature(signature,
+            direction = "any",
+            threshold = filterThreshold, prop = filterProp
+        )
+        conc <- getConcordants(anySig, ilincsLibrary = outputLib)
+        consensusConcordants(conc,
+            paired = FALSE,
+            cellLine = outputCellLines,
+            cutoff = similarityThreshold
+        )
+    }
 }

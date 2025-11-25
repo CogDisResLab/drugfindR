@@ -27,12 +27,12 @@ This function:
 \examples{
 \dontrun{
 testData <- data.frame(
-    signatureid = "SIG1",
-    compound = "A",
-    cellline = "A375",
-    similarity = 0.8,
-    sig_direction = "Up",
-    pValue = 0.01
+  signatureid = "SIG1",
+  compound = "A",
+  cellline = "A375",
+  similarity = 0.8,
+  sig_direction = "Up",
+  pValue = 0.01
 )
 selected <- .selectAndOrderResults(testData)
 }

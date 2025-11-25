@@ -30,10 +30,6 @@ The request is configured but not executed - it must be performed using
 the request execution function.
 }
 \examples{
-\dontrun{
-# Create request for any signature
-req <- .createSignatureRequest("LINCSKD_28")
-req <- .createSignatureRequest("LINCSOE_1000")
-}
+NULL
 }
 \keyword{internal}

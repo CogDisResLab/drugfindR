@@ -7,7 +7,7 @@
 ##  Parse the first argument as the package name + package version
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) != 1L) {
-    stop("Usage: rename-package.R <package-name>")
+  stop("Usage: rename-package.R <package-name>")
 }
 
 message("Received package name: ", args[[1L]])
@@ -18,12 +18,12 @@ packageVersion <- strsplit(args, "_")[[1L]][[2L]]
 message("Package version: ", packageVersion)
 
 newName <- paste(
-    packageName, paste("R",
-        getRversion(),
-        sep = "-"
-    ),
-    paste0("v", packageVersion),
-    sep = "_"
+  packageName, paste("R",
+    getRversion(),
+    sep = "-"
+  ),
+  paste0("v", packageVersion),
+  sep = "_"
 )
 
 message("Renaming package to: ", newName)
@@ -31,9 +31,9 @@ message("Renaming package to: ", newName)
 value <- file.rename(args[[1L]], newName)
 
 if (value) {
-    message("Successfully renamed package to: ", newName)
-    cat(newName)
+  message("Successfully renamed package to: ", newName)
+  cat(newName)
 } else {
-    stop("Failed to rename package to: ", newName)
-    cat("")
+  stop("Failed to rename package to: ", newName)
+  cat("")
 }

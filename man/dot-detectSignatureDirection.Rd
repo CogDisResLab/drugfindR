@@ -30,26 +30,6 @@ information is used by iLINCS for signature analysis and is included
 in the output results.
 }
 \examples{
-\dontrun{
-# All up-regulated genes
-upSig <- data.frame(Value_LogDiffExp = c(1.0, 2.0, 1.5))
-.detectSignatureDirection(up_sig)
-# Returns: "Up"
-
-# All down-regulated genes
-downSig <- data.frame(Value_LogDiffExp = c(-1.0, -2.0, -1.5))
-.detectSignatureDirection(down_sig)
-# Returns: "Down"
-
-# Mixed regulation
-mixedSig <- data.frame(Value_LogDiffExp = c(-1.0, 0.5, 2.0))
-.detectSignatureDirection(mixed_sig)
-# Returns: "Any"
-
-# Edge case: zero values
-zeroSig <- data.frame(Value_LogDiffExp = c(0.0, 0.0, 0.0))
-.detectSignatureDirection(zero_sig)
-# Returns: "Up" (since all values >= 0)
-}
+NULL
 }
 \keyword{internal}

@@ -3,157 +3,183 @@
 #' @include getConcordants.R consensusConcordants.R filterSignature.R
 NULL
 
-#' Investigate a Given Gene or Drug
+#' Investigate concordant signatures for a gene or drug
 #' `r lifecycle::badge("stable")`
 #'
-#' This function takes the name of a gene or a drug and a
-#' database to use to pull signatures
-#' from and then queries iLINCS to get concordant signatures
+#' Given the name of a target (gene knockdown/overexpression or compound)
+#' this high–level convenience wrapper:
 #'
-#' @param target The name of the gene or drug
-#' @param inputLib One of "OE", "KD" or "CP". Marks the database to use.
-#' @param outputLib One of "OE", "KD" or "CP". Marks the database to query.
-#' @param filterThreshold The Filtering threshold.
-#' @param similarityThreshold The Similarity Threshold
-#' @param paired Logical. Whether to query iLINCS separately
-#' for up and down regulated genes
-#' @param inputCellLines A character vector of cell lines to
-#' restrict our search for input signatures to.
-#' @param outputCellLines A character vetor of cell lines to
-#' restrict the output search to.
+#' 1. Locates iLINCS source signatures for the target in the specified input library.
+#' 2. Optionally filters by source cell line(s).
+#' 3. Retrieves each source signature and filters genes by direction and magnitude.
+#' 4. Queries iLINCS for concordant signatures in the chosen output library.
+#' 5. Computes paired or unpaired consensus concordance across up/down regulated sets.
+#' 6. Returns an augmented tibble of similarity scores and rich source/target metadata.
 #'
-#' @return A tibble with the the similarity scores and signature metadata
+#' The paired workflow evaluates concordance separately for up‑ and down‑regulated
+#' genes and then combines (via [consensusConcordants()]) the two result sets. When
+#' `paired = FALSE` a single aggregate signature (direction = "any") is used.
+#'
+#' Network access: This function performs remote API calls (unless tests are run
+#' under a mocking context such as `httptest2::with_mock_api()`). Examples are
+#' wrapped in `\donttest{}` to avoid false negatives on CRAN / Bioconductor builders
+#' without network access.
+#'
+#' @section Thresholds:
+#' * `filterThreshold` controls gene selection within each source signature. It is
+#'   passed to [filterSignature()] as the absolute (or directional) threshold.
+#' * `similarityThreshold` is applied when forming the consensus concordants to
+#'   discard low similarity entries.
+#'
+#' @param target Character scalar. Gene symbol (for KD/OE libraries), or drug /
+#'   compound name (for CP library) used to locate source signatures.
+#' @param inputLib Character ("OE", "KD", or "CP"). Library from which source
+#'   signatures for `target` are drawn.
+#' @param outputLib Character ("OE", "KD", or "CP"). Library queried for
+#'   concordant signatures.
+#' @param filterThreshold Numeric in \(0,1\]. Minimum absolute (or directional)
+#'   change used to retain genes in each source signature prior to concordance.
+#'   Default `0.85` is conservative; consider lowering (e.g. `0.5`) for broader
+#'   coverage.
+#' @param similarityThreshold Numeric in \[0,1\]. Minimum similarity score retained
+#'   in the final consensus result set. Default `0.321` (~ upper third).
+#' @param paired Logical. If `TRUE` (default) computes concordance separately for
+#'   up and down regulated gene sets; if `FALSE` uses all selected genes together.
+#' @param inputCellLines Optional character vector restricting the search for
+#'   source signatures to specified cell line(s). If `NULL` all available are
+#'   considered.
+#' @param outputCellLines Optional character vector restricting target signatures
+#'   (during consensus formation) to specified cell line(s). If `NULL` all are
+#'   considered.
+#'
+#' @return A tibble (data frame) with one row per consensus concordant target
+#'   signature. Typical columns include:
+#'   * `Source` / `Target` – gene or compound names.
+#'   * `Similarity` – numeric concordance score in \[-1,1\].
+#'   * `SourceSignature`, `TargetSignature` – iLINCS signature identifiers.
+#'   * `SourceCellLine`, `TargetCellLine` – originating cell lines (if applicable).
+#'   * `SourceConcentration`, `TargetConcentration` – dosing information for CP.
+#'   * `SourceTime`, `TargetTime` – time point metadata.
+#'
+#' @details Errors are raised if:
+#' * No source signatures match `target` in the requested `inputLib` (empty set).
+#' * Invalid library codes are supplied.
+#'
+#' Internally this function orchestrates: [getSignature()], [filterSignature()],
+#' [getConcordants()] and [consensusConcordants()]. It returns a vertically
+#' concatenated result across all matching source signatures.
+#'
+#' @seealso [getSignature()], [filterSignature()], [getConcordants()],
+#'   [consensusConcordants()], [prepareSignature()] for lower‑level operations.
+#'
 #' @export
 #'
-#' @importFrom dplyr filter pull select any_of inner_join
+#' @importFrom dplyr filter pull select any_of inner_join mutate
 #' @importFrom stringr str_to_lower
 #' @importFrom purrr map map2 map_dfr
 #' @importFrom rlang .data
 #' @importFrom magrittr %>%
 #'
 #' @examples
+#' # Input validation examples (no API calls)
+#' # Demonstrate library parameter validation
+#' tryCatch(
+#'     investigateTarget(target = "TP53", inputLib = "INVALID", outputLib = "CP"),
+#'     error = function(e) message("Expected error: invalid inputLib")
+#' )
+#'
+#' tryCatch(
+#'     investigateTarget(target = "TP53", inputLib = "KD", outputLib = "INVALID"),
+#'     error = function(e) message("Expected error: invalid outputLib")
+#' )
+#'
 #' \donttest{
-#'
-#' # Search the whole iLINCS database for top concordant signatures for an
-#' # ABL2 knockdown signature
-#'
-#' investigatedSignature <- investigateTarget("ABL2",
+#' # This function makes multiple API calls to iLINCS and may take several minutes
+#' # Basic paired investigation of a knockdown signature against compound library
+#' set.seed(1)
+#' res <- investigateTarget(
+#'     target = "AATK",
 #'     inputLib = "KD",
 #'     outputLib = "CP",
-#'     filterThreshold = 0.5
+#'     filterThreshold = 0.5,
+#'     similarityThreshold = 0.3,
+#'     paired = TRUE
 #' )
-#' }
+#' head(res)
 #'
+#' # Unpaired (aggregate) workflow — often faster, returns a single consensus set
+#' res_unpaired <- investigateTarget(
+#'     target = "AATK", inputLib = "KD", outputLib = "CP",
+#'     filterThreshold = 0.5, similarityThreshold = 0.3, paired = FALSE
+#' )
+#' head(res_unpaired)
+#'
+#' # Restrict source signatures to specific cell lines (if available)
+#' # and target signatures to a subset of cell lines during consensus
+#' res_filtered <- investigateTarget(
+#'     target = "AATK", inputLib = "KD", outputLib = "CP",
+#'     outputCellLines = c("MCF7"),
+#'     filterThreshold = 0.5, similarityThreshold = 0.3
+#' )
+#' head(res_filtered)
+#'
+#' # Using httptest2 (if installed) to mock network calls:
+#' # httptest2::with_mock_api({
+#' #   mock_res <- investigateTarget("AATK", "KD", "CP", filterThreshold = 0.5)
+#' #   print(head(mock_res))
+#' # })
+#' }
 investigateTarget <- function(
-    target,
-    inputLib, outputLib,
-    filterThreshold = 0.85,
-    similarityThreshold = 0.321,
-    paired = TRUE, inputCellLines = NULL,
-    outputCellLines = NULL) {
+  target,
+  inputLib, outputLib,
+  filterThreshold = 0.85,
+  similarityThreshold = 0.321,
+  paired = TRUE, inputCellLines = NULL,
+  outputCellLines = NULL
+) {
     stopIfInvalidLibraries(c(inputLib, outputLib))
 
+    # Load metadata and obtain candidate source signatures for the target
     inputMetadata <- .loadMetadata(inputLib)
-
-    if (!is.null(inputCellLines)) {
-        filteredSignatureIds <- inputMetadata %>%
-            dplyr::filter(
-                stringr::str_to_lower(target) ==
-                    stringr::str_to_lower(.data[["Source"]])
-            ) %>%
-            dplyr::filter(.data[["SourceCellLine"]] %in% inputCellLines) %>%
-            dplyr::pull(.data[["SourceSignature"]])
-    } else {
-        filteredSignatureIds <- inputMetadata %>%
-            dplyr::filter(
-                stringr::str_to_lower(target) ==
-                    stringr::str_to_lower(.data[["Source"]])
-            ) %>%
-            dplyr::pull(.data[["SourceSignature"]])
-    }
+    filteredSignatureIds <- inputMetadata %>%
+        dplyr::filter(
+            stringr::str_to_lower(.data[["Source"]]) ==
+                stringr::str_to_lower(target)
+        ) %>%
+        {
+            if (!is.null(inputCellLines)) dplyr::filter(., .data[["SourceCellLine"]] %in% inputCellLines) else .
+        } %>%
+        dplyr::pull(.data[["SourceSignature"]])
 
     if (length(filteredSignatureIds) == 0L) {
-        stop("No signatures match the given input criteria.")
+        stop("No signatures match the given input criteria.", call. = FALSE)
     }
 
-    allSignatures <- filteredSignatureIds %>%
-        purrr::map(~ getSignature(.x))
-
-    if (paired) {
-        filteredUp <- allSignatures %>%
-            purrr::map(~ filterSignature(
-                .x,
-                direction = "up",
-                threshold = filterThreshold
-            ))
-
-        filteredDown <- allSignatures %>%
-            purrr::map(~ filterSignature(
-                .x,
-                direction = "down",
-                threshold = filterThreshold
-            ))
-
-        concordantUp <- filteredUp %>%
-            purrr::map(~ getConcordants(.x, ilincsLibrary = outputLib))
-
-        concordantDown <- filteredDown %>%
-            purrr::map(~ getConcordants(.x, ilincsLibrary = outputLib))
-
-        consensusTargets <- purrr::map2(
-            concordantUp, concordantDown,
-            ~ consensusConcordants(.x, .y,
-                paired = paired,
-                cellLine = outputCellLines,
-                cutoff = similarityThreshold
-            )
-        )
-    } else {
-        filtered <- allSignatures %>%
-            purrr::map(~ filterSignature(
-                .x,
-                direction = "any",
-                threshold = filterThreshold
-            ))
-
-        concordants <- filtered %>%
-            purrr::map(~ getConcordants(.x, ilincsLibrary = outputLib))
-
-        consensusTargets <- purrr::map(
-            concordants,
-            ~ consensusConcordants(.x,
-                paired = paired,
-                cellLine = outputCellLines,
-                cutoff = similarityThreshold
-            )
-        )
-    }
-
-    augmented <- consensusTargets %>%
-        purrr::map2(
-            filteredSignatureIds,
-            ~ dplyr::mutate(.x, SourceSignature = .y)
+    # Helper to process a single signature ID using existing modular functions
+    process_one <- function(sigId) {
+        sig <- getSignature(sigId)
+        .computeConsensusFromSignature(
+            sig,
+            outputLib = outputLib,
+            filterThreshold = filterThreshold,
+            similarityThreshold = similarityThreshold,
+            paired = paired,
+            outputCellLines = outputCellLines
         ) %>%
-        purrr::map_dfr(~ dplyr::inner_join(
-            .x,
-            inputMetadata,
-            by = "SourceSignature"
-        )) %>%
+            dplyr::mutate(SourceSignature = sigId)
+    }
+
+    # Process all source signatures and augment with metadata
+    filteredSignatureIds %>%
+        purrr::map(process_one) %>%
+        dplyr::bind_rows() %>%
+        dplyr::inner_join(inputMetadata, by = "SourceSignature") %>%
         dplyr::select(
             dplyr::any_of(c(
-                "Source",
-                "Target",
-                "Similarity",
-                "SourceSignature",
-                "SourceCellLine",
-                "SourceConcentration",
-                "SourceTime",
-                "TargetSignature",
-                "TargetCellLine",
-                "TargetConcentration",
-                "TargetTime"
+                "Source", "Target", "Similarity", "SourceSignature",
+                "SourceCellLine", "SourceConcentration", "SourceTime",
+                "TargetSignature", "TargetCellLine", "TargetConcentration", "TargetTime",
+                "InputSigDirection", "SignatureType", "pValue"
             ))
         )
-
-    augmented
 }

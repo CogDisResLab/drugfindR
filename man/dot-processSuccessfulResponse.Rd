@@ -39,9 +39,6 @@ The rounding ensures consistent precision across different platforms and
 prevents floating-point precision issues in downstream analyses.
 }
 \examples{
-\dontrun{
-# Process a successful response (response would come from httr2::req_perform)
-# signature <- .processSuccessfulResponse(response, "LINCSKD_28")
-}
+NULL
 }
 \keyword{internal}

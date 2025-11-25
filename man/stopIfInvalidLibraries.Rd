@@ -29,15 +29,7 @@ If any invalid libraries are found, the function provides a detailed error
 message listing the invalid libraries and the expected options.
 }
 \examples{
-\dontrun{
-# Valid libraries
-stopIfInvalidLibraries(c("CP", "KD")) # No error
-stopIfInvalidLibraries("OE") # No error
-
-# Invalid libraries (will throw errors)
-stopIfInvalidLibraries("INVALID") # Error
-stopIfInvalidLibraries(c("CP", "XYZ")) # Error
-}
+NULL
 }
 \seealso{
 \code{\link{validateLibraries}} for the underlying validation logic,

@@ -12,7 +12,7 @@
 #
 # This particular file contains the differential gene expression data for the
 # patients with COVID-19 compared to the healthy controls.
-url  <- "https://zenodo.org/records/10265182/files/dCovid_diffexp.tsv"
+url <- "https://zenodo.org/records/10265182/files/dCovid_diffexp.tsv"
 
 # We download the file to the inst/extdata directory of the package.
 location <- file.path("inst", "extdata", "dCovid_diffexp.tsv")
