@@ -78,7 +78,6 @@ NULL
 #' @importFrom stringr str_to_lower
 #' @importFrom purrr map map2 map_dfr
 #' @importFrom rlang .data
-#' @importFrom magrittr %>%
 #'
 #' @examples
 #' # Input validation examples (no API calls)
@@ -141,14 +140,14 @@ investigateTarget <- function(
 
     # Load metadata and obtain candidate source signatures for the target
     inputMetadata <- .loadMetadata(inputLib)
-    filteredSignatureIds <- inputMetadata %>%
+    filteredSignatureIds <- inputMetadata |>
         dplyr::filter(
             stringr::str_to_lower(.data[["Source"]]) ==
                 stringr::str_to_lower(target)
-        ) %>%
-        {
-            if (!is.null(inputCellLines)) dplyr::filter(., .data[["SourceCellLine"]] %in% inputCellLines) else .
-        } %>%
+        ) |>
+        (\(x) {
+            if (!is.null(inputCellLines)) dplyr::filter(x, .data[["SourceCellLine"]] %in% inputCellLines) else x
+        })() |>
         dplyr::pull(.data[["SourceSignature"]])
 
     if (length(filteredSignatureIds) == 0L) {
@@ -165,15 +164,15 @@ investigateTarget <- function(
             similarityThreshold = similarityThreshold,
             paired = paired,
             outputCellLines = outputCellLines
-        ) %>%
+        ) |>
             dplyr::mutate(SourceSignature = sigId)
     }
 
     # Process all source signatures and augment with metadata
-    filteredSignatureIds %>%
-        purrr::map(process_one) %>%
-        dplyr::bind_rows() %>%
-        dplyr::inner_join(inputMetadata, by = "SourceSignature") %>%
+    filteredSignatureIds |>
+        purrr::map(process_one) |>
+        dplyr::bind_rows() |>
+        dplyr::inner_join(inputMetadata, by = "SourceSignature") |>
         dplyr::select(
             dplyr::any_of(c(
                 "Source", "Target", "Similarity", "SourceSignature",

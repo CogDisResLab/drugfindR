@@ -113,14 +113,14 @@ investigateSignature <- function(
         outputCellLines = outputCellLines
     )
 
-    consensus %>%
+    consensus |>
         dplyr::mutate(
             SourceSignature = signatureId,
             Source = sourceName,
             SourceCellLine = sourceCellLine,
             SourceTime = sourceTime,
             SourceConcentration = sourceConcentration
-        ) %>%
+        ) |>
         dplyr::select(dplyr::any_of(c(
             "Source", "Target", "Similarity", "SourceSignature",
             "SourceCellLine", "SourceConcentration", "SourceTime",

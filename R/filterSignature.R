@@ -338,7 +338,6 @@
 #'
 #' @import DFplyr
 #' @importFrom dplyr filter
-#' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #' @importFrom stats quantile
 #'
@@ -444,7 +443,6 @@
 #'
 #' @export
 #'
-#' @importFrom magrittr %>%
 #' @importFrom dplyr filter
 #' @importFrom rlang .data
 #' @importFrom stats quantile

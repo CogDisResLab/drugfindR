@@ -264,7 +264,7 @@ test_that(".generateIlincsRequest includes proper headers and configuration", {
 # TESTS FOR API REQUEST EXECUTION
 # ==============================================================================
 
-# NOTE: Add support for verbosity when API supports it
+# TODO: Add support for verbosity
 test_that(".executeIlincsRequest handles verbose option", {
     skip("Verbose response config option is not testable right now")
     verboseResponse <- mockConcordantsResponse()
@@ -290,7 +290,7 @@ test_that(".executeIlincsRequest handles verbose option", {
     })
 })
 
-# NOTE: Need to figure out how to trigger 500 errors for tests
+# TODO: Need to figure out how to trigger 500 errors for tests # nolint: todo_comment_linter.
 test_that(".executeIlincsRequest returns error responses without raising", {
     skip("Have to figure out how to trigger 500 errors")
 
@@ -487,8 +487,8 @@ test_that(".processIlincsResponseSuccess handles CP library correctly", {
     expect_identical(colnames(result), expectedCols)
 
     # Check CP-specific transformations
-    expect_true(all(stringr::str_detect(result[["treatment"]], "DRUG"))) # compound renamed to treatment
-    expect_false(all(stringr::str_detect(result[["treatment"]], "GENE"))) # compound renamed to treatment
+    expect_true(all(stringr::str_detect(result[["treatment"]], stringr::fixed("DRUG")))) # compound renamed to treatment
+    expect_false(all(stringr::str_detect(result[["treatment"]], stringr::fixed("GENE")))) # compound renamed to treatment
     expect_false(all(is.na(result[["concentration"]])))
     expect_identical(result[["sig_type"]], rep("Chemical Perturbagen", 10L))
     expect_identical(result[["sig_direction"]], rep("Up", 10L))

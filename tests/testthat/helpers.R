@@ -90,7 +90,7 @@ createConcordantsTable <- function(nRows = NULL, library = "CP", seed = NULL) {
 
     compound <- sample(drugIds, size = nRows, replace = TRUE)
     treatment <- sample(treatmentIds, size = nRows, replace = TRUE)
-    lincsPertId <- stringr::str_replace(compound, "DRUG", "PERT")
+    lincsPertId <- stringr::str_replace(compound, stringr::fixed("DRUG"), "PERT")
     geneTargets <- rep(NA_character_, nRows)
     nGenes <- rep(978L, nRows)
     similarity <- stats::runif(nRows, min = -1L, max = 1L)

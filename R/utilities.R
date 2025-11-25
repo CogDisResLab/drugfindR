@@ -435,7 +435,6 @@ stopIfInvalidSignature <- function(signature) {
 #'
 #' @keywords internal
 #'
-#' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #'
 #' @examples NULL

@@ -80,11 +80,11 @@ test_that("stopIfInvalidLibraries provides helpful error messages", {
     # Test that error message includes expected libraries
     errorMsg <- testthat::capture_error(stopIfInvalidLibraries("INVALID"))$message
 
-    expect_true(grepl("Invalid library specification", errorMsg))
-    expect_true(grepl("INVALID", errorMsg))
-    expect_true(grepl("'OE' \\(Overexpression\\)", errorMsg))
-    expect_true(grepl("'KD' \\(Knockdown\\)", errorMsg))
-    expect_true(grepl("'CP' \\(Chemical Perturbagen\\)", errorMsg))
+    expect_true(grepl("Invalid library specification", errorMsg, fixed = TRUE))
+    expect_true(grepl("INVALID", errorMsg, fixed = TRUE))
+    expect_true(grepl("'OE' (Overexpression)", errorMsg, fixed = TRUE))
+    expect_true(grepl("'KD' (Knockdown)", errorMsg, fixed = TRUE))
+    expect_true(grepl("'CP' (Chemical Perturbagen)", errorMsg, fixed = TRUE))
 })
 
 test_that("stopIfInvalidLibraries doesn't stop for valid libraries", {
@@ -122,9 +122,9 @@ test_that("loadMetadata throws error for invalid library", {
 
     # Test that error message includes valid options
     errorMsg <- testthat::capture_error(.loadMetadata("INVALID"))$message
-    expect_true(grepl("'OE' \\(Overexpression\\)", errorMsg))
-    expect_true(grepl("'KD' \\(Knockdown\\)", errorMsg))
-    expect_true(grepl("'CP' \\(Chemical Perturbagen\\)", errorMsg))
+    expect_true(grepl("'OE' (Overexpression)", errorMsg, fixed = TRUE))
+    expect_true(grepl("'KD' (Knockdown)", errorMsg, fixed = TRUE))
+    expect_true(grepl("'CP' (Chemical Perturbagen)", errorMsg, fixed = TRUE))
 })
 
 test_that(".returnLibrary returns correct library IDs", {
@@ -144,7 +144,7 @@ test_that(".returnUserAgent returns valid user agent string", {
     userAgent <- .returnUserAgent()
     expect_type(userAgent, "character")
     expect_length(userAgent, 1L)
-    expect_true(grepl("drugfindR", userAgent))
+    expect_true(grepl("drugfindR", userAgent, fixed = TRUE))
     expect_gt(nchar(userAgent), 0L)
 })
 
@@ -245,11 +245,11 @@ test_that(".stopIfInvalidColNames provides comprehensive error message", {
 
     errorMsg <- testthat::capture_error(.stopIfInvalidColNames(complexErrorSig))$message
 
-    expect_true(grepl("Missing columns", errorMsg))
-    expect_true(grepl("Unexpected columns", errorMsg))
-    expect_true(grepl("Expected columns \\(in order\\)", errorMsg))
-    expect_true(grepl("Actual columns", errorMsg))
-    expect_true(grepl("prepareSignature", errorMsg))
+    expect_true(grepl("Missing columns", errorMsg, fixed = TRUE))
+    expect_true(grepl("Unexpected columns", errorMsg, fixed = TRUE))
+    expect_true(grepl("Expected columns (in order)", errorMsg, fixed = TRUE))
+    expect_true(grepl("Actual columns", errorMsg, fixed = TRUE))
+    expect_true(grepl("prepareSignature", errorMsg, fixed = TRUE))
 })
 
 test_that(".stopIfInvalidColNames error message includes all expected information", {
@@ -258,11 +258,11 @@ test_that(".stopIfInvalidColNames error message includes all expected informatio
     errorMsg <- testthat::capture_error(.stopIfInvalidColNames(emptySig))$message
 
     # Should show all missing columns
-    expect_true(grepl("signatureID", errorMsg))
-    expect_true(grepl("ID_geneid", errorMsg))
-    expect_true(grepl("Name_GeneSymbol", errorMsg))
-    expect_true(grepl("Value_LogDiffExp", errorMsg))
-    expect_true(grepl("Significance_pvalue", errorMsg))
+    expect_true(grepl("signatureID", errorMsg, fixed = TRUE))
+    expect_true(grepl("ID_geneid", errorMsg, fixed = TRUE))
+    expect_true(grepl("Name_GeneSymbol", errorMsg, fixed = TRUE))
+    expect_true(grepl("Value_LogDiffExp", errorMsg, fixed = TRUE))
+    expect_true(grepl("Significance_pvalue", errorMsg, fixed = TRUE))
 })
 
 # Tests for .stopIfContainsMissingValues function
@@ -311,10 +311,10 @@ test_that(".stopIfContainsMissingValues provides detailed error information", {
     errorMsg <- testthat::capture_error(.stopIfContainsMissingValues(sigWithMultipleNa))$message
 
     # Should list columns with missing values and counts
-    expect_true(grepl("ID_geneid: 1 missing value", errorMsg))
-    expect_true(grepl("Value_LogDiffExp: 2 missing value", errorMsg))
-    expect_true(grepl("prepareSignature", errorMsg))
-    expect_true(grepl("remove or impute", errorMsg))
+    expect_true(grepl("ID_geneid: 1 missing value", errorMsg, fixed = TRUE))
+    expect_true(grepl("Value_LogDiffExp: 2 missing value", errorMsg, fixed = TRUE))
+    expect_true(grepl("prepareSignature", errorMsg, fixed = TRUE))
+    expect_true(grepl("remove or impute", errorMsg, fixed = TRUE))
 })
 
 test_that(".stopIfContainsMissingValues handles all-NA columns", {
@@ -450,9 +450,9 @@ test_that("improved error messages are more helpful than before", {
     incompleteSig <- data.frame(signatureID = "SIG_001")
     errorMsg <- testthat::capture_error(.stopIfInvalidColNames(incompleteSig))$message
 
-    expect_true(grepl("Missing columns:", errorMsg))
-    expect_true(grepl("Expected columns \\(in order\\):", errorMsg))
-    expect_true(grepl("prepareSignature", errorMsg))
+    expect_true(grepl("Missing columns:", errorMsg, fixed = TRUE))
+    expect_true(grepl("Expected columns (in order):", errorMsg, fixed = TRUE))
+    expect_true(grepl("prepareSignature", errorMsg, fixed = TRUE))
 
     # Missing values error should be specific
     naSig <- data.frame(

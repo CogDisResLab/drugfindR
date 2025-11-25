@@ -85,11 +85,11 @@ test_that("investigateTarget finds targets from KD metadata", {
         # This should find at least one signature
         # We're not running the full function, just testing the lookup logic
         inputMetadata <- .loadMetadata("KD")
-        filteredSigs <- inputMetadata %>%
+        filteredSigs <- inputMetadata |>
             dplyr::filter(
                 stringr::str_to_lower(.data[["Source"]]) ==
                     stringr::str_to_lower(testGene)
-            ) %>%
+            ) |>
             dplyr::pull(.data[["SourceSignature"]])
 
         expect_gt(length(filteredSigs), 0L)
@@ -104,11 +104,11 @@ test_that("investigateTarget finds targets from OE metadata", {
         testGene <- oeMetadata[["Source"]][1L]
 
         inputMetadata <- .loadMetadata("OE")
-        filteredSigs <- inputMetadata %>%
+        filteredSigs <- inputMetadata |>
             dplyr::filter(
                 stringr::str_to_lower(.data[["Source"]]) ==
                     stringr::str_to_lower(testGene)
-            ) %>%
+            ) |>
             dplyr::pull(.data[["SourceSignature"]])
 
         expect_gt(length(filteredSigs), 0L)
@@ -123,11 +123,11 @@ test_that("investigateTarget finds targets from CP metadata", {
         testDrug <- cpMetadata[["Source"]][1L]
 
         inputMetadata <- .loadMetadata("CP")
-        filteredSigs <- inputMetadata %>%
+        filteredSigs <- inputMetadata |>
             dplyr::filter(
                 stringr::str_to_lower(.data[["Source"]]) ==
                     stringr::str_to_lower(testDrug)
-            ) %>%
+            ) |>
             dplyr::pull(.data[["SourceSignature"]])
 
         expect_gt(length(filteredSigs), 0L)
@@ -144,19 +144,19 @@ test_that("investigateTarget is case-insensitive for target names", {
         inputMetadata <- .loadMetadata("KD")
 
         # Test lowercase
-        filteredLower <- inputMetadata %>%
+        filteredLower <- inputMetadata |>
             dplyr::filter(
                 stringr::str_to_lower(.data[["Source"]]) ==
                     stringr::str_to_lower(tolower(testGene))
-            ) %>%
+            ) |>
             dplyr::pull(.data[["SourceSignature"]])
 
         # Test uppercase
-        filteredUpper <- inputMetadata %>%
+        filteredUpper <- inputMetadata |>
             dplyr::filter(
                 stringr::str_to_lower(.data[["Source"]]) ==
                     stringr::str_to_lower(toupper(testGene))
-            ) %>%
+            ) |>
             dplyr::pull(.data[["SourceSignature"]])
 
         # Should find the same signatures regardless of case
@@ -182,20 +182,20 @@ test_that("investigateTarget filters by inputCellLines correctly", {
             inputMetadata <- .loadMetadata("KD")
 
             # Without filtering
-            allSigs <- inputMetadata %>%
+            allSigs <- inputMetadata |>
                 dplyr::filter(
                     stringr::str_to_lower(.data[["Source"]]) ==
                         stringr::str_to_lower(testGene)
-                ) %>%
+                ) |>
                 dplyr::pull(.data[["SourceSignature"]])
 
             # With cell line filtering
-            filteredSigs <- inputMetadata %>%
+            filteredSigs <- inputMetadata |>
                 dplyr::filter(
                     stringr::str_to_lower(.data[["Source"]]) ==
                         stringr::str_to_lower(testGene)
-                ) %>%
-                dplyr::filter(.data[["SourceCellLine"]] %in% testCellLine) %>%
+                ) |>
+                dplyr::filter(.data[["SourceCellLine"]] %in% testCellLine) |>
                 dplyr::pull(.data[["SourceSignature"]])
 
             # Filtered should be subset of all
@@ -279,11 +279,11 @@ test_that("investigateTarget correctly orchestrates getSignature", {
 
         # Get the signature IDs that should be processed
         inputMetadata <- .loadMetadata("KD")
-        expectedSigIds <- inputMetadata %>%
+        expectedSigIds <- inputMetadata |>
             dplyr::filter(
                 stringr::str_to_lower(.data[["Source"]]) ==
                     stringr::str_to_lower(testGene)
-            ) %>%
+            ) |>
             dplyr::pull(.data[["SourceSignature"]])
 
         if (length(expectedSigIds) > 0L) {
@@ -319,9 +319,9 @@ test_that("investigateTarget handles single source signature", {
 
     # Find a target with only one signature
     if (nrow(kdMetadata) > 0L) {
-        singleSigTargets <- kdMetadata %>%
-            dplyr::group_by(.data[["Source"]]) %>%
-            dplyr::filter(dplyr::n() == 1L) %>%
+        singleSigTargets <- kdMetadata |>
+            dplyr::group_by(.data[["Source"]]) |>
+            dplyr::filter(dplyr::n() == 1L) |>
             dplyr::ungroup()
 
         if (nrow(singleSigTargets) > 0L) {
@@ -346,9 +346,9 @@ test_that("investigateTarget handles multiple source signatures", {
 
     # Find a target with multiple signatures
     if (nrow(kdMetadata) > 0L) {
-        multipleSigTargets <- kdMetadata %>%
-            dplyr::group_by(.data[["Source"]]) %>%
-            dplyr::filter(dplyr::n() > 1L) %>%
+        multipleSigTargets <- kdMetadata |>
+            dplyr::group_by(.data[["Source"]]) |>
+            dplyr::filter(dplyr::n() > 1L) |>
             dplyr::ungroup()
 
         if (nrow(multipleSigTargets) > 0L) {
