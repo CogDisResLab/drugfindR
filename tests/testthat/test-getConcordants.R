@@ -1,6 +1,5 @@
 # Comprehensive tests for getConcordants function and internal helpers
 
-library(tibble)
 library(S4Vectors)
 library(httr2)
 library(httptest2)
@@ -184,7 +183,7 @@ test_that(".generateIlincsRequest creates valid httr2 request object", {
     parsedRequestUrl <- url_parse(requestUrl)
     expect_identical(parsedRequestUrl[["scheme"]], "https")
     expect_identical(parsedRequestUrl[["hostname"]], "www.ilincs.org")
-    expect_identical(parsedRequestUrl[["path"]], "/api/SignatureMeta/uploadAndAnalyze")
+    expect_identical(parsedRequestUrl[["path"]], "/api/SignatureMeta/uploadAndAnalyze") # nolint: nonportable_path_linter.
 
     # Check query parameters
     queryParameters <- parsedRequestUrl[["query"]]
@@ -195,7 +194,7 @@ test_that(".generateIlincsRequest creates valid httr2 request object", {
 
     # Check user agent
     userAgent <- request[["options"]][["useragent"]]
-    expect_true(grepl("github.com/CogDisResLab/drugfindR", userAgent))
+    expect_true(grepl("github.com/CogDisResLab/drugfindR", userAgent)) # nolint: nonportable_path_linter.
 
     # Check if the body has the correct structure
     expect_named(request[["body"]], c("data", "type", "content_type", "params"))
@@ -257,7 +256,7 @@ test_that(".generateIlincsRequest includes proper headers and configuration", {
     # Check User-Agent header contains package info
     userAgent <- request[["options"]][["useragent"]]
     expect_true(grepl("drugfindR", userAgent))
-    expect_true(grepl("github.com/CogDisResLab/drugfindR", userAgent))
+    expect_true(grepl("github.com/CogDisResLab/drugfindR", userAgent)) # nolint: nonportable_path_linter.
 })
 
 # ==============================================================================
@@ -419,7 +418,7 @@ test_that(".processIlincsResponse handles other status codes", {
     # Create custom error response with different status code
     errorResp404 <- httr2::response(
         status_code = 404L,
-        headers = list("content-type" = "text/plain"),
+        headers = list("content-type" = "text/plain"), # nolint: nonportable_path_linter.
         body = charToRaw("Not Found")
     )
 

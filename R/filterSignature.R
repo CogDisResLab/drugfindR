@@ -46,7 +46,7 @@
 #' }
 .validateFilterSignatureInput <- function(signature, direction, threshold, prop) { # nolint: cyclocomp_linter.
     # 1. Validate signature data structure
-    if (!any(c("data.frame", "DFrame") %in% class(signature))) {
+    if (!inherits(signature, c("data.frame", "DFrame"))) {
         stop("Signature must be a data.frame, tibble, or DataFrame", call. = FALSE)
     }
 

@@ -1,8 +1,5 @@
 # Comprehensive tests for investigateTarget function
 
-library(httptest2)
-library(dplyr)
-
 # ==============================================================================
 # TESTS FOR INPUT VALIDATION
 # ==============================================================================

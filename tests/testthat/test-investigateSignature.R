@@ -1,8 +1,5 @@
 # Comprehensive tests for investigateSignature function
 
-library(httptest2)
-library(dplyr)
-
 # ==============================================================================
 # TESTS FOR INPUT VALIDATION
 # ==============================================================================

@@ -1,7 +1,6 @@
 # r Comprehensive tests for getSignature function and internal helpers
 
 library(httr2)
-library(httptest2)
 
 # ==============================================================================
 # TESTS FOR INTERNAL VALIDATION FUNCTION
@@ -126,7 +125,7 @@ test_that(".createSignatureRequest creates valid httr2 request object", {
     parsedRequestUrl <- url_parse(requestUrl)
     expect_identical(parsedRequestUrl[["scheme"]], "https")
     expect_identical(parsedRequestUrl[["hostname"]], "www.ilincs.org")
-    expect_identical(parsedRequestUrl[["path"]], "/api/ilincsR/downloadSignature")
+    expect_identical(parsedRequestUrl[["path"]], "/api/ilincsR/downloadSignature") # nolint: nonportable_path_linter.
 
     # Check query parameters
     queryParameters <- parsedRequestUrl[["query"]]
@@ -138,7 +137,7 @@ test_that(".createSignatureRequest creates valid httr2 request object", {
 
     # Check user agent
     userAgent <- request[["options"]][["useragent"]]
-    expect_true(grepl("github.com/CogDisResLab/drugfindR", userAgent))
+    expect_true(grepl("github.com/CogDisResLab/drugfindR", userAgent)) # nolint: nonportable_path_linter.
 })
 
 test_that(".createSignatureRequest works with different signature IDs", {

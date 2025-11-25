@@ -28,7 +28,7 @@
         stop("sigId must be a single character string", call. = FALSE)
     }
 
-    if (nchar(trimws(sigId)) == 0L) {
+    if (!nzchar(trimws(sigId))) {
         stop("sigId cannot be empty or consist only of whitespace", call. = FALSE)
     }
 

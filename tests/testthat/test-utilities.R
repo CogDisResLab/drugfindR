@@ -1,8 +1,5 @@
 # Test utility functions
 
-library(tibble)
-library(S4Vectors)
-
 test_that("targetRename works correctly without treatment column", {
     inputNamesWithoutTreatment <- c(
         "signature",

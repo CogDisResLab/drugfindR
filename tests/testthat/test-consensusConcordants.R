@@ -1,8 +1,5 @@
 # Comprehensive tests for consensusConcordants function and internal functions
 
-library(tibble)
-library(dplyr)
-
 # ==============================================================================
 # TESTS FOR .validateConsensusConcordantsInput
 # ==============================================================================

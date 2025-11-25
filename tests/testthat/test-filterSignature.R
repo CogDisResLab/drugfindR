@@ -1,6 +1,5 @@
 # Comprehensive tests for filterSignature function and internal helpers
 
-library(tibble)
 library(S4Vectors)
 
 # ==============================================================================

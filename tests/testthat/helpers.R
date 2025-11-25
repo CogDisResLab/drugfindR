@@ -163,7 +163,7 @@ createEmptyIlincsResponse <- function() {
         url = "https://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze?lib=LIB_5",
         status_code = 200L,
         method = "POST",
-        headers = list(`Content-Type` = "application/json"),
+        headers = list(`Content-Type` = "application/json"), # nolint: nonportable_path_linter.
         body = charToRaw(responseData)
     )
 }
@@ -181,7 +181,7 @@ createIlincsErrorResponse400 <- function() {
         url = "https://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze?lib=LIB_5",
         status_code = 400L,
         method = "POST",
-        headers = list(`Content-Type` = "application/json"),
+        headers = list(`Content-Type` = "application/json"), # nolint: nonportable_path_linter.
         body = charToRaw(responseData)
     )
 }
@@ -197,7 +197,7 @@ createIlincsErrorResponse500 <- function() {
         url = "https://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze?lib=LIB_5",
         status_code = 500L,
         method = "POST",
-        headers = list(`Content-Type` = "application/json"),
+        headers = list(`Content-Type` = "application/json"), # nolint: nonportable_path_linter.
         body = charToRaw(responseData)
     )
 }

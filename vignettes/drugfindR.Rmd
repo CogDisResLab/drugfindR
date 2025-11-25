@@ -47,7 +47,7 @@ physiological reasons.
 
 ```{r install}
 #| eval: FALSE
-devtools::install_github("CogDisResLab/drugfindR")
+devtools::install_github("CogDisResLab/drugfindR") # nolint: nonportable_path_linter.
 ```
 
 ## Use Cases
@@ -129,7 +129,7 @@ rows. The names of the columns are typical of what you would get from
 
 The next step is to prepare the signature for analysis by `drugfindR`. This
 step is necessary because the signature can be in many different formats,
-with different names for columns. iLICNS needs columns to be in a specific
+with different names for columns. iLINCS needs columns to be in a specific
 order and with specific names. The `prepareSignature()` function takes care of
 this for us.
 

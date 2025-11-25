@@ -74,7 +74,7 @@ NULL
         missingCols <- setdiff(requiredCols, names(df))
         if (length(missingCols) > 0L) {
             stop("Missing required columns in dataframe ", i, ": ",
-                paste(missingCols, collapse = ", "),
+                toString(missingCols),
                 call. = FALSE
             )
         }

@@ -178,11 +178,11 @@ stopIfInvalidLibraries <- function(libs) {
         errorMsg <- "Input signature does not conform to expected structure.\n"
 
         if (length(missingCols) > 0L) {
-            errorMsg <- paste0(errorMsg, "Missing columns: ", paste(missingCols, collapse = ", "), "\n")
+            errorMsg <- paste0(errorMsg, "Missing columns: ", toString(missingCols), "\n")
         }
 
         if (length(extraCols) > 0L) {
-            errorMsg <- paste0(errorMsg, "Unexpected columns: ", paste(extraCols, collapse = ", "), "\n")
+            errorMsg <- paste0(errorMsg, "Unexpected columns: ", toString(extraCols), "\n")
         }
 
         if (!identical(expectedColNames, actualColNames[seq_along(expectedColNames)])) {
@@ -191,8 +191,8 @@ stopIfInvalidLibraries <- function(libs) {
 
         errorMsg <- paste0(
             errorMsg,
-            "Expected columns (in order): ", paste(expectedColNames, collapse = ", "), "\n",
-            "Actual columns: ", paste(actualColNames, collapse = ", "), "\n",
+            "Expected columns (in order): ", toString(expectedColNames), "\n",
+            "Actual columns: ", toString(actualColNames), "\n",
             "Please use `prepareSignature()` to ensure compliance."
         )
 
@@ -219,10 +219,10 @@ stopIfInvalidLibraries <- function(libs) {
 #'
 #' @examples NULL
 .stopIfContainsMissingValues <- function(signature) {
-    if (any(is.na(signature))) {
+    if (anyNA(signature)) {
         # Find which columns contain missing values
-        colsWithNa <- colnames(signature)[sapply(signature, function(x) any(is.na(x)))]
-        naCounts <- sapply(signature[colsWithNa], function(x) sum(is.na(x)))
+        colsWithNa <- colnames(signature)[vapply(signature, anyNA, logical(1L))]
+        naCounts <- vapply(signature[colsWithNa], function(x) sum(is.na(x)), integer(1L))
 
         errorMsg <- paste0(
             "Input signature contains missing (NA) values, which are not allowed.\n",
@@ -309,19 +309,16 @@ stopIfInvalidSignature <- function(signature) {
 #'
 #' @examples NULL
 .loadMetadata <- function(lib) {
-    if (lib == "OE") {
-        oeMetadata
-    } else if (lib == "KD") {
-        kdMetadata
-    } else if (lib == "CP") {
-        cpMetadata
-    } else {
+    switch(lib,
+        OE = oeMetadata,
+        KD = kdMetadata,
+        CP = cpMetadata,
         stop(
             "Invalid library: '", lib, "'. ",
             "Library must be one of 'OE' (Overexpression), 'KD' (Knockdown), or 'CP' (Chemical Perturbagen).",
             call. = FALSE
         )
-    }
+    )
 }
 
 

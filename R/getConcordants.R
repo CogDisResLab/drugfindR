@@ -32,7 +32,7 @@
 #' @examples NULL
 .validateGetConcordantsInput <- function(signature, ilincsLibrary) {
     # 1. Validate signature data type
-    if (!any(c("data.frame", "DFrame") %in% class(signature))) {
+    if (!inherits(signature, c("data.frame", "DFrame"))) {
         stop("Signature must be a data.frame, tibble, or DataFrame", call. = FALSE)
     }
 
@@ -66,7 +66,7 @@
 #' @examples NULL
 .prepareSignatureFile <- function(signature) {
     signatureFile <- tempfile(pattern = "ilincs_sig", fileext = ".xls")
-    if ("DFrame" %in% class(signature)) {
+    if (inherits(signature, "DFrame")) {
         signature <- as.data.frame(signature)
     }
     readr::write_tsv(signature, signatureFile)
