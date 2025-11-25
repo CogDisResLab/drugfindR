@@ -383,9 +383,6 @@ test_that(".processIlincsResponse handles empty concordance tables", {
     expect_true("sig_type" %in% colnames(result))
 })
 
-# ==============================================================================
-# TESTS FOR NEW PROCESSILINCSRESPONSE FAMILY OF FUNCTIONS
-# ==============================================================================
 
 test_that(".processIlincsResponse handles 400 errors correctly", {
     response <- getTestFixture("error_ilincs_response_400", seed = .testSeed)

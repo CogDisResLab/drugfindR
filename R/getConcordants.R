@@ -608,16 +608,6 @@
 #' signatureDataFrame <- S4Vectors::DataFrame(signature)
 #' cpConcordantsDataFrame <- getConcordants(signatureDataFrame, "CP")
 #' # Returns S4Vectors::DataFrame to match input type
-#'
-#' # Manual signature creation (ensure proper structure)
-#' manualSig <- data.frame(
-#'     signatureID = rep("MANUAL_SIG", 3),
-#'     ID_geneid = c("1234", "5678", "9012"),
-#'     Name_GeneSymbol = c("GENE1", "GENE2", "GENE3"),
-#'     Value_LogDiffExp = c(1.5, -2.1, 0.8),
-#'     Significance_pvalue = c(0.05, 0.01, 0.03)
-#' )
-#' concordants <- getConcordants(manualSig, "CP")
 #' }
 #'
 #' @export

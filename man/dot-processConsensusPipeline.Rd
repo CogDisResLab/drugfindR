@@ -33,9 +33,9 @@ This function coordinates the following processing steps:
 \examples{
 \dontrun{
 testData <- data.frame(
-  similarity = c(0.5, -0.8, 0.2),
-  compound = c("A", "B", "C"),
-  cellline = c("A375", "PC3", "A375")
+    similarity = c(0.5, -0.8, 0.2),
+    compound = c("A", "B", "C"),
+    cellline = c("A375", "PC3", "A375")
 )
 processed <- .processConsensusPipeline(testData, 0.3, "A375")
 }

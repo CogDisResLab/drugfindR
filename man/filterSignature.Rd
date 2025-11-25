@@ -66,13 +66,13 @@ When using \code{prop}:
 \examples{
 # Create a mock signature for demonstration
 mockSignature <- data.frame(
-  signatureID = rep("MOCK001", 20),
-  Name_GeneSymbol = paste0("GENE", 1:20),
-  ID_geneid = 1:20,
-  Value_LogDiffExp = c(
-    -3.5, -2.8, -2.1, -1.5, -1.2, -0.8, -0.5, -0.3,
-    -0.1, 0.1, 0.3, 0.6, 0.9, 1.2, 1.6, 2.0, 2.4, 2.9, 3.3, 3.8
-  )
+    signatureID = rep("MOCK001", 20),
+    Name_GeneSymbol = paste0("GENE", 1:20),
+    ID_geneid = 1:20,
+    Value_LogDiffExp = c(
+        -3.5, -2.8, -2.1, -1.5, -1.2, -0.8, -0.5, -0.3,
+        -0.1, 0.1, 0.3, 0.6, 0.9, 1.2, 1.6, 2.0, 2.4, 2.9, 3.3, 3.8
+    )
 )
 
 # Example 1: Filter by symmetric absolute threshold

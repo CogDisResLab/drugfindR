@@ -70,15 +70,15 @@ iLINCS to find the relevant concordant (or discordant) signatures
 \examples{
 # Input validation example (no API calls)
 mockExpr <- data.frame(
-  Symbol = c("TP53", "MYC"),
-  logFC = c(2.5, -1.8),
-  PValue = c(0.001, 0.01)
+    Symbol = c("TP53", "MYC"),
+    logFC = c(2.5, -1.8),
+    PValue = c(0.001, 0.01)
 )
 
 # Validate library parameter (should produce error)
 tryCatch(
-  investigateSignature(mockExpr, outputLib = "INVALID"),
-  error = function(e) message("Expected error: invalid library")
+    investigateSignature(mockExpr, outputLib = "INVALID"),
+    error = function(e) message("Expected error: invalid library")
 )
 
 \donttest{
@@ -86,18 +86,18 @@ tryCatch(
 
 # Load differential expression data
 inputSignature <- read.table(
-  system.file("extdata", "dCovid_diffexp.tsv", package = "drugfindR"),
-  header = TRUE
+    system.file("extdata", "dCovid_diffexp.tsv", package = "drugfindR"),
+    header = TRUE
 )
 
 # Investigate the signature against chemical perturbagen library
 investigatedSignature <- investigateSignature(
-  inputSignature,
-  outputLib = "CP",
-  filterThreshold = 0.5,
-  geneColumn = "hgnc_symbol",
-  logfcColumn = "logFC",
-  pvalColumn = "PValue"
+    inputSignature,
+    outputLib = "CP",
+    filterThreshold = 0.5,
+    geneColumn = "hgnc_symbol",
+    logfcColumn = "logFC",
+    pvalColumn = "PValue"
 )
 head(investigatedSignature)
 }

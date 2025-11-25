@@ -30,24 +30,24 @@ similarity to the signature
 \examples{
 # Create mock concordants data for demonstration
 mockConcordants <- data.frame(
-  signatureid = paste0("SIG", 1:10),
-  treatment = c(
-    "TP53", "TP53", "MYC", "MYC", "EGFR",
-    "EGFR", "KRAS", "BRCA1", "BRCA1", "PIK3CA"
-  ),
-  cellline = c(
-    "A375", "PC3", "A375", "MCF7", "A375",
-    "PC3", "A375", "A375", "MCF7", "A375"
-  ),
-  time = rep("24H", 10),
-  concentration = rep(NA, 10),
-  sig_direction = rep("DOWN", 10),
-  sig_type = rep("single", 10),
-  similarity = c(
-    0.85, 0.72, -0.68, -0.45, 0.55,
-    0.38, 0.42, 0.51, 0.33, 0.29
-  ),
-  pValue = rep(0.001, 10)
+    signatureid = paste0("SIG", 1:10),
+    treatment = c(
+        "TP53", "TP53", "MYC", "MYC", "EGFR",
+        "EGFR", "KRAS", "BRCA1", "BRCA1", "PIK3CA"
+    ),
+    cellline = c(
+        "A375", "PC3", "A375", "MCF7", "A375",
+        "PC3", "A375", "A375", "MCF7", "A375"
+    ),
+    time = rep("24H", 10),
+    concentration = rep(NA, 10),
+    sig_direction = rep("DOWN", 10),
+    sig_type = rep("single", 10),
+    similarity = c(
+        0.85, 0.72, -0.68, -0.45, 0.55,
+        0.38, 0.42, 0.51, 0.33, 0.29
+    ),
+    pValue = rep(0.001, 10)
 )
 
 # Example 1: Basic consensus with default cutoff

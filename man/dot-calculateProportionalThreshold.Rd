@@ -44,7 +44,7 @@ expression values.
 \dontrun{
 # Create sample signature data
 signature <- data.frame(
-  Value_LogDiffExp = c(-3, -2, -1, 0, 1, 2, 3, 4, 5, 6)
+    Value_LogDiffExp = c(-3, -2, -1, 0, 1, 2, 3, 4, 5, 6)
 )
 
 # Calculate thresholds for top/bottom 20\%

@@ -105,7 +105,7 @@ test_that("investigateSignature correctly prepares signatures", {
 
     # Prepare signature manually to compare
     manualSig <- prepareSignature(
-        dge_data[1:20, ],
+        dge_data[1L:20L, ],
         geneColumn = "hgnc_symbol",
         logfcColumn = "logFC",
         pvalColumn = "PValue"
@@ -181,7 +181,7 @@ test_that("investigateSignature passes filterThreshold correctly", {
         sig <- prepareSignature(testDge)
         # Threshold validation happens in filterSignature
         expect_type(0.5, "double")
-        expect_gt(0.5, 0)
+        expect_gt(0.5, 0.0)
     })
 })
 

@@ -32,8 +32,8 @@ signature analysis.
 # Input validation example (no API call)
 # Demonstrates proper signature ID format validation
 tryCatch(
-  getSignature(""), # Empty string should error
-  error = function(e) message("Expected error: empty signature ID")
+    getSignature(""), # Empty string should error
+    error = function(e) message("Expected error: empty signature ID")
 )
 
 \donttest{
