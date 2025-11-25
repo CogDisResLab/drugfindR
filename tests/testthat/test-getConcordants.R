@@ -183,9 +183,10 @@ test_that(".generateIlincsRequest creates valid httr2 request object", {
     parsedRequestUrl <- url_parse(requestUrl)
     expect_identical(parsedRequestUrl[["scheme"]], "https")
     expect_identical(parsedRequestUrl[["hostname"]], "www.ilincs.org")
-    expect_identical(parsedRequestUrl[["path"]], "/api/SignatureMeta/uploadAndAnalyze") # nolint: nonportable_path_linter.
-
-    # Check query parameters
+    expect_identical(
+        parsedRequestUrl[["path"]],
+        "/api/SignatureMeta/uploadAndAnalyze"
+    ) # nolint: nonportable_path_linter.    # Check query parameters
     queryParameters <- parsedRequestUrl[["query"]]
     expect_identical(queryParameters[["lib"]], "LIB_5")
 
@@ -487,7 +488,8 @@ test_that(".processIlincsResponseSuccess handles CP library correctly", {
 
     # Check CP-specific transformations
     expect_true(all(stringr::str_detect(result[["treatment"]], stringr::fixed("DRUG")))) # compound renamed to treatment
-    expect_false(all(stringr::str_detect(result[["treatment"]], stringr::fixed("GENE")))) # compound renamed to treatment
+    # compound renamed to treatment
+    expect_false(all(stringr::str_detect(result[["treatment"]], stringr::fixed("GENE"))))
     expect_false(all(is.na(result[["concentration"]])))
     expect_identical(result[["sig_type"]], rep("Chemical Perturbagen", 10L))
     expect_identical(result[["sig_direction"]], rep("Up", 10L))

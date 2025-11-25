@@ -444,7 +444,7 @@ test_that("improved error messages are more helpful than before", {
     # Test that new error messages provide actionable information
 
     # Missing columns error should be specific
-    incompleteSig <- data.frame(signatureID = "SIG_001")
+    incompleteSig <- data.frame(signatureID = "SIG_001", stringsAsFactors = FALSE)
     errorMsg <- testthat::capture_error(.stopIfInvalidColNames(incompleteSig))$message
 
     expect_true(grepl("Missing columns:", errorMsg, fixed = TRUE))

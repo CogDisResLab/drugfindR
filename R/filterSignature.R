@@ -366,7 +366,7 @@
 #' both_filtered <- .applyDirectionFilter(signature, "any", thresholds)
 #' # Returns genes with |logFC| >= 1.5 (GENE1, GENE2, GENE8, GENE9, GENE10)
 #' }
-.applyDirectionFilter <- function(signature, direction = "any", thresholds) {
+.applyDirectionFilter <- function(signature, thresholds, direction = "any") {
     downThreshold <- thresholds[["downThreshold"]]
     upThreshold <- thresholds[["upThreshold"]]
 
@@ -508,5 +508,5 @@ filterSignature <- function(
     }
 
     # Apply filtering based on direction
-    .applyDirectionFilter(signature, direction, thresholds)
+    .applyDirectionFilter(signature, thresholds, direction)
 }

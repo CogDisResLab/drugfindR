@@ -63,15 +63,15 @@ NULL
 
     # Validate that dataframes are not empty and have required columns
     for (i in seq_along(dots)) {
-        df <- dots[[i]]
+        concordantsDf <- dots[[i]]
 
-        if (is.null(df) || nrow(df) == 0L) {
+        if (is.null(concordantsDf) || nrow(concordantsDf) == 0L) {
             stop("All input dataframes must be non-empty", call. = FALSE)
         }
 
         # Check for essential columns
         requiredCols <- c("treatment", "similarity")
-        missingCols <- setdiff(requiredCols, names(df))
+        missingCols <- setdiff(requiredCols, names(concordantsDf))
         if (length(missingCols) > 0L) {
             stop("Missing required columns in dataframe ", i, ": ",
                 toString(missingCols),

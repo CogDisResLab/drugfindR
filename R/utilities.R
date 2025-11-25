@@ -352,13 +352,11 @@ stopIfInvalidSignature <- function(signature) {
 .returnLibrary <- function(lib) {
     stopIfInvalidLibraries(lib)
 
-    libMap <- c(
+    switch(lib,
         OE = "LIB_11",
         KD = "LIB_6",
         CP = "LIB_5"
     )
-
-    libMap[[lib]]
 }
 
 #' Return a string suitable as a User-Agent for the iLINCS API

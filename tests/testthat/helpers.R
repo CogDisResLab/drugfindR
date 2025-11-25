@@ -102,7 +102,7 @@ createConcordantsTable <- function(nRows = NULL, library = "CP", seed = NULL) {
     rowCol <- signatureId
     concentration <- sample(c("10uM", "0.5uM", "0.12uM"), size = nRows, replace = TRUE)
     cellLine <- sample(c("A375", "A549", "HELA", "PC3"), size = nRows, replace = TRUE)
-    time <- sample(c("6H", "12H", "24H"), size = nRows, replace = TRUE)
+    timePoint <- sample(c("6H", "12H", "24H"), size = nRows, replace = TRUE)
 
 
     if (library == "CP") {
@@ -110,14 +110,14 @@ createConcordantsTable <- function(nRows = NULL, library = "CP", seed = NULL) {
             similarity = similarity, pValue = pValue,
             nGenes = nGenes, compound = compound, lincsPertID = lincsPertId,
             GeneTargets = geneTargets, concentration = concentration,
-            time = time, `_row` = rowCol, signatureid = signatureId, cellline = cellLine
+            time = timePoint, `_row` = rowCol, signatureid = signatureId, cellline = cellLine
         )
     } else {
         concordanceData <- tibble(
             similarity = similarity, pValue = pValue,
             nGenes = nGenes, treatment = treatment, lincsPertID = lincsPertId,
             GeneTargets = geneTargets,
-            time = time, `_row` = rowCol, signatureid = signatureId, cellline = cellLine
+            time = timePoint, `_row` = rowCol, signatureid = signatureId, cellline = cellLine
         )
     }
 }

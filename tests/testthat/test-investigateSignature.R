@@ -95,21 +95,21 @@ test_that("investigateSignature correctly prepares signatures", {
     skip_on_cran()
 
     # Load example data
-    dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+    dgeFile <- system.file("extdata", "dCovid_diffexp.tsv",
         package = "drugfindR"
     )
-    dge_data <- read.delim(dge_file)
+    dgeData <- read.delim(dgeFile)
 
     # Prepare signature manually to compare
     manualSig <- prepareSignature(
-        dge_data[1L:20L, ],
+        dgeData[1L:20L, ],
         geneColumn = "hgnc_symbol",
         logfcColumn = "logFC",
         pvalColumn = "PValue"
     )
 
     # Check that signature has expected structure (can be data.frame or tbl_df)
-    expect_true(is.data.frame(manualSig))
+    expect_s3_class(manualSig, "data.frame")
     expect_named(manualSig, c(
         "signatureID", "ID_geneid", "Name_GeneSymbol",
         "Value_LogDiffExp", "Significance_pvalue"
@@ -134,7 +134,7 @@ test_that("investigateSignature handles custom column names", {
         pvalColumn = "PVALUE"
     )
     # Check signature was created successfully
-    expect_true(is.data.frame(sig))
+    expect_s3_class(sig, "data.frame")
 })
 
 test_that("investigateSignature handles signatures without p-values", {
@@ -153,7 +153,7 @@ test_that("investigateSignature handles signatures without p-values", {
         pvalColumn = NA
     )
 
-    expect_true(is.data.frame(sig))
+    expect_s3_class(sig, "data.frame")
     expect_false("Significance_pvalue" %in% colnames(sig))
 })
 
@@ -239,13 +239,13 @@ test_that("investigateSignature adds source metadata correctly", {
     skip_if_offline()
     skip("Requires network access to iLINCS API")
 
-    dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+    dgeFile <- system.file("extdata", "dCovid_diffexp.tsv",
         package = "drugfindR"
     )
-    dge_data <- read.delim(dge_file)
+    dgeData <- read.delim(dgeFile)
 
     result <- investigateSignature(
-        dge_data[1L:20L, ],
+        dgeData[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -275,13 +275,13 @@ test_that("investigateSignature uses default metadata values", {
     skip_if_offline()
     skip("Requires network access to iLINCS API")
 
-    dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+    dgeFile <- system.file("extdata", "dCovid_diffexp.tsv",
         package = "drugfindR"
     )
-    dge_data <- read.delim(dge_file)
+    dgeData <- read.delim(dgeFile)
 
     result <- investigateSignature(
-        dge_data[1L:20L, ],
+        dgeData[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -301,13 +301,13 @@ test_that("investigateSignature adds SourceSignature column", {
     skip_if_offline()
     skip("Requires network access to iLINCS API")
 
-    dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+    dgeFile <- system.file("extdata", "dCovid_diffexp.tsv",
         package = "drugfindR"
     )
-    dge_data <- read.delim(dge_file)
+    dgeData <- read.delim(dgeFile)
 
     result <- investigateSignature(
-        dge_data[1L:20L, ],
+        dgeData[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -329,13 +329,13 @@ test_that("investigateSignature returns tibble with expected columns", {
     skip_if_offline()
     skip("Requires network access to iLINCS API")
 
-    dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+    dgeFile <- system.file("extdata", "dCovid_diffexp.tsv",
         package = "drugfindR"
     )
-    dge_data <- read.delim(dge_file)
+    dgeData <- read.delim(dgeFile)
 
     result <- investigateSignature(
-        dge_data[1L:20L, ],
+        dgeData[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -360,13 +360,13 @@ test_that("investigateSignature column order is consistent", {
     skip_if_offline()
     skip("Requires network access to iLINCS API")
 
-    dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+    dgeFile <- system.file("extdata", "dCovid_diffexp.tsv",
         package = "drugfindR"
     )
-    dge_data <- read.delim(dge_file)
+    dgeData <- read.delim(dgeFile)
 
     result <- investigateSignature(
-        dge_data[1L:20L, ],
+        dgeData[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -392,13 +392,13 @@ test_that("investigateSignature works with CP library", {
     skip_if_offline()
     skip("Requires network access to iLINCS API")
 
-    dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+    dgeFile <- system.file("extdata", "dCovid_diffexp.tsv",
         package = "drugfindR"
     )
-    dge_data <- read.delim(dge_file)
+    dgeData <- read.delim(dgeFile)
 
     result <- investigateSignature(
-        dge_data[1L:20L, ],
+        dgeData[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -415,13 +415,13 @@ test_that("investigateSignature works with KD library", {
     skip_if_offline()
     skip("Requires network access to iLINCS API")
 
-    dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+    dgeFile <- system.file("extdata", "dCovid_diffexp.tsv",
         package = "drugfindR"
     )
-    dge_data <- read.delim(dge_file)
+    dgeData <- read.delim(dgeFile)
 
     result <- investigateSignature(
-        dge_data[1L:20L, ],
+        dgeData[1L:20L, ],
         outputLib = "KD",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -438,13 +438,13 @@ test_that("investigateSignature works with OE library", {
     skip_if_offline()
     skip("Requires network access to iLINCS API")
 
-    dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+    dgeFile <- system.file("extdata", "dCovid_diffexp.tsv",
         package = "drugfindR"
     )
-    dge_data <- read.delim(dge_file)
+    dgeData <- read.delim(dgeFile)
 
     result <- investigateSignature(
-        dge_data[1L:20L, ],
+        dgeData[1L:20L, ],
         outputLib = "OE",
         filterThreshold = 0.5,
         geneColumn = "hgnc_symbol",
@@ -465,13 +465,13 @@ test_that("investigateSignature paired workflow produces valid results", {
     skip_if_offline()
     skip("Requires network access to iLINCS API")
 
-    dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+    dgeFile <- system.file("extdata", "dCovid_diffexp.tsv",
         package = "drugfindR"
     )
-    dge_data <- read.delim(dge_file)
+    dgeData <- read.delim(dgeFile)
 
     result <- investigateSignature(
-        dge_data[1L:20L, ],
+        dgeData[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         paired = TRUE,
@@ -489,13 +489,13 @@ test_that("investigateSignature unpaired workflow produces valid results", {
     skip_if_offline()
     skip("Requires network access to iLINCS API")
 
-    dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+    dgeFile <- system.file("extdata", "dCovid_diffexp.tsv",
         package = "drugfindR"
     )
-    dge_data <- read.delim(dge_file)
+    dgeData <- read.delim(dgeFile)
 
     result <- investigateSignature(
-        dge_data[1L:20L, ],
+        dgeData[1L:20L, ],
         outputLib = "CP",
         filterThreshold = 0.5,
         paired = FALSE,
@@ -522,27 +522,27 @@ test_that("investigateSignature handles small gene sets", {
     )
 
     sig <- prepareSignature(smallDge)
-    expect_true(is.data.frame(sig))
+    expect_s3_class(sig, "data.frame")
     # May have 0 rows if genes not in L1000
 })
 
 test_that("investigateSignature handles large gene sets", {
     skip_on_cran()
 
-    dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+    dgeFile <- system.file("extdata", "dCovid_diffexp.tsv",
         package = "drugfindR"
     )
-    dge_data <- read.delim(dge_file)
+    dgeData <- read.delim(dgeFile)
 
     # Use full dataset
     sig <- prepareSignature(
-        dge_data,
+        dgeData,
         geneColumn = "hgnc_symbol",
         logfcColumn = "logFC",
         pvalColumn = "PValue"
     )
 
-    expect_true(is.data.frame(sig))
+    expect_s3_class(sig, "data.frame")
     expect_gt(nrow(sig), 100L) # Should have many genes
 })
 
@@ -558,7 +558,7 @@ test_that("investigateSignature handles genes not in L1000", {
     sig <- prepareSignature(fakeDge)
 
     # Should return empty or near-empty signature
-    expect_true(is.data.frame(sig))
+    expect_s3_class(sig, "data.frame")
     expect_lte(nrow(sig), 3L)
 })
 
@@ -571,19 +571,19 @@ test_that("investigateSignature correctly calls .computeConsensusFromSignature",
 
     # Verify that the consensus function is properly orchestrated
     # This is tested indirectly through the full workflow
-    dge_file <- system.file("extdata", "dCovid_diffexp.tsv",
+    dgeFile <- system.file("extdata", "dCovid_diffexp.tsv",
         package = "drugfindR"
     )
-    dge_data <- read.delim(dge_file)
+    dgeData <- read.delim(dgeFile)
 
     sig <- prepareSignature(
-        dge_data[1L:20L, ],
+        dgeData[1L:20L, ],
         geneColumn = "hgnc_symbol",
         logfcColumn = "logFC",
         pvalColumn = "PValue"
     )
 
     # .computeConsensusFromSignature should be callable with this signature
-    expect_true(is.data.frame(sig))
+    expect_s3_class(sig, "data.frame")
     expect_true("Value_LogDiffExp" %in% colnames(sig))
 })

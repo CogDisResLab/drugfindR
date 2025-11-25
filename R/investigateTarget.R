@@ -145,9 +145,7 @@ investigateTarget <- function(
             stringr::str_to_lower(.data[["Source"]]) ==
                 stringr::str_to_lower(target)
         ) |>
-        (\(x) {
-            if (!is.null(inputCellLines)) dplyr::filter(x, .data[["SourceCellLine"]] %in% inputCellLines) else x
-        })() |>
+        (\(x) if (!is.null(inputCellLines)) dplyr::filter(x, .data[["SourceCellLine"]] %in% inputCellLines) else x)() |>
         dplyr::pull(.data[["SourceSignature"]])
 
     if (length(filteredSignatureIds) == 0L) {
