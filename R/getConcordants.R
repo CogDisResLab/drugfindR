@@ -37,10 +37,10 @@
     }
 
     # 2. Validate the signature structure
-    stopIfInvalidSignature(signature) # nolint: object_usage_linter.
+    stopIfInvalidSignature(signature)
 
     # 3. Validate iLINCS library
-    stopIfInvalidLibraries(ilincsLibrary) # nolint: object_usage_linter.
+    stopIfInvalidLibraries(ilincsLibrary)
 
     invisible(class(signature))
 }

@@ -346,7 +346,7 @@ test_that(".applyDirectionFilter works correctly for 'up' direction", {
     testSig <- getTestFixture("prepared_signature", seed = .testSeed, nGenes = 100L)
     thresholds <- list(downThreshold = -1.5, upThreshold = 1.5)
 
-    result <- .applyDirectionFilter(testSig, "up", thresholds)
+    result <- .applyDirectionFilter(testSig, thresholds, "up")
 
     expect_true(all(result[["Value_LogDiffExp"]] >= 1.5))
     expect_identical(nrow(result), 21L) # Values: 2.0, 3.0, 4.0
@@ -355,16 +355,17 @@ test_that(".applyDirectionFilter works correctly for 'up' direction", {
     expect_setequal(
         result[["Value_LogDiffExp"]],
         .applyDirectionFilter(
-            testSig, "up",
-            thresholds = thresholds
+            testSig,
+            thresholds,
+            "up"
         )[["Value_LogDiffExp"]]
     )
     expect_setequal(
         result[["Name_GeneSymbol"]],
         .applyDirectionFilter(
             testSig,
-            "up",
-            thresholds = thresholds
+            thresholds,
+            "up"
         )[["Name_GeneSymbol"]]
     )
 })
@@ -373,7 +374,7 @@ test_that(".applyDirectionFilter works correctly for 'down' direction", {
     testSig <- getTestFixture("prepared_signature", seed = .testSeed, nGenes = 100L)
     thresholds <- list(downThreshold = -1.5, upThreshold = 1.5)
 
-    result <- .applyDirectionFilter(testSig, "down", thresholds)
+    result <- .applyDirectionFilter(testSig, thresholds, "down")
 
     expect_true(all(result[["Value_LogDiffExp"]] <= -1.5))
     expect_identical(nrow(result), 21L) # Values: -3.0, -2.0
@@ -383,16 +384,16 @@ test_that(".applyDirectionFilter works correctly for 'down' direction", {
         result[["Value_LogDiffExp"]],
         .applyDirectionFilter(
             testSig,
-            "down",
-            thresholds = thresholds
+            thresholds,
+            "down"
         )[["Value_LogDiffExp"]]
     )
     expect_setequal(
         result[["Name_GeneSymbol"]],
         .applyDirectionFilter(
             testSig,
-            "down",
-            thresholds = thresholds
+            thresholds,
+            "down"
         )[["Name_GeneSymbol"]]
     )
 })
@@ -401,7 +402,7 @@ test_that(".applyDirectionFilter works correctly for 'any' direction", {
     testSig <- getTestFixture("prepared_signature", seed = .testSeed, nGenes = 100L)
     thresholds <- list(downThreshold = -1.5, upThreshold = 1.5)
 
-    result <- .applyDirectionFilter(testSig, "any", thresholds)
+    result <- .applyDirectionFilter(testSig, thresholds, "any")
 
     expect_true(all(
         result[["Value_LogDiffExp"]] >= 1.5 |
@@ -412,11 +413,11 @@ test_that(".applyDirectionFilter works correctly for 'any' direction", {
     # Check specific values
     expect_setequal(
         result[["Value_LogDiffExp"]],
-        .applyDirectionFilter(testSig, "any", thresholds = thresholds)[["Value_LogDiffExp"]]
+        .applyDirectionFilter(testSig, thresholds, "any")[["Value_LogDiffExp"]]
     )
     expect_setequal(
         result[["Name_GeneSymbol"]],
-        .applyDirectionFilter(testSig, "any", thresholds = thresholds)[["Name_GeneSymbol"]]
+        .applyDirectionFilter(testSig, thresholds, "any")[["Name_GeneSymbol"]]
     )
 })
 
@@ -425,14 +426,14 @@ test_that(".applyDirectionFilter works with edge case thresholds", {
 
     # Test with very high thresholds (should return empty)
     highThresholds <- list(downThreshold = -10.0, upThreshold = 10.0)
-    resultEmpty <- .applyDirectionFilter(testSig, "any", highThresholds)
+    resultEmpty <- .applyDirectionFilter(testSig, highThresholds, "any")
     expect_identical(nrow(resultEmpty), 0L)
 
     # Test with zero thresholds
     zeroThresholds <- list(downThreshold = 0.0, upThreshold = 0.0)
-    resultZeroAny <- .applyDirectionFilter(testSig, "any", zeroThresholds)
-    resultZeroUp <- .applyDirectionFilter(testSig, "up", zeroThresholds)
-    resultZeroDown <- .applyDirectionFilter(testSig, "down", zeroThresholds)
+    resultZeroAny <- .applyDirectionFilter(testSig, zeroThresholds, "any")
+    resultZeroUp <- .applyDirectionFilter(testSig, zeroThresholds, "up")
+    resultZeroDown <- .applyDirectionFilter(testSig, zeroThresholds, "down")
 
     expect_identical(nrow(resultZeroAny), 100L) # All values
     expect_identical(nrow(resultZeroUp), 55L) # Values >= 0: 0.0, 1.0, 2.0, 3.0, 4.0
@@ -443,7 +444,7 @@ test_that(".applyDirectionFilter maintains data structure", {
     testSig <- getTestFixture("prepared_signature", seed = .testSeed)
     thresholds <- list(downThreshold = -1.5, upThreshold = 1.5)
 
-    result <- .applyDirectionFilter(testSig, "any", thresholds)
+    result <- .applyDirectionFilter(testSig, thresholds, "any")
 
     # Should maintain all columns
     expect_identical(colnames(result), colnames(testSig))
