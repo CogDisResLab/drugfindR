@@ -47,9 +47,10 @@ createPreparedDge <- function(nGenes = NULL, seed = NULL) {
     # Map gene symbols -> ENTREZ IDs from l1000 (order-preserving)
     idMap <- tryCatch(
         {
-            if (exists("l1000", inherits = TRUE) &&
-                !is.null(l1000[["L1000"]]) && # nolint: object_usage_linter.
-                !is.null(l1000[["ENTREZID"]])) {
+            if (
+                exists("l1000", inherits = TRUE) &&
+                    !is.null(l1000[["L1000"]]) && # nolint: object_usage_linter.
+                    !is.null(l1000[["ENTREZID"]])) {
                 stats::setNames(as.character(l1000[["ENTREZID"]]), l1000[["L1000"]]) # nolint: object_usage_linter.
             } else {
                 NULL

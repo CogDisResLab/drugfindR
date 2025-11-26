@@ -251,7 +251,7 @@ NULL
 #'
 #' @keywords internal
 #'
-#' @importFrom dplyr select any_of arrange
+#' @importFrom dplyr select any_of arrange desc
 #' @importFrom rlang .data
 #'
 #' @examples
