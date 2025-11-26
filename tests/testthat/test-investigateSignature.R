@@ -380,7 +380,7 @@ test_that("investigateSignature column order is consistent", {
         colnames(result)
     )
 
-    expect_true(all(diff(colIdx) > 0)) # Should be in increasing order
+    expect_true(all(diff(colIdx) > 0L)) # Should be in increasing order
 })
 
 # ==============================================================================

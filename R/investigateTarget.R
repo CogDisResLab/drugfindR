@@ -153,7 +153,7 @@ investigateTarget <- function(
     }
 
     # Helper to process a single signature ID using existing modular functions
-    process_one <- function(sigId) {
+    processOne <- function(sigId) {
         sig <- getSignature(sigId) # nolint: object_usage_linter.
         .computeConsensusFromSignature( # nolint: object_usage_linter.
             sig,
@@ -168,7 +168,7 @@ investigateTarget <- function(
 
     # Process all source signatures and augment with metadata
     filteredSignatureIds |>
-        purrr::map(process_one) |>
+        purrr::map(processOne) |>
         dplyr::bind_rows() |>
         dplyr::inner_join(inputMetadata, by = "SourceSignature") |>
         dplyr::select(

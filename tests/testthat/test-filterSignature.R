@@ -1,4 +1,5 @@
 # Comprehensive tests for filterSignature function and internal helpers
+# nolint start: nonportable_path_linter
 
 library(S4Vectors)
 
@@ -737,3 +738,4 @@ test_that("filterSignature refactored version maintains backward compatibility",
         }
     }
 })
+# nolint end

@@ -507,6 +507,6 @@ test_that("consensusConcordants maintains data integrity", {
     expect_type(result[["pValue"]], "double")
 
     # Check no missing critical values
-    expect_false(any(is.na(result[["Target"]])))
+    expect_false(anyNA(result[["Target"]]))
     expect_false(any(is.infinite(result[["Similarity"]])))
 })

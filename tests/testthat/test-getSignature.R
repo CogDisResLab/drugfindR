@@ -125,7 +125,9 @@ test_that(".createSignatureRequest creates valid httr2 request object", {
     parsedRequestUrl <- url_parse(requestUrl)
     expect_identical(parsedRequestUrl[["scheme"]], "https")
     expect_identical(parsedRequestUrl[["hostname"]], "www.ilincs.org")
-    expect_identical(parsedRequestUrl[["path"]], "/api/ilincsR/downloadSignature") # nolint: nonportable_path_linter.
+    # nolint start: nonportable_path_linter, absolute_path_linter
+    expect_identical(parsedRequestUrl[["path"]], "/api/ilincsR/downloadSignature")
+    # nolint end
 
     # Check query parameters
     queryParameters <- parsedRequestUrl[["query"]]
