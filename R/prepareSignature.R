@@ -78,11 +78,11 @@
     # Select only the relevant columns from the input to avoid
     # carrying through any pre-existing L1000-style columns that
     # would collide with our target names after renaming.
-    filtered_subset <- filteredData |>
+    filteredSubset <- filteredData |>
         dplyr::select(dplyr::all_of(c(geneColumn, logfcColumn, pvalColumn)))
 
     l1000 |> # nolint: object_usage_linter.
-        dplyr::inner_join(filtered_subset,
+        dplyr::inner_join(filteredSubset,
             by = c(SYMBOL = geneColumn), relationship = "many-to-many"
         ) |>
         # NOTE: For the renaming, we are using an in-place
@@ -125,11 +125,11 @@
     # Select only the relevant columns from the input to avoid
     # carrying through any pre-existing L1000-style columns that
     # would collide with our target names after renaming.
-    filtered_subset <- filteredData |>
+    filteredSubset <- filteredData |>
         dplyr::select(dplyr::all_of(c(geneColumn, logfcColumn)))
 
     l1000 |> # nolint: object_usage_linter.
-        dplyr::inner_join(filtered_subset,
+        dplyr::inner_join(filteredSubset,
             by = c(SYMBOL = geneColumn), relationship = "many-to-many"
         ) |>
         # NOTE: For the renaming, we are using an in-place
@@ -241,8 +241,7 @@
 #' )
 #' print(custom_signature)
 prepareSignature <- function(
-  dge,
-  geneColumn = "Symbol",
+  dge, geneColumn = "Symbol",
   logfcColumn = "logFC",
   pvalColumn = "PValue"
 ) {

@@ -290,7 +290,7 @@ test_that(".stopIfContainsMissingValues detects missing values", {
 
     expect_error(
         .stopIfContainsMissingValues(sigWithNa),
-        "Input signature contains missing \\(NA\\) values"
+        "Input signature contains missing \\(NA\\) values" # nolint: nonportable_path_linter.
     )
 })
 
@@ -326,7 +326,7 @@ test_that(".stopIfContainsMissingValues handles all-NA columns", {
     )
 
     errorMsg <- testthat::capture_error(.stopIfContainsMissingValues(sigAllNaColumn))$message
-    expect_true(grepl("ID_geneid: 2 missing value", errorMsg))
+    expect_true(grepl("ID_geneid: 2 missing value", errorMsg, fixed = TRUE))
 })
 
 test_that(".stopIfContainsMissingValues handles mixed data types with NA", {
@@ -341,10 +341,10 @@ test_that(".stopIfContainsMissingValues handles mixed data types with NA", {
     )
 
     errorMsg <- testthat::capture_error(.stopIfContainsMissingValues(mixedNaSig))$message
-    expect_true(grepl("signatureID: 1 missing value", errorMsg))
-    expect_true(grepl("Name_GeneSymbol: 1 missing value", errorMsg))
-    expect_true(grepl("Value_LogDiffExp: 1 missing value", errorMsg))
-    expect_true(grepl("Significance_pvalue: 1 missing value", errorMsg))
+    expect_true(grepl("signatureID: 1 missing value", errorMsg, fixed = TRUE))
+    expect_true(grepl("Name_GeneSymbol: 1 missing value", errorMsg, fixed = TRUE))
+    expect_true(grepl("Value_LogDiffExp: 1 missing value", errorMsg, fixed = TRUE))
+    expect_true(grepl("Significance_pvalue: 1 missing value", errorMsg, fixed = TRUE))
 })
 
 # Tests for stopIfInvalidSignature function (main validation function)
@@ -389,7 +389,7 @@ test_that("stopIfInvalidSignature detects missing values", {
 
     expect_error(
         stopIfInvalidSignature(sigWithNa),
-        "Input signature contains missing \\(NA\\) values"
+        "Input signature contains missing \\(NA\\) values" # nolint: nonportable_path_linter.
     )
 })
 
@@ -462,8 +462,8 @@ test_that("improved error messages are more helpful than before", {
     )
     naErrorMsg <- testthat::capture_error(.stopIfContainsMissingValues(naSig))$message
 
-    expect_true(grepl("Value_LogDiffExp: 1 missing value", naErrorMsg))
-    expect_true(grepl("remove or impute", naErrorMsg))
+    expect_true(grepl("Value_LogDiffExp: 1 missing value", naErrorMsg, fixed = TRUE))
+    expect_true(grepl("remove or impute", naErrorMsg, fixed = TRUE))
 })
 
 # ==============================================================================
@@ -548,8 +548,8 @@ test_that(".computeConsensusFromSignature passes filterThreshold correctly", {
     # Validation happens in filterSignature, so we test the parameter passing
     expect_silent({
         # These parameters should be accepted
-        threshold_values <- c(0.3, 0.5, 0.85, 1.0, 1.5)
-        expect_true(all(threshold_values > 0L))
+        thresholdValues <- c(0.3, 0.5, 0.85, 1.0, 1.5)
+        expect_true(all(thresholdValues > 0L))
     })
 })
 
@@ -561,8 +561,8 @@ test_that(".computeConsensusFromSignature passes filterProp correctly", {
     # Test with proportion values
     # Validation happens in filterSignature
     expect_silent({
-        prop_values <- c(0.1, 0.2, 0.3, 0.5)
-        expect_true(all(prop_values > 0L & prop_values < 1L))
+        propValues <- c(0.1, 0.2, 0.3, 0.5)
+        expect_true(all(propValues > 0L & propValues < 1L))
     })
 })
 
@@ -582,7 +582,7 @@ test_that(".computeConsensusFromSignature passes similarityThreshold correctly",
         paired = FALSE
     )
 
-    result_high <- .computeConsensusFromSignature(
+    resultHigh <- .computeConsensusFromSignature(
         testSig,
         outputLib = "CP",
         filterThreshold = 0.5,
@@ -591,7 +591,7 @@ test_that(".computeConsensusFromSignature passes similarityThreshold correctly",
     )
 
     # Higher threshold should give fewer or equal results
-    expect_lte(nrow(result_high), nrow(resultLow))
+    expect_lte(nrow(resultHigh), nrow(resultLow))
 })
 
 test_that(".computeConsensusFromSignature passes outputCellLines correctly", {

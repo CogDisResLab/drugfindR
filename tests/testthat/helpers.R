@@ -12,7 +12,11 @@ createInputDge <- function(nGenes = NULL, seed = NULL) {
     # Prefer sampling from package dataset `l1000` to satisfy membership checks
     pool <- tryCatch(
         {
-            if (exists("l1000", inherits = TRUE) && !is.null(l1000[["L1000"]])) unique(l1000[["L1000"]]) else NULL # nolint: object_usage_linter.
+            if (exists("l1000", inherits = TRUE) && !is.null(l1000[["L1000"]])) {
+                unique(l1000[["L1000"]]) # nolint: object_usage_linter.
+            } else {
+                NULL
+            }
         },
         error = function(e) NULL
     )
@@ -35,7 +39,11 @@ createPreparedDge <- function(nGenes = NULL, seed = NULL) {
     # Prefer sampling from package dataset `l1000` to satisfy membership checks
     pool <- tryCatch(
         {
-            if (exists("l1000", inherits = TRUE) && !is.null(l1000[["L1000"]])) unique(l1000[["L1000"]]) else NULL # nolint: object_usage_linter.
+            if (exists("l1000", inherits = TRUE) && !is.null(l1000[["L1000"]])) {
+                unique(l1000[["L1000"]]) # nolint: object_usage_linter.
+            } else {
+                NULL
+            }
         },
         error = function(e) NULL
     )
@@ -47,9 +55,10 @@ createPreparedDge <- function(nGenes = NULL, seed = NULL) {
     # Map gene symbols -> ENTREZ IDs from l1000 (order-preserving)
     idMap <- tryCatch(
         {
-            if (exists("l1000", inherits = TRUE) &&
-                !is.null(l1000[["L1000"]]) && # nolint: object_usage_linter.
-                !is.null(l1000[["ENTREZID"]])) {
+            if (
+                exists("l1000", inherits = TRUE) &&
+                    !is.null(l1000[["L1000"]]) && # nolint: object_usage_linter.
+                    !is.null(l1000[["ENTREZID"]])) {
                 stats::setNames(as.character(l1000[["ENTREZID"]]), l1000[["L1000"]]) # nolint: object_usage_linter.
             } else {
                 NULL
@@ -141,7 +150,7 @@ createValidIlincsResponse <- function(nRows = NULL, library = "CP", seed = NULL)
         url = "https://www.ilincs.org/api/SignatureMeta/uploadAndAnalyze?lib=LIB_5",
         status_code = 200L,
         method = "POST",
-        headers = list(`Content-Type` = "application/json"),
+        headers = list(`Content-Type` = "application/json"), # nolint: nonportable_path_linter.
         body = charToRaw(responseData)
     )
 }

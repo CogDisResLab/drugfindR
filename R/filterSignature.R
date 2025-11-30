@@ -285,7 +285,7 @@
 #' thresholds <- .calculateProportionalThreshold(signature, 0.05)
 #' # Returns thresholds based on 5th and 95th percentiles
 #' }
-.calculateProportionalThreshold <- function(signature, prop) {
+.calculateProportionalThreshold <- function(signature, prop) { # nolint: object_length_linter.
     limits <- round(
         quantile(
             signature[["Value_LogDiffExp"]], c(prop, 1L - prop)

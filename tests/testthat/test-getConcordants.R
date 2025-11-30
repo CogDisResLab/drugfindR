@@ -2,7 +2,6 @@
 
 library(S4Vectors)
 library(httr2)
-library(httptest2)
 
 # ==============================================================================
 # TESTS FOR INTERNAL VALIDATION FUNCTION
@@ -79,7 +78,7 @@ test_that(".prepareSignatureFile creates valid temporary file", {
     expect_true(file.exists(signatureFilePath))
 
     # File should have .xls extension
-    expect_true(grepl("\\.xls$", signatureFilePath))
+    expect_true(endsWith(signatureFilePath, ".xls"))
 
     # File should contain signature data
     fileContent <- readr::read_tsv(signatureFilePath, show_col_types = FALSE)
@@ -185,7 +184,7 @@ test_that(".generateIlincsRequest creates valid httr2 request object", {
     expect_identical(parsedRequestUrl[["hostname"]], "www.ilincs.org")
     expect_identical(
         parsedRequestUrl[["path"]],
-        "/api/SignatureMeta/uploadAndAnalyze"
+        "/api/SignatureMeta/uploadAndAnalyze" # nolint: absolute_path_linter, nonportable_path_linter.
     ) # nolint: nonportable_path_linter.    # Check query parameters
     queryParameters <- parsedRequestUrl[["query"]]
     expect_identical(queryParameters[["lib"]], "LIB_5")
@@ -256,8 +255,13 @@ test_that(".generateIlincsRequest includes proper headers and configuration", {
 
     # Check User-Agent header contains package info
     userAgent <- request[["options"]][["useragent"]]
-    expect_true(grepl("drugfindR", userAgent))
-    expect_true(grepl("github.com/CogDisResLab/drugfindR", userAgent)) # nolint: nonportable_path_linter.
+    expect_true(grepl("drugfindR", userAgent, fixed = TRUE))
+    expect_true(
+        grepl("github.com/CogDisResLab/drugfindR", # nolint: nonportable_path_linter.
+            userAgent,
+            fixed = TRUE
+        )
+    )
 })
 
 # ==============================================================================
@@ -515,8 +519,8 @@ test_that(".processIlincsResponseSuccess handles KD library correctly", {
     expect_identical(nrow(result), 10L)
 
     # Check KD-specific transformations
-    expect_true(all(stringr::str_detect(result[["treatment"]], "GENE"))) # compound renamed to treatment
-    expect_false(all(stringr::str_detect(result[["treatment"]], "DRUG"))) # compound renamed to treatment
+    expect_true(all(stringr::str_detect(result[["treatment"]], stringr::fixed("GENE"))))
+    expect_false(all(stringr::str_detect(result[["treatment"]], stringr::fixed("DRUG"))))
     expect_true(all(is.na(result[["concentration"]]))) # All NA for KD
     expect_identical(result[["sig_type"]], rep("Gene Knockdown", 10L))
     expect_identical(result[["sig_direction"]], rep("Down", 10L))
@@ -538,8 +542,8 @@ test_that(".processIlincsResponseSuccess handles OE library correctly", {
     expect_identical(nrow(result), 10L)
 
     # Check OE-specific transformations
-    expect_true(all(stringr::str_detect(result[["treatment"]], "GENE"))) # compound renamed to treatment
-    expect_false(all(stringr::str_detect(result[["treatment"]], "DRUG"))) # compound renamed to treatment
+    expect_true(all(stringr::str_detect(result[["treatment"]], stringr::fixed("GENE"))))
+    expect_false(all(stringr::str_detect(result[["treatment"]], stringr::fixed("DRUG"))))
     expect_true(all(is.na(result[["concentration"]]))) # All NA for OE
     expect_identical(result[["sig_type"]], rep("Gene Overexpression", 10L))
     expect_identical(result[["sig_direction"]], rep("Any", 10L))
@@ -553,7 +557,7 @@ test_that(".processIlincsResponse dispatcher works correctly for success case", 
 
     expect_s3_class(result, "tbl_df")
     expect_identical(nrow(result), 10L)
-    expect_true(all(stringr::str_detect(result[["treatment"]], "DRUG"))) # compound renamed to treatment
+    expect_true(all(stringr::str_detect(result[["treatment"]], stringr::fixed("DRUG"))))
     expect_identical(result[["sig_type"]], rep("Chemical Perturbagen", 10L))
 })
 
@@ -575,12 +579,12 @@ test_that(".processIlincsResponse dispatcher works correctly for error case", {
     # Mock an error response
     expect_error(
         .processIlincsResponse(getTestFixture("error_ilincs_response_400"), "Any", "CP"),
-        "iLINCS API request failed \\(Status 400\\)"
+        "iLINCS API request failed \\(Status 400\\)" # nolint: nonportable_path_linter.
     )
 
     expect_error(
         .processIlincsResponse(getTestFixture("error_ilincs_response_500"), "Any", "CP"),
-        "iLINCS API request failed \\(Status 500\\)"
+        "iLINCS API request failed \\(Status 500\\)" # nolint: nonportable_path_linter.
     )
 })
 

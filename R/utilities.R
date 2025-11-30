@@ -130,7 +130,7 @@ stopIfInvalidLibraries <- function(libs) {
     if (!validateLibraries(libs)) {
         invalidLibs <- libs[!purrr::map_lgl(libs, .validateLibrary)]
         stop(
-            "Invalid library specification(s): ", paste(invalidLibs, collapse = ", "), ". ",
+            "Invalid library specification(s): ", toString(invalidLibs), ". ",
             "Libraries must be one of 'OE' (Overexpression), 'KD' (Knockdown), or 'CP' (Chemical Perturbagen).",
             call. = FALSE
         )
