@@ -368,7 +368,7 @@
 #'
 #' @importFrom httr2 resp_status resp_body_json
 #' @importFrom purrr pluck
-#' @importFrom dplyr bind_rows select any_of rename mutate
+#' @importFrom dplyr bind_rows select any_of mutate
 #' @importFrom rlang .data
 #'
 #' @keywords internal

@@ -72,7 +72,7 @@
 #'
 #' @keywords internal
 #'
-#' @importFrom dplyr inner_join rename mutate select any_of
+#' @importFrom dplyr inner_join mutate select any_of
 #' @importFrom rlang .data
 .mapToL1000WithPvalues <- function(filteredData, geneColumn, logfcColumn, pvalColumn) {
     # Select only the relevant columns from the input to avoid
@@ -119,7 +119,7 @@
 #'
 #' @keywords internal
 #'
-#' @importFrom dplyr inner_join rename mutate select any_of
+#' @importFrom dplyr inner_join mutate select any_of
 #' @importFrom rlang .data
 .mapToL1000WithoutPvalues <- function(filteredData, geneColumn, logfcColumn) {
     # Select only the relevant columns from the input to avoid
@@ -198,7 +198,7 @@
 #' @return A tibble with the L1000 signature.
 #' @export
 #'
-#' @importFrom dplyr filter select any_of inner_join rename mutate
+#' @importFrom dplyr filter select any_of inner_join mutate
 #' @importFrom rlang .data
 #'
 #' @examples
