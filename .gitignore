@@ -1,6 +1,3 @@
-# Created by https://www.toptal.com/developers/gitignore/api/r,macos,archive,archives,compressedarchive,linux,git
-# Edit at https://www.toptal.com/developers/gitignore?templates=r,macos,archive,archives,compressedarchive,linux,git
-
 ### Archive ###
 
 ### Mostly from https://en.wikipedia.org/wiki/List_of_archive_formats
@@ -330,16 +327,19 @@ inst/doc
 **/*.log
 test.tsv
 
-# Ignore overrides
-
-!inst/extdata/*
 
 *.bak
 *.pdf
 *.jats
 
-
+# Ignore the VSCode settings folder
 .vscode/
 
-
+# Ignore JSON test files
 tests/*.json
+
+# Ignore overrides
+!inst/extdata/*
+
+# Unignore the inst/scripts/ directory
+!inst/scripts/

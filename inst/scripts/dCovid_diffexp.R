@@ -1,4 +1,4 @@
-# This script servers as both documentation and script to downlaod
+# This script servers as both documentation and script to download
 # the data file dCovid_diffexp.tsv from Zenodo.
 #
 # This file is used in the vignette to demonstrate the use of the

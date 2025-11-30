@@ -1,2 +1,5 @@
 *.html
 *.R
+
+# Unignore the inst/scripts/ directory
+!inst/scripts/
