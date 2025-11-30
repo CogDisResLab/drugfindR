@@ -8,7 +8,7 @@
 \description{
 drugfindR is a package that allows users to perform drug
 repurposing using gene expression signatures. It uses the LINCS L1000
-database to find the most similar gene expression signatures to the user's
+signatures available from iLINCS  to find the most similar gene expression signatures to the user's
 input signature. It then uses the connectivity analysis to find the most
 similar
 drugs to the user's input signature.
