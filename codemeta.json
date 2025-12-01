@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/CogDisResLab/drugfindR",
   "issueTracker": "https://github.com/CogDisResLab/drugfindR/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.99.1295",
+  "version": "0.99.1299",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -373,7 +373,7 @@
   "applicationCategory": "Genomics",
   "isPartOf": "https://bioconductor.org",
   "keywords": ["LINCS", "iLINCS", "drugrepurposing", "drugdiscovery", "transcriptomics", "geneexpression", "geneknockdown", "geneoverexpression", "chemicalperturbagen", "drugfindR"],
-  "fileSize": "2479.808KB",
+  "fileSize": "2484.194KB",
   "releaseNotes": "https://github.com/CogDisResLab/drugfindR/blob/main/NEWS.md",
   "contIntegration": ["https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml", "https://app.codecov.io/gh/CogDisResLab/drugfindR?branch=devel"],
   "developmentStatus": "https://lifecycle.r-lib.org/articles/stages.html#experimental"
