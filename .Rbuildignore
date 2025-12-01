@@ -27,6 +27,7 @@
 ^renovate\.json$
 ^renv$
 ^renv\.lock$
+^styles$
 ^test\.tsv$
 ^tests\.new$
 ^utilities$

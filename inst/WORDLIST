@@ -12,6 +12,7 @@ AAMDC
 AAMP
 AANAT
 AAO
+aaprop
 AAR
 AARD
 AARS
@@ -137,6 +138,7 @@ ACTC
 ACTE
 ACTG
 Actinomycin
+Actix
 ACTL
 ACTN
 ACTP
@@ -304,6 +306,7 @@ ALDOB
 ALDOC
 Alectinib
 Alendronic
+alex
 Alexidine
 Alexitol
 Alfacalcidol
@@ -728,6 +731,7 @@ AURKBP
 AURKC
 Austricin
 aut
+AutomatedReadability
 automerge
 AUY
 Avagacestat
@@ -803,6 +807,7 @@ Baricitinib
 BARX
 BAS
 baseBranches
+BasedOnStyles
 BASP
 BATF
 Batimastat
@@ -811,6 +816,7 @@ BAX
 BAYK
 BAZ
 Bazedoxifene
+Bazerman
 bbb
 BBIP
 BBOF
@@ -964,12 +970,16 @@ bioconductor
 BiocStyle
 biocthis
 biocViews
+Bioinformaticist
+Bioinformaticists
 bioinformatics
 Biomed
 Biomedicine
 BIOMOL
 biopha
 biopterin
+bioRxiv
+Biostatistics
 Biperiden
 biphenyl
 Biphenyl
@@ -1299,6 +1309,7 @@ CARNS
 Carpindolol
 Carprofen
 Carteolol
+cartoonishly
 CARTPT
 Carvedilol
 CAS
@@ -1847,6 +1858,7 @@ Coladonin
 COLCA
 Colchicine
 COLEC
+ColemanLiau
 Coleoforsin
 Colforsin
 COLGALT
@@ -1938,6 +1950,7 @@ CREBL
 CREBRF
 CREBZF
 Creeden
+creedenzymatic
 CREG
 CRELD
 CREM
@@ -1960,6 +1973,7 @@ CROCC
 CROCCP
 Cromakalim
 Cromolyn
+cron
 CROT
 Crotamitex
 Crotamiton
@@ -2175,6 +2189,7 @@ CYYR
 cz
 CZIB
 CZR
+d'etre
 DAAM
 Dabigatran
 Dabrafenib
@@ -2292,6 +2307,7 @@ Decitabine
 DECR
 DEDD
 deduplicated
+Deepak
 DEFA
 Defactinib
 DEFB
@@ -2345,6 +2361,7 @@ Desipramine
 Desloratadine
 Desmethylclomipramine
 Desmethylclozapine
+Desmoplasia
 Desmopressin
 Desoximetasone
 Desoxycorticosterone
@@ -2357,6 +2374,7 @@ DET
 DEUP
 Devazepide
 developmentStatus
+devicon
 devtools
 dexamethasone
 Dexamethasone
@@ -2779,6 +2797,7 @@ DTX
 DTYMK
 Dubinidine
 DUBR
+Ductal
 Duloxetine
 DUOX
 DUOXA
@@ -2898,6 +2917,7 @@ EI
 Eicosadienoic
 Eicosatrienoic
 EID
+Eid
 EIF
 EIPR
 ELAC
@@ -3419,6 +3439,8 @@ Flavokawain
 Flavoxate
 FLCN
 Flecainide
+FleschKincaid
+FleschReadingEase
 FLG
 FLI
 FLII
@@ -4031,6 +4053,7 @@ GUCY
 GUF
 Guggulsterone
 GUK
+GunningFog
 GUSB
 GUSBP
 GVINP
@@ -4478,6 +4501,7 @@ Idoxuridine
 IDOXURIDINE
 IDUA
 IER
+Iewek
 Ifenprodil
 IFFO
 IFI
@@ -4610,6 +4634,7 @@ Indomethacin
 Indoprofen
 INE
 Infigratinib
+ing
 Ingenol
 INGX
 INHA
@@ -4923,6 +4948,7 @@ Ketoconazole
 Ketoprofen
 Ketorolac
 Ketotifen
+Keybase
 KF
 KH
 KHDC
@@ -4940,6 +4966,8 @@ KIFAP
 KIFBP
 KIFC
 Kinetin
+Kinome
+Kinomics
 KIR
 KIRREL
 KITLG
@@ -5085,6 +5113,7 @@ LDLRAD
 LDLRAP
 LDN
 LDOC
+learnings
 LECT
 Ledipasvir
 LEEJB
@@ -5259,6 +5288,7 @@ Lobelanidine
 Lobeline
 Lobendazole
 LOC
+lockfile
 Lodoxamide
 Lofepramine
 Lofexidine
@@ -5825,6 +5855,7 @@ MILR
 Milrinone
 MILTEFOSINE
 MIMT
+MinAlertLevel
 Minaprine
 MINAR
 MINCR
@@ -6331,6 +6362,7 @@ NEURL
 NEUROD
 Neurodazine
 NEUROG
+Neuropsychopharmacology
 Neurosciences
 Nevirapine
 NEXMIF
@@ -7406,6 +7438,7 @@ PITPNC
 PITPNM
 PITRM
 PITX
+PIV
 Pivalate
 Pivoxil
 PIWIL
@@ -7648,6 +7681,7 @@ Prednisolone
 Pregnenolone
 Preladenant
 PRELID
+Preload
 PRELP
 Prenylamine
 prepareSignature
@@ -7714,6 +7748,7 @@ Procyclidine
 Procysteine
 PRODH
 productizing
+ProfanityUnlikely
 Proglumide
 programmingLanguage
 Proimmune
@@ -7723,6 +7758,7 @@ PROKR
 Prolinal
 Promazine
 Promethazine
+Prometric
 Pronetalol
 Propafenone
 propan
@@ -7755,6 +7791,7 @@ PRORSD
 PRORY
 PROSC
 Proscillaridin
+proselint
 PROSER
 prostaglandin
 Prosteride
@@ -8038,6 +8075,7 @@ RADIL
 RADX
 RAET
 RAI
+raison
 RALA
 RALB
 RALBP
@@ -8163,6 +8201,7 @@ Reparixin
 REPIN
 repo
 repositioning’
+Repurpos
 repurposable
 repurposing
 repurposing’
@@ -8325,6 +8364,7 @@ RNASE
 RNASEH
 RNASEK
 RNASEL
+RNASeq
 RNASET
 RND
 RNF
@@ -8677,6 +8717,7 @@ Sertindole
 Sertkaya
 SERTM
 Sertraline
+serverless
 SESN
 Sesquiterpene
 SESTD
@@ -8837,6 +8878,7 @@ SMARCB
 SMARCC
 SMARCD
 SMARCE
+SmartCard
 SMBD
 SMC
 SMCHD
@@ -8910,6 +8952,7 @@ SNUPN
 SNURF
 SNW
 SNX
+Snyk
 SOAT
 Sobetirome
 Sobie
@@ -9008,6 +9051,7 @@ Spofa
 SPON
 SPOP
 SPOPL
+Spotify
 SPOX
 SPP
 SPPL
@@ -9137,6 +9181,7 @@ STUM
 STX
 STXBP
 STYK
+StylesPath
 STYXL
 SU
 Suadian
@@ -9718,6 +9763,7 @@ Tomelukast
 TOMM
 Tonabersat
 TONSL
+TooWordy
 TOPBP
 Topiramate
 Topiroxostat
@@ -10086,14 +10132,17 @@ Umeclidinium
 UMOD
 UMODL
 UNC
+Uncommented
 UNCX
 Undecenal
 UNG
 UNII
+Uninformational
 UNK
 UNKL
 UNM
 UNQ
+Unsplash
 UPB
 UPF
 UPK
@@ -10326,6 +10375,7 @@ WLS
 WNK
 WNT
 WO
+wordmark
 Wortmannin
 wr
 WRB
@@ -10409,6 +10459,7 @@ YIPF
 YJEFN
 YJU
 YK
+ykman
 YKT
 yl
 Yl
