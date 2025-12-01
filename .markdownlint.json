@@ -12,5 +12,6 @@
     "MD036": false,
     "default": true,
     "no-hard-tabs": true,
-    "whitespace": false
+    "whitespace": false,
+    "MD025": false
 }
