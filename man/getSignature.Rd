@@ -12,13 +12,11 @@ getSignature(sigId)
 }
 \value{
 a tibble with the signature data containing the following columns:
-\itemize{
-\item \code{signatureID}: The signature identifier
-\item \code{ID_geneid}: Gene IDs (Entrez)
-\item \code{Name_GeneSymbol}: Gene symbols
-\item \code{Value_LogDiffExp}: Log fold-change values
-\item \code{Significance_pvalue}: Statistical significance p-values
-}
+* \code{signatureID}: The signature identifier
+* \code{ID_geneid}: Gene IDs (Entrez)
+* \code{Name_GeneSymbol}: Gene symbols
+* \code{Value_LogDiffExp}: Log fold-change values
+* \code{Significance_pvalue}: Statistical significance p-values
 }
 \description{
 This function acts as the entrypoint to the iLINCS database.

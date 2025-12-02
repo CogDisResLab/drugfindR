@@ -18,7 +18,7 @@ function to ensure they meet the required constraints.
 }
 \details{
 This function performs the following validations:
-\enumerate{
+\itemize{
 \item Ensures \code{sigId} is a character vector of length 1
 \item Ensures \code{sigId} is not empty or whitespace-only
 \item Validates that the signature exists in the metadata tables

@@ -14,10 +14,8 @@ input signature (from \code{.validateGetConcordantsInput}).}
 }
 \value{
 The results in the appropriate format:
-\itemize{
-\item S4Vectors::DataFrame if input was a DataFrame
-\item tibble otherwise (for data.frame, tibble inputs)
-}
+* S4Vectors::DataFrame if input was a DataFrame
+* tibble otherwise (for data.frame, tibble inputs)
 }
 \description{
 This internal function formats the output results to match the input

@@ -15,17 +15,14 @@ NULL
 #'
 #' @details
 #' This function performs the following validations:
-#' \enumerate{
-#'   \item Ensures paired analysis has exactly two dataframes
-#'   \item Ensures unpaired analysis has exactly one dataframe
-#'   \item Validates cutoff is numeric and within reasonable range
-#'   \item Validates cellLine parameter format
-#' }
+#'   1. Ensures paired analysis has exactly two dataframes
+#'   1. Ensures unpaired analysis has exactly one dataframe
+#'   1. Validates cutoff is numeric and within reasonable range
+#'   1. Validates cellLine parameter format
 #'
 #' @keywords internal
 #'
 #' @examples
-#' \dontrun{
 #' # Valid calls (no errors)
 #' testData <- data.frame(similarity = c(0.5, -0.3), compound = c("A", "B"))
 #' .validateConsensusConcordantsInput(list(testData), FALSE, 0.3, NULL)
@@ -34,7 +31,6 @@ NULL
 #' # Invalid calls (will throw errors)
 #' .validateConsensusConcordantsInput(list(), FALSE, 0.3, NULL) # No data
 #' .validateConsensusConcordantsInput(list(testData), TRUE, 0.3, NULL) # Paired needs 2 dataframes
-#' }
 # nolint start: object_length_linter, cyclocomp_linter.
 .validateConsensusConcordantsInput <- function(dots, paired, cutoff, cellLine) {
     # nolint end.
@@ -92,22 +88,18 @@ NULL
 #'
 #' @details
 #' This function:
-#' \enumerate{
-#'   \item Combines multiple dataframes using row binding
-#'   \item Preserves all columns from input dataframes
-#'   \item Handles cases where dataframes have different column sets
-#' }
+#'   1. Combines multiple dataframes using row binding
+#'   1. Preserves all columns from input dataframes
+#'   1. Handles cases where dataframes have different column sets
 #'
 #' @keywords internal
 #'
 #' @importFrom dplyr bind_rows
 #'
 #' @examples
-#' \dontrun{
 #' df1 <- data.frame(similarity = 0.5, compound = "A")
 #' df2 <- data.frame(similarity = -0.3, compound = "B")
 #' combined <- .combineConcordantsData(list(df1, df2))
-#' }
 .combineConcordantsData <- function(dots) {
     # Convert any DataFrames to tibbles for dplyr compatibility
     dots <- lapply(dots, tibble::as_tibble)
@@ -126,11 +118,9 @@ NULL
 #'
 #' @details
 #' This function:
-#' \enumerate{
-#'   \item Filters data based on the cellline column
-#'   \item Returns original data if cellLine is NULL
-#'   \item Handles cases where no data matches the specified cell lines
-#' }
+#'   1. Filters data based on the cellline column
+#'   1. Returns original data if cellLine is NULL
+#'   1. Handles cases where no data matches the specified cell lines
 #'
 #' @keywords internal
 #'
@@ -138,13 +128,11 @@ NULL
 #' @importFrom rlang .data
 #'
 #' @examples
-#' \dontrun{
 #' testData <- data.frame(
 #'     similarity = c(0.5, -0.3, 0.7),
 #'     cellline = c("A375", "PC3", "MCF7")
 #' )
 #' filtered <- .filterByCellLine(testData, c("A375", "PC3"))
-#' }
 .filterByCellLine <- function(concordants, cellLine) {
     if (is.null(cellLine)) {
         return(concordants)
@@ -168,11 +156,9 @@ NULL
 #'
 #' @details
 #' This function:
-#' \enumerate{
-#'   \item Filters based on absolute similarity values
-#'   \item Retains both positive and negative similarities above threshold
-#'   \item Removes entries below the cutoff threshold
-#' }
+#'   1. Filters based on absolute similarity values
+#'   1. Retains both positive and negative similarities above threshold
+#'   1. Removes entries below the cutoff threshold
 #'
 #' @keywords internal
 #'
@@ -180,11 +166,9 @@ NULL
 #' @importFrom rlang .data
 #'
 #' @examples
-#' \dontrun{
 #' testData <- data.frame(similarity = c(0.5, -0.8, 0.2, -0.1))
 #' filtered <- .applySimilarityCutoff(testData, 0.3)
 #' # Returns entries with |similarity| >= 0.3
-#' }
 .applySimilarityCutoff <- function(concordants, cutoff) {
     # Convert DataFrame to tibble for dplyr compatibility
     concordants <- tibble::as_tibble(concordants)
@@ -203,12 +187,10 @@ NULL
 #'
 #' @details
 #' This function:
-#' \enumerate{
-#'   \item Groups by treatment or compound columns (whichever is available)
-#'   \item For each group, retains only entries with maximum absolute similarity
-#'   \item Handles ties by keeping all tied entries
-#'   \item Preserves the structure for downstream processing
-#' }
+#'   1. Groups by treatment or compound columns (whichever is available)
+#'   1. For each group, retains only entries with maximum absolute similarity
+#'   1. Handles ties by keeping all tied entries
+#'   1. Preserves the structure for downstream processing
 #'
 #' @keywords internal
 #'
@@ -216,7 +198,6 @@ NULL
 #' @importFrom rlang .data
 #'
 #' @examples
-#' \dontrun{
 #' testData <- data.frame(
 #'     compound = c("A", "A", "B", "B"),
 #'     similarity = c(0.5, 0.8, -0.3, -0.7),
@@ -224,7 +205,6 @@ NULL
 #' )
 #' grouped <- .groupByTargetAndSelectMax(testData)
 #' # Returns entries with max |similarity| for each compound
-#' }
 .groupByTargetAndSelectMax <- function(concordants) {
     if (nrow(concordants) == 0L) {
         return(concordants)
@@ -252,11 +232,9 @@ NULL
 #'
 #' @details
 #' This function:
-#' \enumerate{
-#'   \item Selects standard consensus output columns
-#'   \item Orders results by descending absolute similarity
-#'   \item Handles both CP/KD libraries (with concentration) and OE libraries (without)
-#' }
+#'   1. Selects standard consensus output columns
+#'   1. Orders results by descending absolute similarity
+#'   1. Handles both CP/KD libraries (with concentration) and OE libraries (without)
 #'
 #' @keywords internal
 #'
@@ -264,7 +242,6 @@ NULL
 #' @importFrom rlang .data
 #'
 #' @examples
-#' \dontrun{
 #' testData <- data.frame(
 #'     signatureid = "SIG1",
 #'     compound = "A",
@@ -274,7 +251,6 @@ NULL
 #'     pValue = 0.01
 #' )
 #' selected <- .selectAndOrderResults(testData)
-#' }
 .selectAndOrderResults <- function(concordants) {
     # Convert DataFrame to tibble for dplyr compatibility
     concordants <- tibble::as_tibble(concordants)
@@ -301,18 +277,15 @@ NULL
 #'
 #' @details
 #' This function:
-#' \enumerate{
-#'   \item Applies targetRename function to standardize column names
-#'   \item Converts internal column names to user-facing consensus format
-#'   \item Handles different library types appropriately
-#' }
+#'   1. Applies targetRename function to standardize column names
+#'   1. Converts internal column names to user-facing consensus format
+#'   1. Handles different library types appropriately
 #'
 #' @keywords internal
 #'
 #' @importFrom dplyr rename_with
 #'
 #' @examples
-#' \dontrun{
 #' testData <- data.frame(
 #'     signatureid = "SIG1",
 #'     compound = "A",
@@ -320,7 +293,6 @@ NULL
 #'     similarity = 0.8
 #' )
 #' renamed <- .applyTargetRenaming(testData)
-#' }
 .applyTargetRenaming <- function(concordants) {
     dplyr::rename_with(concordants, targetRename) # nolint: object_usage_linter.
 }
@@ -338,25 +310,21 @@ NULL
 #'
 #' @details
 #' This function coordinates the following processing steps:
-#' \enumerate{
-#'   \item Cell line filtering (if specified)
-#'   \item Similarity cutoff application
-#'   \item Target grouping and maximum similarity selection
-#'   \item Column selection and ordering
-#'   \item Target column renaming
-#' }
+#'   1. Cell line filtering (if specified)
+#'   1. Similarity cutoff application
+#'   1. Target grouping and maximum similarity selection
+#'   1. Column selection and ordering
+#'   1. Target column renaming
 #'
 #' @keywords internal
 #'
 #' @examples
-#' \dontrun{
 #' testData <- data.frame(
 #'     similarity = c(0.5, -0.8, 0.2),
 #'     compound = c("A", "B", "C"),
 #'     cellline = c("A375", "PC3", "A375")
 #' )
 #' processed <- .processConsensusPipeline(testData, 0.3, "A375")
-#' }
 .processConsensusPipeline <- function(concordants, cutoff, cellLine) {
     concordants |>
         .filterByCellLine(cellLine) |>

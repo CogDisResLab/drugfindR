@@ -15,8 +15,8 @@ genes to select from each tail of the distribution.}
 }
 \value{
 A named list with two elements:
-\item{downThreshold}{The quantile threshold for down-regulated genes (quantile at prop)}
-\item{upThreshold}{The quantile threshold for up-regulated genes (quantile at 1-prop)}
+*\code{downThreshold}: The quantile threshold for down-regulated genes (quantile at prop)
+*\code{upThreshold}: The quantile threshold for up-regulated genes (quantile at 1-prop)
 }
 \description{
 This internal function calculates filtering thresholds based on quantiles
@@ -41,7 +41,6 @@ of the most differentially expressed genes regardless of their absolute
 expression values.
 }
 \examples{
-\dontrun{
 # Create sample signature data
 signature <- data.frame(
     Value_LogDiffExp = c(-3, -2, -1, 0, 1, 2, 3, 4, 5, 6)
@@ -58,6 +57,5 @@ thresholds <- .calculateProportionalThreshold(signature, 0.1)
 # Calculate thresholds for top/bottom 5\% (most extreme)
 thresholds <- .calculateProportionalThreshold(signature, 0.05)
 # Returns thresholds based on 5th and 95th percentiles
-}
 }
 \keyword{internal}

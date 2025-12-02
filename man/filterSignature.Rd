@@ -17,11 +17,9 @@ or "any" (both up- and down-regulated genes). Defaults to "any".}
 
 \item{threshold}{Numeric value or vector specifying the log fold-change threshold(s).
 Can be:
-\itemize{
-\item A single positive value: Creates symmetric thresholds (\eqn{\pm threshold})
-\item A vector of two values: First value is the down-regulated threshold,
+* A single positive value: Creates symmetric thresholds (\eqn{\pm threshold})
+* A vector of two values: First value is the down-regulated threshold,
 second value is the up-regulated threshold
-}
 Cannot be specified together with \code{prop}. One of \code{threshold} or
 \code{prop} must be provided.}
 
@@ -97,7 +95,6 @@ all(upRegulated$Value_LogDiffExp >= 1.0) # Should be TRUE
 downRegulated <- filterSignature(mockSignature, direction = "down", threshold = 1.0)
 all(downRegulated$Value_LogDiffExp <= -1.0) # Should be TRUE
 
-\donttest{
 # Network-dependent examples using real iLINCS data
 # Get the L1000 signature for LINCSKD_28
 kdSignature <- getSignature("LINCSKD_28")
@@ -108,9 +105,8 @@ topExtreme <- filterSignature(kdSignature, prop = 0.05)
 # Get top 20\% most up-regulated genes
 topUpregulated <- filterSignature(kdSignature, direction = "up", prop = 0.2)
 }
-}
 \seealso{
-\code{\link{getSignature}} for retrieving L1000 signatures from iLINCS,
-\code{\link{prepareSignature}} for preparing custom signatures,
-\code{\link{getConcordants}} for finding concordant signatures
+\verb{\link{getSignature}} for retrieving L1000 signatures from iLINCS,
+\verb{\link{prepareSignature}} for preparing custom signatures,
+\verb{\link{getConcordants}} for finding concordant signatures
 }

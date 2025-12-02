@@ -86,6 +86,7 @@ awarded to Ali Sajid Imami.
 Useful links:
 \itemize{
   \item \url{https://github.com/CogDisResLab/drugfindR}
+  \item \url{https://cogdisreslab.github.io/drugfindR/}
   \item Report bugs at \url{https://github.com/CogDisResLab/drugfindR/issues}
 }
 

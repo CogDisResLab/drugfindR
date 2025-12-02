@@ -18,11 +18,9 @@ Must have a column named "Value_LogDiffExp" containing log fold-change values.}
 
 \item{direction}{Character string specifying the filtering direction.
 Must be one of:
-\itemize{
-\item "up": Keep only up-regulated genes (logFC >= upThreshold)
-\item "down": Keep only down-regulated genes (logFC <= downThreshold)
-\item "any": Keep both up- and down-regulated genes (logFC >= upThreshold OR logFC <= downThreshold)
-}}
+* "up": Keep only up-regulated genes (logFC >= upThreshold)
+* "down": Keep only down-regulated genes (logFC <= downThreshold)
+* "any": Keep both up- and down-regulated genes (logFC >= upThreshold OR logFC <= downThreshold)}
 }
 \value{
 A tibble containing the filtered signature data with the same structure
@@ -36,10 +34,10 @@ the core filtering logic using dplyr operations.
 \details{
 The filtering logic depends on the direction parameter:
 \itemize{
-\item \strong{"up"}: Retains genes where \code{Value_LogDiffExp >= upThreshold}
-\item \strong{"down"}: Retains genes where \code{Value_LogDiffExp <= downThreshold}
-\item \strong{"any"}: Retains genes where
-\code{Value_LogDiffExp >= upThreshold OR Value_LogDiffExp <= downThreshold}
+\item \code{"up"}: Retains genes where \code{Value_LogDiffExp >= upThreshold}
+\item \code{"down"}: Retains genes where \code{Value_LogDiffExp <= downThreshold}
+\item \code{"any"}: Retains genes where
+\verb{Value_LogDiffExp >= upThreshold OR Value_LogDiffExp <= downThreshold}
 }
 
 The function uses \code{dplyr::filter} with \code{rlang::.data} for

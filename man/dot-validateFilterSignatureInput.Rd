@@ -38,7 +38,6 @@ This function performs the following validations in order:
 }
 }
 \examples{
-\dontrun{
 # Valid calls (no errors)
 sig <- data.frame(Value_LogDiffExp = c(-2, -1, 0, 1, 2))
 .validateFilterSignatureInput(sig, "any", 1.0, NULL)
@@ -53,6 +52,5 @@ sig <- data.frame(Value_LogDiffExp = c(-2, -1, 0, 1, 2))
 .validateFilterSignatureInput(sig, "any", c(2, 1), NULL) # Wrong threshold order
 .validateFilterSignatureInput(sig, "any", NULL, 1.5) # Proportion > 1
 .validateFilterSignatureInput(sig, "any", NULL, -0.1) # Proportion < 0
-}
 }
 \keyword{internal}

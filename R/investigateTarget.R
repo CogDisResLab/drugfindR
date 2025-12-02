@@ -10,11 +10,11 @@ NULL
 #' this high–level convenience wrapper:
 #'
 #' 1. Locates iLINCS source signatures for the target in the specified input library.
-#' 2. Optionally filters by source cell line(s).
-#' 3. Retrieves each source signature and filters genes by direction and magnitude.
-#' 4. Queries iLINCS for concordant signatures in the chosen output library.
-#' 5. Computes paired or unpaired consensus concordance across up/down regulated sets.
-#' 6. Returns an augmented tibble of similarity scores and rich source/target metadata.
+#' 1. Optionally filters by source cell line(s).
+#' 1. Retrieves each source signature and filters genes by direction and magnitude.
+#' 1. Queries iLINCS for concordant signatures in the chosen output library.
+#' 1. Computes paired or unpaired consensus concordance across up/down regulated sets.
+#' 1. Returns an augmented tibble of similarity scores and rich source/target metadata.
 #'
 #' The paired workflow evaluates concordance separately for up‑ and down‑regulated
 #' genes and then combines (via [consensusConcordants()]) the two result sets. When

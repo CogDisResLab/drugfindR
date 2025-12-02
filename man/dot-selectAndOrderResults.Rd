@@ -25,7 +25,6 @@ This function:
 }
 }
 \examples{
-\dontrun{
 testData <- data.frame(
     signatureid = "SIG1",
     compound = "A",
@@ -35,6 +34,5 @@ testData <- data.frame(
     pValue = 0.01
 )
 selected <- .selectAndOrderResults(testData)
-}
 }
 \keyword{internal}

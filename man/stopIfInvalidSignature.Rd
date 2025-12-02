@@ -20,8 +20,8 @@ it meets the requirements for iLINCS analysis.
 \details{
 This function performs two main validation checks:
 \enumerate{
-\item Column structure validation via \code{.stopIfInvalidColNames()}
-\item Missing value validation via \code{.stopIfContainsMissingValues()}
+\item Column structure validation via \code{\link[=.stopIfInvalidColNames]{.stopIfInvalidColNames()}}
+\item Missing value validation via \verb{[.stopIfContainsMissingValues()]}
 }
 
 The signature must have exactly the required columns in the correct order
@@ -31,8 +31,8 @@ and cannot contain any missing (NA) values.
 NULL
 }
 \seealso{
-\code{\link{prepareSignature}} for preparing signatures that meet these requirements,
-\code{\link{.stopIfInvalidColNames}} for column validation details,
-\code{\link{.stopIfContainsMissingValues}} for missing value validation details
+\verb{[ prepareSignature() ]} for preparing signatures that meet these requirements,
+\verb{[ .stopIfInvalidColNames() ]} for column validation details,
+\verb{[ .stopIfContainsMissingValues() ]} for missing value validation details
 }
 \keyword{internal}

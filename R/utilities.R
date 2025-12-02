@@ -57,9 +57,9 @@ targetRename <- function(inputNames) {
 #' @details
 #' Valid library names are:
 #' \itemize{
-#'   \item \code{"CP"}: Chemical Perturbagen library
-#'   \item \code{"KD"}: Knockdown library
-#'   \item \code{"OE"}: Overexpression library
+#'   \item `"CP"`: Chemical Perturbagen library
+#'   \item `"KD"`: Knockdown library
+#'   \item `"OE"`: Overexpression library
 #' }
 #'
 #' @keywords internal
@@ -79,15 +79,15 @@ targetRename <- function(inputNames) {
 #' @return A logical value: TRUE if all libraries are valid, FALSE if any are invalid.
 #'
 #' @details
-#' This function uses \code{.validateLibrary()} to check each library individually
+#' This function uses [`.validateLibrary()`] to check each library individually
 #' and returns TRUE only if all libraries are valid. It's used internally to
 #' validate library parameters before API calls.
 #'
 #' @importFrom purrr map_lgl
 #'
 #' @seealso
-#' \code{\link{.validateLibrary}} for single library validation,
-#' \code{\link{stopIfInvalidLibraries}} for validation with error handling
+#' `[ .validateLibrary() ]` for single library validation,
+#' `[ stopIfInvalidLibraries() ]` for validation with error handling
 #'
 #' @keywords internal
 #'
@@ -109,9 +109,9 @@ validateLibraries <- function(libs) {
 #' @details
 #' This function validates that all provided library names are supported:
 #' \itemize{
-#'   \item \code{"OE"}: Overexpression library (LIB_11)
-#'   \item \code{"KD"}: Knockdown library (LIB_6)
-#'   \item \code{"CP"}: Chemical Perturbagen library (LIB_5)
+#'   \item `"OE"`: Overexpression library (LIB_11)
+#'   \item `"KD"`: Knockdown library (LIB_6)
+#'   \item `"CP"`: Chemical Perturbagen library (LIB_5)
 #' }
 #'
 #' If any invalid libraries are found, the function provides a detailed error
@@ -120,8 +120,8 @@ validateLibraries <- function(libs) {
 #' @importFrom purrr map_lgl
 #'
 #' @seealso
-#' \code{\link{validateLibraries}} for the underlying validation logic,
-#' \code{\link{.validateLibrary}} for single library validation
+#' `[ validateLibraries() ]` for the underlying validation logic,
+#' `[ .validateLibrary() ]` for single library validation
 #'
 #' @keywords internal
 #'
@@ -150,11 +150,11 @@ stopIfInvalidLibraries <- function(libs) {
 #' The function validates that the signature has exactly the following columns
 #' in the specified order:
 #' \enumerate{
-#'   \item \code{signatureID}: Signature identifier
-#'   \item \code{ID_geneid}: Gene ID
-#'   \item \code{Name_GeneSymbol}: Gene symbol
-#'   \item \code{Value_LogDiffExp}: Log fold-change expression value
-#'   \item \code{Significance_pvalue}: Statistical significance p-value
+#'   \item `signatureID`: Signature identifier
+#'   \item `ID_geneid`: Gene ID
+#'   \item `Name_GeneSymbol`: Gene symbol
+#'   \item `Value_LogDiffExp`: Log fold-change expression value
+#'   \item `Significance_pvalue`: Statistical significance p-value
 #' }
 #'
 #' @keywords internal
@@ -259,17 +259,17 @@ stopIfInvalidLibraries <- function(libs) {
 #' @details
 #' This function performs two main validation checks:
 #' \enumerate{
-#'   \item Column structure validation via \code{.stopIfInvalidColNames()}
-#'   \item Missing value validation via \code{.stopIfContainsMissingValues()}
+#'   \item Column structure validation via [`.stopIfInvalidColNames()`]
+#'   \item Missing value validation via `[.stopIfContainsMissingValues()]`
 #' }
 #'
 #' The signature must have exactly the required columns in the correct order
 #' and cannot contain any missing (NA) values.
 #'
 #' @seealso
-#' \code{\link{prepareSignature}} for preparing signatures that meet these requirements,
-#' \code{\link{.stopIfInvalidColNames}} for column validation details,
-#' \code{\link{.stopIfContainsMissingValues}} for missing value validation details
+#' `[ prepareSignature() ]` for preparing signatures that meet these requirements,
+#' `[ .stopIfInvalidColNames() ]` for column validation details,
+#' `[ .stopIfContainsMissingValues() ]` for missing value validation details
 #'
 #' @keywords internal
 #'
@@ -297,9 +297,9 @@ stopIfInvalidSignature <- function(signature) {
 #' @details
 #' The function loads pre-compiled metadata tables for each library:
 #' \itemize{
-#'   \item \code{"OE"}: Overexpression metadata (\code{oeMetadata})
-#'   \item \code{"KD"}: Knockdown metadata (\code{kdMetadata})
-#'   \item \code{"CP"}: Chemical Perturbagen metadata (\code{cpMetadata})
+#'   \item `"OE"`: Overexpression metadata (`oeMetadata`)
+#'   \item `"KD"`: Knockdown metadata (`kdMetadata`)
+#'   \item `"CP"`: Chemical Perturbagen metadata (`cpMetadata`)
 #' }
 #'
 #' These metadata tables are included with the package and contain information
@@ -335,16 +335,16 @@ stopIfInvalidSignature <- function(signature) {
 #' @details
 #' The mapping between user library names and iLINCS internal IDs is:
 #' \itemize{
-#'   \item \code{"OE"} (Overexpression) -> \code{"LIB_11"}
-#'   \item \code{"KD"} (Knockdown) -> \code{"LIB_6"}
-#'   \item \code{"CP"} (Chemical Perturbagen) -> \code{"LIB_5"}
+#'   \item `"OE"` (Overexpression) -> `"LIB_11"`
+#'   \item `"KD"` (Knockdown) -> `"LIB_6"`
+#'   \item `"CP"` (Chemical Perturbagen) -> `"LIB_5"`
 #' }
 #'
 #' The function validates the input library name before mapping and will
 #' stop execution if an invalid library is provided.
 #'
 #' @seealso
-#' \code{\link{stopIfInvalidLibraries}} for library validation details
+#' `[ stopIfInvalidLibraries() ]` for library validation details
 #'
 #' @keywords internal
 #'
@@ -369,7 +369,7 @@ stopIfInvalidSignature <- function(signature) {
 #'
 #' @details
 #' The User-Agent string follows the format:
-#' \code{"drugfindR/<current version>; https://github.com/CogDisResLab/drugfindR"}
+#' `"drugfindR/<current version>; https://github.com/CogDisResLab/drugfindR"`
 #'
 #' This helps iLINCS administrators identify requests from this package
 #' and assists with debugging if issues arise. The version is automatically

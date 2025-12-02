@@ -37,7 +37,7 @@ The signature must conform to the iLINCS expected structure. Use
 NULL
 }
 \seealso{
-\code{\link{stopIfInvalidSignature}} for signature structure validation,
-\code{\link{prepareSignature}} for signature preparation
+\verb{[ stopIfInvalidSignature() ]} for signature structure validation,
+\verb{[ prepareSignature() ]} for signature preparation
 }
 \keyword{internal}

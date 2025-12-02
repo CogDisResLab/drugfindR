@@ -32,6 +32,6 @@ stop execution if an invalid library is provided.
 NULL
 }
 \seealso{
-\code{\link{stopIfInvalidLibraries}} for library validation details
+\verb{[ stopIfInvalidLibraries() ]} for library validation details
 }
 \keyword{internal}

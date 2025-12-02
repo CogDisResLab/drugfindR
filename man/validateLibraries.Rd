@@ -17,7 +17,7 @@ This function validates whether all provided library names are supported
 iLINCS library types.
 }
 \details{
-This function uses \code{.validateLibrary()} to check each library individually
+This function uses \code{\link[=.validateLibrary]{.validateLibrary()}} to check each library individually
 and returns TRUE only if all libraries are valid. It's used internally to
 validate library parameters before API calls.
 }
@@ -25,7 +25,7 @@ validate library parameters before API calls.
 NULL
 }
 \seealso{
-\code{\link{.validateLibrary}} for single library validation,
-\code{\link{stopIfInvalidLibraries}} for validation with error handling
+\verb{[ .validateLibrary() ]} for single library validation,
+\verb{[ stopIfInvalidLibraries() ]} for validation with error handling
 }
 \keyword{internal}
