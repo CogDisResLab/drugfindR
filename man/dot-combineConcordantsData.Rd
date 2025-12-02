@@ -25,8 +25,10 @@ This function:
 }
 }
 \examples{
+\dontrun{
 df1 <- data.frame(similarity = 0.5, compound = "A")
 df2 <- data.frame(similarity = -0.3, compound = "B")
 combined <- .combineConcordantsData(list(df1, df2))
+}
 }
 \keyword{internal}

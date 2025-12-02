@@ -41,6 +41,7 @@ of the most differentially expressed genes regardless of their absolute
 expression values.
 }
 \examples{
+\dontrun{
 # Create sample signature data
 signature <- data.frame(
     Value_LogDiffExp = c(-3, -2, -1, 0, 1, 2, 3, 4, 5, 6)
@@ -57,5 +58,6 @@ thresholds <- .calculateProportionalThreshold(signature, 0.1)
 # Calculate thresholds for top/bottom 5\% (most extreme)
 thresholds <- .calculateProportionalThreshold(signature, 0.05)
 # Returns thresholds based on 5th and 95th percentiles
+}
 }
 \keyword{internal}

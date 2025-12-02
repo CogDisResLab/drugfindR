@@ -23,6 +23,7 @@ NULL
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' # Valid calls (no errors)
 #' testData <- data.frame(similarity = c(0.5, -0.3), compound = c("A", "B"))
 #' .validateConsensusConcordantsInput(list(testData), FALSE, 0.3, NULL)
@@ -31,6 +32,7 @@ NULL
 #' # Invalid calls (will throw errors)
 #' .validateConsensusConcordantsInput(list(), FALSE, 0.3, NULL) # No data
 #' .validateConsensusConcordantsInput(list(testData), TRUE, 0.3, NULL) # Paired needs 2 dataframes
+#' }
 # nolint start: object_length_linter, cyclocomp_linter.
 .validateConsensusConcordantsInput <- function(dots, paired, cutoff, cellLine) {
     # nolint end.
@@ -97,9 +99,11 @@ NULL
 #' @importFrom dplyr bind_rows
 #'
 #' @examples
+#' \dontrun{
 #' df1 <- data.frame(similarity = 0.5, compound = "A")
 #' df2 <- data.frame(similarity = -0.3, compound = "B")
 #' combined <- .combineConcordantsData(list(df1, df2))
+#' }
 .combineConcordantsData <- function(dots) {
     # Convert any DataFrames to tibbles for dplyr compatibility
     dots <- lapply(dots, tibble::as_tibble)
@@ -128,11 +132,13 @@ NULL
 #' @importFrom rlang .data
 #'
 #' @examples
+#' \dontrun{
 #' testData <- data.frame(
 #'     similarity = c(0.5, -0.3, 0.7),
 #'     cellline = c("A375", "PC3", "MCF7")
 #' )
 #' filtered <- .filterByCellLine(testData, c("A375", "PC3"))
+#' }
 .filterByCellLine <- function(concordants, cellLine) {
     if (is.null(cellLine)) {
         return(concordants)
@@ -166,9 +172,11 @@ NULL
 #' @importFrom rlang .data
 #'
 #' @examples
+#' \dontrun{
 #' testData <- data.frame(similarity = c(0.5, -0.8, 0.2, -0.1))
 #' filtered <- .applySimilarityCutoff(testData, 0.3)
 #' # Returns entries with |similarity| >= 0.3
+#' }
 .applySimilarityCutoff <- function(concordants, cutoff) {
     # Convert DataFrame to tibble for dplyr compatibility
     concordants <- tibble::as_tibble(concordants)
@@ -198,6 +206,7 @@ NULL
 #' @importFrom rlang .data
 #'
 #' @examples
+#' \dontrun{
 #' testData <- data.frame(
 #'     compound = c("A", "A", "B", "B"),
 #'     similarity = c(0.5, 0.8, -0.3, -0.7),
@@ -205,6 +214,7 @@ NULL
 #' )
 #' grouped <- .groupByTargetAndSelectMax(testData)
 #' # Returns entries with max |similarity| for each compound
+#' }
 .groupByTargetAndSelectMax <- function(concordants) {
     if (nrow(concordants) == 0L) {
         return(concordants)
@@ -242,6 +252,7 @@ NULL
 #' @importFrom rlang .data
 #'
 #' @examples
+#' \dontrun{
 #' testData <- data.frame(
 #'     signatureid = "SIG1",
 #'     compound = "A",
@@ -251,6 +262,7 @@ NULL
 #'     pValue = 0.01
 #' )
 #' selected <- .selectAndOrderResults(testData)
+#' }
 .selectAndOrderResults <- function(concordants) {
     # Convert DataFrame to tibble for dplyr compatibility
     concordants <- tibble::as_tibble(concordants)
@@ -286,6 +298,7 @@ NULL
 #' @importFrom dplyr rename_with
 #'
 #' @examples
+#' \dontrun{
 #' testData <- data.frame(
 #'     signatureid = "SIG1",
 #'     compound = "A",
@@ -293,6 +306,7 @@ NULL
 #'     similarity = 0.8
 #' )
 #' renamed <- .applyTargetRenaming(testData)
+#' }
 .applyTargetRenaming <- function(concordants) {
     dplyr::rename_with(concordants, targetRename) # nolint: object_usage_linter.
 }
@@ -319,12 +333,14 @@ NULL
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' testData <- data.frame(
 #'     similarity = c(0.5, -0.8, 0.2),
 #'     compound = c("A", "B", "C"),
 #'     cellline = c("A375", "PC3", "A375")
 #' )
 #' processed <- .processConsensusPipeline(testData, 0.3, "A375")
+#' }
 .processConsensusPipeline <- function(concordants, cutoff, cellLine) {
     concordants |>
         .filterByCellLine(cellLine) |>

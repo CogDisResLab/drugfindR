@@ -25,6 +25,7 @@ This function:
 }
 }
 \examples{
+\dontrun{
 testData <- data.frame(
     signatureid = "SIG1",
     compound = "A",
@@ -32,5 +33,6 @@ testData <- data.frame(
     similarity = 0.8
 )
 renamed <- .applyTargetRenaming(testData)
+}
 }
 \keyword{internal}
