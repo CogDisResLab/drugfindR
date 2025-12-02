@@ -510,3 +510,171 @@ test_that("consensusConcordants maintains data integrity", {
     expect_false(anyNA(result[["Target"]]))
     expect_false(any(is.infinite(result[["Similarity"]])))
 })
+
+# ==============================================================================
+# TESTS FOR S4Vectors::DataFrame INPUT/OUTPUT HANDLING
+# ==============================================================================
+
+test_that("consensusConcordants accepts S4Vectors::DataFrame as input", {
+    testDataTibble <- getTestFixture("concordants_table", seed = .testSeed, nRows = 100L) |>
+        .processIlincsResponseSuccess(sigDirection = "Any", ilincsLibrary = "CP")
+    testDataDataFrame <- S4Vectors::DataFrame(testDataTibble)
+
+    # Should work without error
+    result <- consensusConcordants(testDataDataFrame, cutoff = 0.321)
+
+    # Check structure
+    expect_s3_class(result, "tbl_df")
+    expectedCols <- c(
+        "TargetSignature", "Target", "TargetCellLine",
+        "TargetTime", "TargetConcentration", "InputSigDirection",
+        "SignatureType", "Similarity", "pValue"
+    )
+    expect_named(result, expectedCols)
+    expect_gt(nrow(result), 0L)
+})
+
+test_that("consensusConcordants with DataFrame handles paired analysis", {
+    testDataATibble <- getTestFixture("concordants_table", seed = .testSeed, nRows = 100L) |>
+        .processIlincsResponseSuccess(sigDirection = "Up", ilincsLibrary = "CP")
+    testDataBTibble <- getTestFixture("concordants_table", seed = .testSeed + 1L, nRows = 100L) |>
+        .processIlincsResponseSuccess(sigDirection = "Down", ilincsLibrary = "CP")
+
+    testDataADataFrame <- S4Vectors::DataFrame(testDataATibble)
+    testDataBDataFrame <- S4Vectors::DataFrame(testDataBTibble)
+
+    # Should work without error
+    result <- consensusConcordants(testDataADataFrame, testDataBDataFrame, paired = TRUE)
+
+    # Check structure - should return tibble (no explicit DataFrame handling)
+    expect_s3_class(result, "tbl_df")
+    expectedCols <- c(
+        "TargetSignature", "Target", "TargetCellLine",
+        "TargetTime", "TargetConcentration", "InputSigDirection",
+        "SignatureType", "Similarity", "pValue"
+    )
+    expect_named(result, expectedCols)
+    expect_gt(nrow(result), 0L)
+})
+
+test_that("consensusConcordants produces consistent results with DataFrame vs tibble input", {
+    testDataTibble <- getTestFixture("concordants_table", seed = .testSeed, nRows = 100L) |>
+        .processIlincsResponseSuccess(sigDirection = "Any", ilincsLibrary = "CP")
+    testDataDataFrame <- S4Vectors::DataFrame(testDataTibble)
+
+    resultFromTibble <- consensusConcordants(testDataTibble, cutoff = 0.321)
+    resultFromDataFrame <- consensusConcordants(testDataDataFrame, cutoff = 0.321)
+
+    # Results should be identical
+    expect_identical(
+        as.data.frame(resultFromTibble),
+        as.data.frame(resultFromDataFrame)
+    )
+    expect_setequal(
+        resultFromTibble[["Target"]],
+        resultFromDataFrame[["Target"]]
+    )
+    expect_identical(nrow(resultFromTibble), nrow(resultFromDataFrame))
+
+    # Both should be tibbles (no DataFrame output for this function)
+    expect_s3_class(resultFromTibble, "tbl_df")
+    expect_s3_class(resultFromDataFrame, "tbl_df")
+})
+
+test_that("consensusConcordants with DataFrame handles cell line filtering", {
+    testDataTibble <- getTestFixture("concordants_table", seed = .testSeed, nRows = 100L) |>
+        .processIlincsResponseSuccess(sigDirection = "Any", ilincsLibrary = "CP")
+    testDataDataFrame <- S4Vectors::DataFrame(testDataTibble)
+
+    result <- consensusConcordants(testDataDataFrame, cellLine = "A375")
+
+    # Check filtering worked
+    expect_true(all(result[["TargetCellLine"]] == "A375"))
+    expect_s3_class(result, "tbl_df")
+})
+
+test_that("consensusConcordants with DataFrame handles different cutoff values", {
+    testDataTibble <- getTestFixture("concordants_table", seed = .testSeed, nRows = 100L) |>
+        .processIlincsResponseSuccess(sigDirection = "Any", ilincsLibrary = "CP")
+    testDataDataFrame <- S4Vectors::DataFrame(testDataTibble)
+
+    resultLow <- consensusConcordants(testDataDataFrame, cutoff = 0.1)
+    resultHigh <- consensusConcordants(testDataDataFrame, cutoff = 0.7)
+
+    # High cutoff should have fewer results
+    expect_lt(nrow(resultHigh), nrow(resultLow))
+    expect_true(all(abs(resultHigh[["Similarity"]]) >= 0.7))
+    expect_true(all(abs(resultLow[["Similarity"]]) >= 0.1))
+
+    # Both should be tibbles
+    expect_s3_class(resultLow, "tbl_df")
+    expect_s3_class(resultHigh, "tbl_df")
+})
+
+test_that("consensusConcordants with DataFrame handles edge cases", {
+    testDataTibble <- getTestFixture("concordants_table", seed = .testSeed, nRows = 100L) |>
+        .processIlincsResponseSuccess(sigDirection = "Any", ilincsLibrary = "CP")
+    testDataDataFrame <- S4Vectors::DataFrame(testDataTibble)
+
+    # Very high cutoff should return empty result
+    resultEmpty <- consensusConcordants(testDataDataFrame, cutoff = 1.0)
+    expect_s3_class(resultEmpty, "tbl_df")
+    expect_identical(nrow(resultEmpty), 0L)
+    expectedCols <- c(
+        "TargetSignature", "Target", "TargetCellLine",
+        "TargetTime", "TargetConcentration", "InputSigDirection",
+        "SignatureType", "Similarity", "pValue"
+    )
+    expect_named(resultEmpty, expectedCols)
+})
+
+test_that("consensusConcordants pipeline functions handle DataFrame internally", {
+    testDataTibble <- getTestFixture("concordants_table", seed = .testSeed, nRows = 100L) |>
+        .processIlincsResponseSuccess(sigDirection = "Any", ilincsLibrary = "CP")
+    testDataDataFrame <- S4Vectors::DataFrame(testDataTibble)
+
+    # Test internal pipeline functions
+    combined <- .combineConcordantsData(list(testDataDataFrame))
+    expect_s3_class(combined, "tbl_df") # bind_rows converts to tibble
+
+    filtered <- .filterByCellLine(testDataDataFrame, "A375")
+    expect_true(all(filtered[["cellline"]] == "A375"))
+
+    cutoffFiltered <- .applySimilarityCutoff(testDataDataFrame, 0.3)
+    expect_true(all(abs(cutoffFiltered[["similarity"]]) >= 0.3))
+
+    grouped <- .groupByTargetAndSelectMax(testDataDataFrame)
+    expect_gt(nrow(grouped), 0L)
+
+    selected <- .selectAndOrderResults(testDataDataFrame)
+    expect_true("similarity" %in% colnames(selected))
+
+    renamed <- .applyTargetRenaming(selected)
+    expect_true("Similarity" %in% colnames(renamed))
+})
+
+test_that("consensusConcordants validation accepts DataFrame input", {
+    testDataTibble <- getTestFixture("concordants_table", seed = .testSeed, nRows = 100L) |>
+        .processIlincsResponseSuccess(sigDirection = "Any", ilincsLibrary = "CP")
+    testDataDataFrame <- S4Vectors::DataFrame(testDataTibble)
+
+    # Should not error
+    expect_silent(
+        .validateConsensusConcordantsInput(
+            list(testDataDataFrame),
+            paired = FALSE,
+            cutoff = 0.321,
+            cellLine = NULL
+        )
+    )
+
+    # Should work with paired analysis
+    expect_silent(
+        .validateConsensusConcordantsInput(
+            list(testDataDataFrame, testDataDataFrame),
+            paired = TRUE,
+            cutoff = 0.321,
+            cellLine = NULL
+        )
+    )
+})

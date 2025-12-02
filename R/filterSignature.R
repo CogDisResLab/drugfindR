@@ -371,9 +371,9 @@
     upThreshold <- thresholds[["upThreshold"]]
 
     if (direction == "up") {
-        dplyr::filter(signature, .data[["Value_LogDiffExp"]] >= upThreshold) # nolint: object_usage_linter.
+        dplyr::filter(signature, .data[["Value_LogDiffExp"]] >= !!upThreshold) # nolint: object_usage_linter.
     } else if (direction == "down") {
-        dplyr::filter(signature, .data[["Value_LogDiffExp"]] <= downThreshold) # nolint: object_usage_linter.
+        dplyr::filter(signature, .data[["Value_LogDiffExp"]] <= !!downThreshold) # nolint: object_usage_linter.
     } else {
         dplyr::filter(
             signature,

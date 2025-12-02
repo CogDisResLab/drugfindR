@@ -738,4 +738,109 @@ test_that("filterSignature refactored version maintains backward compatibility",
         }
     }
 })
+
+# ==============================================================================
+# TESTS FOR S4Vectors::DataFrame INPUT/OUTPUT HANDLING
+# ==============================================================================
+
+test_that("filterSignature accepts S4Vectors::DataFrame as input", {
+    testSigTibble <- getTestFixture("prepared_signature", seed = .testSeed)
+    testSigDataFrame <- S4Vectors::DataFrame(testSigTibble)
+
+    # Should work without error
+    result <- filterSignature(testSigDataFrame, threshold = 1.0)
+
+    # Check structure - DFplyr should maintain DataFrame type
+    expect_s4_class(result, "DFrame")
+    expect_identical(colnames(result), colnames(testSigTibble))
+    expect_gt(nrow(result), 0L)
+})
+
+test_that("filterSignature with DataFrame input maintains type through filtering", {
+    testSigTibble <- getTestFixture("prepared_signature", seed = .testSeed, nGenes = 100L)
+    testSigDataFrame <- S4Vectors::DataFrame(testSigTibble)
+
+    # Test with different filter parameters
+    resultThreshold <- filterSignature(testSigDataFrame, threshold = 1.5)
+    resultProp <- filterSignature(testSigDataFrame, prop = 0.1)
+    resultUp <- filterSignature(testSigDataFrame, threshold = 1.0, direction = "up")
+    resultDown <- filterSignature(testSigDataFrame, threshold = 1.0, direction = "down")
+
+    # All should maintain DataFrame class
+    expect_s4_class(resultThreshold, "DFrame")
+    expect_s4_class(resultProp, "DFrame")
+    expect_s4_class(resultUp, "DFrame")
+    expect_s4_class(resultDown, "DFrame")
+})
+
+test_that("filterSignature produces consistent results with DataFrame vs tibble input", {
+    testSigTibble <- getTestFixture("prepared_signature", seed = .testSeed)
+    testSigDataFrame <- S4Vectors::DataFrame(testSigTibble)
+
+    resultFromTibble <- filterSignature(testSigTibble, threshold = 1.5)
+    resultFromDataFrame <- filterSignature(testSigDataFrame, threshold = 1.5)
+
+    # Results should have identical content despite different classes
+    expect_identical(
+        as.data.frame(resultFromTibble),
+        as.data.frame(resultFromDataFrame)
+    )
+    expect_setequal(
+        resultFromTibble[["Name_GeneSymbol"]],
+        resultFromDataFrame[["Name_GeneSymbol"]]
+    )
+    expect_identical(nrow(resultFromTibble), nrow(resultFromDataFrame))
+})
+
+test_that("filterSignature with DataFrame handles all direction options", {
+    testSigTibble <- getTestFixture("prepared_signature", seed = .testSeed, nGenes = 100L)
+    testSigDataFrame <- S4Vectors::DataFrame(testSigTibble)
+
+    resultUp <- filterSignature(testSigDataFrame, threshold = 1.5, direction = "up")
+    resultDown <- filterSignature(testSigDataFrame, threshold = 1.5, direction = "down")
+    resultAny <- filterSignature(testSigDataFrame, threshold = 1.5, direction = "any")
+
+    # Check that filtering logic is correct
+    expect_true(all(resultUp[["Value_LogDiffExp"]] >= 1.5))
+    expect_true(all(resultDown[["Value_LogDiffExp"]] <= -1.5))
+    expect_true(all(abs(resultAny[["Value_LogDiffExp"]]) >= 1.5))
+
+    # All should be DataFrame
+    expect_s4_class(resultUp, "DFrame")
+    expect_s4_class(resultDown, "DFrame")
+    expect_s4_class(resultAny, "DFrame")
+})
+
+test_that("filterSignature with DataFrame handles proportion-based filtering", {
+    testSigTibble <- getTestFixture("prepared_signature", seed = .testSeed, nGenes = 100L)
+    testSigDataFrame <- S4Vectors::DataFrame(testSigTibble)
+
+    result <- filterSignature(testSigDataFrame, prop = 0.2)
+
+    # Should return DataFrame
+    expect_s4_class(result, "DFrame")
+
+    # Should have filtered based on quantiles
+    expect_gt(nrow(result), 0L)
+    expect_lt(nrow(result), nrow(testSigDataFrame))
+
+    # Verify column structure is maintained
+    expect_identical(colnames(result), colnames(testSigDataFrame))
+})
+
+test_that("filterSignature with DataFrame handles edge cases", {
+    testSigTibble <- getTestFixture("prepared_signature", seed = .testSeed)
+    testSigDataFrame <- S4Vectors::DataFrame(testSigTibble)
+
+    # Very high threshold should return empty DataFrame
+    resultEmpty <- filterSignature(testSigDataFrame, threshold = 10.0)
+    expect_s4_class(resultEmpty, "DFrame")
+    expect_identical(nrow(resultEmpty), 0L)
+    expect_identical(colnames(resultEmpty), colnames(testSigDataFrame))
+
+    # Zero threshold should return all data
+    resultAll <- filterSignature(testSigDataFrame, threshold = 0.0)
+    expect_s4_class(resultAll, "DFrame")
+    expect_identical(nrow(resultAll), nrow(testSigDataFrame))
+})
 # nolint end

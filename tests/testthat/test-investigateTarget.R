@@ -202,27 +202,6 @@ test_that("investigateTarget filters by inputCellLines correctly", {
     }
 })
 
-# ==============================================================================
-# TESTS FOR PARAMETER VALIDATION
-# ==============================================================================
-
-test_that("investigateTarget validates threshold parameters", {
-    skip_on_cran()
-
-    # filterThreshold should be numeric
-    # Note: These will fail during the consensus calculation if they reach it
-    # For now, we test that bad parameters get caught somewhere in the chain
-
-    # We can't easily test without network access, so skip detailed validation
-    # The actual parameter validation happens in filterSignature and consensusConcordants
-})
-
-test_that("investigateTarget handles paired parameter correctly", {
-    skip_on_cran()
-
-    # Paired should be logical
-    # This will be tested in integration tests with mock data
-})
 
 # ==============================================================================
 # TESTS FOR RETURN VALUE STRUCTURE

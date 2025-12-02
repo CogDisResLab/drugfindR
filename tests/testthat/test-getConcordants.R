@@ -618,3 +618,191 @@ test_that(".processIlincsResponse maintains consistent column order across libra
         expect_named(successResult, expectedCols)
     }
 })
+
+# ==============================================================================
+# TESTS FOR S4Vectors::DataFrame INPUT/OUTPUT HANDLING
+# ==============================================================================
+
+test_that("getConcordants accepts S4Vectors::DataFrame as input and returns DataFrame", {
+    testSigTibble <- getTestFixture("prepared_signature", seed = .testSeed)
+    testSigDataFrame <- S4Vectors::DataFrame(testSigTibble)
+
+    # Mock the API response
+    mockResponse <- getTestFixture("valid_ilincs_response", seed = .testSeed, nRows = 10L)
+
+    # Test the validation function accepts DataFrame
+    expect_silent(
+        .validateGetConcordantsInput(testSigDataFrame, "CP")
+    )
+
+    # Mock complete workflow with DataFrame input
+    signatureFile <- .prepareSignatureFile(testSigDataFrame)
+    expect_true(file.exists(signatureFile))
+
+    direction <- .detectSignatureDirection(testSigDataFrame)
+    expect_type(direction, "character")
+
+    # Process response
+    result <- .processIlincsResponse(mockResponse, direction, "CP")
+    expect_s3_class(result, "tbl_df")
+
+    # Test return type conversion
+    inputClass <- class(testSigDataFrame)
+    finalResult <- .returnResults(result, inputClass)
+    expect_s4_class(finalResult, "DFrame")
+})
+
+test_that(".returnResults correctly converts output based on input class", {
+    testResult <- getTestFixture("concordants_table", seed = .testSeed) |>
+        .processIlincsResponseSuccess("Any", "CP")
+
+    # Test with tibble input class (should return tibble)
+    tibbleClass <- c("tbl_df", "tbl", "data.frame")
+    resultTibble <- .returnResults(testResult, tibbleClass)
+    expect_s3_class(resultTibble, "tbl_df")
+
+    # Test with data.frame input class (should return tibble)
+    dataFrameClass <- c("data.frame")
+    resultDataFrame <- .returnResults(testResult, dataFrameClass)
+    expect_s3_class(resultDataFrame, "tbl_df")
+
+    # Test with DFrame input class (should return DataFrame)
+    dframeClass <- c("DFrame", "DataFrame", "Annotated", "Vector")
+    resultDFrame <- .returnResults(testResult, dframeClass)
+    expect_s4_class(resultDFrame, "DFrame")
+})
+
+test_that("getConcordants workflow preserves DataFrame type through complete pipeline", {
+    skip_if_offline()
+    skip_on_cran()
+
+    testSigTibble <- getTestFixture("prepared_signature", seed = .testSeed)
+    testSigDataFrame <- S4Vectors::DataFrame(testSigTibble)
+
+    # Mock the complete workflow
+    mockResponse <- getTestFixture("valid_ilincs_response", seed = .testSeed, nRows = 10L)
+
+    # Validate input
+    inputClass <- .validateGetConcordantsInput(testSigDataFrame, "CP")
+    expect_true("DFrame" %in% inputClass)
+
+    # Prepare signature file
+    signatureFile <- .prepareSignatureFile(testSigDataFrame)
+    expect_true(file.exists(signatureFile))
+
+    # Detect direction
+    direction <- .detectSignatureDirection(testSigDataFrame)
+    expect_type(direction, "character")
+
+    # Process response
+    result <- .processIlincsResponse(mockResponse, direction, "CP")
+
+    # Convert back to DataFrame
+    finalResult <- .returnResults(result, inputClass)
+    expect_s4_class(finalResult, "DFrame")
+
+    # Check structure is maintained
+    expectedCols <- c(
+        "signatureid", "treatment", "concentration", "time",
+        "cellline", "similarity", "pValue", "sig_direction", "sig_type"
+    )
+    expect_named(finalResult, expectedCols)
+
+    # Cleanup
+    .cleanupGetConcordants(signatureFile)
+})
+
+test_that("getConcordants produces consistent results with DataFrame vs tibble input", {
+    skip_if_offline()
+    skip_on_cran()
+
+    testSigTibble <- getTestFixture("prepared_signature", seed = .testSeed)
+    testSigDataFrame <- S4Vectors::DataFrame(testSigTibble)
+
+    mockResponse <- getTestFixture("valid_ilincs_response", seed = .testSeed, nRows = 10L)
+
+    # Process with tibble
+    inputClassTibble <- .validateGetConcordantsInput(testSigTibble, "CP")
+    signatureFileTibble <- .prepareSignatureFile(testSigTibble)
+    directionTibble <- .detectSignatureDirection(testSigTibble)
+    resultTibble <- .processIlincsResponse(mockResponse, directionTibble, "CP")
+    finalTibble <- .returnResults(resultTibble, inputClassTibble)
+
+    # Process with DataFrame
+    inputClassDataFrame <- .validateGetConcordantsInput(testSigDataFrame, "CP")
+    signatureFileDataFrame <- .prepareSignatureFile(testSigDataFrame)
+    directionDataFrame <- .detectSignatureDirection(testSigDataFrame)
+    resultDataFrame <- .processIlincsResponse(mockResponse, directionDataFrame, "CP")
+    finalDataFrame <- .returnResults(resultDataFrame, inputClassDataFrame)
+
+    # Content should be identical despite different classes
+    expect_identical(
+        as.data.frame(finalTibble),
+        as.data.frame(finalDataFrame)
+    )
+
+    # Classes should differ appropriately
+    expect_s3_class(finalTibble, "tbl_df")
+    expect_s4_class(finalDataFrame, "DFrame")
+
+    # Cleanup
+    .cleanupGetConcordants(signatureFileTibble)
+    .cleanupGetConcordants(signatureFileDataFrame)
+})
+
+test_that("getConcordants with DataFrame handles different libraries", {
+    skip_if_offline()
+    skip_on_cran()
+
+    testSigDataFrame <- S4Vectors::DataFrame(
+        getTestFixture("prepared_signature", seed = .testSeed)
+    )
+
+    libraries <- c("CP", "KD", "OE")
+
+    for (lib in libraries) {
+        # Validate input
+        inputClass <- .validateGetConcordantsInput(testSigDataFrame, lib)
+        expect_true("DFrame" %in% inputClass)
+
+        # Process mock response
+        mockResponse <- getTestFixture("valid_ilincs_response",
+            seed = .testSeed,
+            nRows = 10L, library = lib
+        )
+        result <- .processIlincsResponse(mockResponse, "Any", lib)
+        finalResult <- .returnResults(result, inputClass)
+
+        # Should return DataFrame for all libraries
+        expect_s4_class(finalResult, "DFrame")
+
+        # Check library-specific content
+        if (lib == "CP") {
+            expect_false(all(is.na(finalResult[["concentration"]])))
+        } else {
+            expect_true(all(is.na(finalResult[["concentration"]])))
+        }
+    }
+})
+
+test_that("getConcordants with DataFrame handles empty results", {
+    testSigDataFrame <- S4Vectors::DataFrame(
+        getTestFixture("prepared_signature", seed = .testSeed)
+    )
+
+    # Mock empty response
+    mockEmptyResponse <- getTestFixture("empty_ilincs_response")
+
+    inputClass <- .validateGetConcordantsInput(testSigDataFrame, "CP")
+    result <- .processIlincsResponse(mockEmptyResponse, "Any", "CP")
+    finalResult <- .returnResults(result, inputClass)
+
+    # Should return empty DataFrame with correct structure
+    expect_s4_class(finalResult, "DFrame")
+    expect_identical(nrow(finalResult), 0L)
+    expectedCols <- c(
+        "signatureid", "treatment", "concentration", "time",
+        "cellline", "similarity", "pValue", "sig_direction", "sig_type"
+    )
+    expect_named(finalResult, expectedCols)
+})

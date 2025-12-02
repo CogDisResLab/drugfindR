@@ -74,7 +74,12 @@
 #'
 #' @importFrom dplyr inner_join mutate select any_of
 #' @importFrom rlang .data
+#' @import DFplyr
 .mapToL1000WithPvalues <- function(filteredData, geneColumn, logfcColumn, pvalColumn) {
+    # Convert DataFrame to tibble for dplyr operations
+    # This avoids scoping issues with all_of() in DFplyr
+    filteredData <- tibble::as_tibble(filteredData)
+
     # Select only the relevant columns from the input to avoid
     # carrying through any pre-existing L1000-style columns that
     # would collide with our target names after renaming.
@@ -121,7 +126,12 @@
 #'
 #' @importFrom dplyr inner_join mutate select any_of
 #' @importFrom rlang .data
+#' @import DFplyr
 .mapToL1000WithoutPvalues <- function(filteredData, geneColumn, logfcColumn) {
+    # Convert DataFrame to tibble for dplyr operations
+    # This avoids scoping issues with all_of() in DFplyr
+    filteredData <- tibble::as_tibble(filteredData)
+
     # Select only the relevant columns from the input to avoid
     # carrying through any pre-existing L1000-style columns that
     # would collide with our target names after renaming.
