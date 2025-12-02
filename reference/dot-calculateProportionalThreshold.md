@@ -1,0 +1,71 @@
+# Calculate thresholds using proportional values
+
+This internal function calculates filtering thresholds based on
+quantiles of the log fold-change distribution in the signature data.
+This enables proportion-based filtering that adapts to the data
+distribution.
+
+## Usage
+
+``` r
+.calculateProportionalThreshold(signature, prop)
+```
+
+## Arguments
+
+- signature:
+
+  A data.frame-like object containing the signature data. Must have a
+  column named "Value_LogDiffExp" containing log fold-change values.
+
+- prop:
+
+  A numeric value between 0 and 1 specifying the proportion of genes to
+  select from each tail of the distribution.
+
+## Value
+
+A named list with two elements: \*`downThreshold`: The quantile
+threshold for down-regulated genes (quantile at prop) \*`upThreshold`:
+The quantile threshold for up-regulated genes (quantile at 1-prop)
+
+## Details
+
+This function calculates thresholds using the `quantile` function:
+
+- `downThreshold`: The `prop` quantile of the expression values
+
+- `upThreshold`: The `1-prop` quantile of the expression values
+
+For example, with `prop = 0.1`:
+
+- `downThreshold`: 10th percentile (bottom 10% of values)
+
+- `upThreshold`: 90th percentile (top 10% of values)
+
+This approach is particularly useful when you want to select a fixed
+proportion of the most differentially expressed genes regardless of
+their absolute expression values.
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+# Create sample signature data
+signature <- data.frame(
+    Value_LogDiffExp = c(-3, -2, -1, 0, 1, 2, 3, 4, 5, 6)
+)
+
+# Calculate thresholds for top/bottom 20%
+thresholds <- .calculateProportionalThreshold(signature, 0.2)
+# Returns thresholds based on 20th and 80th percentiles
+
+# Calculate thresholds for top/bottom 10%
+thresholds <- .calculateProportionalThreshold(signature, 0.1)
+# Returns thresholds based on 10th and 90th percentiles
+
+# Calculate thresholds for top/bottom 5% (most extreme)
+thresholds <- .calculateProportionalThreshold(signature, 0.05)
+# Returns thresholds based on 5th and 95th percentiles
+} # }
+```

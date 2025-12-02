@@ -1,0 +1,9 @@
+pandoc: 3.1.11
+pkgdown: 2.2.0
+pkgdown_sha: ~
+articles:
+  drugfindR: drugfindR.html
+last_built: 2025-12-02T18:27Z
+urls:
+  reference: https://cogdisreslab.github.io/drugfindR/reference
+  article: https://cogdisreslab.github.io/drugfindR/articles
