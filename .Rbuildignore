@@ -15,14 +15,17 @@
 ^\.pre-commit-config.yaml$
 ^\.travis\.yml$
 ^\.vscode$
+^_pkgdown\.yml$
 ^codecov\.yml$
 ^codemeta\.json$
 ^data-raw$
 ^doc$
+^docs$
 ^drugfindR\.Rproj$
 ^drugfindR\.code-workspace$
 ^joss$
 ^ltex\..*$
+^pkgdown$
 ^raw$
 ^renovate\.json$
 ^renv$

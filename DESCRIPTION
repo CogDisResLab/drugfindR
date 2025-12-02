@@ -1,6 +1,6 @@
 Package: drugfindR
 Title: Investigate iLINCS for candidate repurposable drugs
-Version: 0.99.1300
+Version: 0.99.1302
 Authors@R: c(
     person(given = c("Ali", "Sajid"),
            family = "Imami",
@@ -31,7 +31,7 @@ Description: This package provides a convenient way to access the
     in the LINCS database.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
-URL: https://github.com/CogDisResLab/drugfindR
+URL: https://github.com/CogDisResLab/drugfindR, https://cogdisreslab.github.io/drugfindR/
 BugReports: https://github.com/CogDisResLab/drugfindR/issues
 LazyData: false
 Roxygen: list(markdown = TRUE)
