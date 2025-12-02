@@ -1,0 +1,27 @@
+url: https://cogdisreslab.github.io/drugfindR/
+
+template:
+  lightswitch: true
+  bootstrap: 5
+  bootswatch: litera
+
+reference:
+  - title: "Convenience Wrappers"
+    desc: "Convenience functions to perform the whole analysis in one shot"
+    contents:
+      - investigateTarget
+      - investigateSignature
+  - title: "Getting Data"
+    desc: "Get data for analysis"
+    contents:
+      - getSignature
+      - prepareSignature
+  - title: "Preprocess Data"
+    desc: "Preprocess data for downstream analysis"
+    contents:
+      - filterSignature
+  - title: "Perform Analysis"
+    desc: "Perform the concordance analysis using iLINCS"
+    contents:
+      - getConcordants
+      - consensusConcordants

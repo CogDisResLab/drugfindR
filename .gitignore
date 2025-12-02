@@ -343,3 +343,4 @@ tests/*.json
 
 # Unignore the inst/scripts/ directory
 !inst/scripts/
+docs
