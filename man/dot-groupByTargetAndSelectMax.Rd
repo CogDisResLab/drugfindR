@@ -26,6 +26,7 @@ This function:
 }
 }
 \examples{
+\dontrun{
 testData <- data.frame(
     compound = c("A", "A", "B", "B"),
     similarity = c(0.5, 0.8, -0.3, -0.7),
@@ -33,5 +34,6 @@ testData <- data.frame(
 )
 grouped <- .groupByTargetAndSelectMax(testData)
 # Returns entries with max |similarity| for each compound
+}
 }
 \keyword{internal}

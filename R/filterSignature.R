@@ -26,6 +26,7 @@
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' # Valid calls (no errors)
 #' sig <- data.frame(Value_LogDiffExp = c(-2, -1, 0, 1, 2))
 #' .validateFilterSignatureInput(sig, "any", 1.0, NULL)
@@ -40,6 +41,7 @@
 #' .validateFilterSignatureInput(sig, "any", c(2, 1), NULL) # Wrong threshold order
 #' .validateFilterSignatureInput(sig, "any", NULL, 1.5) # Proportion > 1
 #' .validateFilterSignatureInput(sig, "any", NULL, -0.1) # Proportion < 0
+#' }
 .validateFilterSignatureInput <- function(signature, direction, threshold, prop) { # nolint: cyclocomp_linter.
     # 1. Validate signature data structure
     if (!inherits(signature, c("data.frame", "DFrame"))) {
@@ -255,6 +257,7 @@
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' # Create sample signature data
 #' signature <- data.frame(
 #'     Value_LogDiffExp = c(-3, -2, -1, 0, 1, 2, 3, 4, 5, 6)
@@ -271,6 +274,7 @@
 #' # Calculate thresholds for top/bottom 5% (most extreme)
 #' thresholds <- .calculateProportionalThreshold(signature, 0.05)
 #' # Returns thresholds based on 5th and 95th percentiles
+#' }
 .calculateProportionalThreshold <- function(signature, prop) { # nolint: object_length_linter.
     limits <- round(
         quantile(
