@@ -12,11 +12,9 @@
 #'
 #' @details
 #' This function performs the following validations:
-#' \enumerate{
-#'   \item Ensures all column names are character strings
-#'   \item Validates that specified columns exist in the input dataframe
-#'   \item Checks that the dataframe is not empty
-#' }
+#'   1. Ensures all column names are character strings
+#'   1. Validates that specified columns exist in the input dataframe
+#'   1. Checks that the dataframe is not empty
 #'
 #' @keywords internal
 #'
@@ -177,10 +175,8 @@
 #' @details
 #' This function dispatches to appropriate mapping functions based on whether
 #' p-value information is available:
-#' \enumerate{
-#'   \item \code{.mapToL1000WithPvalues} when p-value column is specified
-#'   \item \code{.mapToL1000WithoutPvalues} when p-value column is NA
-#' }
+#'   1. `.mapToL1000WithPvalues` when p-value column is specified
+#'   1. `.mapToL1000WithoutPvalues` when p-value column is NA
 #'
 #' @keywords internal
 .processToL1000Signature <- function(filteredData, geneColumn, logfcColumn, pvalColumn = NA) {

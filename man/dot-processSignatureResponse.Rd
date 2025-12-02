@@ -19,8 +19,8 @@ response status from the iLINCS API.
 \details{
 The function dispatches to specialized handlers:
 \enumerate{
-\item \code{.processSignatureResponseError} for HTTP error responses
-\item \code{.processSuccessfulResponse} for successful responses with data
+\item \code{.processSignatureResponseError()} for HTTP error responses
+\item \code{.processSuccessfulResponse()} for successful responses with data
 }
 
 The resulting tibble contains these columns:

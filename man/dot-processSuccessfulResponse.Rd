@@ -11,13 +11,11 @@
 }
 \value{
 A tibble containing the signature data with standardized columns:
-\itemize{
-\item signatureID: The signature identifier
-\item ID_geneid: Character gene identifiers
-\item Name_GeneSymbol: Gene symbols
-\item Value_LogDiffExp: Log fold-change values (rounded to 12 decimal places)
-\item Significance_pvalue: P-values (rounded to 12 decimal places)
-}
+* signatureID: The signature identifier
+* ID_geneid: Character gene identifiers
+* Name_GeneSymbol: Gene symbols
+* Value_LogDiffExp: Log fold-change values (rounded to 12 decimal places)
+* Significance_pvalue: P-values (rounded to 12 decimal places)
 }
 \description{
 This internal function processes a successful HTTP response from the iLINCS

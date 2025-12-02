@@ -9,26 +9,23 @@
 #'   Must be one of "up", "down", or "any".
 #' @param threshold Numeric value or vector specifying absolute threshold(s).
 #'   Can be NULL, a single value, or a vector of two values. Cannot be specified
-#'   together with \code{prop}.
+#'   together with `prop`.
 #' @param prop Numeric value specifying the proportion for quantile-based filtering.
-#'   Must be between 0 and 1. Cannot be specified together with \code{threshold}.
+#'   Must be between 0 and 1. Cannot be specified together with `threshold`.
 #'
 #' @return Invisible NULL. The function throws an error if validation fails.
 #'
 #' @details
 #' This function performs the following validations in order:
-#' \enumerate{
-#'   \item Ensures \code{signature} is a data.frame-like object
-#'   \item Validates \code{direction} is one of the allowed values
-#'   \item Verifies that only one of \code{threshold} or \code{prop} is specified
-#'   \item For \code{threshold}: checks length (1-2 values) and order (lower, higher)
-#'   \item For \code{prop}: checks it's a single value between 0 and 1
-#' }
+#'   1. Ensures `signature` is a data.frame-like object
+#'   1. Validates `direction` is one of the allowed values
+#'   1. Verifies that only one of `threshold` or `prop` is specified
+#'   1. For `threshold`: checks length (1-2 values) and order (lower, higher)
+#'   1. For `prop`: checks it's a single value between 0 and 1
 #'
 #' @keywords internal
 #'
 #' @examples
-#' \dontrun{
 #' # Valid calls (no errors)
 #' sig <- data.frame(Value_LogDiffExp = c(-2, -1, 0, 1, 2))
 #' .validateFilterSignatureInput(sig, "any", 1.0, NULL)
@@ -43,7 +40,6 @@
 #' .validateFilterSignatureInput(sig, "any", c(2, 1), NULL) # Wrong threshold order
 #' .validateFilterSignatureInput(sig, "any", NULL, 1.5) # Proportion > 1
 #' .validateFilterSignatureInput(sig, "any", NULL, -0.1) # Proportion < 0
-#' }
 .validateFilterSignatureInput <- function(signature, direction, threshold, prop) { # nolint: cyclocomp_linter.
     # 1. Validate signature data structure
     if (!inherits(signature, c("data.frame", "DFrame"))) {
@@ -100,14 +96,12 @@
 #'   threshold for filtering.
 #'
 #' @return A named list with two elements:
-#'  \itemize{
-#'   \item `downThreshold`: The negative threshold (-threshold)
-#'   \item `upThreshold`: The positive threshold (threshold)
-#' }
+#'   * `downThreshold`: The negative threshold (-threshold)
+#'   * `upThreshold`: The positive threshold (threshold)
 #'
 #' @details
 #' This function is used when a single threshold value is provided to
-#' \code{filterSignature}. It creates symmetric thresholds where genes with
+#' `filterSignature`. It creates symmetric thresholds where genes with
 #' log fold-change values greater than or equal to the positive threshold
 #' (up-regulated) or less than or equal to the negative threshold
 #' (down-regulated) are retained.
@@ -142,10 +136,8 @@
 #'   and the second element is the up-regulated threshold (typically positive).
 #'
 #' @return A named list with two elements:
-#'  \itemize{
-#'   \item `downThreshold`: The down-regulated threshold (`threshold[1]`)
-#'   \item `upThreshold`: The up-regulated threshold (`threshold[2]`)
-#' }
+#'   * `downThreshold`: The down-regulated threshold (`threshold[1]`)
+#'   * `upThreshold`: The up-regulated threshold (`threshold[2]`)
 #'
 #' @details
 #' This function enables asymmetric filtering where different absolute thresholds
@@ -244,21 +236,17 @@
 #'   genes to select from each tail of the distribution.
 #'
 #' @return A named list with two elements:
-#'   \item{downThreshold}{The quantile threshold for down-regulated genes (quantile at prop)}
-#'   \item{upThreshold}{The quantile threshold for up-regulated genes (quantile at 1-prop)}
+#'   *`downThreshold`: The quantile threshold for down-regulated genes (quantile at prop)
+#'   *`upThreshold`: The quantile threshold for up-regulated genes (quantile at 1-prop)
 #'
 #' @details
-#' This function calculates thresholds using the \code{quantile} function:
-#' \itemize{
-#'   \item \code{downThreshold}: The \code{prop} quantile of the expression values
-#'   \item \code{upThreshold}: The \code{1-prop} quantile of the expression values
-#' }
+#' This function calculates thresholds using the `quantile` function:
+#'   * `downThreshold`: The `prop` quantile of the expression values
+#'   * `upThreshold`: The `1-prop` quantile of the expression values
 #'
-#' For example, with \code{prop = 0.1}:
-#' \itemize{
-#'   \item \code{downThreshold}: 10th percentile (bottom 10% of values)
-#'   \item \code{upThreshold}: 90th percentile (top 10% of values)
-#' }
+#' For example, with `prop = 0.1`:
+#'   * `downThreshold`: 10th percentile (bottom 10% of values)
+#'   * `upThreshold`: 90th percentile (top 10% of values)
 #'
 #' This approach is particularly useful when you want to select a fixed proportion
 #' of the most differentially expressed genes regardless of their absolute
@@ -267,7 +255,6 @@
 #' @keywords internal
 #'
 #' @examples
-#' \dontrun{
 #' # Create sample signature data
 #' signature <- data.frame(
 #'     Value_LogDiffExp = c(-3, -2, -1, 0, 1, 2, 3, 4, 5, 6)
@@ -284,7 +271,6 @@
 #' # Calculate thresholds for top/bottom 5% (most extreme)
 #' thresholds <- .calculateProportionalThreshold(signature, 0.05)
 #' # Returns thresholds based on 5th and 95th percentiles
-#' }
 .calculateProportionalThreshold <- function(signature, prop) { # nolint: object_length_linter.
     limits <- round(
         quantile(
@@ -308,29 +294,24 @@
 #'   Must have a column named "Value_LogDiffExp" containing log fold-change values.
 #' @param direction Character string specifying the filtering direction.
 #'   Must be one of:
-#'   \itemize{
-#'     \item "up": Keep only up-regulated genes (logFC >= upThreshold)
-#'     \item "down": Keep only down-regulated genes (logFC <= downThreshold)
-#'     \item "any": Keep both up- and down-regulated genes (logFC >= upThreshold OR logFC <= downThreshold)
-#'   }
+#'     * "up": Keep only up-regulated genes (logFC >= upThreshold)
+#'     * "down": Keep only down-regulated genes (logFC <= downThreshold)
+#'     * "any": Keep both up- and down-regulated genes (logFC >= upThreshold OR logFC <= downThreshold)
 #' @param thresholds A named list containing:
-#'   \itemize{
-#'   \item `downThreshold`: Threshold for down-regulated genes
-#'   \item `upThreshold`: Threshold for up-regulated genes
-#' }
+#'   * `downThreshold`: Threshold for down-regulated genes
+#'   * `upThreshold`: Threshold for up-regulated genes
+#'
 #' @return A tibble containing the filtered signature data with the same structure
 #'   as the input but including only rows that meet the filtering criteria.
 #'
 #' @details
 #' The filtering logic depends on the direction parameter:
-#' \itemize{
-#'   \item \strong{"up"}: Retains genes where \code{Value_LogDiffExp >= upThreshold}
-#'   \item \strong{"down"}: Retains genes where \code{Value_LogDiffExp <= downThreshold}
-#'   \item \strong{"any"}: Retains genes where
-#'     \code{Value_LogDiffExp >= upThreshold OR Value_LogDiffExp <= downThreshold}
-#' }
+#'   * `"up"`: Retains genes where `Value_LogDiffExp >= upThreshold`
+#'   * `"down"`: Retains genes where `Value_LogDiffExp <= downThreshold`
+#'   * `"any"`: Retains genes where
+#'     `Value_LogDiffExp >= upThreshold OR Value_LogDiffExp <= downThreshold`
 #'
-#' The function uses \code{dplyr::filter} with \code{rlang::.data} for
+#' The function uses `dplyr::filter` with `rlang::.data` for
 #' non-standard evaluation, ensuring compatibility with different data frame types
 #' and avoiding issues with variable scoping.
 #'
@@ -398,48 +379,40 @@
 #'   or "any" (both up- and down-regulated genes). Defaults to "any".
 #' @param threshold Numeric value or vector specifying the log fold-change threshold(s).
 #'   Can be:
-#'   \itemize{
-#'     \item A single positive value: Creates symmetric thresholds (\eqn{\pm threshold})
-#'     \item A vector of two values: First value is the down-regulated threshold,
+#'     * A single positive value: Creates symmetric thresholds (\eqn{\pm threshold})
+#'     * A vector of two values: First value is the down-regulated threshold,
 #'           second value is the up-regulated threshold
-#'   }
-#'   Cannot be specified together with \code{prop}. One of \code{threshold} or
-#'   \code{prop} must be provided.
+#'   Cannot be specified together with `prop`. One of `threshold` or
+#'   `prop` must be provided.
 #' @param prop Numeric value between 0 and 1 specifying the proportion of genes
 #'   to select from the top and bottom of the expression distribution. For example,
-#'   \code{prop = 0.1} selects the top 10% most up-regulated and bottom 10%
-#'   most down-regulated genes. Cannot be specified together with \code{threshold}.
+#'   `prop = 0.1` selects the top 10% most up-regulated and bottom 10%
+#'   most down-regulated genes. Cannot be specified together with `threshold`.
 #'
 #' @return A tibble containing the filtered L1000 signature with the same structure
 #'   as the input but containing only genes that meet the filtering criteria.
 #'
 #' @details
 #' The filtering process follows these steps:
-#' \enumerate{
-#'   \item Input validation: Checks data frame structure and parameter consistency
-#'   \item Threshold calculation: Computes filtering thresholds based on either
-#'         absolute values (\code{threshold}) or quantiles (\code{prop})
-#'   \item Direction-based filtering: Applies the computed thresholds according
+#'   1. Input validation: Checks data frame structure and parameter consistency
+#'   1. Threshold calculation: Computes filtering thresholds based on either
+#'         absolute values (`threshold`) or quantiles (`prop`)
+#'   1. Direction-based filtering: Applies the computed thresholds according
 #'         to the specified direction
-#' }
 #'
-#' When using \code{threshold}:
-#' \itemize{
-#'   \item Single value: Genes with |logFC| >= threshold are retained
-#'   \item Two values: Genes with logFC <= `threshold[1]` OR logFC >= `threshold[2]`
-#' }
+#' When using `threshold`:
+#'   * Single value: Genes with |logFC| >= threshold are retained
+#'   * Two values: Genes with logFC <= `threshold[1]` OR logFC >= `threshold[2]`
 #'
-#' When using \code{prop}:
-#' \itemize{
-#'   \item Thresholds are calculated as quantiles of the expression distribution
-#'   \item Down threshold = quantile(logFC, prop)
-#'   \item Up threshold = quantile(logFC, 1 - prop)
-#' }
+#' When using `prop`:
+#'   * Thresholds are calculated as quantiles of the expression distribution
+#'   * Down threshold = quantile(logFC, prop)
+#'   * Up threshold = quantile(logFC, 1 - prop)
 #'
 #' @seealso
-#' \code{\link{getSignature}} for retrieving L1000 signatures from iLINCS,
-#' \code{\link{prepareSignature}} for preparing custom signatures,
-#' \code{\link{getConcordants}} for finding concordant signatures
+#' `\link{getSignature}` for retrieving L1000 signatures from iLINCS,
+#' `\link{prepareSignature}` for preparing custom signatures,
+#' `\link{getConcordants}` for finding concordant signatures
 #'
 #' @export
 #'
@@ -482,7 +455,6 @@
 #' downRegulated <- filterSignature(mockSignature, direction = "down", threshold = 1.0)
 #' all(downRegulated$Value_LogDiffExp <= -1.0) # Should be TRUE
 #'
-#' \donttest{
 #' # Network-dependent examples using real iLINCS data
 #' # Get the L1000 signature for LINCSKD_28
 #' kdSignature <- getSignature("LINCSKD_28")
@@ -492,7 +464,6 @@
 #'
 #' # Get top 20% most up-regulated genes
 #' topUpregulated <- filterSignature(kdSignature, direction = "up", prop = 0.2)
-#' }
 filterSignature <- function(
   signature, direction = "any",
   threshold = NULL, prop = NULL

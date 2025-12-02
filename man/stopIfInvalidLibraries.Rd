@@ -32,7 +32,7 @@ message listing the invalid libraries and the expected options.
 NULL
 }
 \seealso{
-\code{\link{validateLibraries}} for the underlying validation logic,
-\code{\link{.validateLibrary}} for single library validation
+\verb{[ validateLibraries() ]} for the underlying validation logic,
+\verb{[ .validateLibrary() ]} for single library validation
 }
 \keyword{internal}

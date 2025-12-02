@@ -27,10 +27,8 @@ This function:
 }
 }
 \examples{
-\dontrun{
 testData <- data.frame(similarity = c(0.5, -0.8, 0.2, -0.1))
 filtered <- .applySimilarityCutoff(testData, 0.3)
 # Returns entries with |similarity| >= 0.3
-}
 }
 \keyword{internal}

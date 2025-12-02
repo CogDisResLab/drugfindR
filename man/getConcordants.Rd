@@ -2,49 +2,43 @@
 % Please edit documentation in R/getConcordants.R
 \name{getConcordants}
 \alias{getConcordants}
-\title{Get concordant signatures from iLINCS database}
+\title{Get concordant signatures from iLINCS database
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}}
 \usage{
 getConcordants(signature, ilincsLibrary = "CP")
 }
 \arguments{
 \item{signature}{A data.frame, tibble, or S4Vectors::DataFrame containing
 the signature data. Must conform to iLINCS signature structure with columns:
-\itemize{
-\item \code{signatureID}: Signature identifier
-\item \code{ID_geneid}: Gene IDs
-\item \code{Name_GeneSymbol}: Gene symbols
-\item \code{Value_LogDiffExp}: Log fold-change values
-\item \code{Significance_pvalue}: Statistical significance p-values
-}
-Use \code{prepareSignature()} to ensure proper formatting.}
+* \code{signatureID}: Signature identifier
+* \code{ID_geneid}: Gene IDs
+* \code{Name_GeneSymbol}: Gene symbols
+* \code{Value_LogDiffExp}: Log fold-change values
+* \code{Significance_pvalue}: Statistical significance p-values
+
+Use \code{\link[=prepareSignature]{prepareSignature()}} to ensure proper formatting.}
 
 \item{ilincsLibrary}{Character string specifying the iLINCS library to search.
 Must be one of:
-\itemize{
-\item \code{"CP"}: Chemical Perturbagen library (default)
-\item \code{"KD"}: Knockdown library
-\item \code{"OE"}: Overexpression library
-}}
+* \code{"CP"}: Chemical Perturbagen library (default)
+* \code{"KD"}: Knockdown library
+* \code{"OE"}: Overexpression library}
 }
 \value{
 A data structure containing concordant signatures. The return type
 matches the input signature type:
-\itemize{
-\item tibble for data.frame or tibble inputs
-\item S4Vectors::DataFrame for DataFrame inputs
-}
+* tibble for data.frame or tibble inputs
+* S4Vectors::DataFrame for DataFrame inputs
 
 Contains the following columns:
-\itemize{
-\item \code{signatureid}: Unique signature identifier
-\item \code{compound} or \code{treatment}: Drug/treatment name
-\item \code{concentration}: Drug concentration (CP library only)
-\item \code{time}: Treatment duration
-\item \code{cellline}: Cell line used
-\item \code{similarity}: Similarity score (rounded to 8 decimal places)
-\item \code{pValue}: Statistical significance (rounded to 20 decimal places)
-\item \code{sig_direction}: Signature direction ("Up", "Down", or "Any")
-}
+* \code{signatureid}: Unique signature identifier
+* \code{compound} or \code{treatment}: Drug/treatment name
+* \code{concentration}: Drug concentration (CP library only)
+* \code{time}: Treatment duration
+* \code{cellline}: Cell line used
+* \code{similarity}: Similarity score (rounded to 8 decimal places)
+* \code{pValue}: Statistical significance (rounded to 20 decimal places)
+* \code{sig_direction}: Signature direction ("Up", "Down", or "Any")
 }
 \description{
 This function queries the iLINCS (Integrative Library of Integrated
@@ -105,7 +99,6 @@ tryCatch(
     error = function(e) message("Expected error: invalid library")
 )
 
-\donttest{
 # This example requires network access to the iLINCS API
 
 # Load example differential expression data
@@ -142,7 +135,6 @@ cpConcordantsDf <- getConcordants(signatureDf, "CP")
 signatureDataFrame <- S4Vectors::DataFrame(signature)
 cpConcordantsDataFrame <- getConcordants(signatureDataFrame, "CP")
 # Returns S4Vectors::DataFrame to match input type
-}
 
 }
 \references{
@@ -152,7 +144,7 @@ Pilarczyk et al. (2020). Connecting omics signatures and revealing
 biological mechanisms with iLINCS. Nature Communications, 11(1), 4058.
 }
 \seealso{
-\code{\link{prepareSignature}} for signature preparation,
-\code{\link{filterSignature}} for signature filtering,
-\code{\link{investigateSignature}} for signature investigation
+\verb{[ prepareSignature() ]} for signature preparation,
+\verb{[ filterSignature() ]} for signature filtering,
+\verb{[ investigateSignature() ]} for signature investigation
 }

@@ -32,7 +32,6 @@ This function performs the following validations:
 }
 }
 \examples{
-\dontrun{
 # Valid calls (no errors)
 testData <- data.frame(similarity = c(0.5, -0.3), compound = c("A", "B"))
 .validateConsensusConcordantsInput(list(testData), FALSE, 0.3, NULL)
@@ -41,6 +40,5 @@ testData <- data.frame(similarity = c(0.5, -0.3), compound = c("A", "B"))
 # Invalid calls (will throw errors)
 .validateConsensusConcordantsInput(list(), FALSE, 0.3, NULL) # No data
 .validateConsensusConcordantsInput(list(testData), TRUE, 0.3, NULL) # Paired needs 2 dataframes
-}
 }
 \keyword{internal}

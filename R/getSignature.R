@@ -9,11 +9,9 @@
 #'
 #' @details
 #' This function performs the following validations:
-#' \enumerate{
-#'   \item Ensures \code{sigId} is a character vector of length 1
-#'   \item Ensures \code{sigId} is not empty or whitespace-only
-#'   \item Validates that the signature exists in the metadata tables
-#' }
+#'   * Ensures `sigId` is a character vector of length 1
+#'   * Ensures `sigId` is not empty or whitespace-only
+#'   * Validates that the signature exists in the metadata tables
 #'
 #' @keywords internal
 #'
@@ -54,11 +52,9 @@
 #'
 #' @details
 #' This function searches all three metadata tables:
-#' \itemize{
-#'   \item Chemical Perturbagen (CP) metadata
-#'   \item Knockdown (KD) metadata
-#'   \item Overexpression (OE) metadata
-#' }
+#'   * Chemical Perturbagen (CP) metadata
+#'   * Knockdown (KD) metadata
+#'   * Overexpression (OE) metadata
 #'
 #' The function checks the "SourceSignature" column in each metadata table
 #' for the provided signature ID(s).
@@ -87,13 +83,11 @@
 #'
 #' @details
 #' This function builds a complete HTTP request by:
-#' \enumerate{
-#'   \item Setting the base URL using \code{.ilincsBaseUrl()}
-#'   \item Appending the API path: "ilincsR/downloadSignature"
-#'   \item Adding query parameters: sigID and noOfTopGenes (set to Inf for all genes)
-#'   \item Setting the HTTP method to POST
-#'   \item Adding a user agent string using \code{.returnUserAgent()}
-#' }
+#'   1. Setting the base URL using \code{.ilincsBaseUrl()}
+#'   1. Appending the API path: "ilincsR/downloadSignature"
+#'   1. Adding query parameters: sigID and noOfTopGenes (set to Inf for all genes)
+#'   1. Setting the HTTP method to POST
+#'   1. Adding a user agent string using \code{.returnUserAgent()}
 #'
 #' The request is configured but not executed - it must be performed using
 #' the request execution function.
@@ -132,12 +126,10 @@
 #' error messages with context.
 #'
 #' The function handles:
-#' \itemize{
-#'   \item Network connection errors
-#'   \item HTTP error status codes (400, 401, 403, 404, 500, etc.)
-#'   \item Timeout errors
-#'   \item Other httr2 request failures
-#' }
+#'   * Network connection errors
+#'   * HTTP error status codes (400, 401, 403, 404, 500, etc.)
+#'   * Timeout errors
+#'   * Other httr2 request failures
 #'
 #' @importFrom httr2 req_error req_perform req_options
 #'
@@ -165,25 +157,21 @@
 #' @param response An httr2 response object from a successful iLINCS API call.
 #'
 #' @return A tibble containing the signature data with standardized columns:
-#'   \itemize{
-#'     \item signatureID: The signature identifier
-#'     \item ID_geneid: Character gene identifiers
-#'     \item Name_GeneSymbol: Gene symbols
-#'     \item Value_LogDiffExp: Log fold-change values (rounded to 12 decimal places)
-#'     \item Significance_pvalue: P-values (rounded to 12 decimal places)
-#'   }
+#'     * signatureID: The signature identifier
+#'     * ID_geneid: Character gene identifiers
+#'     * Name_GeneSymbol: Gene symbols
+#'     * Value_LogDiffExp: Log fold-change values (rounded to 12 decimal places)
+#'     * Significance_pvalue: P-values (rounded to 12 decimal places)
 #'
 #' @details
 #' This function:
-#' \enumerate{
-#'   \item Extracts JSON data from the response body
-#'   \item Maps the "signature" elements from the response
-#'   \item Flattens the nested structure into a data frame
-#'   \item Removes the "PROBE" column (not needed for analysis)
-#'   \item Converts gene IDs to character format
-#'   \item Rounds numeric values to 12 decimal places for consistency
-#'   \item Adds signature metadata including L1000 status
-#' }
+#'   1. Extracts JSON data from the response body
+#'   1. Maps the "signature" elements from the response
+#'   1. Flattens the nested structure into a data frame
+#'   1. Removes the "PROBE" column (not needed for analysis)
+#'   1. Converts gene IDs to character format
+#'   1. Rounds numeric values to 12 decimal places for consistency
+#'   1. Adds signature metadata including L1000 status
 #'
 #' The rounding ensures consistent precision across different platforms and
 #' prevents floating-point precision issues in downstream analyses.
@@ -274,19 +262,15 @@
 #'
 #' @details
 #' The function dispatches to specialized handlers:
-#' \enumerate{
-#'   \item \code{.processSignatureResponseError} for HTTP error responses
-#'   \item \code{.processSuccessfulResponse} for successful responses with data
-#' }
+#'   1. `.processSignatureResponseError()` for HTTP error responses
+#'   1. `.processSuccessfulResponse()` for successful responses with data
 #'
 #' The resulting tibble contains these columns:
-#' \itemize{
-#'   \item \code{signatureID}: The signature identifier
-#'   \item \code{ID_geneid}: Character gene identifiers
-#'   \item \code{Name_GeneSymbol}: Gene symbols
-#'   \item \code{Value_LogDiffExp}: Log fold-change values (rounded to 12 decimal places)
-#'   \item \code{Significance_pvalue}: P-values (rounded to 12 decimal places)
-#' }
+#'   * \code{signatureID}: The signature identifier
+#'   * \code{ID_geneid}: Character gene identifiers
+#'   * \code{Name_GeneSymbol}: Gene symbols
+#'   * \code{Value_LogDiffExp}: Log fold-change values (rounded to 12 decimal places)
+#'   * \code{Significance_pvalue}: P-values (rounded to 12 decimal places)
 #'
 #' @importFrom httr2 resp_status
 #'
@@ -315,13 +299,11 @@
 #' @param sigId character. The ilincs signature_id
 #'
 #' @return a tibble with the signature data containing the following columns:
-#'   \itemize{
-#'     \item \code{signatureID}: The signature identifier
-#'     \item \code{ID_geneid}: Gene IDs (Entrez)
-#'     \item \code{Name_GeneSymbol}: Gene symbols
-#'     \item \code{Value_LogDiffExp}: Log fold-change values
-#'     \item \code{Significance_pvalue}: Statistical significance p-values
-#'   }
+#'     * `signatureID`: The signature identifier
+#'     * `ID_geneid`: Gene IDs (Entrez)
+#'     * `Name_GeneSymbol`: Gene symbols
+#'     * `Value_LogDiffExp`: Log fold-change values
+#'     * `Significance_pvalue`: Statistical significance p-values
 #' @export
 #'
 #' @importFrom httr2 request req_method req_url_query req_user_agent

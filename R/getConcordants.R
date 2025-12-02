@@ -14,18 +14,16 @@
 #'
 #' @details
 #' This function performs comprehensive validation:
-#' \enumerate{
-#'   \item Ensures \code{signature} is a data.frame-like object (data.frame, tibble, or S4Vectors::DataFrame)
-#'   \item Validates complete signature structure via \code{stopIfInvalidSignature()}
-#'   \item Validates \code{ilincsLibrary} is one of the supported libraries
-#' }
+#'   1. Ensures `signature` is a data.frame-like object (data.frame, tibble, or S4Vectors::DataFrame)
+#'   1. Validates complete signature structure via `stopIfInvalidSignature()`
+#'   1. Validates `ilincsLibrary` is one of the supported libraries
 #'
 #' The signature must conform to the iLINCS expected structure. Use
-#' \code{prepareSignature()} to ensure proper formatting.
+#' `prepareSignature()` to ensure proper formatting.
 #'
 #' @seealso
-#' \code{\link{stopIfInvalidSignature}} for signature structure validation,
-#' \code{\link{prepareSignature}} for signature preparation
+#' `[ stopIfInvalidSignature() ]` for signature structure validation,
+#' `[ prepareSignature() ]` for signature preparation
 #'
 #' @keywords internal
 #'
@@ -85,11 +83,9 @@
 #'
 #' @details
 #' The function examines the "Value_LogDiffExp" column to determine direction:
-#' \itemize{
-#'   \item "Up": All expression values are greater than or equal to zero
-#'   \item "Down": All expression values are less than or equal to zero
-#'   \item "Any": Mixed positive and negative values
-#' }
+#'   * "Up": All expression values are greater than or equal to zero
+#'   * "Down": All expression values are less than or equal to zero
+#'   * "Any": Mixed positive and negative values
 #'
 #' Note that zero values are considered "Up" direction. This direction
 #' information is used by iLINCS for signature analysis and is included
@@ -123,19 +119,15 @@
 #'
 #' @details
 #' The function:
-#' \enumerate{
-#'   \item Maps the library name to the internal iLINCS library ID
-#'   \item Constructs a multipart POST request with the signature file
-#'   \item Includes appropriate user agent and API endpoint
-#'   \item Executes the request and returns the response
-#' }
+#'   1. Maps the library name to the internal iLINCS library ID
+#'   1. Constructs a multipart POST request with the signature file
+#'   1. Includes appropriate user agent and API endpoint
+#'   1. Executes the request and returns the response
 #'
 #' The library mapping is:
-#' \itemize{
-#'   \item CP (Chemical Perturbagen): LIB_5
-#'   \item KD (Knockdown): LIB_6
-#'   \item OE (Overexpression): LIB_11
-#' }
+#'   * CP (Chemical Perturbagen): LIB_5
+#'   * KD (Knockdown): LIB_6
+#'   * OE (Overexpression): LIB_11
 #'
 #' @importFrom httr2 request req_url_path_append req_url_query req_body_multipart
 #'   req_method req_user_agent req_error req_perform req_options
@@ -171,18 +163,16 @@
 #'
 #' @details
 #' This function configures the request to not raise errors automatically
-#' on HTTP error status codes (4xx, 5xx) by using \code{httr2::req_error()}.
+#' on HTTP error status codes (4xx, 5xx) by using `httr2::req_error()`.
 #' Instead, error responses are returned as response objects that can be
-#' processed by \code{.processIlincsResponse()} to generate appropriate
+#' processed by `.processIlincsResponse()` to generate appropriate
 #' error messages with context.
 #'
 #' The function handles:
-#' \itemize{
-#'   \item Network connection errors
-#'   \item HTTP error status codes (400, 401, 403, 404, 500, etc.)
-#'   \item Timeout errors
-#'   \item Other httr2 request failures
-#' }
+#'   * Network connection errors
+#'   * HTTP error status codes (400, 401, 403, 404, 500, etc.)
+#'   * Timeout errors
+#'   * Other httr2 request failures
 #'
 #' @importFrom httr2 req_error req_perform
 #'
@@ -347,24 +337,20 @@
 #'
 #' @details
 #' The function dispatches to specialized handlers:
-#' \enumerate{
-#'   \item \code{.processIlincsResponseError} for HTTP error responses
-#'   \item \code{.processIlincsResponseEmpty} for empty concordance tables
-#'   \item \code{.processIlincsResponseSuccess} for successful responses with data
-#' }
+#'   1. `.processIlincsResponseError` for HTTP error responses
+#'   1. `.processIlincsResponseEmpty` for empty concordance tables
+#'   1. `.processIlincsResponseSuccess` for successful responses with data
 #'
 #' The resulting tibble always contains these columns in order:
-#' \itemize{
-#'   \item \code{signatureid}: Unique signature identifier
-#'   \item \code{treatment}: Drug/treatment name (compound renamed for CP library)
-#'   \item \code{concentration}: Drug concentration (NA for KD/OE libraries)
-#'   \item \code{time}: Treatment duration
-#'   \item \code{cellline}: Cell line used
-#'   \item \code{similarity}: Similarity score (rounded to 8 decimal places)
-#'   \item \code{pValue}: Statistical significance (rounded to 20 decimal places)
-#'   \item \code{sig_direction}: Signature direction ("Up", "Down", or "Any")
-#'   \item \code{sig_type}: Library type description
-#' }
+#'   * `signatureid`: Unique signature identifier
+#'   * `treatment`: Drug/treatment name (compound renamed for CP library)
+#'   * `concentration`: Drug concentration (NA for KD/OE libraries)
+#'   * `time`: Treatment duration
+#'   * `cellline`: Cell line used
+#'   * `similarity`: Similarity score (rounded to 8 decimal places)
+#'   * `pValue`: Statistical significance (rounded to 20 decimal places)
+#'   * `sig_direction`: Signature direction ("Up", "Down", or "Any")
+#'   * `sig_type`: Library type description
 #'
 #' @importFrom httr2 resp_status resp_body_json
 #' @importFrom purrr pluck
@@ -406,7 +392,7 @@
 #'
 #' @details
 #' The function checks if the specified file exists and removes it using
-#' \code{unlink()}. This cleanup is performed automatically at the end of
+#' `unlink()`. This cleanup is performed automatically at the end of
 #' the getConcordants operation.
 #'
 #' @keywords internal
@@ -424,13 +410,11 @@
 #'
 #' @param result A tibble containing the processed results from iLINCS API.
 #' @param inputClass A character vector containing the class of the original
-#'   input signature (from \code{.validateGetConcordantsInput}).
+#'   input signature (from `.validateGetConcordantsInput`).
 #'
 #' @return The results in the appropriate format:
-#'   \itemize{
-#'     \item S4Vectors::DataFrame if input was a DataFrame
-#'     \item tibble otherwise (for data.frame, tibble inputs)
-#'   }
+#'     * S4Vectors::DataFrame if input was a DataFrame
+#'     * tibble otherwise (for data.frame, tibble inputs)
 #'
 #' @details
 #' This function ensures that the output format matches the input format
@@ -452,6 +436,7 @@
 }
 
 #' Get concordant signatures from iLINCS database
+#' `r lifecycle::badge("stable")`
 #'
 #' This function queries the iLINCS (Integrative Library of Integrated
 #' Network-based Cellular Signatures) database to find signatures that are
@@ -459,58 +444,48 @@
 #'
 #' @param signature A data.frame, tibble, or S4Vectors::DataFrame containing
 #'   the signature data. Must conform to iLINCS signature structure with columns:
-#'   \itemize{
-#'     \item \code{signatureID}: Signature identifier
-#'     \item \code{ID_geneid}: Gene IDs
-#'     \item \code{Name_GeneSymbol}: Gene symbols
-#'     \item \code{Value_LogDiffExp}: Log fold-change values
-#'     \item \code{Significance_pvalue}: Statistical significance p-values
-#'   }
-#'   Use \code{prepareSignature()} to ensure proper formatting.
+#'     * `signatureID`: Signature identifier
+#'     * `ID_geneid`: Gene IDs
+#'     * `Name_GeneSymbol`: Gene symbols
+#'     * `Value_LogDiffExp`: Log fold-change values
+#'     * `Significance_pvalue`: Statistical significance p-values
+#'
+#'   Use [`prepareSignature()`] to ensure proper formatting.
+
 #' @param ilincsLibrary Character string specifying the iLINCS library to search.
 #'   Must be one of:
-#'   \itemize{
-#'     \item \code{"CP"}: Chemical Perturbagen library (default)
-#'     \item \code{"KD"}: Knockdown library
-#'     \item \code{"OE"}: Overexpression library
-#'   }
+#'     * `"CP"`: Chemical Perturbagen library (default)
+#'     * `"KD"`: Knockdown library
+#'     * `"OE"`: Overexpression library
 #'
 #' @return A data structure containing concordant signatures. The return type
 #'   matches the input signature type:
-#'   \itemize{
-#'     \item tibble for data.frame or tibble inputs
-#'     \item S4Vectors::DataFrame for DataFrame inputs
-#'   }
+#'     * tibble for data.frame or tibble inputs
+#'     * S4Vectors::DataFrame for DataFrame inputs
 #'
 #'   Contains the following columns:
-#'   \itemize{
-#'     \item \code{signatureid}: Unique signature identifier
-#'     \item \code{compound} or \code{treatment}: Drug/treatment name
-#'     \item \code{concentration}: Drug concentration (CP library only)
-#'     \item \code{time}: Treatment duration
-#'     \item \code{cellline}: Cell line used
-#'     \item \code{similarity}: Similarity score (rounded to 8 decimal places)
-#'     \item \code{pValue}: Statistical significance (rounded to 20 decimal places)
-#'     \item \code{sig_direction}: Signature direction ("Up", "Down", or "Any")
-#'   }
+#'     * `signatureid`: Unique signature identifier
+#'     * `compound` or `treatment`: Drug/treatment name
+#'     * `concentration`: Drug concentration (CP library only)
+#'     * `time`: Treatment duration
+#'     * `cellline`: Cell line used
+#'     * `similarity`: Similarity score (rounded to 8 decimal places)
+#'     * `pValue`: Statistical significance (rounded to 20 decimal places)
+#'     * `sig_direction`: Signature direction ("Up", "Down", or "Any")
 #'
 #' @details
 #' The function performs the following steps:
-#' \enumerate{
-#'   \item Validates input parameters
-#'   \item Creates a temporary file with signature data
-#'   \item Detects signature direction from expression values
-#'   \item Sends a multipart POST request to the iLINCS API
-#'   \item Processes the JSON response into a standardized tibble
-#'   \item Cleans up temporary files
-#' }
+#'   1. Validates input parameters
+#'   1. Creates a temporary file with signature data
+#'   1. Detects signature direction from expression values
+#'   1. Sends a multipart POST request to the iLINCS API
+#'   1. Processes the JSON response into a standardized tibble
+#'   1. Cleans up temporary files
 #'
 #' The signature direction is determined as follows:
-#' \itemize{
-#'   \item \code{"Up"}: All expression values are greater than or equal to zero
-#'   \item \code{"Down"}: All expression values are less than or equal to zero
-#'   \item \code{"Any"}: Mixed positive and negative values
-#' }
+#'   * `"Up"`: All expression values are greater than or equal to zero
+#'   * `"Down"`: All expression values are less than or equal to zero
+#'   * `"Any"`: Mixed positive and negative values
 #'
 #' @section API Details:
 #' This function interfaces with the iLINCS web service API. The signature
@@ -519,14 +494,12 @@
 #'
 #' @section Error Handling:
 #' The function will stop execution with informative error messages for:
-#' \itemize{
-#'   \item Invalid signature data types (must be data.frame, tibble, or DataFrame)
-#'   \item Invalid signature structure (missing required columns, wrong order, etc.)
-#'   \item Missing values in signature data
-#'   \item Unsupported iLINCS library names
-#'   \item HTTP errors from the iLINCS API
-#'   \item Invalid or empty API responses
-#' }
+#'   * Invalid signature data types (must be data.frame, tibble, or DataFrame)
+#'   * Invalid signature structure (missing required columns, wrong order, etc.)
+#'   * Missing values in signature data
+#'   * Unsupported iLINCS library names
+#'   * HTTP errors from the iLINCS API
+#'   * Invalid or empty API responses
 #'
 #' @importFrom httr2 request req_url_path_append req_url_query req_body_multipart
 #'   req_method req_user_agent req_error req_perform req_options resp_status resp_body_json resp_body_string
@@ -538,9 +511,9 @@
 #' @importFrom S4Vectors DataFrame
 #'
 #' @seealso
-#' \code{\link{prepareSignature}} for signature preparation,
-#' \code{\link{filterSignature}} for signature filtering,
-#' \code{\link{investigateSignature}} for signature investigation
+#' `[ prepareSignature() ]` for signature preparation,
+#' `[ filterSignature() ]` for signature filtering,
+#' `[ investigateSignature() ]` for signature investigation
 #'
 #' @references
 #' iLINCS Portal: \url{http://www.ilincs.org/}
@@ -564,7 +537,6 @@
 #'     error = function(e) message("Expected error: invalid library")
 #' )
 #'
-#' \donttest{
 #' # This example requires network access to the iLINCS API
 #'
 #' # Load example differential expression data
@@ -601,7 +573,6 @@
 #' signatureDataFrame <- S4Vectors::DataFrame(signature)
 #' cpConcordantsDataFrame <- getConcordants(signatureDataFrame, "CP")
 #' # Returns S4Vectors::DataFrame to match input type
-#' }
 #'
 #' @export
 getConcordants <- function(signature, ilincsLibrary = "CP") {
