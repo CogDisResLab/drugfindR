@@ -109,6 +109,8 @@ NULL
 #' combined <- .combineConcordantsData(list(df1, df2))
 #' }
 .combineConcordantsData <- function(dots) {
+    # Convert any DataFrames to tibbles for dplyr compatibility
+    dots <- lapply(dots, tibble::as_tibble)
     dplyr::bind_rows(dots)
 }
 
@@ -148,7 +150,10 @@ NULL
         return(concordants)
     }
 
-    dplyr::filter(concordants, .data[["cellline"]] %in% cellLine) # nolint: object_usage_linter.
+    # Convert DataFrame to tibble for dplyr compatibility
+    concordants <- tibble::as_tibble(concordants)
+
+    dplyr::filter(concordants, .data[["cellline"]] %in% !!cellLine) # nolint: object_usage_linter.
 }
 
 #' Apply similarity cutoff filter to concordants data
@@ -181,7 +186,10 @@ NULL
 #' # Returns entries with |similarity| >= 0.3
 #' }
 .applySimilarityCutoff <- function(concordants, cutoff) {
-    dplyr::filter(concordants, abs(.data[["similarity"]]) >= cutoff) # nolint: object_usage_linter.
+    # Convert DataFrame to tibble for dplyr compatibility
+    concordants <- tibble::as_tibble(concordants)
+
+    dplyr::filter(concordants, abs(.data[["similarity"]]) >= !!cutoff) # nolint: object_usage_linter.
 }
 
 #' Group concordants by target and select maximum similarity entries
@@ -222,10 +230,11 @@ NULL
         return(concordants)
     }
 
+    # Convert DataFrame to tibble for dplyr group_by compatibility
+    concordants <- tibble::as_tibble(concordants)
+
     concordants |>
-        dplyr::group_by(
-            dplyr::across(!!"treatment")
-        ) |>
+        dplyr::group_by(.data[["treatment"]]) |>
         dplyr::filter(
             abs(.data[["similarity"]]) == max(abs(.data[["similarity"]])) # nolint: object_usage_linter.
         ) |>
@@ -267,6 +276,9 @@ NULL
 #' selected <- .selectAndOrderResults(testData)
 #' }
 .selectAndOrderResults <- function(concordants) {
+    # Convert DataFrame to tibble for dplyr compatibility
+    concordants <- tibble::as_tibble(concordants)
+
     concordants |>
         dplyr::select(
             dplyr::any_of(c(

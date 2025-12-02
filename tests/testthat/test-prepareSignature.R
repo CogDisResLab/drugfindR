@@ -501,3 +501,70 @@ test_that(
         expect_true(all(signature[["Name_GeneSymbol"]] %in% l1000[["L1000"]]))
     }
 )
+
+# ==============================================================================
+# TESTS FOR S4Vectors::DataFrame INPUT/OUTPUT HANDLING
+# ==============================================================================
+
+test_that("prepareSignature accepts S4Vectors::DataFrame as input", {
+    filteredData <- getTestFixture("input_signature", seed = .testSeed)
+    filteredDataFrame <- S4Vectors::DataFrame(filteredData)
+
+    # Should work without error
+    signature <- prepareSignature(filteredDataFrame,
+        geneColumn = "Gene",
+        logfcColumn = "LogFC",
+        pvalColumn = "PValue"
+    )
+
+    # Check structure is maintained - returns data.frame (which includes tibble)
+    expect_s3_class(signature, "data.frame")
+    expectedCols <- c("signatureID", "ID_geneid", "Name_GeneSymbol", "Value_LogDiffExp", "Significance_pvalue")
+    expect_named(signature, expectedCols)
+    expect_gt(nrow(signature), 0L)
+})
+
+test_that("prepareSignature accepts S4Vectors::DataFrame without p-values", {
+    filteredData <- getTestFixture("input_signature", seed = .testSeed)
+    filteredDataFrame <- S4Vectors::DataFrame(filteredData[, c("Gene", "LogFC")])
+
+    # Should work without error
+    signature <- prepareSignature(filteredDataFrame,
+        geneColumn = "Gene",
+        logfcColumn = "LogFC",
+        pvalColumn = NA
+    )
+
+    # Check structure is maintained - returns data.frame (which includes tibble)
+    expect_s3_class(signature, "data.frame")
+    expectedCols <- c("signatureID", "ID_geneid", "Name_GeneSymbol", "Value_LogDiffExp")
+    expect_named(signature, expectedCols)
+    expect_gt(nrow(signature), 0L)
+})
+
+test_that("prepareSignature produces consistent results with DataFrame vs tibble input", {
+    filteredDataTibble <- getTestFixture("input_signature", seed = .testSeed)
+    filteredDataFrame <- S4Vectors::DataFrame(filteredDataTibble)
+
+    signatureFromTibble <- prepareSignature(filteredDataTibble,
+        geneColumn = "Gene",
+        logfcColumn = "LogFC",
+        pvalColumn = "PValue"
+    )
+
+    signatureFromDataFrame <- prepareSignature(filteredDataFrame,
+        geneColumn = "Gene",
+        logfcColumn = "LogFC",
+        pvalColumn = "PValue"
+    )
+
+    # Results should be identical
+    expect_identical(
+        as.data.frame(signatureFromTibble),
+        as.data.frame(signatureFromDataFrame)
+    )
+    expect_setequal(
+        signatureFromTibble[["Name_GeneSymbol"]],
+        signatureFromDataFrame[["Name_GeneSymbol"]]
+    )
+})
