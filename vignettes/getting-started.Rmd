@@ -1,0 +1,418 @@
+---
+title: "Getting Started with drugfindR"
+author: "Ali Sajid Imami"
+date: "`r Sys.Date()`"
+output: BiocStyle::html_document
+vignette: >
+  %\VignetteIndexEntry{Getting Started with drugfindR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    fig.width = 7,
+    fig.height = 5,
+    warning = FALSE,
+    message = FALSE
+)
+```
+
+# Introduction
+
+Welcome to **drugfindR**! This package provides R-based programmatic access to the [iLINCS](http://www.ilincs.org) (Integrative Library of Integrated Network-Based Cellular Signatures) database for drug repurposing and functional genomics research.
+
+## What is drugfindR?
+
+drugfindR enables researchers to:
+
+- **Identify candidate repurposable drugs** from transcriptomic signatures
+- **Discover functional relationships** between genes and compounds
+- **Query LINCS databases** programmatically without web platform dependencies
+- **Process signatures efficiently** with high-throughput batch capabilities
+
+## What is LINCS?
+
+The Library of Integrated Network-Based Cellular Signatures (LINCS) project systematically catalogs cellular responses to genetic and chemical perturbations. The iLINCS platform integrates three major signature types:
+
+- **Chemical Perturbagen (CP)**: Drug and compound treatment signatures
+- **Gene Knockdown (KD)**: Gene silencing signatures
+- **Gene Overexpression (OE)**: Gene upregulation signatures
+
+# Installation
+
+## From r-universe (Recommended)
+
+```{r install-runiverse, eval = FALSE}
+install.packages("drugfindR",
+    repos = c(
+        "https://cogdisreslab.r-universe.dev",
+        "https://cran.r-project.org"
+    )
+)
+```
+
+## From GitHub (Development Version)
+
+```{r install-github, eval = FALSE}
+if (!requireNamespace("devtools", quietly = TRUE)) {
+    install.packages("devtools")
+}
+devtools::install_github("CogDisResLab/drugfindR")
+```
+
+# Loading the Package
+
+```{r load-package}
+library(drugfindR)
+library(dplyr)
+library(readr)
+```
+
+# Two Approaches to Using drugfindR
+
+drugfindR offers two complementary approaches:
+
+## 1. High-Level Convenience Functions
+
+These wrapper functions handle the entire workflow with sensible defaults:
+
+- `investigateSignature()`: Analyze transcriptomic data to find concordant drugs/genes
+- `investigateTarget()`: Explore functional relationships for a specific gene or drug
+
+**Use when**: You want rapid results with minimal code
+
+## 2. Modular Pipeline Functions
+
+Five building-block functions provide fine-grained control:
+
+1. `getSignature()`: Retrieve LINCS signatures by ID
+2. `prepareSignature()`: Format custom signatures for iLINCS
+3. `filterSignature()`: Apply thresholds to signatures
+4. `getConcordants()`: Query iLINCS for concordant signatures
+5. `consensusConcordants()`: Generate consensus rankings
+
+**Use when**: You need custom workflows or detailed intermediate results
+
+# Quick Start Example 1: Investigate a Transcriptomic Signature
+
+Let's identify candidate drugs for a disease signature using the convenience function.
+
+## Load Example Data
+
+We'll use a COVID-19 differential expression dataset included with the package:
+
+```{r load-covid-data}
+# Load the COVID-19 differential expression data
+covid_file <- system.file("extdata", "dCovid_diffexp.tsv", package = "drugfindR")
+covid_diffexp <- read_tsv(covid_file, show_col_types = FALSE)
+
+# Preview the data
+head(covid_diffexp)
+```
+
+This dataset contains:
+- `hgnc_symbol`: Gene symbols
+- `logFC`: Log fold-change values
+- `PValue`: Statistical significance
+
+## One-Line Analysis
+
+```{r investigate-signature-simple, eval = FALSE}
+# Find drugs that may counteract the COVID-19 signature
+results <- investigateSignature(
+    expr = covid_diffexp,
+    outputLib = "CP", # Query Chemical Perturbagens
+    filterThreshold = 1.5, # Keep genes with |logFC| >= 1.5
+    geneColumn = "hgnc_symbol",
+    logfcColumn = "logFC",
+    pvalColumn = "PValue"
+)
+
+# View top candidates
+head(results, 10)
+```
+
+## Understanding the Results
+
+The output contains:
+
+- **Source**: Your input signature identifier
+- **Target**: Drug/compound name
+- **Similarity**: Concordance score (-1 to 1)
+  - Negative scores: Drug reverses your signature (potential therapeutic)
+  - Positive scores: Drug mimics your signature
+- **TargetSignature**: iLINCS signature ID
+- **TargetCellLine**: Cell line used in the signature
+- **pValue**: Statistical significance
+
+# Quick Start Example 2: Investigate a Specific Gene
+
+Let's explore what happens when TP53 is knocked down and find drugs with similar effects.
+
+```{r investigate-target-simple, eval = FALSE}
+# Find drugs that mimic TP53 knockdown
+tp53_results <- investigateTarget(
+    target = "TP53",
+    inputLib = "KD", # Use Knockdown signatures
+    outputLib = "CP", # Find Chemical Perturbagens
+    filterThreshold = 0.5
+)
+
+# View results
+head(tp53_results, 10)
+```
+
+# Modular Approach: Step-by-Step Workflow
+
+For more control, let's break down the analysis into individual steps.
+
+## Step 1: Prepare Your Signature
+
+```{r prepare-signature}
+# Convert your data to iLINCS format
+signature <- prepareSignature(
+    covid_diffexp,
+    geneColumn = "hgnc_symbol",
+    logfcColumn = "logFC",
+    pvalColumn = "PValue"
+)
+
+# Preview the prepared signature
+head(signature)
+```
+
+The `prepareSignature()` function:
+- Standardizes column names
+- Maps genes to L1000 gene space
+- Validates data format
+
+## Step 2: Filter by Threshold
+
+```{r filter-signatures}
+# Filter for strongly upregulated genes
+filtered_up <- filterSignature(
+    signature,
+    direction = "up",
+    threshold = 1.5
+)
+
+# Filter for strongly downregulated genes
+filtered_down <- filterSignature(
+    signature,
+    direction = "down",
+    threshold = 1.5
+)
+
+cat("Upregulated genes:", nrow(filtered_up), "\n")
+cat("Downregulated genes:", nrow(filtered_down), "\n")
+```
+
+## Step 3: Query for Concordant Signatures
+
+```{r get-concordants, eval = FALSE}
+# Find drugs that match upregulated genes
+concordants_up <- getConcordants(
+    filtered_up,
+    ilincsLibrary = "CP",
+    direction = "up"
+)
+
+# Find drugs that match downregulated genes
+concordants_down <- getConcordants(
+    filtered_down,
+    ilincsLibrary = "CP",
+    direction = "down"
+)
+```
+
+## Step 4: Generate Consensus Rankings
+
+```{r consensus, eval = FALSE}
+# Combine and rank candidate drugs
+consensus <- consensusConcordants(
+    concordants_up,
+    concordants_down,
+    paired = TRUE,
+    cutoff = 0.2
+)
+
+head(consensus, 10)
+```
+
+# Choosing Your Approach
+
+| Aspect | Convenience Functions | Modular Functions |
+|--------|----------------------|-------------------|
+| **Code Length** | Minimal (1 function call) | Longer (5 steps) |
+| **Flexibility** | Limited customization | Full control |
+| **Intermediate Results** | Hidden | Available |
+| **Learning Curve** | Easy | Moderate |
+| **Best For** | Quick analyses, standard workflows | Custom pipelines, research |
+
+# Filtering Strategies
+
+## Absolute Thresholds
+
+Use specific log fold-change cutoffs:
+
+```{r absolute-threshold-demo}
+# Single threshold (symmetric)
+filtered_symmetric <- filterSignature(signature, threshold = 1.5)
+# Keeps genes with |logFC| >= 1.5
+
+# Double threshold (asymmetric)
+filtered_asymmetric <- filterSignature(signature, threshold = c(-2.0, 1.5))
+# Keeps genes with logFC <= -2.0 OR logFC >= 1.5
+```
+
+## Proportional Thresholds
+
+Select a percentage of most extreme genes:
+
+```{r proportional-threshold-demo}
+# Top/bottom 10% most differentially expressed
+filtered_prop <- filterSignature(signature, prop = 0.1)
+```
+
+## Direction-Specific Filtering
+
+```{r direction-filtering-demo}
+# Only upregulated genes
+up_only <- filterSignature(signature, direction = "up", threshold = 1.0)
+
+# Only downregulated genes
+down_only <- filterSignature(signature, direction = "down", threshold = 1.0)
+
+# Both directions (default)
+both_directions <- filterSignature(signature, direction = "any", threshold = 1.0)
+```
+
+# Understanding Library Types
+
+## Chemical Perturbagen (CP)
+
+- Drug and compound treatment signatures
+- Use for: Drug repurposing, finding therapeutic candidates
+- Example: `outputLib = "CP"`
+
+## Gene Knockdown (KD)
+
+- Gene silencing (shRNA, siRNA) signatures
+- Use for: Understanding gene function, finding genes with similar effects
+- Example: `inputLib = "KD"`
+
+## Gene Overexpression (OE)
+
+- Gene upregulation signatures
+- Use for: Understanding gain-of-function effects
+- Example: `inputLib = "OE"`
+
+# Paired vs. Unpaired Analysis
+
+## Paired Analysis (Default)
+
+Separately analyzes up- and down-regulated genes:
+
+```{r paired-demo, eval = FALSE}
+# Default behavior
+results_paired <- investigateSignature(
+    covid_diffexp,
+    outputLib = "CP",
+    filterThreshold = 1.5,
+    paired = TRUE, # This is the default
+    geneColumn = "hgnc_symbol"
+)
+```
+
+**Advantages**:
+- More biological precision
+- Distinguishes directional effects
+- Better for complex signatures
+
+## Unpaired Analysis
+
+Treats all significant genes together:
+
+```{r unpaired-demo, eval = FALSE}
+results_unpaired <- investigateSignature(
+    covid_diffexp,
+    outputLib = "CP",
+    filterThreshold = 1.5,
+    paired = FALSE,
+    geneColumn = "hgnc_symbol"
+)
+```
+
+**Advantages**:
+- Simpler interpretation
+- Faster execution
+- Good for exploratory analysis
+
+# Common Use Cases
+
+## 1. Drug Repurposing
+
+**Goal**: Find drugs that reverse a disease signature
+
+```{r drug-repurposing-pattern, eval = FALSE}
+disease_results <- investigateSignature(
+    expr = disease_signature,
+    outputLib = "CP",
+    filterThreshold = 1.5,
+    paired = TRUE
+)
+
+# Look for negative similarity scores (drug reverses disease)
+potential_therapeutics <- disease_results %>%
+    filter(Similarity < -0.3) %>%
+    arrange(Similarity)
+```
+
+## 2. Gene Function Discovery
+
+**Goal**: Understand what a gene does by finding similar genes
+
+```{r gene-function-pattern, eval = FALSE}
+gene_function <- investigateTarget(
+    target = "BRCA1",
+    inputLib = "KD",
+    outputLib = "KD", # Find genes with similar knockdown effects
+    filterThreshold = 0.5
+)
+```
+
+## 3. Mechanism of Action
+
+**Goal**: Find genes affected by a drug
+
+```{r moa-pattern, eval = FALSE}
+drug_mechanism <- investigateTarget(
+    target = "metformin",
+    inputLib = "CP",
+    outputLib = "KD", # Find genes whose KD mimics drug effect
+    filterThreshold = 0.5
+)
+```
+
+# Next Steps
+
+Now that you understand the basics, explore these advanced topics:
+
+- **[Drug Repurposing from Transcriptomic Data](drug-repurposing.html)**: Deep dive into therapeutic discovery workflows
+- **[Target Investigation and Functional Genomics](target-investigation.html)**: Comprehensive guide to gene and drug target analysis
+- **[Package Documentation](https://cogdisreslab.github.io/drugfindR/)**: Complete function reference
+
+# Session Information
+
+```{r session-info}
+sessionInfo()
+```
+
+# References
+
+1. O'Donovan SM, Imami A, et al. (2021). Identification of candidate repurposable drugs to combat COVID-19 using a signature-based approach. *Scientific Reports*, 11:4495. [doi:10.1038/s41598-021-84044-9](https://doi.org/10.1038/s41598-021-84044-9)
+
+2. Subramanian A, et al. (2017). A Next Generation Connectivity Map: L1000 Platform and the First 1,000,000 Profiles. *Cell*, 171(6):1437-1452.e17. [doi:10.1016/j.cell.2017.10.049](https://doi.org/10.1016/j.cell.2017.10.049)

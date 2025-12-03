@@ -161,8 +161,13 @@ Discover genes and compounds with similar or opposite functional effects to a ge
 ## Documentation
 
 - **[Full Documentation Website](https://cogdisreslab.github.io/drugfindR/)**
-- **[Get Started Tutorial](https://cogdisreslab.github.io/drugfindR/articles/drugfindR.html)** - Comprehensive vignette with worked examples
 - **[Function Reference](https://cogdisreslab.github.io/drugfindR/reference/index.html)** - Complete API documentation
+
+### Vignettes
+
+- **[Getting Started](https://cogdisreslab.github.io/drugfindR/articles/getting-started.html)** - Quick start guide with common workflows
+- **[Drug Repurposing from Transcriptomic Data](https://cogdisreslab.github.io/drugfindR/articles/drug-repurposing.html)** - Comprehensive guide for therapeutic discovery
+- **[Target Investigation and Functional Genomics](https://cogdisreslab.github.io/drugfindR/articles/target-investigation.html)** - Gene and drug target analysis
 
 ### Key Functions
 
