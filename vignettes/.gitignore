@@ -1,5 +1,10 @@
 *.html
 *.R
+# Generated files from vignette building
+getting-started_cache/
+drug-repurposing_cache/
+target-investigation_cache/
+*_files/
 
 # Unignore the inst/scripts/ directory
 !inst/scripts/

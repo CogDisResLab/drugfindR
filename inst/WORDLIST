@@ -1894,6 +1894,7 @@ CORL
 CORO
 coronavirus
 Coronavirus
+Corsello
 CORT
 Corticosterone
 Corvasal
@@ -2610,6 +2611,7 @@ Dipyridamole
 Dipyrone
 DIQ
 DIRAS
+directionality
 Dirithromycin
 Disintegrin
 DISODIUM
@@ -4237,6 +4239,7 @@ HGF
 HGFAC
 HGH
 HGNC
+hgnc
 HGS
 HGSNAT
 HHAT
@@ -5140,6 +5143,7 @@ Lersivirine
 Lesinurad
 Lestaurtinib
 Letermovir
+Lethality
 LETM
 LETMD
 Letrozole
@@ -5694,6 +5698,7 @@ Metaxalone
 Metergoline
 METERGOLINE
 Metformin
+metformin
 methanamine
 Methandriol
 methanesulfonamide
@@ -6905,6 +6910,7 @@ OVAAL
 Ovasterol
 OVCA
 OVCH
+overexpressed
 Overexpression
 overexpression
 OVGP
@@ -7240,6 +7246,7 @@ ph
 PHA
 PHACTR
 Pharm
+pharmacodynamics
 pharmacokinetics
 Pharmacother
 PHAX
@@ -7924,6 +7931,7 @@ PTS
 PTTG
 PTX
 pubmed
+PubMed
 PUDP
 PUDPP
 PUF
@@ -7939,6 +7947,7 @@ Purpurogallin
 purrr
 Purvalanol
 Purvalanola
+Pushpakom
 PUSL
 PVALB
 PVALEF
@@ -8791,6 +8800,7 @@ SHOX
 SHPK
 SHPRH
 SHQ
+shRNA
 SHROOM
 SHSY
 SHTN
@@ -8829,6 +8839,7 @@ SINHCAFP
 SIPA
 Siramesine
 SIRLNT
+siRNA
 sirolimus
 Sirolimus
 SIRPA
@@ -10155,6 +10166,7 @@ UPF
 UPK
 UPP
 upregulated
+upregulation
 UPRT
 upThreshold
 UQCC
@@ -10306,6 +10318,8 @@ VIRMA
 Vismodegib
 VIT
 Vitinoin
+vitro
+vivo
 VKORC
 VLDLR
 VMA

@@ -30,5 +30,6 @@ linters: linters_with_tags(
 encoding: "UTF-8"
 exclusions: list(
     "renv/activate.R",
-    "doc/"
+    "doc/",
+    "vignettes/"
     )
