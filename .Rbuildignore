@@ -6,6 +6,7 @@
 ^LICENSE\.md$
 ^Meta$
 ^README\.Rmd$
+^README\.html$
 ^R\.new$
 ^\.Rproj\.user$
 ^\.cz\.toml$
@@ -14,6 +15,7 @@
 ^\.markdownlintignore$
 ^\.pre-commit-config.yaml$
 ^\.travis\.yml$
+^\.vale\.ini$
 ^\.vscode$
 ^_pkgdown\.yml$
 ^codecov\.yml$
