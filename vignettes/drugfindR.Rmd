@@ -88,8 +88,7 @@ and returns a list of consensus signature.
 
 For this case, we will use one of the signatures that was used in the paper
 ["Identification of candidate repurposable drugs to combat COVID - 19 using a
-signature - based approach" by O'Donovan, Imami, et al]
-(https://www.nature.com/articles/s41598-021-84044-9).
+signature - based approach" by O'Donovan, Imami, et al](https://www.nature.com/articles/s41598-021-84044-9).
 
 In that paper, the authors used the available gene expression data from cells
 infected with SARS-CoV-2 to identify potential
