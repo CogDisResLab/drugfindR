@@ -20,9 +20,9 @@ investigateSignature(
   logfcColumn = "logFC",
   pvalColumn = "PValue",
   sourceName = "Input",
-  sourceCellLine = "NA",
-  sourceTime = "NA",
-  sourceConcentration = "NA"
+  sourceCellLine = NA,
+  sourceTime = NA,
+  sourceConcentration = NA
 )
 ```
 
@@ -129,14 +129,14 @@ investigatedSignature <- investigateSignature(
 head(investigatedSignature)
 #> # A tibble: 6 × 14
 #>   Source Target    Similarity SourceSignature SourceCellLine SourceConcentration
-#>   <chr>  <chr>          <dbl> <chr>           <chr>          <chr>              
+#>   <chr>  <chr>          <dbl> <chr>           <lgl>          <lgl>              
 #> 1 Input  FR-180204     -0.760 InputSig        NA             NA                 
 #> 2 Input  Ponatinib      0.751 InputSig        NA             NA                 
 #> 3 Input  Suprofen       0.740 InputSig        NA             NA                 
 #> 4 Input  SGI-1776       0.739 InputSig        NA             NA                 
 #> 5 Input  SCHEMBL6…     -0.733 InputSig        NA             NA                 
 #> 6 Input  Lypressin     -0.729 InputSig        NA             NA                 
-#> # ℹ 8 more variables: SourceTime <chr>, TargetSignature <chr>,
+#> # ℹ 8 more variables: SourceTime <lgl>, TargetSignature <chr>,
 #> #   TargetCellLine <chr>, TargetConcentration <chr>, TargetTime <chr>,
 #> #   InputSigDirection <chr>, SignatureType <chr>, pValue <dbl>
 # }
