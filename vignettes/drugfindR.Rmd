@@ -99,7 +99,7 @@ the `dCovid_diffexp.tsv` signature from the paper.
 
 ### Step 1: Get the Signature
 
-This signature is available with the package. Our first step is to download the
+This signature is available with the package. Our first step is to import the
 signature so we can work with it. The `read_tsv()` function from the `readr`
 package can be used to read the signature into R from a remote URL or a local
 file.
