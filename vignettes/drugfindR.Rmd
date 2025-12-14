@@ -147,8 +147,7 @@ The default is `"PValue"`.
 # However, we will specify all three arguments for clarity
 
 signature <- prepareSignature(diffexp,
-    geneColumn = "hgnc_symbol",
-    logfcColumn = "logFC", pvalColumn = "PValue"
+    geneColumn = "hgnc_symbol"
 )
 
 # Take a look at the signature
