@@ -43,11 +43,11 @@ physiological reasons.
 
 ## Installation
 
-`drugfindR` can be installed from GitHub using the `devtools` package:
+`drugfindR` can be installed from BioConductor using the `BiocManager` package:
 
 ```{r install}
 #| eval: FALSE
-devtools::install_github("CogDisResLab/drugfindR") # nolint: nonportable_path_linter.
+BiocManager::install("drugfindR") # nolint: nonportable_path_linter.
 ```
 
 ## Use Cases
