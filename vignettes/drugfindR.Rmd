@@ -330,10 +330,10 @@ The default is `"PValue"`.
 7. `sourceName`: The name of the source of the signature. The default is
 `"Input"`.
 8. `sourceCellLine`: The cell line of the source of the signature.
-The default is `"NA"`.
-9. `sourceTime`: The time of the source of the signature. The default is `"NA"`.
+The default is `NA`.
+9. `sourceTime`: The time of the source of the signature. The default is `NA`.
 10. `sourceConcentration`: The concentration of the source of the signature.
-The default is `"NA"`.
+The default is `NA`.
 
 
 ```{r investigateSignature}

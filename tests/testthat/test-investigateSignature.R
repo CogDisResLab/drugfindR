@@ -291,9 +291,9 @@ test_that("investigateSignature uses default metadata values", {
 
     # Check default values
     expect_identical(unique(result[["Source"]]), "Input")
-    expect_identical(unique(result[["SourceCellLine"]]), "NA")
-    expect_identical(unique(result[["SourceTime"]]), "NA")
-    expect_identical(unique(result[["SourceConcentration"]]), "NA")
+    expect_identical(unique(result[["SourceCellLine"]]), NA_character_)
+    expect_identical(unique(result[["SourceTime"]]), NA_character_)
+    expect_identical(unique(result[["SourceConcentration"]]), NA_character_)
 })
 
 test_that("investigateSignature adds SourceSignature column", {

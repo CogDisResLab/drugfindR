@@ -17,9 +17,9 @@ investigateSignature(
   logfcColumn = "logFC",
   pvalColumn = "PValue",
   sourceName = "Input",
-  sourceCellLine = "NA",
-  sourceTime = "NA",
-  sourceConcentration = "NA"
+  sourceCellLine = NA,
+  sourceTime = NA,
+  sourceConcentration = NA
 )
 }
 \arguments{
