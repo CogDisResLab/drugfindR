@@ -144,7 +144,7 @@ The default is `"PValue"`.
 ```{r prepareSignature}
 # Prepare the signature for analysis
 # The only thing that is different from the defaults is the gene_column
-# However, we will specify all three arguments for clarity
+# so we will specify that and rely on defaults for others.
 
 signature <- prepareSignature(diffexp,
     geneColumn = "hgnc_symbol"
