@@ -493,7 +493,7 @@ devtools::session_info()
 #>  DFplyr         1.4.0     2025-10-29 [1] Bioconduc~
 #>  digest         0.6.39    2025-11-19 [1] RSPM
 #>  dplyr        * 1.1.4     2023-11-17 [1] RSPM
-#>  drugfindR    * 0.99.1344 2025-12-16 [1] local
+#>  drugfindR    * 0.99.1346 2025-12-16 [1] local
 #>  ellipsis       0.3.2     2021-04-29 [1] RSPM
 #>  evaluate       1.0.5     2025-08-27 [1] RSPM
 #>  farver         2.1.2     2024-05-13 [1] RSPM
