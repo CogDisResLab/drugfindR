@@ -42,9 +42,37 @@ drugfindR streamlines transcriptomic signature analysis by:
 
 The package integrates with standard differential expression analysis outputs from tools like [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) and [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html).
 
+## Bioconductor Acceptance
+
+🎉 **drugfindR has been accepted into Bioconductor!**
+
+The package will be available in **Bioconductor Release 3.23** (accessible via the main release channel). Additionally, drugfindR is available now from the **Bioconductor devel channel** and will be fully integrated within one week.
+
 ## Installation
 
-Install the stable release from [r-universe](https://cogdisreslab.r-universe.dev/drugfindR):
+### From Bioconductor (Recommended)
+
+Install from the **Bioconductor devel channel** (available now):
+
+```{r, eval = FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+    install.packages("BiocManager")
+}
+BiocManager::install("drugfindR", version = "devel")
+```
+
+Or wait for **Bioconductor Release 3.23** and install from the stable release channel:
+
+```{r, eval = FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+    install.packages("BiocManager")
+}
+BiocManager::install("drugfindR")
+```
+
+### Alternative Installation Methods
+
+Install from [r-universe](https://cogdisreslab.r-universe.dev/drugfindR):
 
 ```{r, eval = FALSE}
 install.packages("drugfindR",

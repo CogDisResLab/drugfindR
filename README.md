@@ -42,9 +42,41 @@ outputs from tools like
 and
 [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html).
 
+## Bioconductor Acceptance
+
+🎉 **drugfindR has been accepted into Bioconductor!**
+
+The package will be available in **Bioconductor Release 3.23**
+(accessible via the main release channel). Additionally, drugfindR is
+available now from the **Bioconductor devel channel** and will be fully
+integrated within one week.
+
 ## Installation
 
-Install the stable release from
+### From Bioconductor (Recommended)
+
+Install from the **Bioconductor devel channel** (available now):
+
+``` r
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+    install.packages("BiocManager")
+}
+BiocManager::install("drugfindR", version = "devel")
+```
+
+Or wait for **Bioconductor Release 3.23** and install from the stable
+release channel:
+
+``` r
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+    install.packages("BiocManager")
+}
+BiocManager::install("drugfindR")
+```
+
+### Alternative Installation Methods
+
+Install from
 [r-universe](https://cogdisreslab.r-universe.dev/drugfindR):
 
 ``` r
