@@ -247,10 +247,9 @@
 #' )
 #' print(custom_signature)
 prepareSignature <- function(
-  dge, geneColumn = "Symbol",
-  logfcColumn = "logFC",
-  pvalColumn = "PValue"
-) {
+    dge, geneColumn = "Symbol",
+    logfcColumn = "logFC",
+    pvalColumn = "PValue") {
     # Validate input parameters
     .validatePrepareSignatureInput(dge, geneColumn, logfcColumn, pvalColumn)
 

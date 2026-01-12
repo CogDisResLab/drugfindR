@@ -129,13 +129,12 @@ NULL
 #' # })
 #' }
 investigateTarget <- function(
-  target,
-  inputLib, outputLib,
-  filterThreshold = 0.85,
-  similarityThreshold = 0.321,
-  paired = TRUE, inputCellLines = NULL,
-  outputCellLines = NULL
-) {
+    target,
+    inputLib, outputLib,
+    filterThreshold = 0.85,
+    similarityThreshold = 0.321,
+    paired = TRUE, inputCellLines = NULL,
+    outputCellLines = NULL) {
     stopIfInvalidLibraries(c(inputLib, outputLib)) # nolint: object_usage_linter.
 
     # Load metadata and obtain candidate source signatures for the target
