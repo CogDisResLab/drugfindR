@@ -469,9 +469,8 @@
 #' # Get top 20% most up-regulated genes
 #' topUpregulated <- filterSignature(kdSignature, direction = "up", prop = 0.2)
 filterSignature <- function(
-  signature, direction = "any",
-  threshold = NULL, prop = NULL
-) {
+    signature, direction = "any",
+    threshold = NULL, prop = NULL) {
     # Validate input parameters
     .validateFilterSignatureInput(signature, direction, threshold, prop)
 
