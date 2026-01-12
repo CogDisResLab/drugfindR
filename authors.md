@@ -18,14 +18,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/CogDisResLab/drugfindR/blob/devel/DESCRIPTION)
 
-Imami AS, Sahay S, Creeden JF (2025). *drugfindR: Investigate iLINCS for
+Imami AS, Sahay S, Creeden JF (2026). *drugfindR: Investigate iLINCS for
 candidate repurposable drugs*. R package version 0.99.1346,
 <https://github.com/CogDisResLab/drugfindR>.
 
     @Manual{,
       title = {drugfindR: Investigate iLINCS for candidate repurposable drugs},
       author = {Ali Sajid Imami and Smita Sahay and Justin Fortune Creeden},
-      year = {2025},
+      year = {2026},
       note = {R package version 0.99.1346},
       url = {https://github.com/CogDisResLab/drugfindR},
     }

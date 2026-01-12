@@ -6,8 +6,8 @@ library(tidyverse)
 #> ✔ dplyr     1.1.4     ✔ readr     2.1.6
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
 #> ✔ ggplot2   4.0.1     ✔ tibble    3.3.0
-#> ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-#> ✔ purrr     1.2.0     
+#> ✔ lubridate 1.9.4     ✔ tidyr     1.3.2
+#> ✔ purrr     1.2.1     
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 #> ✖ dplyr::filter() masks stats::filter()
 #> ✖ dplyr::lag()    masks stats::lag()
@@ -471,7 +471,7 @@ devtools::session_info()
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2025-12-16
+#>  date     2026-01-12
 #>  pandoc   3.1.11 @ /opt/hostedtoolcache/pandoc/3.1.11/x64/ (via rmarkdown)
 #>  quarto   NA
 #> 
@@ -493,7 +493,7 @@ devtools::session_info()
 #>  DFplyr         1.4.0     2025-10-29 [1] Bioconduc~
 #>  digest         0.6.39    2025-11-19 [1] RSPM
 #>  dplyr        * 1.1.4     2023-11-17 [1] RSPM
-#>  drugfindR    * 0.99.1346 2025-12-16 [1] local
+#>  drugfindR    * 0.99.1346 2026-01-12 [1] local
 #>  ellipsis       0.3.2     2021-04-29 [1] RSPM
 #>  evaluate       1.0.5     2025-08-27 [1] RSPM
 #>  farver         2.1.2     2024-05-13 [1] RSPM
@@ -510,8 +510,8 @@ devtools::session_info()
 #>  httr2          1.2.2     2025-12-08 [1] RSPM
 #>  jquerylib      0.1.4     2021-04-26 [1] RSPM
 #>  jsonlite       2.0.0     2025-03-27 [1] RSPM
-#>  knitr          1.50      2025-03-16 [1] RSPM
-#>  lifecycle      1.0.4     2023-11-07 [1] RSPM
+#>  knitr          1.51      2025-12-20 [1] RSPM
+#>  lifecycle      1.0.5     2026-01-08 [1] RSPM
 #>  lubridate    * 1.9.4     2024-12-08 [1] RSPM
 #>  magrittr       2.0.4     2025-09-12 [1] RSPM
 #>  memoise        2.0.1     2021-11-26 [1] RSPM
@@ -521,14 +521,14 @@ devtools::session_info()
 #>  pkgconfig      2.0.3     2019-09-22 [1] RSPM
 #>  pkgdown        2.2.0     2025-11-06 [1] any (@2.2.0)
 #>  pkgload        1.4.1     2025-09-23 [1] RSPM
-#>  purrr        * 1.2.0     2025-11-04 [1] RSPM
+#>  purrr        * 1.2.1     2026-01-09 [1] RSPM
 #>  R6             2.6.1     2025-02-15 [1] RSPM
 #>  ragg           1.5.0     2025-09-02 [1] RSPM
 #>  rappdirs       0.3.3     2021-01-31 [1] RSPM
 #>  RColorBrewer   1.1-3     2022-04-03 [1] RSPM
 #>  readr        * 2.1.6     2025-11-14 [1] RSPM
 #>  remotes        2.5.0     2024-03-17 [1] RSPM
-#>  rlang          1.1.6     2025-04-11 [1] RSPM
+#>  rlang          1.1.7     2026-01-09 [1] RSPM
 #>  rmarkdown      2.30      2025-09-28 [1] RSPM
 #>  S4Vectors      0.48.0    2025-10-29 [1] Bioconduc~
 #>  S7             0.2.1     2025-11-14 [1] RSPM
@@ -540,7 +540,7 @@ devtools::session_info()
 #>  systemfonts    1.3.1     2025-10-01 [1] RSPM
 #>  textshaping    1.0.4     2025-10-10 [1] RSPM
 #>  tibble       * 3.3.0     2025-06-08 [1] RSPM
-#>  tidyr        * 1.3.1     2024-01-24 [1] RSPM
+#>  tidyr        * 1.3.2     2025-12-19 [1] RSPM
 #>  tidyselect     1.2.1     2024-03-11 [1] RSPM
 #>  tidyverse    * 2.0.0     2023-02-22 [1] RSPM
 #>  timechange     0.3.0     2024-01-18 [1] RSPM
@@ -549,7 +549,7 @@ devtools::session_info()
 #>  vctrs          0.6.5     2023-12-01 [1] RSPM
 #>  vroom          1.6.7     2025-11-28 [1] RSPM
 #>  withr          3.0.2     2024-10-28 [1] RSPM
-#>  xfun           0.54      2025-10-30 [1] RSPM
+#>  xfun           0.55      2025-12-16 [1] RSPM
 #>  yaml           2.3.12    2025-12-10 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library
