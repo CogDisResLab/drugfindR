@@ -5,7 +5,7 @@ library(tidyverse)
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 #> ✔ dplyr     1.1.4     ✔ readr     2.1.6
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
-#> ✔ ggplot2   4.0.1     ✔ tibble    3.3.0
+#> ✔ ggplot2   4.0.1     ✔ tibble    3.3.1
 #> ✔ lubridate 1.9.4     ✔ tidyr     1.3.2
 #> ✔ purrr     1.2.1     
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
@@ -493,7 +493,7 @@ devtools::session_info()
 #>  DFplyr         1.4.0     2025-10-29 [1] Bioconduc~
 #>  digest         0.6.39    2025-11-19 [1] RSPM
 #>  dplyr        * 1.1.4     2023-11-17 [1] RSPM
-#>  drugfindR    * 0.99.1346 2026-01-12 [1] local
+#>  drugfindR    * 0.99.1349 2026-01-12 [1] local
 #>  ellipsis       0.3.2     2021-04-29 [1] RSPM
 #>  evaluate       1.0.5     2025-08-27 [1] RSPM
 #>  farver         2.1.2     2024-05-13 [1] RSPM
@@ -539,7 +539,7 @@ devtools::session_info()
 #>  stringr      * 1.6.0     2025-11-04 [1] RSPM
 #>  systemfonts    1.3.1     2025-10-01 [1] RSPM
 #>  textshaping    1.0.4     2025-10-10 [1] RSPM
-#>  tibble       * 3.3.0     2025-06-08 [1] RSPM
+#>  tibble       * 3.3.1     2026-01-11 [1] RSPM
 #>  tidyr        * 1.3.2     2025-12-19 [1] RSPM
 #>  tidyselect     1.2.1     2024-03-11 [1] RSPM
 #>  tidyverse    * 2.0.0     2023-02-22 [1] RSPM
