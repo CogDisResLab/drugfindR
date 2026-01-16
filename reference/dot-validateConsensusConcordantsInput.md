@@ -47,14 +47,16 @@ This function performs the following validations:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 # Valid calls (no errors)
 testData <- data.frame(similarity = c(0.5, -0.3), compound = c("A", "B"))
 .validateConsensusConcordantsInput(list(testData), FALSE, 0.3, NULL)
+#> Error in .validateConsensusConcordantsInput(list(testData), FALSE, 0.3,     NULL): could not find function ".validateConsensusConcordantsInput"
 .validateConsensusConcordantsInput(list(testData, testData), TRUE, 0.3, "A375")
+#> Error in .validateConsensusConcordantsInput(list(testData, testData),     TRUE, 0.3, "A375"): could not find function ".validateConsensusConcordantsInput"
 
 # Invalid calls (will throw errors)
 .validateConsensusConcordantsInput(list(), FALSE, 0.3, NULL) # No data
+#> Error in .validateConsensusConcordantsInput(list(), FALSE, 0.3, NULL): could not find function ".validateConsensusConcordantsInput"
 .validateConsensusConcordantsInput(list(testData), TRUE, 0.3, NULL) # Paired needs 2 dataframes
-} # }
+#> Error in .validateConsensusConcordantsInput(list(testData), TRUE, 0.3,     NULL): could not find function ".validateConsensusConcordantsInput"
 ```

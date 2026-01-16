@@ -44,12 +44,11 @@ This function coordinates the following processing steps:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 testData <- data.frame(
     similarity = c(0.5, -0.8, 0.2),
     compound = c("A", "B", "C"),
     cellline = c("A375", "PC3", "A375")
 )
 processed <- .processConsensusPipeline(testData, 0.3, "A375")
-} # }
+#> Error in .processConsensusPipeline(testData, 0.3, "A375"): could not find function ".processConsensusPipeline"
 ```

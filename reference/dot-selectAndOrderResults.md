@@ -33,7 +33,6 @@ This function:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 testData <- data.frame(
     signatureid = "SIG1",
     compound = "A",
@@ -43,5 +42,5 @@ testData <- data.frame(
     pValue = 0.01
 )
 selected <- .selectAndOrderResults(testData)
-} # }
+#> Error in .selectAndOrderResults(testData): could not find function ".selectAndOrderResults"
 ```

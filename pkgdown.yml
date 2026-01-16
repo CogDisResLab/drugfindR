@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   drugfindR: drugfindR.html
-last_built: 2026-01-14T06:11Z
+last_built: 2026-01-16T04:36Z
 urls:
   reference: https://cogdisreslab.github.io/drugfindR/reference
   article: https://cogdisreslab.github.io/drugfindR/articles

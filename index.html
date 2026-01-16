@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">drugfindR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1349</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1302</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,245 +52,40 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>drugfindR provides R-based programmatic access to the <a href="http://www.ilincs.org" class="external-link">iLINCS</a> (Integrative LINCS) database for drug repurposing and functional genomics research. The package enables systematic analysis of gene expression signatures against comprehensive databases of:</p>
-<ul>
-<li>
-<strong>Gene Knockdown (KD)</strong> signatures</li>
-<li>
-<strong>Gene Overexpression (OE)</strong> signatures</li>
-<li>
-<strong>Chemical Perturbagen (CP)</strong> signatures</li>
-</ul>
-<div class="section level2">
-<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
-</h2>
-<p>drugfindR streamlines transcriptomic signature analysis by:</p>
-<ul>
-<li>Querying LINCS signatures without web platform dependencies</li>
-<li>Processing custom transcriptomic data for concordance analysis</li>
-<li>Identifying candidate repurposable drugs based on signature similarity</li>
-<li>Discovering functional relationships between genes and compounds</li>
-<li>Enabling high-throughput batch processing of multiple signatures</li>
-</ul>
-<p>The package integrates with standard differential expression analysis outputs from tools like <a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html" class="external-link">edgeR</a> and <a href="https://bioconductor.org/packages/release/bioc/html/DESeq2.html" class="external-link">DESeq2</a>.</p>
-</div>
-<div class="section level2">
-<h2 id="bioconductor-acceptance">Bioconductor Acceptance<a class="anchor" aria-label="anchor" href="#bioconductor-acceptance"></a>
-</h2>
-<p>🎉 <strong>drugfindR has been accepted into Bioconductor!</strong></p>
-<p>The package will be available in <strong>Bioconductor Release 3.23</strong> (accessible via the main release channel). Additionally, drugfindR is available now from the <strong>Bioconductor devel channel</strong> and will be fully integrated within one week.</p>
-</div>
+<p><a href="https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml" class="external-link"><img src="https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml/badge.svg" alt="Continuous Integration / R Workflows"></a> <a href="https://github.com/CogDisResLab/drugfindR/releases/latest" class="external-link"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcogdisreslab.r-universe.dev%2Fapi%2Fpackages%2FdrugfindR&amp;query=%24.Version&amp;style=flat&amp;label=latest-release&amp;color=orange" alt="latest-version"></a> <a href="https://github.com/CogDisResLab/drugfindR/blob/main/LICENSE" class="external-link"><img src="https://img.shields.io/github/license/CogDisResLab/drugfindR" alt="license"></a> <a href="https://zenodo.org/badge/latestdoi/338354715" class="external-link"><img src="https://zenodo.org/badge/338354715.svg" alt="DOI"></a> <a href="https://app.codecov.io/gh/CogDisResLab/drugfindR?branch=devel" class="external-link"><img src="https://codecov.io/gh/CogDisResLab/drugfindR/branch/devel/graph/badge.svg" alt="Codecov test coverage"></a> <!-- badges: end --></p>
+<p>drugfindR allows convenient access to the iLINCS Gene Knockdown, Gene Overexpression and Chemical Perturbagen databases and allows you to generate and investigate signatures to identify relevant genes and drugs.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<div class="section level3">
-<h3 id="from-bioconductor-recommended">From Bioconductor (Recommended)<a class="anchor" aria-label="anchor" href="#from-bioconductor-recommended"></a>
-</h3>
-<p>Install from the <strong>Bioconductor devel channel</strong> (available now):</p>
+<p>You can install the released version of drugfindR from <a href="https://cogdisreslab.r-universe.dev/drugfindR" class="external-link">r-universe</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"drugfindR"</span>, version <span class="op">=</span> <span class="st">"devel"</span><span class="op">)</span></span></code></pre></div>
-<p>Or wait for <strong>Bioconductor Release 3.23</strong> and install from the stable release channel:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"drugfindR"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="alternative-installation-methods">Alternative Installation Methods<a class="anchor" aria-label="anchor" href="#alternative-installation-methods"></a>
-</h3>
-<p>Install from <a href="https://cogdisreslab.r-universe.dev/drugfindR" class="external-link">r-universe</a>:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"drugfindR"</span>,</span>
 <span>    repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>        <span class="st">"https://cogdisreslab.r-universe.dev"</span>,</span>
 <span>        <span class="st">"https://cran.r-project.org"</span></span>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Or install the development version from <a href="https://github.com/CogDisResLab/drugfindR" class="external-link">GitHub</a>:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>And the development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"devtools"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"CogDisResLab/drugfindR"</span><span class="op">)</span></span></code></pre></div>
 </div>
-</div>
 <div class="section level2">
-<h2 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>drugfindR offers two analysis approaches:</p>
-<div class="section level3">
-<h3 id="id_1-high-level-convenience-functions">1. High-Level Convenience Functions<a class="anchor" aria-label="anchor" href="#id_1-high-level-convenience-functions"></a>
-</h3>
-<p>For rapid analysis with sensible defaults, use the wrapper functions:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CogDisResLab/drugfindR" class="external-link">drugfindR</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Investigate a transcriptomic signature for candidate drugs</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/investigateSignature.html">investigateSignature</a></span><span class="op">(</span></span>
-<span>    expr <span class="op">=</span> <span class="va">my_diffexp_data</span>,</span>
-<span>    outputLib <span class="op">=</span> <span class="st">"CP"</span>, <span class="co"># Query chemical perturbagens</span></span>
-<span>    filterThreshold <span class="op">=</span> <span class="fl">1.5</span>, <span class="co"># Filter by absolute log fold change</span></span>
-<span>    geneColumn <span class="op">=</span> <span class="st">"gene_symbol"</span>,</span>
-<span>    logfcColumn <span class="op">=</span> <span class="st">"logFC"</span>,</span>
-<span>    pvalColumn <span class="op">=</span> <span class="st">"PValue"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Investigate a specific gene target</span></span>
-<span><span class="va">target_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/investigateTarget.html">investigateTarget</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="st">"TP53"</span>,</span>
-<span>    inputLib <span class="op">=</span> <span class="st">"KD"</span>, <span class="co"># Use knockdown signatures</span></span>
-<span>    outputLib <span class="op">=</span> <span class="st">"CP"</span>, <span class="co"># Find related chemical perturbagens</span></span>
-<span>    filterThreshold <span class="op">=</span> <span class="fl">0.5</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="id_2-modular-pipeline-functions">2. Modular Pipeline Functions<a class="anchor" aria-label="anchor" href="#id_2-modular-pipeline-functions"></a>
-</h3>
-<p>For customized workflows and fine-grained control:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Step 1: Prepare your signature</span></span>
-<span><span class="va">signature</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepareSignature.html">prepareSignature</a></span><span class="op">(</span><span class="va">diffexp_data</span>,</span>
-<span>    geneColumn <span class="op">=</span> <span class="st">"gene"</span>,</span>
-<span>    logfcColumn <span class="op">=</span> <span class="st">"logFC"</span>,</span>
-<span>    pvalColumn <span class="op">=</span> <span class="st">"PValue"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Step 2: Filter by thresholds</span></span>
-<span><span class="va">filtered_up</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/filterSignature.html">filterSignature</a></span><span class="op">(</span><span class="va">signature</span>, direction <span class="op">=</span> <span class="st">"up"</span>, threshold <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span>
-<span><span class="va">filtered_dn</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/filterSignature.html">filterSignature</a></span><span class="op">(</span><span class="va">signature</span>, direction <span class="op">=</span> <span class="st">"down"</span>, threshold <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Step 3: Query concordant signatures</span></span>
-<span><span class="va">concordants_up</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/getConcordants.html">getConcordants</a></span><span class="op">(</span><span class="va">filtered_up</span>, ilincsLibrary <span class="op">=</span> <span class="st">"CP"</span><span class="op">)</span></span>
-<span><span class="va">concordants_dn</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/getConcordants.html">getConcordants</a></span><span class="op">(</span><span class="va">filtered_dn</span>, ilincsLibrary <span class="op">=</span> <span class="st">"CP"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Step 4: Generate consensus results</span></span>
-<span><span class="va">consensus</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/consensusConcordants.html">consensusConcordants</a></span><span class="op">(</span><span class="va">concordants_up</span>, <span class="va">concordants_dn</span>,</span>
-<span>    paired <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    cutoff <span class="op">=</span> <span class="fl">0.2</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-</div>
-</div>
-<div class="section level2">
-<h2 id="primary-use-cases">Primary Use Cases<a class="anchor" aria-label="anchor" href="#primary-use-cases"></a>
-</h2>
-<div class="section level3">
-<h3 id="drug-repurposing-from-transcriptomic-data">Drug Repurposing from Transcriptomic Data<a class="anchor" aria-label="anchor" href="#drug-repurposing-from-transcriptomic-data"></a>
-</h3>
-<p>Identify candidate drugs that reverse or mimic a disease signature by comparing your expression data against LINCS chemical perturbagen signatures.</p>
-</div>
-<div class="section level3">
-<h3 id="target-validation-and-functional-analysis">Target Validation and Functional Analysis<a class="anchor" aria-label="anchor" href="#target-validation-and-functional-analysis"></a>
-</h3>
-<p>Discover genes and compounds with similar or opposite functional effects to a gene of interest using knockdown and overexpression signatures.</p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
-</h2>
-<ul>
-<li><strong><a href="https://cogdisreslab.github.io/drugfindR/">Full Documentation Website</a></strong></li>
-<li>
-<strong><a href="https://cogdisreslab.github.io/drugfindR/articles/drugfindR.html">Get Started Tutorial</a></strong> - Comprehensive vignette with worked examples</li>
-<li>
-<strong><a href="https://cogdisreslab.github.io/drugfindR/reference/index.html">Function Reference</a></strong> - Complete API documentation</li>
-</ul>
-<div class="section level3">
-<h3 id="key-functions">Key Functions<a class="anchor" aria-label="anchor" href="#key-functions"></a>
-</h3>
-<table class="table">
-<colgroup>
-<col width="33%">
-<col width="33%">
-<col width="33%">
-</colgroup>
-<thead><tr class="header">
-<th>Function</th>
-<th>Purpose</th>
-<th>Reference</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td><a href="https://cogdisreslab.github.io/drugfindR/reference/investigateSignature.html"><code>investigateSignature()</code></a></td>
-<td>All-in-one signature analysis</td>
-<td><a href="https://cogdisreslab.github.io/drugfindR/reference/investigateSignature.html">docs</a></td>
-</tr>
-<tr class="even">
-<td><a href="https://cogdisreslab.github.io/drugfindR/reference/investigateTarget.html"><code>investigateTarget()</code></a></td>
-<td>Analyze a specific gene target</td>
-<td><a href="https://cogdisreslab.github.io/drugfindR/reference/investigateTarget.html">docs</a></td>
-</tr>
-<tr class="odd">
-<td><a href="https://cogdisreslab.github.io/drugfindR/reference/prepareSignature.html"><code>prepareSignature()</code></a></td>
-<td>Format signatures for iLINCS</td>
-<td><a href="https://cogdisreslab.github.io/drugfindR/reference/prepareSignature.html">docs</a></td>
-</tr>
-<tr class="even">
-<td><a href="https://cogdisreslab.github.io/drugfindR/reference/filterSignature.html"><code>filterSignature()</code></a></td>
-<td>Apply thresholds to signatures</td>
-<td><a href="https://cogdisreslab.github.io/drugfindR/reference/filterSignature.html">docs</a></td>
-</tr>
-<tr class="odd">
-<td><a href="https://cogdisreslab.github.io/drugfindR/reference/getConcordants.html"><code>getConcordants()</code></a></td>
-<td>Query iLINCS for matches</td>
-<td><a href="https://cogdisreslab.github.io/drugfindR/reference/getConcordants.html">docs</a></td>
-</tr>
-<tr class="even">
-<td><a href="https://cogdisreslab.github.io/drugfindR/reference/consensusConcordants.html"><code>consensusConcordants()</code></a></td>
-<td>Generate consensus results</td>
-<td><a href="https://cogdisreslab.github.io/drugfindR/reference/consensusConcordants.html">docs</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="section level2">
-<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
-</h2>
-<p>If you use drugfindR in your research, please cite:</p>
-<blockquote>
-<p>Imami AS, Sahay S, Creeden JF, McCullumsmith RE (2024). drugfindR: Investigate iLINCS for candidate repurposable drugs. R package version 0.99.1302. <a href="doi:10.5281/zenodo.338354715" class="uri">doi:10.5281/zenodo.338354715</a></p>
-</blockquote>
-</div>
-<div class="section level2">
-<h2 id="getting-help">Getting Help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
-</h2>
-<ul>
-<li>
-<strong>Questions &amp; Discussions</strong>: Use <a href="https://github.com/CogDisResLab/drugfindR/discussions" class="external-link">GitHub Discussions</a>
-</li>
-<li>
-<strong>Bug Reports</strong>: Open an <a href="https://github.com/CogDisResLab/drugfindR/issues" class="external-link">issue</a>
-</li>
-<li>
-<strong>Feature Requests</strong>: Submit via <a href="https://github.com/CogDisResLab/drugfindR/issues" class="external-link">GitHub Issues</a>
-</li>
-</ul>
-</div>
-<div class="section level2">
-<h2 id="related-resources">Related Resources<a class="anchor" aria-label="anchor" href="#related-resources"></a>
-</h2>
-<ul>
-<li>
-<a href="http://www.ilincs.org" class="external-link">iLINCS Portal</a> - Web-based platform for LINCS data</li>
-<li>
-<a href="https://lincsproject.org/" class="external-link">LINCS Project</a> - Library of Integrated Network-Based Cellular Signatures</li>
-<li>
-<a href="https://www.nature.com/articles/s41598-021-84044-9" class="external-link">O’Donovan et al. 2021</a> - Example application for COVID-19 drug repurposing</li>
-</ul>
-</div>
-<div class="section level2">
-<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
-</h2>
-<p>GPL-3 + file LICENSE</p>
+<p>This package has two different interfaces that can be used to generate the results:</p>
+<ol style="list-style-type: decimal">
+<li><p>The first way is to use the individual building block functions to generate results. This is useful if you want to use the results in your own analysis pipeline or want more control over the results.</p></li>
+<li><p>The second way is to use one of the convenience functions (<code>investigateSignatures</code> or <code>investigateTarget</code>) to generate results. This approach uses the building block functions under the hood with sensible defaults and returns a final result that can be used for further analysis.</p></li>
+</ol>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://www.bioconductor.org/packages/drugfindR" class="external-link">View on Bioconductor</a></li>
 <li><a href="https://github.com/CogDisResLab/drugfindR/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/CogDisResLab/drugfindR/issues" class="external-link">Report a bug</a></li>
 </ul>
@@ -326,11 +121,6 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml" class="external-link"><img src="https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflows.yml/badge.svg" alt="Continuous Integration / R Workflows"></a></li>
-<li><a href="https://github.com/CogDisResLab/drugfindR/releases/latest" class="external-link"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fcogdisreslab.r-universe.dev%2Fapi%2Fpackages%2FdrugfindR&amp;query=%24.Version&amp;style=flat&amp;label=latest-release&amp;color=orange" alt="latest-version"></a></li>
-<li><a href="https://github.com/CogDisResLab/drugfindR/blob/main/LICENSE" class="external-link"><img src="https://img.shields.io/github/license/CogDisResLab/drugfindR" alt="license"></a></li>
-<li><a href="https://zenodo.org/badge/latestdoi/338354715" class="external-link"><img src="https://zenodo.org/badge/338354715.svg" alt="DOI"></a></li>
-<li><a href="https://app.codecov.io/gh/CogDisResLab/drugfindR?branch=devel" class="external-link"><img src="https://codecov.io/gh/CogDisResLab/drugfindR/branch/devel/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 

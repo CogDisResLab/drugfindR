@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">drugfindR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1349</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1302</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,7 @@
       <h1>drugfindR</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/CogDisResLab/drugfindR/blob/devel/vignettes/drugfindR.Rmd" class="external-link"><code>vignettes/drugfindR.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/CogDisResLab/drugfindR/blob/v0.99.1302/vignettes/drugfindR.Rmd" class="external-link"><code>vignettes/drugfindR.Rmd</code></a></small>
       <div class="d-none name"><code>drugfindR.Rmd</code></div>
     </div>
 
@@ -100,10 +100,10 @@ physiological reasons.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p><code>drugfindR</code> can be installed from BioConductor using the
-<code>BiocManager</code> package:</p>
+<p><code>drugfindR</code> can be installed from GitHub using the
+<code>devtools</code> package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"drugfindR"</span><span class="op">)</span> <span class="co"># nolint: nonportable_path_linter.</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"CogDisResLab/drugfindR"</span><span class="op">)</span> <span class="co"># nolint: nonportable_path_linter.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="use-cases">Use Cases<a class="anchor" aria-label="anchor" href="#use-cases"></a>
@@ -156,9 +156,8 @@ concordant signatures and returns a list of consensus signature.</li>
 <h2 id="use-case-1-identifying-candidate-drugs-from-an-input-signature">Use Case 1: Identifying Candidate Drugs from an Input Signature<a class="anchor" aria-label="anchor" href="#use-case-1-identifying-candidate-drugs-from-an-input-signature"></a>
 </h2>
 <p>For this case, we will use one of the signatures that was used in the
-paper <a href="https://www.nature.com/articles/s41598-021-84044-9" class="external-link">“Identification
-of candidate repurposable drugs to combat COVID - 19 using a signature -
-based approach” by O’Donovan, Imami, et al</a>.</p>
+paper [“Identification of candidate repurposable drugs to combat COVID -
+19 using a signature - based approach” by O’Donovan, Imami, et al] (<a href="https://www.nature.com/articles/s41598-021-84044-9" class="external-link uri">https://www.nature.com/articles/s41598-021-84044-9</a>).</p>
 <p>In that paper, the authors used the available gene expression data
 from cells infected with SARS-CoV-2 to identify potential drugs that
 could be repurposed to treat COVID-19. We will use one of the signatures
@@ -170,9 +169,10 @@ signature from the paper.</p>
 <h3 id="step-1-get-the-signature">Step 1: Get the Signature<a class="anchor" aria-label="anchor" href="#step-1-get-the-signature"></a>
 </h3>
 <p>This signature is available with the package. Our first step is to
-import the signature so we can work with it. The <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_tsv()</a></code>
-function from the <code>readr</code> package can be used to read the
-signature into R from a remote URL or a local file.</p>
+download the signature so we can work with it. The
+<code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_tsv()</a></code> function from the <code>readr</code> package can
+be used to read the signature into R from a remote URL or a local
+file.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load the signature from the paper</span></span>
 <span></span>
@@ -262,10 +262,11 @@ contains the p-values. The default is <code>"PValue"</code>.</li>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Prepare the signature for analysis</span></span>
 <span><span class="co"># The only thing that is different from the defaults is the gene_column</span></span>
-<span><span class="co"># so we will specify that and rely on defaults for others.</span></span>
+<span><span class="co"># However, we will specify all three arguments for clarity</span></span>
 <span></span>
 <span><span class="va">signature</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepareSignature.html">prepareSignature</a></span><span class="op">(</span><span class="va">diffexp</span>,</span>
-<span>    geneColumn <span class="op">=</span> <span class="st">"hgnc_symbol"</span></span>
+<span>    geneColumn <span class="op">=</span> <span class="st">"hgnc_symbol"</span>,</span>
+<span>    logfcColumn <span class="op">=</span> <span class="st">"logFC"</span>, pvalColumn <span class="op">=</span> <span class="st">"PValue"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Take a look at the signature</span></span>
@@ -944,13 +945,13 @@ contains the p-values. The default is <code>"PValue"</code>.</li>
 The default is <code>"Input"</code>.</li>
 <li>
 <code>sourceCellLine</code>: The cell line of the source of the
-signature. The default is <code>NA</code>.</li>
+signature. The default is <code>"NA"</code>.</li>
 <li>
 <code>sourceTime</code>: The time of the source of the signature.
-The default is <code>NA</code>.</li>
+The default is <code>"NA"</code>.</li>
 <li>
 <code>sourceConcentration</code>: The concentration of the source of
-the signature. The default is <code>NA</code>.</li>
+the signature. The default is <code>"NA"</code>.</li>
 </ol>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">investigated</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/investigateSignature.html">investigateSignature</a></span><span class="op">(</span><span class="va">diffexp</span>,</span>
@@ -1111,7 +1112,7 @@ the signature. The default is <code>NA</code>.</li>
 <span><span class="co">#&gt;  collate  C.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2026-01-14</span></span>
+<span><span class="co">#&gt;  date     2026-01-16</span></span>
 <span><span class="co">#&gt;  pandoc   3.1.11 @ /opt/hostedtoolcache/pandoc/3.1.11/x64/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt;  quarto   NA</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -1133,7 +1134,7 @@ the signature. The default is <code>NA</code>.</li>
 <span><span class="co">#&gt;  DFplyr         1.4.0     <span style="color: #555555;">2025-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">Bioconduc~</span></span></span>
 <span><span class="co">#&gt;  digest         0.6.39    <span style="color: #555555;">2025-11-19</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">#&gt;  dplyr        * 1.1.4     <span style="color: #555555;">2023-11-17</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
-<span><span class="co">#&gt;  drugfindR    * <span style="color: #BB00BB; font-weight: bold;">0.99.1349</span> <span style="color: #555555;">2026-01-14</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">local</span></span></span>
+<span><span class="co">#&gt;  drugfindR    * <span style="color: #BB00BB; font-weight: bold;">0.99.1302</span> <span style="color: #555555;">2026-01-16</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">local</span></span></span>
 <span><span class="co">#&gt;  ellipsis       0.3.2     <span style="color: #555555;">2021-04-29</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">#&gt;  evaluate       1.0.5     <span style="color: #555555;">2025-08-27</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">#&gt;  farver         2.1.2     <span style="color: #555555;">2024-05-13</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>

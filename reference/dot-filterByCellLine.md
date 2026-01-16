@@ -36,11 +36,10 @@ This function:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 testData <- data.frame(
     similarity = c(0.5, -0.3, 0.7),
     cellline = c("A375", "PC3", "MCF7")
 )
 filtered <- .filterByCellLine(testData, c("A375", "PC3"))
-} # }
+#> Error in .filterByCellLine(testData, c("A375", "PC3")): could not find function ".filterByCellLine"
 ```

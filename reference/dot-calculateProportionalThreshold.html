@@ -11,7 +11,7 @@ proportion-based filtering that adapts to the data distribution."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">drugfindR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1349</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1302</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,7 @@ proportion-based filtering that adapts to the data distribution."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Calculate thresholds using proportional values</h1>
-      <small class="dont-index">Source: <a href="https://github.com/CogDisResLab/drugfindR/blob/devel/R/filterSignature.R" class="external-link"><code>R/filterSignature.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/CogDisResLab/drugfindR/blob/v0.99.1302/R/filterSignature.R" class="external-link"><code>R/filterSignature.R</code></a></small>
       <div class="d-none name"><code>dot-calculateProportionalThreshold.Rd</code></div>
     </div>
 
@@ -82,24 +82,25 @@ expression values.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># Create sample signature data</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create sample signature data</span></span></span>
 <span class="r-in"><span><span class="va">signature</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    Value_LogDiffExp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate thresholds for top/bottom 20%</span></span></span>
 <span class="r-in"><span><span class="va">thresholds</span> <span class="op">&lt;-</span> <span class="fu">.calculateProportionalThreshold</span><span class="op">(</span><span class="va">signature</span>, <span class="fl">0.2</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .calculateProportionalThreshold(signature, 0.2):</span> could not find function ".calculateProportionalThreshold"</span>
 <span class="r-in"><span><span class="co"># Returns thresholds based on 20th and 80th percentiles</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate thresholds for top/bottom 10%</span></span></span>
 <span class="r-in"><span><span class="va">thresholds</span> <span class="op">&lt;-</span> <span class="fu">.calculateProportionalThreshold</span><span class="op">(</span><span class="va">signature</span>, <span class="fl">0.1</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .calculateProportionalThreshold(signature, 0.1):</span> could not find function ".calculateProportionalThreshold"</span>
 <span class="r-in"><span><span class="co"># Returns thresholds based on 10th and 90th percentiles</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate thresholds for top/bottom 5% (most extreme)</span></span></span>
 <span class="r-in"><span><span class="va">thresholds</span> <span class="op">&lt;-</span> <span class="fu">.calculateProportionalThreshold</span><span class="op">(</span><span class="va">signature</span>, <span class="fl">0.05</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .calculateProportionalThreshold(signature, 0.05):</span> could not find function ".calculateProportionalThreshold"</span>
 <span class="r-in"><span><span class="co"># Returns thresholds based on 5th and 95th percentiles</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

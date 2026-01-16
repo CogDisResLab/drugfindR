@@ -56,20 +56,28 @@ This function performs the following validations in order:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 # Valid calls (no errors)
 sig <- data.frame(Value_LogDiffExp = c(-2, -1, 0, 1, 2))
 .validateFilterSignatureInput(sig, "any", 1.0, NULL)
+#> Error in .validateFilterSignatureInput(sig, "any", 1, NULL): could not find function ".validateFilterSignatureInput"
 .validateFilterSignatureInput(sig, "up", NULL, 0.1)
+#> Error in .validateFilterSignatureInput(sig, "up", NULL, 0.1): could not find function ".validateFilterSignatureInput"
 .validateFilterSignatureInput(sig, "down", c(-1.5, 1.0), NULL)
+#> Error in .validateFilterSignatureInput(sig, "down", c(-1.5, 1), NULL): could not find function ".validateFilterSignatureInput"
 
 # Invalid calls (will throw errors)
 .validateFilterSignatureInput(sig, "invalid", 1.0, NULL) # Invalid direction
+#> Error in .validateFilterSignatureInput(sig, "invalid", 1, NULL): could not find function ".validateFilterSignatureInput"
 .validateFilterSignatureInput(sig, "any", 1.0, 0.1) # Both threshold and prop
+#> Error in .validateFilterSignatureInput(sig, "any", 1, 0.1): could not find function ".validateFilterSignatureInput"
 .validateFilterSignatureInput(sig, "any", NULL, NULL) # Neither threshold nor prop
+#> Error in .validateFilterSignatureInput(sig, "any", NULL, NULL): could not find function ".validateFilterSignatureInput"
 .validateFilterSignatureInput(sig, "any", c(1, 2, 3), NULL) # Too many thresholds
+#> Error in .validateFilterSignatureInput(sig, "any", c(1, 2, 3), NULL): could not find function ".validateFilterSignatureInput"
 .validateFilterSignatureInput(sig, "any", c(2, 1), NULL) # Wrong threshold order
+#> Error in .validateFilterSignatureInput(sig, "any", c(2, 1), NULL): could not find function ".validateFilterSignatureInput"
 .validateFilterSignatureInput(sig, "any", NULL, 1.5) # Proportion > 1
+#> Error in .validateFilterSignatureInput(sig, "any", NULL, 1.5): could not find function ".validateFilterSignatureInput"
 .validateFilterSignatureInput(sig, "any", NULL, -0.1) # Proportion < 0
-} # }
+#> Error in .validateFilterSignatureInput(sig, "any", NULL, -0.1): could not find function ".validateFilterSignatureInput"
 ```
