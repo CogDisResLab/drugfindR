@@ -32,6 +32,7 @@ This function:
 ## Examples
 
 ``` r
+if (FALSE) { # \dontrun{
 testData <- data.frame(
     signatureid = "SIG1",
     compound = "A",
@@ -39,5 +40,5 @@ testData <- data.frame(
     similarity = 0.8
 )
 renamed <- .applyTargetRenaming(testData)
-#> Error in .applyTargetRenaming(testData): could not find function ".applyTargetRenaming"
+} # }
 ```

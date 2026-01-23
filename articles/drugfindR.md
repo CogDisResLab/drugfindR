@@ -39,10 +39,11 @@ physiological reasons.
 
 ## Installation
 
-`drugfindR` can be installed from GitHub using the `devtools` package:
+`drugfindR` can be installed from BioConductor using the `BiocManager`
+package:
 
 ``` r
-devtools::install_github("CogDisResLab/drugfindR") # nolint: nonportable_path_linter.
+BiocManager::install("drugfindR") # nolint: nonportable_path_linter.
 ```
 
 ## Use Cases
@@ -89,9 +90,9 @@ The five pipeline functions are:
 ## Use Case 1: Identifying Candidate Drugs from an Input Signature
 
 For this case, we will use one of the signatures that was used in the
-paper \[“Identification of candidate repurposable drugs to combat
-COVID - 19 using a signature - based approach” by O’Donovan, Imami, et
-al\] (<https://www.nature.com/articles/s41598-021-84044-9>).
+paper [“Identification of candidate repurposable drugs to combat COVID -
+19 using a signature - based approach” by O’Donovan, Imami, et
+al](https://www.nature.com/articles/s41598-021-84044-9).
 
 In that paper, the authors used the available gene expression data from
 cells infected with SARS-CoV-2 to identify potential drugs that could be
@@ -103,7 +104,7 @@ the `dCovid_diffexp.tsv` signature from the paper.
 ### Step 1: Get the Signature
 
 This signature is available with the package. Our first step is to
-download the signature so we can work with it. The
+import the signature so we can work with it. The
 [`read_tsv()`](https://readr.tidyverse.org/reference/read_delim.html)
 function from the `readr` package can be used to read the signature into
 R from a remote URL or a local file.
@@ -169,11 +170,10 @@ takes three optional arguments:
 ``` r
 # Prepare the signature for analysis
 # The only thing that is different from the defaults is the gene_column
-# However, we will specify all three arguments for clarity
+# so we will specify that and rely on defaults for others.
 
 signature <- prepareSignature(diffexp,
-    geneColumn = "hgnc_symbol",
-    logfcColumn = "logFC", pvalColumn = "PValue"
+    geneColumn = "hgnc_symbol"
 )
 
 # Take a look at the signature
@@ -430,11 +430,11 @@ Other arguments that have sensible defaults are:
 7.  `sourceName`: The name of the source of the signature. The default
     is `"Input"`.
 8.  `sourceCellLine`: The cell line of the source of the signature. The
-    default is `"NA"`.
+    default is `NA`.
 9.  `sourceTime`: The time of the source of the signature. The default
-    is `"NA"`.
+    is `NA`.
 10. `sourceConcentration`: The concentration of the source of the
-    signature. The default is `"NA"`.
+    signature. The default is `NA`.
 
 ``` r
 investigated <- investigateSignature(diffexp,
@@ -471,7 +471,7 @@ devtools::session_info()
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2026-01-16
+#>  date     2026-01-23
 #>  pandoc   3.1.11 @ /opt/hostedtoolcache/pandoc/3.1.11/x64/ (via rmarkdown)
 #>  quarto   NA
 #> 
@@ -493,7 +493,7 @@ devtools::session_info()
 #>  DFplyr         1.4.0     2025-10-29 [1] Bioconduc~
 #>  digest         0.6.39    2025-11-19 [1] RSPM
 #>  dplyr        * 1.1.4     2023-11-17 [1] RSPM
-#>  drugfindR    * 0.99.1302 2026-01-16 [1] local
+#>  drugfindR    * 0.99.1349 2026-01-23 [1] local
 #>  ellipsis       0.3.2     2021-04-29 [1] RSPM
 #>  evaluate       1.0.5     2025-08-27 [1] RSPM
 #>  farver         2.1.2     2024-05-13 [1] RSPM
@@ -524,7 +524,7 @@ devtools::session_info()
 #>  purrr        * 1.2.1     2026-01-09 [1] RSPM
 #>  R6             2.6.1     2025-02-15 [1] RSPM
 #>  ragg           1.5.0     2025-09-02 [1] RSPM
-#>  rappdirs       0.3.3     2021-01-31 [1] RSPM
+#>  rappdirs       0.3.4     2026-01-17 [1] RSPM
 #>  RColorBrewer   1.1-3     2022-04-03 [1] RSPM
 #>  readr        * 2.1.6     2025-11-14 [1] RSPM
 #>  remotes        2.5.0     2024-03-17 [1] RSPM
@@ -546,10 +546,10 @@ devtools::session_info()
 #>  timechange     0.3.0     2024-01-18 [1] RSPM
 #>  tzdb           0.5.0     2025-03-15 [1] RSPM
 #>  usethis        3.2.1     2025-09-06 [1] RSPM
-#>  vctrs          0.6.5     2023-12-01 [1] RSPM
+#>  vctrs          0.7.0     2026-01-16 [1] RSPM
 #>  vroom          1.6.7     2025-11-28 [1] RSPM
 #>  withr          3.0.2     2024-10-28 [1] RSPM
-#>  xfun           0.55      2025-12-16 [1] RSPM
+#>  xfun           0.56      2026-01-18 [1] RSPM
 #>  yaml           2.3.12    2025-12-10 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library

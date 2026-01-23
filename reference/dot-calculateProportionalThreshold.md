@@ -50,6 +50,7 @@ their absolute expression values.
 ## Examples
 
 ``` r
+if (FALSE) { # \dontrun{
 # Create sample signature data
 signature <- data.frame(
     Value_LogDiffExp = c(-3, -2, -1, 0, 1, 2, 3, 4, 5, 6)
@@ -57,16 +58,14 @@ signature <- data.frame(
 
 # Calculate thresholds for top/bottom 20%
 thresholds <- .calculateProportionalThreshold(signature, 0.2)
-#> Error in .calculateProportionalThreshold(signature, 0.2): could not find function ".calculateProportionalThreshold"
 # Returns thresholds based on 20th and 80th percentiles
 
 # Calculate thresholds for top/bottom 10%
 thresholds <- .calculateProportionalThreshold(signature, 0.1)
-#> Error in .calculateProportionalThreshold(signature, 0.1): could not find function ".calculateProportionalThreshold"
 # Returns thresholds based on 10th and 90th percentiles
 
 # Calculate thresholds for top/bottom 5% (most extreme)
 thresholds <- .calculateProportionalThreshold(signature, 0.05)
-#> Error in .calculateProportionalThreshold(signature, 0.05): could not find function ".calculateProportionalThreshold"
 # Returns thresholds based on 5th and 95th percentiles
+} # }
 ```

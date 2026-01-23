@@ -15,7 +15,7 @@ iLINCS to find the relevant concordant (or discordant) signatures"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">drugfindR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1302</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1349</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,7 @@ iLINCS to find the relevant concordant (or discordant) signatures"></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Investigate a given DGE dataset <a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="figures/lifecycle-stable.svg" alt="[Stable]"></a></h1>
-      <small class="dont-index">Source: <a href="https://github.com/CogDisResLab/drugfindR/blob/v0.99.1302/R/investigateSignature.R" class="external-link"><code>R/investigateSignature.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/CogDisResLab/drugfindR/blob/devel/R/investigateSignature.R" class="external-link"><code>R/investigateSignature.R</code></a></small>
       <div class="d-none name"><code>investigateSignature.Rd</code></div>
     </div>
 
@@ -64,9 +64,9 @@ iLINCS to find the relevant concordant (or discordant) signatures</p>
 <span>  logfcColumn <span class="op">=</span> <span class="st">"logFC"</span>,</span>
 <span>  pvalColumn <span class="op">=</span> <span class="st">"PValue"</span>,</span>
 <span>  sourceName <span class="op">=</span> <span class="st">"Input"</span>,</span>
-<span>  sourceCellLine <span class="op">=</span> <span class="st">"NA"</span>,</span>
-<span>  sourceTime <span class="op">=</span> <span class="st">"NA"</span>,</span>
-<span>  sourceConcentration <span class="op">=</span> <span class="st">"NA"</span></span>
+<span>  sourceCellLine <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  sourceTime <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  sourceConcentration <span class="op">=</span> <span class="cn">NA</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -178,14 +178,14 @@ the concentration for the input data</p></dd>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">investigatedSignature</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 14</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Source Target    Similarity SourceSignature SourceCellLine SourceConcentration</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Input  FR-180204     -<span style="color: #BB0000;">0.760</span> InputSig        NA             NA                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Input  Ponatinib      0.751 InputSig        NA             NA                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Input  Suprofen       0.740 InputSig        NA             NA                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Input  SGI-1776       0.739 InputSig        NA             NA                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Input  SCHEMBL6…     -<span style="color: #BB0000;">0.733</span> InputSig        NA             NA                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Input  Lypressin     -<span style="color: #BB0000;">0.729</span> InputSig        NA             NA                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 8 more variables: SourceTime &lt;chr&gt;, TargetSignature &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Input  FR-180204     -<span style="color: #BB0000;">0.760</span> InputSig        <span style="color: #BB0000;">NA</span>             <span style="color: #BB0000;">NA</span>                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Input  Ponatinib      0.751 InputSig        <span style="color: #BB0000;">NA</span>             <span style="color: #BB0000;">NA</span>                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Input  Suprofen       0.740 InputSig        <span style="color: #BB0000;">NA</span>             <span style="color: #BB0000;">NA</span>                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Input  SGI-1776       0.739 InputSig        <span style="color: #BB0000;">NA</span>             <span style="color: #BB0000;">NA</span>                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Input  SCHEMBL6…     -<span style="color: #BB0000;">0.733</span> InputSig        <span style="color: #BB0000;">NA</span>             <span style="color: #BB0000;">NA</span>                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Input  Lypressin     -<span style="color: #BB0000;">0.729</span> InputSig        <span style="color: #BB0000;">NA</span>             <span style="color: #BB0000;">NA</span>                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 8 more variables: SourceTime &lt;lgl&gt;, TargetSignature &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TargetCellLine &lt;chr&gt;, TargetConcentration &lt;chr&gt;, TargetTime &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   InputSigDirection &lt;chr&gt;, SignatureType &lt;chr&gt;, pValue &lt;dbl&gt;</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
