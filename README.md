@@ -14,6 +14,7 @@ Workflows](https://github.com/CogDisResLab/drugfindR/actions/workflows/rworkflow
 [![DOI](https://zenodo.org/badge/338354715.svg)](https://zenodo.org/badge/latestdoi/338354715)
 [![Codecov test
 coverage](https://codecov.io/gh/CogDisResLab/drugfindR/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/CogDisResLab/drugfindR?branch=devel)
+[![status](https://joss.theoj.org/papers/bd06ca716c1279ba7b71e40878410f1d/status.svg)](https://joss.theoj.org/papers/bd06ca716c1279ba7b71e40878410f1d)
 <!-- badges: end -->
 
 drugfindR provides R-based programmatic access to the
@@ -182,7 +183,7 @@ to a gene of interest using knockdown and overexpression signatures.
 ### Key Functions
 
 | Function | Purpose | Reference |
-| ---- | ---- | ---- |
+|----|----|----|
 | [`investigateSignature()`](https://cogdisreslab.github.io/drugfindR/reference/investigateSignature.html) | All-in-one signature analysis | [docs](https://cogdisreslab.github.io/drugfindR/reference/investigateSignature.html) |
 | [`investigateTarget()`](https://cogdisreslab.github.io/drugfindR/reference/investigateTarget.html) | Analyze a specific gene target | [docs](https://cogdisreslab.github.io/drugfindR/reference/investigateTarget.html) |
 | [`prepareSignature()`](https://cogdisreslab.github.io/drugfindR/reference/prepareSignature.html) | Format signatures for iLINCS | [docs](https://cogdisreslab.github.io/drugfindR/reference/prepareSignature.html) |
@@ -194,10 +195,10 @@ to a gene of interest using knockdown and overexpression signatures.
 
 If you use drugfindR in your research, please cite:
 
->   Imami AS, Sahay S, Creeden JF, McCullumsmith RE (2024).
->   drugfindR: Investigate iLINCS for candidate repurposable drugs.
->   R package version 0.99.1302.
->   doi:10.5281/zenodo.338354715
+    Imami AS, Sahay S, Creeden JF, McCullumsmith RE (2024).
+    drugfindR: Investigate iLINCS for candidate repurposable drugs.
+    R package version 0.99.1302.
+    doi:10.5281/zenodo.338354715
 
 ## Getting Help
 
