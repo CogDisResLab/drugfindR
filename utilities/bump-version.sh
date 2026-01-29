@@ -5,6 +5,8 @@ set -euo pipefail
 
 DESCRIPTION_FILE="DESCRIPTION"
 CODEMETA_FILE="codemeta.json"
+README_RMD_FILE="README.Rmd"
+README_MD_FILE="README.md"
 
 # --- Get base version (e.g., 0.99) from DESCRIPTION file ---
 # Assumes DESCRIPTION contains: Version: X.Y.Z
@@ -44,7 +46,23 @@ tmpfile=$(mktemp)
 jq --arg new_version "$NEW_VERSION" '.version = $new_version' "$CODEMETA_FILE" >"$tmpfile"
 mv "$tmpfile" "$CODEMETA_FILE"
 
+# --- Update README.Rmd ---
+# Find and replace version in the citation section
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    sed -i '' -E "s/R package version [0-9]+\.[0-9]+\.[0-9]+\./R package version $NEW_VERSION./" "$README_RMD_FILE"
+else
+    sed -i -E "s/R package version [0-9]+\.[0-9]+\.[0-9]+\./R package version $NEW_VERSION./" "$README_RMD_FILE"
+fi
+
+# --- Update README.md ---
+# Find and replace version in the citation section
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    sed -i '' -E "s/R package version [0-9]+\.[0-9]+\.[0-9]+\./R package version $NEW_VERSION./" "$README_MD_FILE"
+else
+    sed -i -E "s/R package version [0-9]+\.[0-9]+\.[0-9]+\./R package version $NEW_VERSION./" "$README_MD_FILE"
+fi
+
 # --- Stage updated files for git commit ---
-git add "$DESCRIPTION_FILE" "$CODEMETA_FILE"
+git add "$DESCRIPTION_FILE" "$CODEMETA_FILE" "$README_RMD_FILE" "$README_MD_FILE"
 
 echo "✅ Version updated and staged: $NEW_VERSION"
