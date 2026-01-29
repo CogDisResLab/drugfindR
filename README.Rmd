@@ -22,6 +22,7 @@ knitr::opts_chunk$set( # nolint: extraction_operator_linter.
 [![license](https://img.shields.io/github/license/CogDisResLab/drugfindR)](https://github.com/CogDisResLab/drugfindR/blob/main/LICENSE)
 [![DOI](https://zenodo.org/badge/338354715.svg)](https://zenodo.org/badge/latestdoi/338354715)
 [![Codecov test coverage](https://codecov.io/gh/CogDisResLab/drugfindR/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/CogDisResLab/drugfindR?branch=devel)
+[![status](https://joss.theoj.org/papers/bd06ca716c1279ba7b71e40878410f1d/status.svg)](https://joss.theoj.org/papers/bd06ca716c1279ba7b71e40878410f1d)
 <!-- badges: end -->
 
 drugfindR provides R-based programmatic access to the [iLINCS](http://www.ilincs.org) (Integrative LINCS) database for drug repurposing and functional genomics research. The package enables systematic analysis of gene expression signatures against comprehensive databases of:
