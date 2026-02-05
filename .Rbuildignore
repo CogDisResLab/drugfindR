@@ -18,6 +18,7 @@
 ^\.vale\.ini$
 ^\.vscode$
 ^_pkgdown\.yml$
+^codecov\.yaml$
 ^codecov\.yml$
 ^codemeta\.json$
 ^data-raw$
