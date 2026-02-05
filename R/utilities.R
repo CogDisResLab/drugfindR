@@ -434,13 +434,14 @@ stopIfInvalidSignature <- function(signature) {
 #'
 #' @examples NULL
 .computeConsensusFromSignature <- function(
-    signature,
-    outputLib,
-    filterThreshold = NULL,
-    filterProp = NULL,
-    similarityThreshold = 0.321,
-    paired = TRUE,
-    outputCellLines = NULL) {
+  signature,
+  outputLib,
+  filterThreshold = NULL,
+  filterProp = NULL,
+  similarityThreshold = 0.321,
+  paired = TRUE,
+  outputCellLines = NULL
+) {
     stopIfInvalidLibraries(outputLib)
 
     if (paired) {

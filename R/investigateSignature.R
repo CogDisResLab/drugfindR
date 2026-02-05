@@ -74,20 +74,21 @@ NULL
 #' head(investigatedSignature)
 #' }
 investigateSignature <- function(
-    expr,
-    outputLib,
-    filterThreshold = NULL,
-    filterProp = NULL,
-    similarityThreshold = 0.2,
-    paired = TRUE,
-    outputCellLines = NULL,
-    geneColumn = "Symbol",
-    logfcColumn = "logFC",
-    pvalColumn = "PValue",
-    sourceName = "Input",
-    sourceCellLine = NA,
-    sourceTime = NA,
-    sourceConcentration = NA) {
+  expr,
+  outputLib,
+  filterThreshold = NULL,
+  filterProp = NULL,
+  similarityThreshold = 0.2,
+  paired = TRUE,
+  outputCellLines = NULL,
+  geneColumn = "Symbol",
+  logfcColumn = "logFC",
+  pvalColumn = "PValue",
+  sourceName = "Input",
+  sourceCellLine = NA,
+  sourceTime = NA,
+  sourceConcentration = NA
+) {
     stopIfInvalidLibraries(outputLib) # nolint: object_usage_linter.
     if (missing(outputLib)) {
         stop("Please specify an output library", call. = FALSE)

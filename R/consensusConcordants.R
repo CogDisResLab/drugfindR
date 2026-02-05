@@ -427,10 +427,11 @@ NULL
 #' }
 #'
 consensusConcordants <- function(
-    ...,
-    paired = FALSE,
-    cutoff = 0.321,
-    cellLine = NULL) {
+  ...,
+  paired = FALSE,
+  cutoff = 0.321,
+  cellLine = NULL
+) {
     # Capture input dataframes
     dots <- list(...)
 
