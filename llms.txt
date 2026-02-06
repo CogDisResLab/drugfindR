@@ -178,9 +178,12 @@ to a gene of interest using knockdown and overexpression signatures.
 
 If you use drugfindR in your research, please cite:
 
-> Imami AS, Sahay S, Creeden JF, McCullumsmith RE (2024). drugfindR:
-> Investigate iLINCS for candidate repurposable drugs. R package version
-> 0.99.1302. <doi:10.5281/zenodo.338354715>
+``` R
+Imami AS, Sahay S, Creeden JF, McCullumsmith RE (2024).
+drugfindR: Investigate iLINCS for candidate repurposable drugs.
+R package version 0.99.1364.
+doi:10.5281/zenodo.338354715
+```
 
 ## Getting Help
 
