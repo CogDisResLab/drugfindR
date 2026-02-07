@@ -3,20 +3,23 @@ on:
   workflow_dispatch:
   push:
     branches-ignore:
-    - master
-    - main
-    - RELEASE_**
-    - graphite-**
+      - master
+      - main
+      - RELEASE_**
+      - graphite-**
   pull_request:
     branches:
-    - master
-    - main
-    - devel
-    - RELEASE_**
+      - master
+      - main
+      - devel
+      - RELEASE_**
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   rworkflows:
@@ -27,30 +30,30 @@ jobs:
       fail-fast: ${{ false }}
       matrix:
         config:
-        - os: ubuntu-latest
-          bioc: devel
-          r: auto
-          cont: bioconductor/bioconductor_docker:devel
-          rspm: https://packagemanager.rstudio.com/cran/__linux__/focal/release
-        - os: macOS-latest
-          bioc: devel
-          r: auto
-        - os: windows-latest
-          bioc: devel
-          r: auto
+          - os: ubuntu-latest
+            bioc: devel
+            r: auto
+            cont: bioconductor/bioconductor_docker:devel
+            rspm: https://packagemanager.rstudio.com/cran/__linux__/focal/release
+          - os: macOS-latest
+            bioc: devel
+            r: auto
+          - os: windows-latest
+            bioc: devel
+            r: auto
     steps:
-    - uses: neurogenomics/rworkflows@master
-      with:
-        run_bioccheck: ${{ true }}
-        run_rcmdcheck: ${{ true }}
-        as_cran: ${{ true }}
-        run_vignettes: ${{ true }}
-        has_testthat: ${{ true }}
-        run_covr: ${{ false }}
-        run_pkgdown: ${{ false }}
-        has_runit: ${{ false }}
-        has_latex: ${{ false }}
-        GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
-        run_docker: ${{ false }}
-        runner_os: ${{ runner.os }}
-        cache_version: cache-v1
+      - uses: neurogenomics/rworkflows@master
+        with:
+          run_bioccheck: ${{ true }}
+          run_rcmdcheck: ${{ true }}
+          as_cran: ${{ true }}
+          run_vignettes: ${{ true }}
+          has_testthat: ${{ true }}
+          run_covr: ${{ false }}
+          run_pkgdown: ${{ false }}
+          has_runit: ${{ false }}
+          has_latex: ${{ false }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run_docker: ${{ false }}
+          runner_os: ${{ runner.os }}
+          cache_version: cache-v1
