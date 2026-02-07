@@ -9,6 +9,9 @@ name: Create Github Release
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 
+permissions:
+  contents: read
+
 jobs:
   create-release:
     runs-on: ubuntu-latest
@@ -34,7 +37,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        r_version: ['release', 'devel']
+        r_version: ["release", "devel"]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

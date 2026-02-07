@@ -5,6 +5,9 @@ on:
       - joss/
       - .github/workflows/draft-paper.yaml
 
+permissions:
+  contents: read
+
 jobs:
   paper:
     runs-on: ubuntu-latest
