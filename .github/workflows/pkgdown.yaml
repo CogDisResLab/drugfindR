@@ -12,7 +12,8 @@ on:
 
 name: Pkgdown Website
 
-permissions: read-all
+permissions:
+  contents: read
 
 jobs:
   pkgdown:
