@@ -8,12 +8,15 @@ CODEMETA_FILE="codemeta.json"
 README_RMD_FILE="README.Rmd"
 README_MD_FILE="README.md"
 
+# A Base Version bump to clean up some older versions
+BASE_PATCH=2000
 # --- Get base version (e.g., 0.99) from DESCRIPTION file ---
 # Assumes DESCRIPTION contains: Version: X.Y.Z
 BASE_VERSION=$(grep '^Version:' "$DESCRIPTION_FILE" | awk '{print $2}' | cut -d. -f1,2)
 
 # --- Use total commit count as patch number ---
-PATCH_NUMBER=$(git rev-list --all --count HEAD)
+COMMIT_COUNT=$(git rev-list --first-parent --count HEAD)
+PATCH_NUMBER=$((BASE_PATCH + COMMIT_COUNT))
 
 # --- Compose new version: MAJOR.MINOR.PATCH ---
 NEW_VERSION="$BASE_VERSION.$PATCH_NUMBER"

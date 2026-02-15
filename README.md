@@ -197,7 +197,7 @@ If you use drugfindR in your research, please cite:
 
     Imami AS, Sahay S, Creeden JF, McCullumsmith RE (2024).
     drugfindR: Investigate iLINCS for candidate repurposable drugs.
-    R package version 0.99.1371.
+    R package version 0.99.2516.
     doi:10.5281/zenodo.338354715
 
 ## Getting Help
