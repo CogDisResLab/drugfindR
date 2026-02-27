@@ -3,7 +3,7 @@
 ``` r
 library(tidyverse)
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.2.0     ✔ readr     2.1.6
+#> ✔ dplyr     1.2.0     ✔ readr     2.2.0
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
 #> ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
 #> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
@@ -471,7 +471,7 @@ devtools::session_info()
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2026-02-19
+#>  date     2026-02-27
 #>  pandoc   3.1.11 @ /opt/hostedtoolcache/pandoc/3.1.11/x64/ (via rmarkdown)
 #>  quarto   NA
 #> 
@@ -493,7 +493,7 @@ devtools::session_info()
 #>  DFplyr         1.4.0     2025-10-29 [1] Bioconduc~
 #>  digest         0.6.39    2025-11-19 [1] RSPM
 #>  dplyr        * 1.2.0     2026-02-03 [1] RSPM
-#>  drugfindR    * 0.99.2516 2026-02-19 [1] local
+#>  drugfindR    * 0.99.2516 2026-02-27 [1] local
 #>  ellipsis       0.3.2     2021-04-29 [1] RSPM
 #>  evaluate       1.0.5     2025-08-27 [1] RSPM
 #>  farver         2.1.2     2024-05-13 [1] RSPM
@@ -526,7 +526,7 @@ devtools::session_info()
 #>  ragg           1.5.0     2025-09-02 [1] RSPM
 #>  rappdirs       0.3.4     2026-01-17 [1] RSPM
 #>  RColorBrewer   1.1-3     2022-04-03 [1] RSPM
-#>  readr        * 2.1.6     2025-11-14 [1] RSPM
+#>  readr        * 2.2.0     2026-02-19 [1] RSPM
 #>  remotes        2.5.0     2024-03-17 [1] RSPM
 #>  rlang          1.1.7     2026-01-09 [1] RSPM
 #>  rmarkdown      2.30      2025-09-28 [1] RSPM
