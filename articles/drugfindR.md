@@ -1,6 +1,7 @@
 # drugfindR
 
 ``` r
+
 library(tidyverse)
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 #> ✔ dplyr     1.2.1     ✔ readr     2.2.0
@@ -43,6 +44,7 @@ physiological reasons.
 package:
 
 ``` r
+
 BiocManager::install("drugfindR") # nolint: nonportable_path_linter.
 ```
 
@@ -110,6 +112,7 @@ function from the `readr` package can be used to read the signature into
 R from a remote URL or a local file.
 
 ``` r
+
 # Load the signature from the paper
 
 diffexp <- read_tsv(
@@ -168,6 +171,7 @@ takes three optional arguments:
     p-values. The default is `"PValue"`.
 
 ``` r
+
 # Prepare the signature for analysis
 # The only thing that is different from the defaults is the gene_column
 # so we will specify that and rely on defaults for others.
@@ -182,14 +186,14 @@ head(signature) |>
     knitr::kable()
 ```
 
-|     | signatureID | ID_geneid | Name_GeneSymbol | Value_LogDiffExp | Significance_pvalue |
-|:----|:------------|:----------|:----------------|-----------------:|--------------------:|
-| 1   | InputSig    | 4860      | PNP             |         1.709692 |           0.0024364 |
-| 5   | InputSig    | 4125      | MAN2B1          |         1.100506 |           0.0030275 |
-| 8   | InputSig    | 2274      | FHL2            |         1.330287 |           0.1423757 |
-| 14  | InputSig    | 351       | APP             |         1.050513 |           0.0108441 |
-| 26  | InputSig    | 7077      | TIMP2           |         1.795990 |           0.0124167 |
-| 29  | InputSig    | 23659     | PLA2G15         |         1.113303 |           0.0495367 |
+|  | signatureID | ID_geneid | Name_GeneSymbol | Value_LogDiffExp | Significance_pvalue |
+|:---|:---|:---|:---|---:|---:|
+| 1 | InputSig | 4860 | PNP | 1.709692 | 0.0024364 |
+| 5 | InputSig | 4125 | MAN2B1 | 1.100506 | 0.0030275 |
+| 8 | InputSig | 2274 | FHL2 | 1.330287 | 0.1423757 |
+| 14 | InputSig | 351 | APP | 1.050513 | 0.0108441 |
+| 26 | InputSig | 7077 | TIMP2 | 1.795990 | 0.0124167 |
+| 29 | InputSig | 23659 | PLA2G15 | 1.113303 | 0.0495367 |
 
 We can see that the signature has been reordered and renamed. The first
 column is now `names(signature)[1]`, the second column is now
@@ -230,6 +234,7 @@ function takes three arguments:
     They can not be specified together.
 
 ``` r
+
 # Filter the signature to only include genes that are upregulated by at least
 # 1.5 logFC
 
@@ -253,6 +258,7 @@ filteredSignatureUp |>
 | InputSig    | 1509      | CTSD            |         1.547209 |           0.0019360 |
 
 ``` r
+
 # Filter the signature to only include genes that are downregulated by at least
 # 1.5 logFC
 filteredSignatureDn <- filterSignature(signature,
@@ -297,6 +303,7 @@ function takes the following arguments:
     This is `NULL` by default.
 
 ``` r
+
 # Get the concordant signatures for the upregulated signature
 
 upConcordants <- getConcordants(filteredSignatureUp, ilincsLibrary = "CP")
@@ -306,16 +313,17 @@ upConcordants |>
     knitr::kable()
 ```
 
-| signatureid    | treatment    | concentration | time | cellline | similarity | pValue | sig_direction | sig_type             |
-|:---------------|:-------------|:--------------|:-----|:---------|-----------:|-------:|:--------------|:---------------------|
-| LINCSCP_99767  | Mitoxantrone | 0.04uM        | 24h  | HCC515   |  0.6259367 |  0e+00 | Up            | Chemical Perturbagen |
-| LINCSCP_207881 | Navitoclax   | 10uM          | 6h   | H1299    |  0.6121090 |  0e+00 | Up            | Chemical Perturbagen |
-| LINCSCP_207785 | Myriocin     | 10uM          | 6h   | H1299    |  0.5997346 |  0e+00 | Up            | Chemical Perturbagen |
-| LINCSCP_285868 | CHEMBL259628 | 10uM          | 6h   | SKM1     |  0.5835506 |  1e-07 | Up            | Chemical Perturbagen |
-| LINCSCP_163143 | Crizotinib   | 0.12uM        | 3h   | SKBR3    |  0.5759650 |  1e-07 | Up            | Chemical Perturbagen |
-| LINCSCP_64976  | PP-242       | 0.5uM         | 24h  | VCAP     | -0.5674210 |  2e-07 | Up            | Chemical Perturbagen |
+| signatureid | treatment | concentration | time | cellline | similarity | pValue | sig_direction | sig_type |
+|:---|:---|:---|:---|:---|---:|---:|:---|:---|
+| LINCSCP_99767 | Mitoxantrone | 0.04uM | 24h | HCC515 | 0.6259367 | 0e+00 | Up | Chemical Perturbagen |
+| LINCSCP_207881 | Navitoclax | 10uM | 6h | H1299 | 0.6121090 | 0e+00 | Up | Chemical Perturbagen |
+| LINCSCP_207785 | Myriocin | 10uM | 6h | H1299 | 0.5997346 | 0e+00 | Up | Chemical Perturbagen |
+| LINCSCP_285868 | CHEMBL259628 | 10uM | 6h | SKM1 | 0.5835506 | 1e-07 | Up | Chemical Perturbagen |
+| LINCSCP_163143 | Crizotinib | 0.12uM | 3h | SKBR3 | 0.5759650 | 1e-07 | Up | Chemical Perturbagen |
+| LINCSCP_64976 | PP-242 | 0.5uM | 24h | VCAP | -0.5674210 | 2e-07 | Up | Chemical Perturbagen |
 
 ``` r
+
 
 # Get the concordant signatures for the downregulated signature
 
@@ -326,14 +334,14 @@ dnConcordants |>
     knitr::kable()
 ```
 
-| signatureid    | treatment    | concentration | time | cellline | similarity |   pValue | sig_direction | sig_type             |
-|:---------------|:-------------|:--------------|:-----|:---------|-----------:|---------:|:--------------|:---------------------|
-| LINCSCP_260147 | PD-98059     | 10uM          | 6h   | NEU      |  0.9276283 | 6.00e-07 | Down          | Chemical Perturbagen |
-| LINCSCP_149954 | 848193-68-0  | 0.12uM        | 24h  | NPC.TAK  | -0.9235333 | 9.00e-07 | Down          | Chemical Perturbagen |
-| LINCSCP_40982  | Devazepide   | 10uM          | 24h  | NEU      |  0.9133641 | 2.00e-06 | Down          | Chemical Perturbagen |
-| LINCSCP_292245 | MLS003568137 | 10uM          | 24h  | VCAP     | -0.8890042 | 9.30e-06 | Down          | Chemical Perturbagen |
-| LINCSCP_150380 | VX-745       | 0.04uM        | 24h  | NPC.TAK  |  0.8854791 | 1.13e-05 | Down          | Chemical Perturbagen |
-| LINCSCP_150801 | Mitoxantrone | 1.11uM        | 24h  | PC3      |  0.8736419 | 2.09e-05 | Down          | Chemical Perturbagen |
+| signatureid | treatment | concentration | time | cellline | similarity | pValue | sig_direction | sig_type |
+|:---|:---|:---|:---|:---|---:|---:|:---|:---|
+| LINCSCP_260147 | PD-98059 | 10uM | 6h | NEU | 0.9276283 | 6.00e-07 | Down | Chemical Perturbagen |
+| LINCSCP_149954 | 848193-68-0 | 0.12uM | 24h | NPC.TAK | -0.9235333 | 9.00e-07 | Down | Chemical Perturbagen |
+| LINCSCP_40982 | Devazepide | 10uM | 24h | NEU | 0.9133641 | 2.00e-06 | Down | Chemical Perturbagen |
+| LINCSCP_292245 | MLS003568137 | 10uM | 24h | VCAP | -0.8890042 | 9.30e-06 | Down | Chemical Perturbagen |
+| LINCSCP_150380 | VX-745 | 0.04uM | 24h | NPC.TAK | 0.8854791 | 1.13e-05 | Down | Chemical Perturbagen |
+| LINCSCP_150801 | Mitoxantrone | 1.11uM | 24h | PC3 | 0.8736419 | 2.09e-05 | Down | Chemical Perturbagen |
 
 ### Step 5: Get the list of Consensus Concordant Signatures
 
@@ -368,6 +376,7 @@ function takes the following arguments:
     filtering the consensus list. The default is `0.321`.
 
 ``` r
+
 # Get the consensus concordant signatures for the upregulated signature
 
 consensus <- consensusConcordants(upConcordants, dnConcordants,
@@ -379,14 +388,14 @@ consensus |>
     knitr::kable()
 ```
 
-| TargetSignature | Target       | TargetCellLine | TargetTime | TargetConcentration | InputSigDirection | SignatureType        | Similarity |   pValue |
-|:----------------|:-------------|:---------------|:-----------|:--------------------|:------------------|:---------------------|-----------:|---------:|
-| LINCSCP_260147  | PD-98059     | NEU            | 6h         | 10uM                | Down              | Chemical Perturbagen |  0.9276283 | 6.00e-07 |
-| LINCSCP_149954  | 848193-68-0  | NPC.TAK        | 24h        | 0.12uM              | Down              | Chemical Perturbagen | -0.9235333 | 9.00e-07 |
-| LINCSCP_40982   | Devazepide   | NEU            | 24h        | 10uM                | Down              | Chemical Perturbagen |  0.9133641 | 2.00e-06 |
-| LINCSCP_292245  | MLS003568137 | VCAP           | 24h        | 10uM                | Down              | Chemical Perturbagen | -0.8890042 | 9.30e-06 |
-| LINCSCP_150380  | VX-745       | NPC.TAK        | 24h        | 0.04uM              | Down              | Chemical Perturbagen |  0.8854791 | 1.13e-05 |
-| LINCSCP_150801  | Mitoxantrone | PC3            | 24h        | 1.11uM              | Down              | Chemical Perturbagen |  0.8736419 | 2.09e-05 |
+| TargetSignature | Target | TargetCellLine | TargetTime | TargetConcentration | InputSigDirection | SignatureType | Similarity | pValue |
+|:---|:---|:---|:---|:---|:---|:---|---:|---:|
+| LINCSCP_260147 | PD-98059 | NEU | 6h | 10uM | Down | Chemical Perturbagen | 0.9276283 | 6.00e-07 |
+| LINCSCP_149954 | 848193-68-0 | NPC.TAK | 24h | 0.12uM | Down | Chemical Perturbagen | -0.9235333 | 9.00e-07 |
+| LINCSCP_40982 | Devazepide | NEU | 24h | 10uM | Down | Chemical Perturbagen | 0.9133641 | 2.00e-06 |
+| LINCSCP_292245 | MLS003568137 | VCAP | 24h | 10uM | Down | Chemical Perturbagen | -0.8890042 | 9.30e-06 |
+| LINCSCP_150380 | VX-745 | NPC.TAK | 24h | 0.04uM | Down | Chemical Perturbagen | 0.8854791 | 1.13e-05 |
+| LINCSCP_150801 | Mitoxantrone | PC3 | 24h | 1.11uM | Down | Chemical Perturbagen | 0.8736419 | 2.09e-05 |
 
 ### Alternate One-Step Method
 
@@ -437,6 +446,7 @@ Other arguments that have sensible defaults are:
     signature. The default is `NA`.
 
 ``` r
+
 investigated <- investigateSignature(diffexp,
     outputLib = "CP", filterThreshold = 1.5,
     geneColumn = "hgnc_symbol", logfcColumn = "logFC",
@@ -448,18 +458,19 @@ investigated |>
     knitr::kable()
 ```
 
-| Source | Target       | Similarity | SourceSignature | SourceCellLine | SourceConcentration | SourceTime | TargetSignature | TargetCellLine | TargetConcentration | TargetTime | InputSigDirection | SignatureType        |   pValue |
-|:-------|:-------------|-----------:|:----------------|:---------------|:--------------------|:-----------|:----------------|:---------------|:--------------------|:-----------|:------------------|:---------------------|---------:|
-| Input  | PD-98059     |  0.9276283 | InputSig        | NA             | NA                  | NA         | LINCSCP_260147  | NEU            | 10uM                | 6h         | Down              | Chemical Perturbagen | 6.00e-07 |
-| Input  | 848193-68-0  | -0.9235333 | InputSig        | NA             | NA                  | NA         | LINCSCP_149954  | NPC.TAK        | 0.12uM              | 24h        | Down              | Chemical Perturbagen | 9.00e-07 |
-| Input  | Devazepide   |  0.9133641 | InputSig        | NA             | NA                  | NA         | LINCSCP_40982   | NEU            | 10uM                | 24h        | Down              | Chemical Perturbagen | 2.00e-06 |
-| Input  | MLS003568137 | -0.8890042 | InputSig        | NA             | NA                  | NA         | LINCSCP_292245  | VCAP           | 10uM                | 24h        | Down              | Chemical Perturbagen | 9.30e-06 |
-| Input  | VX-745       |  0.8854791 | InputSig        | NA             | NA                  | NA         | LINCSCP_150380  | NPC.TAK        | 0.04uM              | 24h        | Down              | Chemical Perturbagen | 1.13e-05 |
-| Input  | Mitoxantrone |  0.8736419 | InputSig        | NA             | NA                  | NA         | LINCSCP_150801  | PC3            | 1.11uM              | 24h        | Down              | Chemical Perturbagen | 2.09e-05 |
+| Source | Target | Similarity | SourceSignature | SourceCellLine | SourceConcentration | SourceTime | TargetSignature | TargetCellLine | TargetConcentration | TargetTime | InputSigDirection | SignatureType | pValue |
+|:---|:---|---:|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|---:|
+| Input | PD-98059 | 0.9276283 | InputSig | NA | NA | NA | LINCSCP_260147 | NEU | 10uM | 6h | Down | Chemical Perturbagen | 6.00e-07 |
+| Input | 848193-68-0 | -0.9235333 | InputSig | NA | NA | NA | LINCSCP_149954 | NPC.TAK | 0.12uM | 24h | Down | Chemical Perturbagen | 9.00e-07 |
+| Input | Devazepide | 0.9133641 | InputSig | NA | NA | NA | LINCSCP_40982 | NEU | 10uM | 24h | Down | Chemical Perturbagen | 2.00e-06 |
+| Input | MLS003568137 | -0.8890042 | InputSig | NA | NA | NA | LINCSCP_292245 | VCAP | 10uM | 24h | Down | Chemical Perturbagen | 9.30e-06 |
+| Input | VX-745 | 0.8854791 | InputSig | NA | NA | NA | LINCSCP_150380 | NPC.TAK | 0.04uM | 24h | Down | Chemical Perturbagen | 1.13e-05 |
+| Input | Mitoxantrone | 0.8736419 | InputSig | NA | NA | NA | LINCSCP_150801 | PC3 | 1.11uM | 24h | Down | Chemical Perturbagen | 2.09e-05 |
 
 ## Environment Setup
 
 ``` r
+
 devtools::session_info()
 #> ─ Session info ───────────────────────────────────────────────────────────────
 #>  setting  value
@@ -472,7 +483,7 @@ devtools::session_info()
 #>  ctype    C.UTF-8
 #>  tz       UTC
 #>  date     2026-06-04
-#>  pandoc   3.1.11 @ /opt/hostedtoolcache/pandoc/3.1.11/x64/ (via rmarkdown)
+#>  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
 #>  quarto   NA
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
@@ -533,7 +544,7 @@ devtools::session_info()
 #>  S7             0.2.2   2026-04-22 [1] RSPM
 #>  sass           0.4.10  2025-04-11 [1] RSPM
 #>  scales         1.4.0   2025-04-24 [1] RSPM
-#>  sessioninfo    1.2.3   2025-02-05 [1] RSPM
+#>  sessioninfo    1.2.3   2025-02-05 [1] any (@1.2.3)
 #>  stringi        1.8.7   2025-03-27 [1] RSPM
 #>  stringr      * 1.6.0   2025-11-04 [1] RSPM
 #>  systemfonts    1.3.2   2026-03-05 [1] RSPM

@@ -42,6 +42,7 @@ integrated within one week.
 Install from the **Bioconductor devel channel** (available now):
 
 ``` r
+
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
@@ -52,6 +53,7 @@ Or wait for **Bioconductor Release 3.23** and install from the stable
 release channel:
 
 ``` r
+
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
@@ -64,6 +66,7 @@ Install from
 [r-universe](https://cogdisreslab.r-universe.dev/drugfindR):
 
 ``` r
+
 install.packages("drugfindR",
     repos = c(
         "https://cogdisreslab.r-universe.dev",
@@ -76,6 +79,7 @@ Or install the development version from
 [GitHub](https://github.com/CogDisResLab/drugfindR):
 
 ``` r
+
 if (!requireNamespace("devtools", quietly = TRUE)) {
     install.packages("devtools")
 }
@@ -91,6 +95,7 @@ drugfindR offers two analysis approaches:
 For rapid analysis with sensible defaults, use the wrapper functions:
 
 ``` r
+
 library(drugfindR)
 
 # Investigate a transcriptomic signature for candidate drugs
@@ -117,6 +122,7 @@ target_results <- investigateTarget(
 For customized workflows and fine-grained control:
 
 ``` r
+
 # Step 1: Prepare your signature
 signature <- prepareSignature(diffexp_data,
     geneColumn = "gene",
@@ -165,14 +171,14 @@ to a gene of interest using knockdown and overexpression signatures.
 
 ### Key Functions
 
-| Function                                                                                                 | Purpose                        | Reference                                                                            |
-|----------------------------------------------------------------------------------------------------------|--------------------------------|--------------------------------------------------------------------------------------|
-| [`investigateSignature()`](https://cogdisreslab.github.io/drugfindR/reference/investigateSignature.html) | All-in-one signature analysis  | [docs](https://cogdisreslab.github.io/drugfindR/reference/investigateSignature.html) |
-| [`investigateTarget()`](https://cogdisreslab.github.io/drugfindR/reference/investigateTarget.html)       | Analyze a specific gene target | [docs](https://cogdisreslab.github.io/drugfindR/reference/investigateTarget.html)    |
-| [`prepareSignature()`](https://cogdisreslab.github.io/drugfindR/reference/prepareSignature.html)         | Format signatures for iLINCS   | [docs](https://cogdisreslab.github.io/drugfindR/reference/prepareSignature.html)     |
-| [`filterSignature()`](https://cogdisreslab.github.io/drugfindR/reference/filterSignature.html)           | Apply thresholds to signatures | [docs](https://cogdisreslab.github.io/drugfindR/reference/filterSignature.html)      |
-| [`getConcordants()`](https://cogdisreslab.github.io/drugfindR/reference/getConcordants.html)             | Query iLINCS for matches       | [docs](https://cogdisreslab.github.io/drugfindR/reference/getConcordants.html)       |
-| [`consensusConcordants()`](https://cogdisreslab.github.io/drugfindR/reference/consensusConcordants.html) | Generate consensus results     | [docs](https://cogdisreslab.github.io/drugfindR/reference/consensusConcordants.html) |
+| Function | Purpose | Reference |
+|----|----|----|
+| [`investigateSignature()`](https://cogdisreslab.github.io/drugfindR/reference/investigateSignature.html) | All-in-one signature analysis | [docs](https://cogdisreslab.github.io/drugfindR/reference/investigateSignature.html) |
+| [`investigateTarget()`](https://cogdisreslab.github.io/drugfindR/reference/investigateTarget.html) | Analyze a specific gene target | [docs](https://cogdisreslab.github.io/drugfindR/reference/investigateTarget.html) |
+| [`prepareSignature()`](https://cogdisreslab.github.io/drugfindR/reference/prepareSignature.html) | Format signatures for iLINCS | [docs](https://cogdisreslab.github.io/drugfindR/reference/prepareSignature.html) |
+| [`filterSignature()`](https://cogdisreslab.github.io/drugfindR/reference/filterSignature.html) | Apply thresholds to signatures | [docs](https://cogdisreslab.github.io/drugfindR/reference/filterSignature.html) |
+| [`getConcordants()`](https://cogdisreslab.github.io/drugfindR/reference/getConcordants.html) | Query iLINCS for matches | [docs](https://cogdisreslab.github.io/drugfindR/reference/getConcordants.html) |
+| [`consensusConcordants()`](https://cogdisreslab.github.io/drugfindR/reference/consensusConcordants.html) | Generate consensus results | [docs](https://cogdisreslab.github.io/drugfindR/reference/consensusConcordants.html) |
 
 ## Citation
 
