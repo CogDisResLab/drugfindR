@@ -471,29 +471,29 @@ devtools::session_info()
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2026-04-28
+#>  date     2026-06-04
 #>  pandoc   3.1.11 @ /opt/hostedtoolcache/pandoc/3.1.11/x64/ (via rmarkdown)
 #>  quarto   NA
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package      * version date (UTC) lib source
-#>  BiocGenerics   0.57.1  2026-04-17 [1] Bioconduc~
+#>  BiocGenerics   0.58.1  2026-05-14 [1] Bioconduc~
 #>  BiocManager    1.30.27 2025-11-14 [1] RSPM
-#>  BiocStyle    * 2.39.0  2025-10-30 [1] Bioconduc~
+#>  BiocStyle    * 2.40.0  2026-04-28 [1] Bioconduc~
 #>  bit            4.6.0   2025-03-06 [1] RSPM
-#>  bit64          4.8.0   2026-04-21 [1] RSPM
+#>  bit64          4.8.2   2026-05-19 [1] RSPM
 #>  bookdown       0.46    2025-12-05 [1] RSPM
-#>  bslib          0.10.0  2026-01-26 [1] RSPM
+#>  bslib          0.11.0  2026-05-16 [1] RSPM
 #>  cachem         1.1.0   2024-05-16 [1] RSPM
 #>  cli            3.6.6   2026-04-09 [1] RSPM
 #>  crayon         1.5.3   2024-06-20 [1] RSPM
 #>  curl           7.1.0   2026-04-22 [1] RSPM
 #>  desc           1.4.3   2023-12-10 [1] RSPM
-#>  devtools       2.5.1   2026-04-16 [1] RSPM
-#>  DFplyr         1.5.2   2026-02-15 [1] Bioconduc~
+#>  devtools       2.5.2   2026-04-30 [1] RSPM
+#>  DFplyr         1.6.0   2026-04-28 [1] Bioconduc~
 #>  digest         0.6.39  2025-11-19 [1] RSPM
 #>  dplyr        * 1.2.1   2026-04-03 [1] RSPM
-#>  drugfindR    * 1.1.0   2026-04-28 [1] local
+#>  drugfindR    * 1.1.0   2026-06-04 [1] local
 #>  ellipsis       0.3.3   2026-04-04 [1] RSPM
 #>  evaluate       1.0.5   2025-08-27 [1] RSPM
 #>  farver         2.1.2   2024-05-13 [1] RSPM
@@ -529,7 +529,7 @@ devtools::session_info()
 #>  readr        * 2.2.0   2026-02-19 [1] RSPM
 #>  rlang          1.2.0   2026-04-06 [1] RSPM
 #>  rmarkdown      2.31    2026-03-26 [1] RSPM
-#>  S4Vectors      0.49.3  2026-04-26 [1] Bioconduc~
+#>  S4Vectors      0.50.1  2026-05-13 [1] Bioconduc~
 #>  S7             0.2.2   2026-04-22 [1] RSPM
 #>  sass           0.4.10  2025-04-11 [1] RSPM
 #>  scales         1.4.0   2025-04-24 [1] RSPM
@@ -548,7 +548,7 @@ devtools::session_info()
 #>  vctrs          0.7.3   2026-04-11 [1] RSPM
 #>  vroom          1.7.1   2026-03-31 [1] RSPM
 #>  withr          3.0.2   2024-10-28 [1] RSPM
-#>  xfun           0.57    2026-03-20 [1] RSPM
+#>  xfun           0.58    2026-06-01 [1] RSPM
 #>  yaml           2.3.12  2025-12-10 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library
