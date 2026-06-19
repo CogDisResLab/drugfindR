@@ -482,7 +482,7 @@ devtools::session_info()
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2026-06-04
+#>  date     2026-06-19
 #>  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
 #>  quarto   NA
 #> 
@@ -493,7 +493,7 @@ devtools::session_info()
 #>  BiocStyle    * 2.40.0  2026-04-28 [1] Bioconduc~
 #>  bit            4.6.0   2025-03-06 [1] RSPM
 #>  bit64          4.8.2   2026-05-19 [1] RSPM
-#>  bookdown       0.46    2025-12-05 [1] RSPM
+#>  bookdown       0.47    2026-06-16 [1] RSPM
 #>  bslib          0.11.0  2026-05-16 [1] RSPM
 #>  cachem         1.1.0   2024-05-16 [1] RSPM
 #>  cli            3.6.6   2026-04-09 [1] RSPM
@@ -504,7 +504,7 @@ devtools::session_info()
 #>  DFplyr         1.6.0   2026-04-28 [1] Bioconduc~
 #>  digest         0.6.39  2025-11-19 [1] RSPM
 #>  dplyr        * 1.2.1   2026-04-03 [1] RSPM
-#>  drugfindR    * 1.1.0   2026-06-04 [1] local
+#>  drugfindR    * 1.1.0   2026-06-19 [1] local
 #>  ellipsis       0.3.3   2026-04-04 [1] RSPM
 #>  evaluate       1.0.5   2025-08-27 [1] RSPM
 #>  farver         2.1.2   2024-05-13 [1] RSPM
@@ -531,7 +531,7 @@ devtools::session_info()
 #>  pkgbuild       1.4.8   2025-05-26 [1] RSPM
 #>  pkgconfig      2.0.3   2019-09-22 [1] RSPM
 #>  pkgdown        2.2.0   2025-11-06 [1] any (@2.2.0)
-#>  pkgload        1.5.2   2026-04-22 [1] RSPM
+#>  pkgload        1.5.3   2026-06-15 [1] RSPM
 #>  purrr        * 1.2.2   2026-04-10 [1] RSPM
 #>  R6             2.6.1   2025-02-15 [1] RSPM
 #>  ragg           1.5.2   2026-03-23 [1] RSPM
@@ -544,7 +544,7 @@ devtools::session_info()
 #>  S7             0.2.2   2026-04-22 [1] RSPM
 #>  sass           0.4.10  2025-04-11 [1] RSPM
 #>  scales         1.4.0   2025-04-24 [1] RSPM
-#>  sessioninfo    1.2.3   2025-02-05 [1] any (@1.2.3)
+#>  sessioninfo    1.2.4   2026-06-04 [1] RSPM
 #>  stringi        1.8.7   2025-03-27 [1] RSPM
 #>  stringr      * 1.6.0   2025-11-04 [1] RSPM
 #>  systemfonts    1.3.2   2026-03-05 [1] RSPM
