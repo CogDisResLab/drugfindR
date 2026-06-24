@@ -482,7 +482,7 @@ devtools::session_info()
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2026-06-19
+#>  date     2026-06-24
 #>  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
 #>  quarto   NA
 #> 
@@ -504,7 +504,7 @@ devtools::session_info()
 #>  DFplyr         1.6.0   2026-04-28 [1] Bioconduc~
 #>  digest         0.6.39  2025-11-19 [1] RSPM
 #>  dplyr        * 1.2.1   2026-04-03 [1] RSPM
-#>  drugfindR    * 1.1.0   2026-06-19 [1] local
+#>  drugfindR    * 1.1.0   2026-06-24 [1] local
 #>  ellipsis       0.3.3   2026-04-04 [1] RSPM
 #>  evaluate       1.0.5   2025-08-27 [1] RSPM
 #>  farver         2.1.2   2024-05-13 [1] RSPM
@@ -518,7 +518,7 @@ devtools::session_info()
 #>  hms            1.1.4   2025-10-17 [1] RSPM
 #>  htmltools      0.5.9   2025-12-04 [1] RSPM
 #>  htmlwidgets    1.6.4   2023-12-06 [1] RSPM
-#>  httr2          1.2.2   2025-12-08 [1] RSPM
+#>  httr2          1.2.3   2026-06-23 [1] RSPM
 #>  jquerylib      0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite       2.0.0   2025-03-27 [1] RSPM
 #>  knitr          1.51    2025-12-20 [1] RSPM
@@ -558,8 +558,8 @@ devtools::session_info()
 #>  usethis        3.2.1   2025-09-06 [1] RSPM
 #>  vctrs          0.7.3   2026-04-11 [1] RSPM
 #>  vroom          1.7.1   2026-03-31 [1] RSPM
-#>  withr          3.0.2   2024-10-28 [1] RSPM
-#>  xfun           0.58    2026-06-01 [1] RSPM
+#>  withr          3.0.3   2026-06-19 [1] RSPM
+#>  xfun           0.59    2026-06-19 [1] RSPM
 #>  yaml           2.3.12  2025-12-10 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library
