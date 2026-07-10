@@ -1,9 +1,12 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
+  drug-repurposing: drug-repurposing.html
   drugfindR: drugfindR.html
-last_built: 2026-06-24T10:09Z
+  getting-started: getting-started.html
+  target-investigation: target-investigation.html
+last_built: 2026-07-10T01:22Z
 urls:
   reference: https://cogdisreslab.github.io/drugfindR/reference
   article: https://cogdisreslab.github.io/drugfindR/articles
