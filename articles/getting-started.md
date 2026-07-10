@@ -469,8 +469,7 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] readr_2.2.0         dplyr_1.2.1         drugfindR_0.99.1170
-#> [4] BiocStyle_2.40.0   
+#> [1] readr_2.2.0      dplyr_1.2.1      drugfindR_1.0.0  BiocStyle_2.40.0
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] utf8_1.2.6          rappdirs_0.3.4      sass_0.4.10        
