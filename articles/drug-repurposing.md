@@ -762,27 +762,27 @@ sessionInfo()
 #> [5] drugfindR_1.0.0  BiocStyle_2.40.0
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] utf8_1.2.6          rappdirs_0.3.4      sass_0.4.10        
-#>  [4] generics_0.1.4      stringi_1.8.7       hms_1.1.4          
-#>  [7] digest_0.6.39       magrittr_2.0.5      RColorBrewer_1.1-3 
-#> [10] evaluate_1.0.5      grid_4.6.1          bookdown_0.47      
-#> [13] fastmap_1.2.0       jsonlite_2.0.0      DFplyr_1.6.0       
-#> [16] BiocManager_1.30.27 purrr_1.2.2         scales_1.4.0       
-#> [19] httr2_1.2.3         textshaping_1.0.5   jquerylib_0.1.4    
-#> [22] cli_3.6.6           crayon_1.5.3        rlang_1.3.0        
-#> [25] bit64_4.8.2         withr_3.0.3         cachem_1.1.0       
-#> [28] yaml_2.3.12         otel_0.2.0          parallel_4.6.1     
-#> [31] tools_4.6.1         tzdb_0.5.0          BiocGenerics_0.58.1
-#> [34] curl_7.1.0          vctrs_0.7.3         R6_2.6.1           
-#> [37] stats4_4.6.1        lifecycle_1.0.5     stringr_1.6.0      
-#> [40] bit_4.6.0           S4Vectors_0.50.1    fs_2.1.0           
-#> [43] htmlwidgets_1.6.4   vroom_1.7.1         ragg_1.5.2         
-#> [46] pkgconfig_2.0.3     desc_1.4.3          pkgdown_2.2.1      
-#> [49] pillar_1.11.1       bslib_0.11.0        gtable_0.3.6       
-#> [52] glue_1.8.1          systemfonts_1.3.2   xfun_0.60          
-#> [55] tibble_3.3.1        tidyselect_1.2.1    knitr_1.51         
-#> [58] farver_2.1.2        htmltools_0.5.9     labeling_0.4.3     
-#> [61] rmarkdown_2.31      compiler_4.6.1      S7_0.2.2
+#>  [1] utf8_1.2.6          sass_0.4.10         generics_0.1.4     
+#>  [4] stringi_1.8.7       hms_1.1.4           digest_0.6.39      
+#>  [7] magrittr_2.0.5      RColorBrewer_1.1-3  evaluate_1.0.5     
+#> [10] grid_4.6.1          bookdown_0.47       fastmap_1.2.0      
+#> [13] jsonlite_2.0.0      DFplyr_1.6.0        BiocManager_1.30.27
+#> [16] purrr_1.2.2         scales_1.4.0        httr2_1.3.0        
+#> [19] textshaping_1.0.5   jquerylib_0.1.4     cli_3.6.6          
+#> [22] crayon_1.5.3        rlang_1.3.0         bit64_4.8.2        
+#> [25] withr_3.0.3         cachem_1.1.0        yaml_2.3.12        
+#> [28] otel_0.2.0          parallel_4.6.1      tools_4.6.1        
+#> [31] tzdb_0.5.0          BiocGenerics_0.58.1 curl_7.1.0         
+#> [34] vctrs_0.7.3         R6_2.6.1            stats4_4.6.1       
+#> [37] lifecycle_1.0.5     stringr_1.6.0       bit_4.6.0          
+#> [40] S4Vectors_0.50.1    fs_2.1.0            htmlwidgets_1.6.4  
+#> [43] vroom_1.7.1         ragg_1.5.2          pkgconfig_2.0.3    
+#> [46] desc_1.4.3          pkgdown_2.2.1       pillar_1.11.1      
+#> [49] bslib_0.11.0        gtable_0.3.6        glue_1.8.1         
+#> [52] systemfonts_1.3.2   xfun_0.60           tibble_3.3.1       
+#> [55] tidyselect_1.2.1    knitr_1.51          farver_2.1.2       
+#> [58] htmltools_0.5.9     labeling_0.4.3      rmarkdown_2.31     
+#> [61] compiler_4.6.1      S7_0.2.2
 ```
 
 ## References

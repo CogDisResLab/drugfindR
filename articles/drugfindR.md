@@ -482,7 +482,7 @@ devtools::session_info()
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2026-07-10
+#>  date     2026-07-22
 #>  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
 #>  quarto   NA
 #> 
@@ -504,7 +504,7 @@ devtools::session_info()
 #>  DFplyr         1.6.0   2026-04-28 [1] Bioconduc~
 #>  digest         0.6.39  2025-11-19 [1] RSPM
 #>  dplyr        * 1.2.1   2026-04-03 [1] RSPM
-#>  drugfindR    * 1.0.0   2026-07-10 [1] local
+#>  drugfindR    * 1.0.0   2026-07-22 [1] local
 #>  ellipsis       0.3.3   2026-04-04 [1] RSPM
 #>  evaluate       1.0.5   2025-08-27 [1] RSPM
 #>  farver         2.1.2   2024-05-13 [1] RSPM
@@ -518,7 +518,7 @@ devtools::session_info()
 #>  hms            1.1.4   2025-10-17 [1] RSPM
 #>  htmltools      0.5.9   2025-12-04 [1] RSPM
 #>  htmlwidgets    1.6.4   2023-12-06 [1] RSPM
-#>  httr2          1.2.3   2026-06-23 [1] RSPM
+#>  httr2          1.3.0   2026-07-13 [1] RSPM
 #>  jquerylib      0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite       2.0.0   2025-03-27 [1] RSPM
 #>  knitr          1.51    2025-12-20 [1] RSPM
@@ -535,7 +535,6 @@ devtools::session_info()
 #>  purrr        * 1.2.2   2026-04-10 [1] RSPM
 #>  R6             2.6.1   2025-02-15 [1] RSPM
 #>  ragg           1.5.2   2026-03-23 [1] RSPM
-#>  rappdirs       0.3.4   2026-01-17 [1] RSPM
 #>  RColorBrewer   1.1-3   2022-04-03 [1] RSPM
 #>  readr        * 2.2.0   2026-02-19 [1] RSPM
 #>  rlang          1.3.0   2026-07-05 [1] RSPM

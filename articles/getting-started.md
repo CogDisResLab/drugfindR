@@ -472,25 +472,25 @@ sessionInfo()
 #> [1] readr_2.2.0      dplyr_1.2.1      drugfindR_1.0.0  BiocStyle_2.40.0
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] utf8_1.2.6          rappdirs_0.3.4      sass_0.4.10        
-#>  [4] generics_0.1.4      stringi_1.8.7       hms_1.1.4          
-#>  [7] digest_0.6.39       magrittr_2.0.5      evaluate_1.0.5     
-#> [10] bookdown_0.47       fastmap_1.2.0       jsonlite_2.0.0     
-#> [13] DFplyr_1.6.0        BiocManager_1.30.27 purrr_1.2.2        
-#> [16] httr2_1.2.3         textshaping_1.0.5   jquerylib_0.1.4    
-#> [19] cli_3.6.6           crayon_1.5.3        rlang_1.3.0        
-#> [22] bit64_4.8.2         withr_3.0.3         cachem_1.1.0       
-#> [25] yaml_2.3.12         otel_0.2.0          parallel_4.6.1     
-#> [28] tools_4.6.1         tzdb_0.5.0          BiocGenerics_0.58.1
-#> [31] curl_7.1.0          vctrs_0.7.3         R6_2.6.1           
-#> [34] stats4_4.6.1        lifecycle_1.0.5     stringr_1.6.0      
-#> [37] S4Vectors_0.50.1    fs_2.1.0            htmlwidgets_1.6.4  
-#> [40] bit_4.6.0           vroom_1.7.1         ragg_1.5.2         
-#> [43] pkgconfig_2.0.3     desc_1.4.3          pkgdown_2.2.1      
-#> [46] pillar_1.11.1       bslib_0.11.0        glue_1.8.1         
-#> [49] systemfonts_1.3.2   xfun_0.60           tibble_3.3.1       
-#> [52] tidyselect_1.2.1    knitr_1.51          htmltools_0.5.9    
-#> [55] rmarkdown_2.31      compiler_4.6.1
+#>  [1] utf8_1.2.6          sass_0.4.10         generics_0.1.4     
+#>  [4] stringi_1.8.7       hms_1.1.4           digest_0.6.39      
+#>  [7] magrittr_2.0.5      evaluate_1.0.5      bookdown_0.47      
+#> [10] fastmap_1.2.0       jsonlite_2.0.0      DFplyr_1.6.0       
+#> [13] BiocManager_1.30.27 purrr_1.2.2         httr2_1.3.0        
+#> [16] textshaping_1.0.5   jquerylib_0.1.4     cli_3.6.6          
+#> [19] rlang_1.3.0         crayon_1.5.3        bit64_4.8.2        
+#> [22] withr_3.0.3         cachem_1.1.0        yaml_2.3.12        
+#> [25] otel_0.2.0          parallel_4.6.1      tools_4.6.1        
+#> [28] tzdb_0.5.0          BiocGenerics_0.58.1 curl_7.1.0         
+#> [31] vctrs_0.7.3         R6_2.6.1            stats4_4.6.1       
+#> [34] lifecycle_1.0.5     stringr_1.6.0       S4Vectors_0.50.1   
+#> [37] fs_2.1.0            htmlwidgets_1.6.4   bit_4.6.0          
+#> [40] vroom_1.7.1         ragg_1.5.2          pkgconfig_2.0.3    
+#> [43] desc_1.4.3          pkgdown_2.2.1       pillar_1.11.1      
+#> [46] bslib_0.11.0        glue_1.8.1          systemfonts_1.3.2  
+#> [49] xfun_0.60           tibble_3.3.1        tidyselect_1.2.1   
+#> [52] knitr_1.51          htmltools_0.5.9     rmarkdown_2.31     
+#> [55] compiler_4.6.1
 ```
 
 ## References
