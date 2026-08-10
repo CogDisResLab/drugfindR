@@ -987,7 +987,7 @@ sessionInfo()
 #> [5] drugfindR_1.0.0  BiocStyle_2.40.0
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] sass_0.4.10         generics_0.1.4      stringi_1.8.7      
+#>  [1] sass_0.4.10         generics_0.1.4      stringi_1.8.9      
 #>  [4] hms_1.1.4           digest_0.6.39       magrittr_2.0.5     
 #>  [7] RColorBrewer_1.1-3  evaluate_1.0.5      grid_4.6.1         
 #> [10] bookdown_0.47       fastmap_1.2.0       jsonlite_2.0.0     
@@ -1000,7 +1000,7 @@ sessionInfo()
 #> [31] stats4_4.6.1        lifecycle_1.0.5     stringr_1.6.0      
 #> [34] S4Vectors_0.50.1    fs_2.1.0            htmlwidgets_1.6.4  
 #> [37] ragg_1.5.2          pkgconfig_2.0.3     desc_1.4.3         
-#> [40] pkgdown_2.2.1       pillar_1.11.1       bslib_0.11.0       
+#> [40] pkgdown_2.2.1       pillar_1.11.1       bslib_0.12.0       
 #> [43] gtable_0.3.6        glue_1.8.1          systemfonts_1.3.2  
 #> [46] xfun_0.60           tibble_3.3.1        tidyselect_1.2.1   
 #> [49] knitr_1.51          farver_2.1.2        htmltools_0.5.9    

@@ -763,7 +763,7 @@ sessionInfo()
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] utf8_1.2.6          sass_0.4.10         generics_0.1.4     
-#>  [4] stringi_1.8.7       hms_1.1.4           digest_0.6.39      
+#>  [4] stringi_1.8.9       hms_1.1.4           digest_0.6.39      
 #>  [7] magrittr_2.0.5      RColorBrewer_1.1-3  evaluate_1.0.5     
 #> [10] grid_4.6.1          bookdown_0.47       fastmap_1.2.0      
 #> [13] jsonlite_2.0.0      DFplyr_1.6.0        BiocManager_1.30.27
@@ -778,7 +778,7 @@ sessionInfo()
 #> [40] S4Vectors_0.50.1    fs_2.1.0            htmlwidgets_1.6.4  
 #> [43] vroom_1.7.1         ragg_1.5.2          pkgconfig_2.0.3    
 #> [46] desc_1.4.3          pkgdown_2.2.1       pillar_1.11.1      
-#> [49] bslib_0.11.0        gtable_0.3.6        glue_1.8.1         
+#> [49] bslib_0.12.0        gtable_0.3.6        glue_1.8.1         
 #> [52] systemfonts_1.3.2   xfun_0.60           tibble_3.3.1       
 #> [55] tidyselect_1.2.1    knitr_1.51          farver_2.1.2       
 #> [58] htmltools_0.5.9     labeling_0.4.3      rmarkdown_2.31     
