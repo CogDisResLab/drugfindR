@@ -482,7 +482,7 @@ devtools::session_info()
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2026-08-10
+#>  date     2026-08-31
 #>  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
 #>  quarto   NA
 #> 
@@ -492,19 +492,19 @@ devtools::session_info()
 #>  BiocManager    1.30.27 2025-11-14 [1] RSPM
 #>  BiocStyle    * 2.40.0  2026-04-28 [1] Bioconduc~
 #>  bit            4.6.0   2025-03-06 [1] RSPM
-#>  bit64          4.8.2   2026-05-19 [1] RSPM
-#>  bookdown       0.47    2026-06-16 [1] RSPM
+#>  bit64          4.8.4   2026-08-20 [1] RSPM
+#>  bookdown       0.48    2026-08-28 [1] RSPM
 #>  bslib          0.12.0  2026-08-04 [1] RSPM
 #>  cachem         1.1.0   2024-05-16 [1] RSPM
 #>  cli            3.6.6   2026-04-09 [1] RSPM
 #>  crayon         1.5.3   2024-06-20 [1] RSPM
-#>  curl           7.1.0   2026-04-22 [1] RSPM
+#>  curl           8.0.0   2026-08-25 [1] RSPM
 #>  desc           1.4.3   2023-12-10 [1] RSPM
 #>  devtools       2.5.2   2026-04-30 [1] RSPM
 #>  DFplyr         1.6.0   2026-04-28 [1] Bioconduc~
 #>  digest         0.6.39  2025-11-19 [1] RSPM
 #>  dplyr        * 1.2.1   2026-04-03 [1] RSPM
-#>  drugfindR    * 1.0.0   2026-08-10 [1] local
+#>  drugfindR    * 1.0.0   2026-08-31 [1] local
 #>  ellipsis       0.3.3   2026-04-04 [1] RSPM
 #>  evaluate       1.0.5   2025-08-27 [1] RSPM
 #>  farver         2.1.2   2024-05-13 [1] RSPM
@@ -539,7 +539,7 @@ devtools::session_info()
 #>  readr        * 2.2.0   2026-02-19 [1] RSPM
 #>  rlang          1.3.0   2026-07-05 [1] RSPM
 #>  rmarkdown      2.31    2026-03-26 [1] RSPM
-#>  S4Vectors      0.50.1  2026-05-13 [1] Bioconduc~
+#>  S4Vectors      0.50.2  2026-08-23 [1] Bioconduc~
 #>  S7             0.2.2   2026-04-22 [1] RSPM
 #>  sass           0.4.10  2025-04-11 [1] RSPM
 #>  scales         1.4.0   2025-04-24 [1] RSPM
