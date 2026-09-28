@@ -475,14 +475,14 @@ devtools::session_info()
 #> ─ Session info ───────────────────────────────────────────────────────────────
 #>  setting  value
 #>  version  R version 4.6.1 (2026-06-24)
-#>  os       Ubuntu 24.04.4 LTS
+#>  os       Ubuntu 24.04.5 LTS
 #>  system   x86_64, linux-gnu
 #>  ui       X11
 #>  language en
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2026-08-31
+#>  date     2026-09-28
 #>  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
 #>  quarto   NA
 #> 
@@ -492,7 +492,7 @@ devtools::session_info()
 #>  BiocManager    1.30.27 2025-11-14 [1] RSPM
 #>  BiocStyle    * 2.40.0  2026-04-28 [1] Bioconduc~
 #>  bit            4.6.0   2025-03-06 [1] RSPM
-#>  bit64          4.8.4   2026-08-20 [1] RSPM
+#>  bit64          4.8.6   2026-09-01 [1] RSPM
 #>  bookdown       0.48    2026-08-28 [1] RSPM
 #>  bslib          0.12.0  2026-08-04 [1] RSPM
 #>  cachem         1.1.0   2024-05-16 [1] RSPM
@@ -504,7 +504,7 @@ devtools::session_info()
 #>  DFplyr         1.6.0   2026-04-28 [1] Bioconduc~
 #>  digest         0.6.39  2025-11-19 [1] RSPM
 #>  dplyr        * 1.2.1   2026-04-03 [1] RSPM
-#>  drugfindR    * 1.0.0   2026-08-31 [1] local
+#>  drugfindR    * 1.0.0   2026-09-28 [1] local
 #>  ellipsis       0.3.3   2026-04-04 [1] RSPM
 #>  evaluate       1.0.5   2025-08-27 [1] RSPM
 #>  farver         2.1.2   2024-05-13 [1] RSPM
@@ -521,7 +521,7 @@ devtools::session_info()
 #>  httr2          1.3.0   2026-07-13 [1] RSPM
 #>  jquerylib      0.1.4   2021-04-26 [1] RSPM
 #>  jsonlite       2.0.0   2025-03-27 [1] RSPM
-#>  knitr          1.51    2025-12-20 [1] RSPM
+#>  knitr          1.52    2026-09-06 [1] RSPM
 #>  lifecycle      1.0.5   2026-01-08 [1] RSPM
 #>  lubridate    * 1.9.5   2026-02-04 [1] RSPM
 #>  magrittr       2.0.5   2026-04-04 [1] RSPM
@@ -538,8 +538,8 @@ devtools::session_info()
 #>  RColorBrewer   1.1-3   2022-04-03 [1] RSPM
 #>  readr        * 2.2.0   2026-02-19 [1] RSPM
 #>  rlang          1.3.0   2026-07-05 [1] RSPM
-#>  rmarkdown      2.31    2026-03-26 [1] RSPM
-#>  S4Vectors      0.50.2  2026-08-23 [1] Bioconduc~
+#>  rmarkdown      2.32    2026-09-01 [1] RSPM
+#>  S4Vectors      0.50.3  2026-09-16 [1] Bioconduc~
 #>  S7             0.2.2   2026-04-22 [1] RSPM
 #>  sass           0.4.10  2025-04-11 [1] RSPM
 #>  scales         1.4.0   2025-04-24 [1] RSPM
@@ -554,11 +554,11 @@ devtools::session_info()
 #>  tidyverse    * 2.0.0   2023-02-22 [1] RSPM
 #>  timechange     0.4.0   2026-01-29 [1] RSPM
 #>  tzdb           0.5.0   2025-03-15 [1] RSPM
-#>  usethis        3.2.1   2025-09-06 [1] RSPM
+#>  usethis        3.2.2   2026-09-10 [1] RSPM
 #>  vctrs          0.7.3   2026-04-11 [1] RSPM
 #>  vroom          1.7.1   2026-03-31 [1] RSPM
 #>  withr          3.0.3   2026-06-19 [1] RSPM
-#>  xfun           0.60    2026-07-09 [1] RSPM
+#>  xfun           0.61    2026-09-16 [1] RSPM
 #>  yaml           2.3.12  2025-12-10 [1] RSPM
 #> 
 #>  [1] /home/runner/work/_temp/Library

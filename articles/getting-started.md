@@ -450,7 +450,7 @@ Now that you understand the basics, explore these advanced topics:
 sessionInfo()
 #> R version 4.6.1 (2026-06-24)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.4 LTS
+#> Running under: Ubuntu 24.04.5 LTS
 #> 
 #> Matrix products: default
 #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -478,18 +478,18 @@ sessionInfo()
 #> [10] fastmap_1.2.0       jsonlite_2.0.0      DFplyr_1.6.0       
 #> [13] BiocManager_1.30.27 purrr_1.2.2         httr2_1.3.0        
 #> [16] textshaping_1.0.5   jquerylib_0.1.4     cli_3.6.6          
-#> [19] rlang_1.3.0         crayon_1.5.3        bit64_4.8.4        
+#> [19] rlang_1.3.0         crayon_1.5.3        bit64_4.8.6        
 #> [22] withr_3.0.3         cachem_1.1.0        yaml_2.3.12        
 #> [25] otel_0.2.0          parallel_4.6.1      tools_4.6.1        
 #> [28] tzdb_0.5.0          BiocGenerics_0.58.1 curl_8.0.0         
 #> [31] vctrs_0.7.3         R6_2.6.1            stats4_4.6.1       
-#> [34] lifecycle_1.0.5     stringr_1.6.0       S4Vectors_0.50.2   
+#> [34] lifecycle_1.0.5     stringr_1.6.0       S4Vectors_0.50.3   
 #> [37] fs_2.1.0            htmlwidgets_1.6.4   bit_4.6.0          
 #> [40] vroom_1.7.1         ragg_1.5.2          pkgconfig_2.0.3    
 #> [43] desc_1.4.3          pkgdown_2.2.1       pillar_1.11.1      
 #> [46] bslib_0.12.0        glue_1.8.1          systemfonts_1.3.2  
-#> [49] xfun_0.60           tibble_3.3.1        tidyselect_1.2.1   
-#> [52] knitr_1.51          htmltools_0.5.9     rmarkdown_2.31     
+#> [49] xfun_0.61           tibble_3.3.1        tidyselect_1.2.1   
+#> [52] knitr_1.52          htmltools_0.5.9     rmarkdown_2.32     
 #> [55] compiler_4.6.1
 ```
 

@@ -739,7 +739,7 @@ Key takeaways for drug repurposing with drugfindR:
 sessionInfo()
 #> R version 4.6.1 (2026-06-24)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.4 LTS
+#> Running under: Ubuntu 24.04.5 LTS
 #> 
 #> Matrix products: default
 #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -769,19 +769,19 @@ sessionInfo()
 #> [13] jsonlite_2.0.0      DFplyr_1.6.0        BiocManager_1.30.27
 #> [16] purrr_1.2.2         scales_1.4.0        httr2_1.3.0        
 #> [19] textshaping_1.0.5   jquerylib_0.1.4     cli_3.6.6          
-#> [22] crayon_1.5.3        rlang_1.3.0         bit64_4.8.4        
+#> [22] crayon_1.5.3        rlang_1.3.0         bit64_4.8.6        
 #> [25] withr_3.0.3         cachem_1.1.0        yaml_2.3.12        
 #> [28] otel_0.2.0          parallel_4.6.1      tools_4.6.1        
 #> [31] tzdb_0.5.0          BiocGenerics_0.58.1 curl_8.0.0         
 #> [34] vctrs_0.7.3         R6_2.6.1            stats4_4.6.1       
 #> [37] lifecycle_1.0.5     stringr_1.6.0       bit_4.6.0          
-#> [40] S4Vectors_0.50.2    fs_2.1.0            htmlwidgets_1.6.4  
+#> [40] S4Vectors_0.50.3    fs_2.1.0            htmlwidgets_1.6.4  
 #> [43] vroom_1.7.1         ragg_1.5.2          pkgconfig_2.0.3    
 #> [46] desc_1.4.3          pkgdown_2.2.1       pillar_1.11.1      
 #> [49] bslib_0.12.0        gtable_0.3.6        glue_1.8.1         
-#> [52] systemfonts_1.3.2   xfun_0.60           tibble_3.3.1       
-#> [55] tidyselect_1.2.1    knitr_1.51          farver_2.1.2       
-#> [58] htmltools_0.5.9     labeling_0.4.3      rmarkdown_2.31     
+#> [52] systemfonts_1.3.2   xfun_0.61           tibble_3.3.1       
+#> [55] tidyselect_1.2.1    knitr_1.52          farver_2.1.2       
+#> [58] htmltools_0.5.9     labeling_0.4.3      rmarkdown_2.32     
 #> [61] compiler_4.6.1      S7_0.2.2
 ```
 
