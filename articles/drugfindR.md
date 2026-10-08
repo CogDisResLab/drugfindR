@@ -482,7 +482,7 @@ devtools::session_info()
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2026-09-29
+#>  date     2026-10-08
 #>  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
 #>  quarto   NA
 #> 
@@ -504,7 +504,7 @@ devtools::session_info()
 #>  DFplyr         1.6.0   2026-04-28 [1] Bioconduc~
 #>  digest         0.6.39  2025-11-19 [1] RSPM
 #>  dplyr        * 1.2.1   2026-04-03 [1] RSPM
-#>  drugfindR    * 1.0.0   2026-09-29 [1] local
+#>  drugfindR    * 1.0.0   2026-10-08 [1] local
 #>  ellipsis       0.3.3   2026-04-04 [1] RSPM
 #>  evaluate       1.0.5   2025-08-27 [1] RSPM
 #>  farver         2.1.2   2024-05-13 [1] RSPM
