@@ -42,7 +42,7 @@ jobs:
             bioc: devel
             r: auto
     steps:
-      - uses: neurogenomics/rworkflows@6aaf49348859a96eea744b1907b1fe850e3ead5e # master
+      - uses: neurogenomics/rworkflows@ea16aa1b6e5a8608572eb38f734858b865c87f4b # master
         with:
           run_bioccheck: ${{ true }}
           run_rcmdcheck: ${{ true }}
