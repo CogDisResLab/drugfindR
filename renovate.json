@@ -6,7 +6,9 @@
   "baseBranchPatterns": [
     "devel"
   ],
-  "dependencyDashboard": true,
+  "dependencyDashboard": {
+    "enabled": true
+  },
   "bumpVersion": "patch",
   "extends": [
     "config:best-practices",
